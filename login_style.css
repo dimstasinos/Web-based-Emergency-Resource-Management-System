@@ -1,5 +1,5 @@
 body{
-  background-image: url(backround.jpg);
+  background-image: url(backround.JPEG);
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -52,7 +52,7 @@ h1{
 }
 
 #pass{
-  background-color: rgba(109, 0, 0, 0.384); 
+  background-color: rgba(109, 0, 0, 0.288);
   border-radius: 15px;
 }
 
