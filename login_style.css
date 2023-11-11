@@ -1,0 +1,18 @@
+body {
+  background-image: url(backround.jpg);
+  background-position: left,top;
+  background-size: auto;
+}
+
+loginbox{
+  width: 320px;
+  height: 420px;
+  background:darkblue;
+  color: #fff;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  
+}
