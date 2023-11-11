@@ -1,17 +1,15 @@
-body {
-  background: url(backround.jpg) no-repeat;
-  
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+body{
+  background-image: url(backround.jpg);
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
 .loginbox{
   width: 320px;
-  height: 320px;
-  background: rgba(0, 0, 0, 0.192);
+  height: 400px;
+  background: rgba(0, 0, 0, 0.600);
   color: #ffffff;
   top: 50%;
   left: 50%;
@@ -31,8 +29,21 @@ body {
 }
 
 h1{
+  font-family: 'Roboto', Courier, monospace;
   margin: 0;
   padding: 0 0 20px;
   text-align: center;
   font-size: 45px;
 }
+
+
+.inputBox{
+  width: 100%;
+  padding: 10px;
+  outline-color: aqua;
+  font-family: 'Roboto', Courier, monospace;
+  font-size: larger;
+  pointer-events: visibleFill;
+}
+
+
