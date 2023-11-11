@@ -47,11 +47,13 @@ h1{
 }
 
 #user{
+  padding: 6px;
   background-color: rgb(175, 175, 175); 
   border-radius: 15px;
 }
 
 #pass{
+  padding: 6px;
   background-color: rgb(175, 175, 175); 
   border-radius: 15px;
 }
