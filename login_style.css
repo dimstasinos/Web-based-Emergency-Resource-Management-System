@@ -40,6 +40,7 @@ h1{
 .inputBox{
   width: 100%;
   padding: 10px;
+
   outline-color: aqua;
   font-family: 'Roboto', Courier, monospace;
   font-size: larger;
