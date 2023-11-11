@@ -1,18 +1,38 @@
 body {
-  background-image: url(backround.jpg);
-  background-position: left,top;
-  background-size: auto;
+  background: url(backround.jpg) no-repeat;
+  
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
 }
 
-loginbox{
+.loginbox{
   width: 320px;
-  height: 420px;
-  background:darkblue;
-  color: #fff;
+  height: 320px;
+  background: rgba(0, 0, 0, 0.192);
+  color: #ffffff;
   top: 50%;
   left: 50%;
   position: absolute;
   transform: translate(-50%, -50%);
   box-sizing: border-box;
-  
+  padding: 70px 30px;
+}
+
+.loginuser{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  position: absolute;
+  top: -50px;
+  left: calc(50%, 50px);
+}
+
+h1{
+  margin: 0;
+  padding: 0 0 20px;
+  text-align: center;
+  font-size: 45px;
 }
