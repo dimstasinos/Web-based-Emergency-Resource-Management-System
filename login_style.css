@@ -58,5 +58,10 @@ h1{
   border-radius: 15px;
 }
 
-
+#log{
+  width: 100px;
+  padding: 8px;
+  background-color:rgb(175, 175, 175);
+  border-radius: 20px;
+}
 
