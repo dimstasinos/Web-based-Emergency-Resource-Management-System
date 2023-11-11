@@ -40,9 +40,9 @@ h1{
 
 .inputBox{
   width: 100%;
-  padding: 10px;
   font-family: 'Roboto', Courier, monospace;
   font-size: larger;
+  line-height: 28px;
   pointer-events: visibleFill;
 }
 
