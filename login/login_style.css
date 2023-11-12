@@ -49,6 +49,7 @@ h1{
 .showPass{
   padding: 10px 0 0;  
   font-size: 12px;
+  
 }
 
 .userBox{
@@ -68,11 +69,6 @@ h1{
   pointer-events: visibleFill;
 }
 
-#showPass{
-  display: flex;
-  align-items: center;
-}
-
 #loginButton{
   width: 50%;
   height: 30px;
@@ -85,7 +81,7 @@ h1{
   cursor: pointer;
 }
 
-.loginButton:hover {
+#loginButton:hover {
   background-color: #5045a0;
 }
 
@@ -102,6 +98,8 @@ h1{
   background-color: rgb(175, 175, 175); 
   border-radius: 15px;
 }
+
+
 
 
 
