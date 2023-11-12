@@ -74,11 +74,13 @@ h1{
 }
 
 .loginButton{
-  width: 100%;
+  width: 50%;
   height: 30px;
-  
+  margin-left: 65px;
+  transition-duration: 0.5s;
   background-color: rgb(175, 175, 175);
   border-radius: 15px;
+  text-align: center;
   border: none;
   cursor: pointer;
 }
