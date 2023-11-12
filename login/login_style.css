@@ -68,12 +68,12 @@ h1{
   pointer-events: visibleFill;
 }
 
-.showPass{
+#showPass{
   display: flex;
   align-items: center;
 }
 
-.loginButton{
+#loginButton{
   width: 50%;
   height: 30px;
   margin-left: 65px;

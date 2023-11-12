@@ -63,7 +63,7 @@ body{
     pointer-events: visibleFill;
   }
 
-  .registerButton{
+  #registerButton{
     width: 50%;
     height: 30px;
     margin-left: 65px;
@@ -75,7 +75,7 @@ body{
     cursor: pointer;
   }
   
-  .registerButton:hover {
+  #registerButton:hover {
     background-color: #5045a0;
   }
   
