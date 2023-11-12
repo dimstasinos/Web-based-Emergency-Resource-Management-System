@@ -73,6 +73,20 @@ h1{
   align-items: center;
 }
 
+.loginButton{
+  width: 100%;
+  height: 30px;
+  
+  background-color: rgb(175, 175, 175);
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+}
+
+.loginButton:hover {
+  background-color: #5045a0;
+}
+
 #user{
   padding: 6px;
   width: 95%;
@@ -93,3 +107,4 @@ h1{
   background-color:rgb(175, 175, 175);
   border-radius: 20px;
 }
+
