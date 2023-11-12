@@ -18,7 +18,7 @@ body{
     width: 320px;
     height: 470px;
     border-radius: 15px;
-    background: rgba(0, 0, 0, 1);
+    background: rgba(0, 0, 0, 0.95);
     color: #ffffff;
     top: 50%;
     left: 50%;
@@ -68,7 +68,7 @@ body{
     height: 30px;
     margin-left: 65px;
     transition-duration: 0.5s;
-    background-color: rgb(175, 175, 175);
+    background-color: rgba(255, 255, 255, 1);
     border-radius: 15px;
     text-align: center;
     border: none;
@@ -76,27 +76,27 @@ body{
   }
   
   #registerButton:hover {
-    background-color: #5045a0;
+    background-color: rgba(255, 255, 255, 0.5);
   }
   
   #user{
     padding: 6px;
     width: 95%;
-    background-color: rgb(175, 175, 175); 
+    background-color: rgba(255, 255, 255, 1); 
     border-radius: 15px;
   }
   
   #pass{
     padding: 6px;
     width: 95%;
-    background-color: rgb(175, 175, 175); 
+    background-color: rgba(255, 255, 255, 1); 
     border-radius: 15px;
   }
 
   #confpass{
     padding: 6px;
     width: 95%;
-    background-color: rgb(175, 175, 175); 
+    background-color: rgba(255, 255, 255, 1); 
     border-radius: 15px;
   }
   
