@@ -10,7 +10,7 @@ body {
   font-family: 'Roboto', Courier, monospace;
   margin: 0;
   color: rgb(255, 38, 0);
-  padding: 0 0 0;
+  padding: 0 0 10px;
   text-align: center;
   font-size: 15px;
 }
@@ -103,10 +103,5 @@ h1{
   border-radius: 15px;
 }
 
-#log{
-  width: 100px;
-  padding: 8px;
-  background-color:rgb(175, 175, 175);
-  border-radius: 20px;
-}
+
 

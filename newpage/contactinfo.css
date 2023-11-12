@@ -1,0 +1,91 @@
+body {
+    background-color:blanchedalmond;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+  }
+
+.contactbox{
+  width: 320px;
+  height: 400px;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 1);
+  color: #ffffff;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  padding: 70px 30px;
+  }
+
+  .submitButton{
+    width: 50%;
+    height: 30px;
+    margin-left: 65px;
+    margin-top: 10%;
+    transition-duration: 0.5s;
+    background-color: rgb(175, 175, 175);
+    border-radius: 15px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+  }
+
+  .submitButton:hover {
+    background-color: blanchedalmond;
+  }
+
+  h1{
+    font-family: 'Roboto', Courier, monospace;
+    margin: 0;
+    padding: 0 0 10px;
+    text-align: center;
+    font-size: 45px;
+  }
+
+  .nameBox{
+    width: 100%;
+    font-family: 'Roboto', Courier, monospace;
+    font-size: larger;
+    line-height: 28px;
+    pointer-events: visibleFill;
+  }
+
+  .phoneBox{
+    width: 100%;
+    font-family: 'Roboto', Courier, monospace;
+    font-size: larger;
+    line-height: 28px;
+    pointer-events: visibleFill;
+  }
+
+  .locationBox{
+    width: 100%;
+    font-family: 'Roboto', Courier, monospace;
+    font-size: larger;
+    line-height: 28px;
+    pointer-events: visibleFill;
+  }
+
+  #name{
+    padding: 6px;
+    width: 95%;
+    background-color: rgb(175, 175, 175); 
+    border-radius: 15px;
+  }
+
+  #phone{
+    padding: 6px;
+    width: 95%;
+    background-color: rgb(175, 175, 175); 
+    border-radius: 15px;
+  }
+
+  #location{
+    padding: 6px;
+    width: 95%;
+    background-color: rgb(175, 175, 175); 
+    border-radius: 15px;
+  }

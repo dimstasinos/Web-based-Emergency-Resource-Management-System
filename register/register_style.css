@@ -16,7 +16,7 @@ body{
 }
 .registerbox{
     width: 320px;
-    height: 500px;
+    height: 450px;
     border-radius: 15px;
     background: rgba(0, 0, 0, 1);
     color: #ffffff;
@@ -46,35 +46,58 @@ body{
   }
   
   
-  .inputBox{
+  .userBox{
     width: 100%;
     font-family: 'Roboto', Courier, monospace;
     font-size: larger;
     line-height: 28px;
     pointer-events: visibleFill;
   }
+
+  .passBox {
+    margin-top: 10px;
+    width: 100%;
+    font-family: 'Roboto', Courier, monospace;
+    font-size: larger;
+    line-height: 28px;
+    pointer-events: visibleFill;
+  }
+
+  .registerButton{
+    width: 50%;
+    height: 30px;
+    margin-left: 65px;
+    transition-duration: 0.5s;
+    background-color: rgb(175, 175, 175);
+    border-radius: 15px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .registerButton:hover {
+    background-color: #5045a0;
+  }
   
   #user{
     padding: 6px;
+    width: 95%;
     background-color: rgb(175, 175, 175); 
     border-radius: 15px;
   }
   
   #pass{
     padding: 6px;
-    background-color: rgb(175, 175, 175); 
-    border-radius: 15px;
-  }
-  
-  #conf{
-    padding: 6px;
+    width: 95%;
     background-color: rgb(175, 175, 175); 
     border-radius: 15px;
   }
 
-  #log{
-    width: 100px;
-    padding: 8px;
-    background-color:rgb(175, 175, 175);
-    border-radius: 20px;
+  #confpass{
+    padding: 6px;
+    width: 95%;
+    background-color: rgb(175, 175, 175); 
+    border-radius: 15px;
   }
+  
+
