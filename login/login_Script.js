@@ -1,9 +1,9 @@
 function showPassword() {
   var inputPass = document.getElementById("pass");
-  
+
   if(inputPass.type === "password") {
-    inputPass = "text";
+    inputPass.type = "text";
   }else {
-    inputPass = "password";
+    inputPass.type = "password";
   }
 }
