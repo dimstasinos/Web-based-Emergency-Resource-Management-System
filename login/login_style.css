@@ -41,11 +41,15 @@ body {
 h1{
   font-family: 'Roboto', Courier, monospace;
   margin: 0;
-  padding: 0 0 20px;
+  padding: 0 0 10px;
   text-align: center;
   font-size: 45px;
 }
 
+.showPass{
+  padding: 10px 0 0;  
+  font-size: 10px;
+}
 
 .inputBox{
   width: 100%;

@@ -2,27 +2,30 @@
 <html>
 
 <head>
+  <meta name="viewport" content="width=device-width initial-scale=1">
   <link rel="stylesheet" href="login_style.css">
   <title>Login</title>
-  <meta name="viewport" content="width=device-width" , initial-scale="1">
 </head>
 
 <body>
   <div class="loginbox">
-    <img scr="loginuser.png" class="loginuser">
+    <img src="loginuser.png" alt="Login image" class="loginuser">
     <h1>Login</h1>
     <form>
       <div class="inputBox">
-        <label for="Username">Username</label>
-        <input type="username" id="user" placeholder="Enter username" maxlength="12" required>
+        <label for="user">Username</label>
+        <input type="text" id="user" placeholder="Enter username" maxlength="12" required>
       </div>
       <div class="inputBox">
         <label for="pass">Password </label>
         <input type="password" id="pass" name="pass" placeholder="Enter password" required>
       </div>
+      <div class="showPass">
+        <input type="checkbox" onclick="showPassword()"> Show Password
+      </div>
       <div class="register">
         <p>Don't have an account? 
-          <a href="register/register_page.html"><strong>Click Here!</strong></a>
+          <a href="register/register_page.html"><br><strong>Click Here!</strong></a>
         </p>
       </div>
       <div class="loginbutton">
