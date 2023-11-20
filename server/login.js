@@ -18,6 +18,6 @@ database_connect.connect(e => {
 
 function validation(username, password){
 
-  
+  database_connect.query("SELECT * FROM users WHERE username=use")
 
 }
