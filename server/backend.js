@@ -1,13 +1,10 @@
 const http = require("http");
+const login = require('./login');
 const host = `localhost`;
 const port = 8000;
 
-const requestListener= function (req, res) {
-  
-};
 
-const server = http.createServer(requestListener);
+login.validation("test",123);
 
-server.listen(port, host, () => {
-  console.log(`Server is running on http://${host}:${port}`);
-});
+const server = http.createServer();
+
