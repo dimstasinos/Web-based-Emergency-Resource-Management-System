@@ -3,8 +3,15 @@ const login = require('./login');
 const host = `localhost`;
 const port = 8000;
 
+const server = http.createServer((req, res) => {
 
-login.validation("test",123);
+  
 
-const server = http.createServer();
+});
 
+
+server.listen(port, ()=>{
+  
+  console.log(`Server running at http://${host}:${port}/`);
+
+});
