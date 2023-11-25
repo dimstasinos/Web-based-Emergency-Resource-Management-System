@@ -13,14 +13,14 @@
   <div class="loginbox">
     <img src="/images/loginuser.png" alt="Login image" class="loginuser">
     <h1>Login</h1>
-    <form>
+    <form action="/server/login.php" method="post">
       <div class="userBox">
-        <label for="user">Username</label>
-        <input type="text" id="user" placeholder="Enter username" maxlength="12" required>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter username" maxlength="12" required>
       </div>
       <div class="passBox">
         <label for="pass">Password</label>
-        <input type="password" id="pass" placeholder="Enter password" required>
+        <input type="password" id="pass" name="password" placeholder="Enter password" required>
       </div>
       <div class="showPass">
         <input type="checkbox" id="check" onclick="showPassword()">
