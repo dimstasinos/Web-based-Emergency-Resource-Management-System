@@ -1,6 +1,6 @@
 @font-face {
   font-family: Roboto;
-  src: url(fonts/Roboto/Roboto-Black.ttf);
+  src: url(/fonts/Roboto/Roboto-Black.ttf);
 }
 
 
@@ -12,7 +12,7 @@ body {
   background-repeat: no-repeat;
 }
 
-.register{
+#register{
   font-family: 'Roboto', Courier, monospace;
   margin: 0;
   color: rgb(255, 38, 0);
@@ -21,7 +21,7 @@ body {
   font-size: 15px;
 }
 
-.loginbox{
+#loginbox{
   width: 320px;
   height: 430px;
   border-radius: 15px;
@@ -35,7 +35,7 @@ body {
   padding: 70px 30px;
 }
 
-.loginuser{
+#loginuser{
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -52,13 +52,13 @@ h1{
   font-size: 45px;
 }
 
-.showPass{
+#showPass{
   padding: 10px 0 0;  
   font-size: 12px;
   
 }
 
-.userBox{
+#userBox{
   width: 100%;
   font-family: 'Roboto', Courier, monospace;
   font-size: larger;
@@ -66,7 +66,7 @@ h1{
   pointer-events: visibleFill;
 }
 
-.passBox {
+#passBox {
   margin-top: 10px;
   width: 100%;
   font-family: 'Roboto', Courier, monospace;

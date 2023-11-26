@@ -5,37 +5,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width initial-scale=1">
   <link rel="stylesheet" href="/css/login_style.css">
-  <script src="/scripts/login_Script.js"></script>
   <title>Login</title>
 </head>
 
 <body>
-  <div class="loginbox">
-    <img src="/images/loginuser.png" alt="Login image" class="loginuser">
+  <div id="loginbox">
+    <img src="/images/loginuser.png" alt="Login image" id="loginuser">
     <h1>Login</h1>
     <form action="/server/login.php" method="post">
-      <div class="userBox">
+      <div id="userBox">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" placeholder="Enter username" maxlength="12" required>
       </div>
-      <div class="passBox">
+      <div id="passBox">
         <label for="pass">Password</label>
         <input type="password" id="pass" name="password" placeholder="Enter password" required>
       </div>
-      <div class="showPass">
-        <input type="checkbox" id="check" onclick="showPassword()">
+      <div id="showPass">
+        <input type="checkbox" id="check">
         <label for="check">Show password</label>
       </div>
-      <div class="register">
+      <div id="register">
         <p>Don't have an account?
           <a href="/html/register_page"><br><strong>Register</strong></a>
         </p>
       </div>
       <div>
-        <button type="submit" id="loginButton" onclick="submitForm()"><strong>LOGIN</strong></button>
+        <button type="submit" id="loginButton"><strong>LOGIN</strong></button>
       </div>
     </form>
   </div>
 
-
+  <script src="/scripts/login_Script.js"></script>
 </body>
