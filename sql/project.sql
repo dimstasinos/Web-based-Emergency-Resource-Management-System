@@ -7,3 +7,22 @@ create table credentials (cred_id INT NOT NULL , username VARCHAR(50), password 
 
 insert into user(user_name,user_surname,user_category) VALUES('Giorgos','Nikolaou','Diaswsths');
 insert into credentials(cred_id,username,password) VALUES ('1','giorgosnik','23041978');
+
+
+create table item_category (
+  category_id INT not null,
+  category_name VARCHAR(15) not null,
+  primary key(category_id)
+  );
+
+create table items (
+  item_id INT NOT NULL,
+  item_name VARCHAR(15) not null,
+  item_category INT not null,
+  item_detail_name VARCHAR(15),
+  item_value float,
+  primary key(item_id),
+  CONSTRAINT TABLE_CAT
+  FOREIGN KEY (item_category) REFERENCES item_category(category_id)
+  on update CASCADE on delete CASCADE
+);
