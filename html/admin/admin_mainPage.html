@@ -6,6 +6,8 @@
   <link rel="stylesheet" href="/css/admin_mainPageStyle.css">
   <link rel="stylesheet" href="/leaflet/leaflet.css" />
   <script src="/leaflet/leaflet.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="js/admin.js"></script>
   <style> 
     #map { 
       height: 500px; 
@@ -24,7 +26,7 @@
     <a href="#">Logout</a>
   </div>
   <div class="main">
-    <!-- Removed duplicate map div -->
+ 
     <div id="map"></div>
   </div>
 
@@ -40,24 +42,8 @@
     var baseMarker = L.marker([37.9755, 23.7348], ).addTo(map);
     baseMarker.bindPopup("<b>Βάση</b><br>Τοποθεσία Βάσης").openPopup();  
 
-    // Marker diaswsth
-    var rescuerMarker = L.marker([37.9838, 23.7275]).addTo(map);
-    rescuerMarker.bindPopup("<b>Διασώστης</b><br>Θέση Διασώστης").openPopup();
-
-    // Marker aithmata
-    var requestMarker = L.marker([37.980, 23.730]).addTo(map);
-    requestMarker.bindPopup("<b>Αίτημα</b><br>Πληροφορίες Αιτήματος");
-
-    // Marker prosfores
-    var offerMarker = L.marker([37.985, 23.725]).addTo(map);
-    offerMarker.bindPopup("<b>Προσφορά</b><br>Πληροφορίες Προσφοράς");
-
-    // Marker diaswsth sundesh me marker task
-    var line = L.polyline([
-      [37.9838, 23.7275],
-      [37.980, 23.730], //tha mpainoun apo vash afta
-    ], {color: 'red'}).addTo(map);
   </script>
 </body>
+
 
 </html>
