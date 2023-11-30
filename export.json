@@ -1096,6 +1096,175 @@
           "detail_value": "20pieces"
         }
       ]
+    },
+    {
+      "id": "106",
+      "name": "T-Shirt",
+      "category": "7",
+      "details": [
+        {
+          "detail_name": "size",
+          "detail_value": "XL"
+        }
+      ]
+    },
+    {
+      "id": "107",
+      "name": "Cooling Fan",
+      "category": "34",
+      "details": [
+        {
+          "detail_name": "",
+          "detail_value": ""
+        }
+      ]
+    },
+    {
+      "id": "108",
+      "name": "Cool Scarf",
+      "category": "34",
+      "details": [
+        {
+          "detail_name": "",
+          "detail_value": ""
+        }
+      ]
+    },
+    {
+      "id": "109",
+      "name": "Whistle",
+      "category": "23",
+      "details": [
+        {
+          "detail_name": "",
+          "detail_value": ""
+        }
+      ]
+    },
+    {
+      "id": "110",
+      "name": "Blankets",
+      "category": "28",
+      "details": [
+        {
+          "detail_name": "",
+          "detail_value": ""
+        }
+      ]
+    },
+    {
+      "id": "111",
+      "name": "Sleeping Bag",
+      "category": "28",
+      "details": [
+        {
+          "detail_name": "",
+          "detail_value": ""
+        }
+      ]
+    },
+    {
+      "id": "112",
+      "name": "Toothbrush",
+      "category": "21",
+      "details": [
+        {
+          "detail_name": "",
+          "detail_value": ""
+        }
+      ]
+    },
+    {
+      "id": "113",
+      "name": "Toothpaste",
+      "category": "21",
+      "details": [
+        {
+          "detail_name": "",
+          "detail_value": ""
+        }
+      ]
+    },
+    {
+      "id": "114",
+      "name": "Thermometer",
+      "category": "16",
+      "details": [
+        {
+          "detail_name": "",
+          "detail_value": ""
+        }
+      ]
+    },
+    {
+      "id": "115",
+      "name": "Rice",
+      "category": "5",
+      "details": [
+        {
+          "detail_name": "",
+          "detail_value": ""
+        }
+      ]
+    },
+    {
+      "id": "116",
+      "name": "Bread",
+      "category": "5",
+      "details": [
+        {
+          "detail_name": "",
+          "detail_value": ""
+        }
+      ]
+    },
+    {
+      "id": "117",
+      "name": "Towels",
+      "category": "22",
+      "details": [
+        {
+          "detail_name": "",
+          "detail_value": ""
+        }
+      ]
+    },
+    {
+      "id": "118",
+      "name": "Wet Wipes",
+      "category": "22",
+      "details": [
+        {
+          "detail_name": "",
+          "detail_value": ""
+        }
+      ]
+    },
+    {
+      "id": "119",
+      "name": "Fire Extinguisher",
+      "category": "23",
+      "details": [
+        {
+          "detail_name": "",
+          "detail_value": ""
+        }
+      ]
+    },
+    {
+      "id": "120",
+      "name": "Fruits",
+      "category": "5",
+      "details": [
+        {
+          "detail_name": "",
+          "detail_value": ""
+        },
+        {
+          "detail_name": "",
+          "detail_value": ""
+        }
+      ]
     }
   ],
   "categories": [
@@ -1158,6 +1327,10 @@
     {
       "id": "8",
       "category_name": "Hacker of class"
+    },
+    {
+      "id": "34",
+      "category_name": "Hot Weather"
     },
     {
       "id": "26",
