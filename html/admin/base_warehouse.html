@@ -1,25 +1,35 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width initial-scale=1">
-    <title>Αποθήκη</title>
-  </head>
 
-  <body>
-      <h1>Αποθήκη</h1>
-      <p>Διαχειριστής</p>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width initial-scale=1">
+  <title>Αποθήκη</title>
+</head>
 
-      <label for="online_data">Ενημέρωση βάσης από κοινό αποθετήριο</label>
-      <button id="online_data">Ενημέρωση</button>
-      <div>
-        <select id="cat">
-          
-        </select>
-      </div>
-      
-    
+<body>
+  <h1>Αποθήκη</h1>
+  <p>Διαχειριστής</p>
 
-    <script src="/scripts/admin_warehouse.js"></script>
-  </body>
+  <label for="online_data">Ενημέρωση βάσης από κοινό αποθετήριο</label>
+  <button id="online_data">Ενημέρωση</button>
+
+  <div>
+    <label for="cat">Καταηγορίες ειδών</label>
+    <select id="cat"></select>
+  </div>
+
+  <div>
+    <table>
+      <tr>
+        <th>Όνομα</th>
+        <th>Λεπτομέριες</th>
+      </tr>
+    </table>
+  </div>
+
+
+  <script src="/scripts/admin_warehouse.js"></script>
+</body>
+
 </html>
