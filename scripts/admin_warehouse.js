@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function(){
       if(data!=null){
         console.log(data);
         categories_select(data);
+        items_select(data);
       }
       else{
         const list = document.getElementById("cat");
@@ -50,6 +51,11 @@ function categories_select(data) {
   });
     
   
+}
+
+function items_select(data){
+  
+
 }
 
 
