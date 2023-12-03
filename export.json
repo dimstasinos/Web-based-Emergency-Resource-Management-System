@@ -7,7 +7,7 @@
       "details": [
         {
           "detail_name": "volume",
-          "detail_value": "1.5"
+          "detail_value": "1.5l"
         },
         {
           "detail_name": "pack size",
@@ -22,7 +22,7 @@
       "details": [
         {
           "detail_name": "volume",
-          "detail_value": "250"
+          "detail_value": "250ml"
         },
         {
           "detail_name": "pack size",
@@ -37,11 +37,11 @@
       "details": [
         {
           "detail_name": "brand",
-          "detail_value": "0"
+          "detail_value": "Trata"
         },
         {
           "detail_name": "weight",
-          "detail_value": "200"
+          "detail_value": "200g"
         }
       ]
     },
@@ -52,7 +52,7 @@
       "details": [
         {
           "detail_name": "weight",
-          "detail_value": "500"
+          "detail_value": "500g"
         }
       ]
     },
@@ -63,11 +63,11 @@
       "details": [
         {
           "detail_name": "weight",
-          "detail_value": "1"
+          "detail_value": "1kg"
         },
         {
           "detail_name": "type",
-          "detail_value": "0"
+          "detail_value": "white"
         }
       ]
     },
@@ -78,15 +78,15 @@
       "details": [
         {
           "detail_name": "weight",
-          "detail_value": "100"
+          "detail_value": "100g"
         },
         {
           "detail_name": "type",
-          "detail_value": "0"
+          "detail_value": "milk chocolate"
         },
         {
           "detail_name": "brand",
-          "detail_value": "0"
+          "detail_value": "ION"
         }
       ]
     },
@@ -108,7 +108,7 @@
       "details": [
         {
           "detail_name": "weight",
-          "detail_value": "500"
+          "detail_value": "500g"
         },
         {
           "detail_name": "pack size",
@@ -116,7 +116,7 @@
         },
         {
           "detail_name": "expiry date",
-          "detail_value": "13"
+          "detail_value": "13\/12\/1978"
         }
       ]
     },
@@ -127,7 +127,7 @@
       "details": [
         {
           "detail_name": "Details",
-          "detail_value": "600"
+          "detail_value": "600ml"
         }
       ]
     },
@@ -160,7 +160,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -171,7 +171,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -182,7 +182,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "25"
+          "detail_value": "25 pcs"
         }
       ]
     },
@@ -193,7 +193,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "100"
+          "detail_value": "100 pcs"
         }
       ]
     },
@@ -204,7 +204,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -215,7 +215,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "250"
+          "detail_value": "250ml"
         }
       ]
     },
@@ -226,7 +226,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -237,7 +237,7 @@
       "details": [
         {
           "detail_name": "volume",
-          "detail_value": "200"
+          "detail_value": "200mg"
         }
       ]
     },
@@ -248,7 +248,7 @@
       "details": [
         {
           "detail_name": "size",
-          "detail_value": "50"
+          "detail_value": "50\" x 60\""
         }
       ]
     },
@@ -259,7 +259,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -278,7 +278,7 @@
         },
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -293,7 +293,7 @@
         },
         {
           "detail_name": "size",
-          "detail_value": "0"
+          "detail_value": "regular"
         }
       ]
     },
@@ -319,7 +319,7 @@
       "details": [
         {
           "detail_name": "volume",
-          "detail_value": "500"
+          "detail_value": "500gr"
         },
         {
           "detail_name": "stock ",
@@ -327,7 +327,7 @@
         },
         {
           "detail_name": "scent",
-          "detail_value": "0"
+          "detail_value": "aloe"
         }
       ]
     },
@@ -386,7 +386,7 @@
         },
         {
           "detail_name": "dosage",
-          "detail_value": "500"
+          "detail_value": "500mg"
         }
       ]
     },
@@ -401,7 +401,7 @@
         },
         {
           "detail_name": "dosage",
-          "detail_value": "200"
+          "detail_value": "200mg"
         }
       ]
     },
@@ -412,7 +412,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -423,15 +423,15 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         },
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         },
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -442,7 +442,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -453,7 +453,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -464,7 +464,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -475,7 +475,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -486,7 +486,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -497,7 +497,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -508,7 +508,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -519,7 +519,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -530,7 +530,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -541,7 +541,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -552,7 +552,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -563,7 +563,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -574,7 +574,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -585,7 +585,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -596,7 +596,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -607,7 +607,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -618,7 +618,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -629,7 +629,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -640,7 +640,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -651,7 +651,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -662,7 +662,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -673,7 +673,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -684,7 +684,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -695,7 +695,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -706,7 +706,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -717,7 +717,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -728,7 +728,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -739,15 +739,15 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         },
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         },
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -758,7 +758,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -769,7 +769,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -780,7 +780,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -791,7 +791,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -802,23 +802,23 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         },
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         },
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         },
         {
           "detail_name": "ghw56",
-          "detail_value": "0"
+          "detail_value": "twhwhrwh"
         },
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -829,7 +829,7 @@
       "details": [
         {
           "detail_name": "wtwty",
-          "detail_value": "0"
+          "detail_value": "wytwty"
         }
       ]
     },
@@ -840,7 +840,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -851,7 +851,7 @@
       "details": [
         {
           "detail_name": "Volume",
-          "detail_value": "500"
+          "detail_value": "500ml"
         }
       ]
     },
@@ -862,7 +862,7 @@
       "details": [
         {
           "detail_name": "volume",
-          "detail_value": "75"
+          "detail_value": "75ml"
         }
       ]
     },
@@ -873,7 +873,7 @@
       "details": [
         {
           "detail_name": "duration",
-          "detail_value": "7"
+          "detail_value": "7 hours"
         }
       ]
     },
@@ -884,7 +884,7 @@
       "details": [
         {
           "detail_name": "volume",
-          "detail_value": "250"
+          "detail_value": "250ml"
         }
       ]
     },
@@ -895,7 +895,7 @@
       "details": [
         {
           "detail_name": "material",
-          "detail_value": "0"
+          "detail_value": "silicone"
         }
       ]
     },
@@ -906,7 +906,7 @@
       "details": [
         {
           "detail_name": "weight",
-          "detail_value": "400"
+          "detail_value": "400gr"
         }
       ]
     },
@@ -917,7 +917,7 @@
       "details": [
         {
           "detail_name": "weight",
-          "detail_value": "23"
+          "detail_value": "23,5gr"
         }
       ]
     },
@@ -932,15 +932,15 @@
         },
         {
           "detail_name": "Tool",
-          "detail_value": "0"
+          "detail_value": "Knife"
         },
         {
           "detail_name": "Tool",
-          "detail_value": "0"
+          "detail_value": "Screwdriver"
         },
         {
           "detail_name": "Tool",
-          "detail_value": "0"
+          "detail_value": "Spoon"
         }
       ]
     },
@@ -951,11 +951,11 @@
       "details": [
         {
           "detail_name": "Basic Ingredients",
-          "detail_value": "0"
+          "detail_value": "Iodine"
         },
         {
           "detail_name": "Suggested for",
-          "detail_value": "0"
+          "detail_value": "Everyone expept pregnant women"
         }
       ]
     },
@@ -966,11 +966,11 @@
       "details": [
         {
           "detail_name": "Power",
-          "detail_value": "0"
+          "detail_value": "Batteries"
         },
         {
           "detail_name": "Frequencies Range",
-          "detail_value": "3"
+          "detail_value": "3 kHz - 3000 GHz"
         }
       ]
     },
@@ -981,7 +981,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": "(scrubbers, rubber gloves, kitchen detergent, laundry soap)"
         }
       ]
     },
@@ -992,7 +992,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -1003,7 +1003,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -1014,7 +1014,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -1025,7 +1025,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -1036,7 +1036,7 @@
       "details": [
         {
           "detail_name": "volume",
-          "detail_value": "500"
+          "detail_value": "500ml"
         }
       ]
     },
@@ -1047,7 +1047,7 @@
       "details": [
         {
           "detail_name": "volume",
-          "detail_value": "500"
+          "detail_value": "500g"
         }
       ]
     },
@@ -1058,7 +1058,7 @@
       "details": [
         {
           "detail_name": "volume",
-          "detail_value": "500"
+          "detail_value": "500g"
         }
       ]
     },
@@ -1069,7 +1069,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -1080,7 +1080,7 @@
       "details": [
         {
           "detail_name": "volume",
-          "detail_value": "500"
+          "detail_value": "500ml"
         }
       ]
     },
@@ -1091,7 +1091,7 @@
       "details": [
         {
           "detail_name": "volume",
-          "detail_value": "20"
+          "detail_value": "20pieces"
         }
       ]
     },
@@ -1102,7 +1102,7 @@
       "details": [
         {
           "detail_name": "size",
-          "detail_value": "0"
+          "detail_value": "XL"
         }
       ]
     },
@@ -1113,7 +1113,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -1124,7 +1124,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -1135,7 +1135,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -1146,7 +1146,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -1157,7 +1157,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -1168,7 +1168,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -1179,7 +1179,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -1190,7 +1190,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -1201,7 +1201,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -1212,7 +1212,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -1223,7 +1223,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -1234,7 +1234,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -1245,7 +1245,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -1256,11 +1256,11 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         },
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     },
@@ -1271,7 +1271,7 @@
       "details": [
         {
           "detail_name": "",
-          "detail_value": "0"
+          "detail_value": ""
         }
       ]
     }

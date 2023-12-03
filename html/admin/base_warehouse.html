@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width initial-scale=1">
+  <link rel="stylesheet" href="/css/admin_database.css">
   <title>Αποθήκη</title>
 </head>
 
@@ -14,9 +15,15 @@
   <label for="online_data">Ενημέρωση βάσης από κοινό αποθετήριο</label>
   <button id="online_data">Ενημέρωση</button>
 
+  <form id="json_upload" enctype="multipart/form-data">
+    <label for="json_file">Αρχείο JSON</label>
+    <input type="file" id="json_file" name="json_file" accept=".json" />
+    <button type="button" id="submit_button" onclick="upload_data()">Upload</button>
+  </form>
+
   <div>
-    <label for="cat">Καταηγορίες ειδών</label>
-    <select id="cat"></select>
+    <label for="cat_list">Καταηγορίες ειδών</label>
+    <select id="cat_list"></select>
   </div>
 
   <div>
@@ -25,10 +32,11 @@
         <tr>
           <th>ID</th>
           <th>Όνομα</th>
+          <th>Καταηγορία</th>
           <th>Λεπτομέριες</th>
         </tr>
       </thead>
-      <tbody id="items"></tbody>
+      <tbody id="items_table"></tbody>
     </table>
   </div>
 
