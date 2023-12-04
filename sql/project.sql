@@ -26,3 +26,10 @@ create table items (
   FOREIGN KEY (item_category) REFERENCES item_category(category_id)
   on update CASCADE on delete CASCADE
 );
+
+create TABLE announcements (
+    id INTEGER PRIMARY KEY ,
+    title TEXT,
+    date DATE,
+    content TEXT
+);

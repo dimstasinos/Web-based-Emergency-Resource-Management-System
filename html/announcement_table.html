@@ -1,17 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Announcements</title>
-        <link rel="stylesheet" type="text/css" href="/css/announcement_table.css">
-    </head>
-    <body>
-        <section>
-            <div class="leftBox">
-                <div class="content">
-                    <h1>Announcements</h1>
-                    <p>Announcements for the items we need you to offer.</p>
-                </div>
-            </div>
-        </section>
-    </body>
-</html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width initial-scale=1">
+  <link rel="stylesheet" href="/css/announcement_table.css">
+  <title>Login</title>
+</head>
+
+<body>
+    <div id="announncement">
+      
+      <h1>Announcement</h1>
+      
+        <div>
+            <table>
+                <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Date</th>
+                  <th>Content</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+      <h2>New Announcement</h2>  
+      <form id="announcementForm" action="/announcements.php" method="post">
+        <div id="title">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+        </div>
+        <div id="date">
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required>
+        </div>
+        <div id="content">
+        <label for="content">Content:</label>
+        <textarea id="content" name="content" rows="4" required></textarea>
+        </div>
+        <div>
+        <button type="button" onclick="addAnnouncement()">Add Announcement</button>
+        </div>
+    </form>
+  
+    <script src="/scripts/announcement.js"></script>
+  </body>
