@@ -1,28 +1,37 @@
 document.addEventListener('DOMContentLoaded', function () {
-    fetch('/server/announcement.php',)
-        .then(jsonResponse => {
+    
+    fetch('/server/announcement.php')
+    .then(response => response.json())
+    .then(data => { 
+   
+      const tableBody = document.getElementById('table');
+      
+      data.announcements.forEach(item => {
+        console.log(data);
+        const row = document.createElement('tr');
 
-            const isEmpty = jsonResponse.headers.get('Content-Length');
-            if (isEmpty === '0') {
-                return null;
-            }
+        
+        const idCell = document.createElement('td');
+        idCell.textContent = item.id;
+        row.appendChild(idCell);
 
-            return jsonResponse.json();
-        })
-        .then(data => {
-            if (data != null) {
-                console.log(data);
-                announcements_select(data);
-                selected_ann = announcements_id(data);
-                announcements_select(data, selected_ann);
-            }
-            else {
-                const list = document.getElementById("ann_list");
-                list.innerHTML = '';
-                let select_add = document.createElement("option");
-                select_add.textContent = "Η Βάση δεδομένων είναι κενή";
-                list.appendChild(select_add);
-            }
-        })
-        .catch(error => console.error('Error:', error));
+        const titleCell = document.createElement('td');
+        titleCell.textContent = item.title;
+        row.appendChild(titleCell);
+
+        const dateCell = document.createElement('td');
+        dateCell.textContent = item.date;
+        row.appendChild(dateCell);
+
+        const contentCell = document.createElement('td');
+        contentCell.textContent = item.content;
+        row.appendChild(contentCell);
+
+        
+        tableBody.appendChild(row);
+        
+      });
+    })
+    .catch(error => console.error('Error fetching data:', error));
+        
 });

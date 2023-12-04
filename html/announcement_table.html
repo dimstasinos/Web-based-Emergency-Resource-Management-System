@@ -1,47 +1,44 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width initial-scale=1">
-  <link rel="stylesheet" href="/css/announcement_table.css">
-  <title>Login</title>
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcements</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
 
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
 <body>
-    <div id="announncement">
-      
-      <h1>Announcement</h1>
-      
-        <div>
-            <table>
-                <thead>
-                <tr>
-                  <th>Title</th>
-                  <th>Date</th>
-                  <th>Content</th>
-                </tr>
-                </thead>
-            </table>
-        </div>
-      <h2>New Announcement</h2>  
-      <form id="announcementForm" action="/announcements.php" method="post">
-        <div id="title">
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required>
-        </div>
-        <div id="date">
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date" required>
-        </div>
-        <div id="content">
-        <label for="content">Content:</label>
-        <textarea id="content" name="content" rows="4" required></textarea>
-        </div>
-        <div>
-        <button type="button" onclick="addAnnouncement()">Add Announcement</button>
-        </div>
-    </form>
-  
+
+    <h2>Announcemnets</h2>
+
+    <table id="table">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Title</th>
+                <th>Date</th>
+                <th>Content</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table content will be dynamically added here -->
+        </tbody>
+    </table>
+
     <script src="/scripts/announcement.js"></script>
-  </body>
+</body>
+</html>
