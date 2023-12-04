@@ -43,10 +43,15 @@ document.getElementById('online_data').addEventListener('click', function () {
     .then(jsonResponse => jsonResponse.json())
     .then(data => {
       categories_select(data);
-      items_select(data);
+      selected_cat = category_id(data);
+      items_select(data, selected_cat);
     })
     .catch(error => console.error('Error:', error));
 });
+
+
+
+
 
 function category_id(data) {
 
@@ -55,7 +60,6 @@ function category_id(data) {
   var category = data.categories.find(category => category.category_name === category_select);
   return category.id;
 }
-
 
 function categories_select(data) {
 
@@ -87,6 +91,7 @@ function items_select(data, selected_cat) {
       const name_table = document.createElement('td');
       const category_table = document.createElement('td');
       const detail_table = document.createElement('td');
+      const radiobutton_select = document.createElement('input');
 
       id_table.textContent = item.id;
       name_table.textContent = item.name;
@@ -108,6 +113,7 @@ function items_select(data, selected_cat) {
       row_table.appendChild(name_table);
       row_table.appendChild(category_table);
       row_table.appendChild(detail_table);
+
 
       table.appendChild(row_table);
     }
