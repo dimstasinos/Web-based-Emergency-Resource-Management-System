@@ -42,13 +42,18 @@
 
 
   <div>
-    <form id="details_pros">
+    <form id="products">
       <fieldset>
-        <legend>Λεπτομέριες:</legend>
-        <label for="detail_name_text">Όνομα</label>
-        <input type="text" id="detail_name_text" required>
-        <label for="detail_value_text">Τιμή</label>
-        <input type="text" id="detail_value_text" required>
+        <legend>Προιόν:</legend>
+        <div id="product_info">Δεν επιλέχθηκε κάποιο προιόν</div>
+        <div>Λεπτομέριες προίντος:</div>
+        <div id="details">
+          <label for="detail_name_text">Όνομα</label>
+          <input type="text" id="detail_name_text" >
+          <label for="detail_value_text">Τιμή</label>
+          <input type="text" id="detail_value_text" >
+          <div id="details_more"></div>
+        </div>
       </fieldset>
     </form>
   </div>

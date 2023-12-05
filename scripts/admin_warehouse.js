@@ -19,13 +19,60 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById("table_admin").addEventListener("click", function (event) {
 
           if (event.target.tagName === "TD") {
-            var selected_row = event.target.closest("tr");
-            var row_items = Array.from(selected_row.cells).map(cell => cell.textContent);
+            const selected_row = event.target.closest("tr");
+            const row_items = Array.from(selected_row.cells).map(cell => cell.textContent);
+            const item_id=row_items[0];
+            
+            const product = data.items.find(item => item.id === item_id);
+            const category = data.categories.find(cat_name => cat_name.id === product.category); 
+            
+            const det_num = product.details.length;
+            
+            if(document.getElementById('details_more').innerHTML!== ''){
+              document.getElementById('details_more').innerHTML = ''
+            }
+
+            if(det_num>1){
+              for(var i=0;i<det_num-1;i++){
+
+                  var det_new_div = document.createElement('div');
+                  
+
+                  const text_label = document.createElement('label');
+                  text_label.setAttribute('for', 'detail_name_text_'+i);
+                  text_label.textContent = 'Όνομα';
+
+                  const text_input = document.createElement('input');
+                  text_input.type = 'text';
+                  text_label.id = 'detail_name_text_'+ i;
+
+                  var text_label_2 = document.createElement('label');
+                  text_label_2.setAttribute('for', 'detail_value_text_'+i);
+                  text_label_2.textContent = 'Τιμή';
+
+                  var text_input_2 = document.createElement('input');
+                  text_input_2.type = 'text';
+                  text_input_2.id = 'detail_value_text_'+i;
+                  text_input_2.required = true;
+
+                  det_new_div.appendChild(text_input);
+                  det_new_div.appendChild(text_label);
+                  det_new_div.appendChild(text_input_2);
+                  det_new_div.appendChild(text_label_2);
+                  
+
+                  document.getElementById('details_more').appendChild(det_new_div);
+                 
+
+              }
+            }
+
+            const info = product.id + " " + category.category_name +  " " +  product.name;
+
+            document.getElementById("product_info").textContent = info;
+            
+
           }
-
-
-
-
         });
 
       }
@@ -132,14 +179,14 @@ function items_select(data, selected_cat) {
 
 function upload_data() {
 
-  const updoad_file = document.getElementById('json_file');
-  const json_file = updoad_file.files[0];
+  const upload_file = document.getElementById('json_file');
+  const json_file = upload_file.files[0];
 
   if (json_file) {
 
     const json_data = new FormData();
     json_data.append('jsonfile', json_file);
-
+   
     fetch('/server/warehouse_admin/file_upload.php', {
       method: 'POST',
       body: json_data,
@@ -154,6 +201,11 @@ function upload_data() {
       .then(data => {
         if (data.status === 'success') {
           alert('Το αρχείο ανέβηκε');
+          
+          categories_select(data.data);
+          selected_cat = category_id(data.data);
+          items_select(data.data, selected_cat);
+
         } else {
           console.error('Error uploading file:', data.message);
           alert('Σφάλμα στο ανέβασμα του αρχείου: ' + data.message)
@@ -170,4 +222,3 @@ function upload_data() {
   }
 
 }
-
