@@ -14,6 +14,20 @@ document.addEventListener('DOMContentLoaded', function () {
         categories_select(data);
         selected_cat = category_id(data);
         items_select(data, selected_cat);
+
+
+        document.getElementById("table_admin").addEventListener("click", function (event) {
+
+          if (event.target.tagName === "TD") {
+            var selected_row = event.target.closest("tr");
+            var row_items = Array.from(selected_row.cells).map(cell => cell.textContent);
+          }
+
+
+
+
+        });
+
       }
       else {
         const list = document.getElementById("cat_list");
@@ -48,10 +62,6 @@ document.getElementById('online_data').addEventListener('click', function () {
     })
     .catch(error => console.error('Error:', error));
 });
-
-
-
-
 
 function category_id(data) {
 
@@ -91,7 +101,6 @@ function items_select(data, selected_cat) {
       const name_table = document.createElement('td');
       const category_table = document.createElement('td');
       const detail_table = document.createElement('td');
-      const radiobutton_select = document.createElement('input');
 
       id_table.textContent = item.id;
       name_table.textContent = item.name;
@@ -128,39 +137,37 @@ function upload_data() {
 
   if (json_file) {
 
-     const json_data = new FormData();
-     json_data.append('jsonfile', json_file);
-   
-     fetch('/server/warehouse_admin/file_upload.php', {
-       method: 'POST',
-       body: json_data,
-     }) 
-     .then(response => {
-    
-      if (!response.ok) {
-          throw new Error('Network response was not ok');
-      }
-      return response.json(); 
-  })
-     .then(data =>{
-      if(data.status === 'success'){
-       alert('Το αρχείο ανέβηκε');
-      } else{
-        console.error('Error uploading file:', data.message);
-        alert('Σφάλμα στο ανέβασμα του αρχείου: ' + data.message)
-      }
+    const json_data = new FormData();
+    json_data.append('jsonfile', json_file);
 
-     })
-     .catch(error => {
-       console.error(error);
-       alert('Σφάλμα στο ανέβασμα του αρχείου')
-     })
+    fetch('/server/warehouse_admin/file_upload.php', {
+      method: 'POST',
+      body: json_data,
+    })
+      .then(response => {
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data.status === 'success') {
+          alert('Το αρχείο ανέβηκε');
+        } else {
+          console.error('Error uploading file:', data.message);
+          alert('Σφάλμα στο ανέβασμα του αρχείου: ' + data.message)
+        }
+
+      })
+      .catch(error => {
+        console.error(error);
+        alert('Σφάλμα στο ανέβασμα του αρχείου')
+      })
 
   } else {
     alert("Επιλέξτε ένα αρχείο")
   }
 
 }
-
-
 

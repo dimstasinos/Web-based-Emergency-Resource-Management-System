@@ -27,7 +27,7 @@
   </div>
 
   <div>
-    <table>
+    <table id="table_admin">
       <thead>
         <tr>
           <th>ID</th>
@@ -38,6 +38,19 @@
       </thead>
       <tbody id="items_table"></tbody>
     </table>
+  </div>
+
+
+  <div>
+    <form id="details_pros">
+      <fieldset>
+        <legend>Λεπτομέριες:</legend>
+        <label for="detail_name_text">Όνομα</label>
+        <input type="text" id="detail_name_text" required>
+        <label for="detail_value_text">Τιμή</label>
+        <input type="text" id="detail_value_text" required>
+      </fieldset>
+    </form>
   </div>
 
 

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Table from JSON</title>
+</head>
+<body>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Age</th>
+      <th>City</th>
+    </tr>
+  </thead>
+  <tbody id="table-body"></tbody>
+</table>
+
+<script>
+  // JSON data embedded directly in the script
+  const jsonData = [
+    {"name": "John", "age": 25, "city": "New York"},
+    {"name": "Jane", "age": 30, "city": "Los Angeles"},
+    {"name": "Bob", "age": 22, "city": "Chicago"}
+  ];
+
+  // Get the table body element
+  const tableBody = document.getElementById('table-body');
+
+  // Loop through the data and populate the table
+  jsonData.forEach(item => {
+    // Create a new row
+    const row = document.createElement('tr');
+
+    // Create cells for each property in the JSON data
+    const nameCell = document.createElement('td');
+    nameCell.textContent = item.name;
+    row.appendChild(nameCell);
+
+    const ageCell = document.createElement('td');
+    ageCell.textContent = item.age;
+    row.appendChild(ageCell);
+
+    const cityCell = document.createElement('td');
+    cityCell.textContent = item.city;
+    row.appendChild(cityCell);
+
+    // Append the row to the table body
+    tableBody.appendChild(row);
+  });
+</script>
+
+</body>
+</html>
