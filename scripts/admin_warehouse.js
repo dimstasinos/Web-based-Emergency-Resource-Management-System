@@ -19,60 +19,84 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById("table_admin").addEventListener("click", function (event) {
 
           if (event.target.tagName === "TD") {
+
+            document.getElementById('detail_name_text').value = '';
+            document.getElementById('detail_value_text').value = '';
+            document.getElementById('detail_select').innerHTML = '';
+
             const selected_row = event.target.closest("tr");
             const row_items = Array.from(selected_row.cells).map(cell => cell.textContent);
-            const item_id=row_items[0];
-            
+            const item_id = row_items[0];
+
             const product = data.items.find(item => item.id === item_id);
-            const category = data.categories.find(cat_name => cat_name.id === product.category); 
-            
+            const category = data.categories.find(cat_name => cat_name.id === product.category);
+
             const det_num = product.details.length;
-            
-            if(document.getElementById('details_more').innerHTML!== ''){
-              document.getElementById('details_more').innerHTML = ''
-            }
 
-            if(det_num>1){
-              for(var i=0;i<det_num-1;i++){
+            var flag = 0;
 
-                  var det_new_div = document.createElement('div');
-                  
+            product.details.forEach(item => {
 
-                  const text_label = document.createElement('label');
-                  text_label.setAttribute('for', 'detail_name_text_'+i);
-                  text_label.textContent = 'Όνομα';
 
-                  const text_input = document.createElement('input');
-                  text_input.type = 'text';
-                  text_label.id = 'detail_name_text_'+ i;
+            });
 
-                  var text_label_2 = document.createElement('label');
-                  text_label_2.setAttribute('for', 'detail_value_text_'+i);
-                  text_label_2.textContent = 'Τιμή';
+            for (let item of product.details) {
 
-                  var text_input_2 = document.createElement('input');
-                  text_input_2.type = 'text';
-                  text_input_2.id = 'detail_value_text_'+i;
-                  text_input_2.required = true;
-
-                  det_new_div.appendChild(text_input);
-                  det_new_div.appendChild(text_label);
-                  det_new_div.appendChild(text_input_2);
-                  det_new_div.appendChild(text_label_2);
-                  
-
-                  document.getElementById('details_more').appendChild(det_new_div);
-                 
-
+              if (item.detail_name === "" && item.detail_value === "") {
+                flag = 1;
+              } else {
+                flag = 0;
+                break;
               }
+
             }
 
-            const info = product.id + " " + category.category_name +  " " +  product.name;
 
-            document.getElementById("product_info").textContent = info;
-            
+            if (flag === 0) {
+              var i = 0;
+              product.details.forEach(item => {
+
+                const radio_button = document.createElement('input');
+                radio_button.type = 'radio';
+                radio_button.name = 'select';
+                radio_button.id = 'radiobutton_' + i;
+                radio_button.value = i;
+
+                const radio_button_label = document.createElement('label');
+                radio_button_label.setAttribute('for', 'radiobutton_' + i);
+                radio_button_label.textContent = item.detail_name + ': ' + item.detail_value;
+                i++;
+
+                document.getElementById('detail_select').appendChild(radio_button);
+                document.getElementById('detail_select').appendChild(radio_button_label);
+              });
+
+              const info = product.id + " " + category.category_name + " " + product.name;
+
+              document.getElementById("product_info").textContent = info;
+
+              var radio_button = document.getElementsByName('select');
+
+              for (var i = 0; i < radio_button.length; i++) {
+                radio_button[i].addEventListener('change', function () {
+                  if (this.checked) {
+                    document.getElementById('detail_name_text').value = product.details[this.value].detail_name;
+                    document.getElementById('detail_value_text').value = product.details[this.value].detail_value;
+                  }
+                });
+              }
+            } else {
+
+              const info = product.id + " " + category.category_name + " " + product.name;
+
+              document.getElementById("product_info").textContent = info;
+
+
+            }
 
           }
+
+
         });
 
       }
@@ -86,6 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .catch(error => console.error('Error:', error));
 });
+
 
 document.getElementById('cat_list').addEventListener('change', function () {
 
@@ -186,7 +211,7 @@ function upload_data() {
 
     const json_data = new FormData();
     json_data.append('jsonfile', json_file);
-   
+
     fetch('/server/warehouse_admin/file_upload.php', {
       method: 'POST',
       body: json_data,
@@ -201,7 +226,7 @@ function upload_data() {
       .then(data => {
         if (data.status === 'success') {
           alert('Το αρχείο ανέβηκε');
-          
+
           categories_select(data.data);
           selected_cat = category_id(data.data);
           items_select(data.data, selected_cat);
