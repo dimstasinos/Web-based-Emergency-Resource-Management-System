@@ -45,7 +45,14 @@
     <form id="products">
       <fieldset>
         <legend>Προιόν:</legend>
-        <div id="product_info">Δεν επιλέχθηκε κάποιο προιόν</div>
+        <div id="product_select">
+          <label for="id_selected">ID</label>
+          <input type="text" id="id_selected" disabled>
+          <label for="name_selected">Όνομα</label>
+          <input type="text" id="name_selected">
+          <label for="cat_selected">Καταηγορία</label>
+          <select id="cat_selected"></select>
+        </div>
         <div id="detail_select"></div>
 
         <div>Λεπτομέριες προίντος:</div>

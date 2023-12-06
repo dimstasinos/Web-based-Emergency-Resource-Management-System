@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
         categories_select(data);
         selected_cat = category_id(data);
         items_select(data, selected_cat);
-
+        categories_select_product(data);
 
         document.getElementById("table_admin").addEventListener("click", function (event) {
 
@@ -35,11 +35,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             var flag = 0;
 
-            product.details.forEach(item => {
-
-
-            });
-
             for (let item of product.details) {
 
               if (item.detail_name === "" && item.detail_value === "") {
@@ -50,7 +45,6 @@ document.addEventListener('DOMContentLoaded', function () {
               }
 
             }
-
 
             if (flag === 0) {
               var i = 0;
@@ -71,9 +65,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('detail_select').appendChild(radio_button_label);
               });
 
-              const info = product.id + " " + category.category_name + " " + product.name;
+              document.getElementById("id_selected").value = product.id;
+              document.getElementById("name_selected").value = product.name;
 
-              document.getElementById("product_info").textContent = info;
+              for (var i = 0; i < document.getElementById("cat_selected").options.length; i++) {
+                if (document.getElementById("cat_selected").options[i].value === category.category_name) {
+                  document.getElementById("cat_selected").selectedIndex = i;
+                  break;
+                }
+              }
 
               var radio_button = document.getElementsByName('select');
 
@@ -87,11 +87,15 @@ document.addEventListener('DOMContentLoaded', function () {
               }
             } else {
 
-              const info = product.id + " " + category.category_name + " " + product.name;
+              document.getElementById("id_selected").value = product.id;
+              document.getElementById("name_selected").value = product.name;
 
-              document.getElementById("product_info").textContent = info;
-
-
+              for (var i = 0; i < document.getElementById("cat_selected").options.length; i++) {
+                if (document.getElementById("cat_selected").options[i].value === category.category_name) {
+                  document.getElementById("cat_selected").selectedIndex = i;
+                  break;
+                }
+              }
             }
 
           }
@@ -156,7 +160,18 @@ function categories_select(data) {
       list.appendChild(select_add);
     }
   });
+}
 
+function categories_select_product(data) {
+
+  const list = document.getElementById("cat_selected");
+  list.innerHTML = '';
+
+  data.categories.forEach(category => {
+    let select_add = document.createElement("option");
+    select_add.textContent = category.category_name;
+    list.appendChild(select_add);
+  });
 
 }
 
