@@ -28,7 +28,7 @@ if ($response->num_rows > 0) {
       while ($det_row = $details_response->fetch_assoc()) {
         $detail_array = array(
           "detail_name" => $det_row["item_detail_name"],
-          "detail_value" => $det_row["item_value"]
+          "detail_value" => $det_row["item_detail_value"]
         );
         $details[] = $detail_array;
       }

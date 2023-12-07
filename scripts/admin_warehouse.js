@@ -127,11 +127,90 @@ document.getElementById('clear').addEventListener('click', function () {
   document.getElementById('detail_name_text').value = '';
   document.getElementById('detail_value_text').value = '';
 
-  if(document.getElementById('radiobutton_0')){
+  if (document.getElementById('radiobutton_0')) {
     for (var i = 0; i < document.getElementsByName('select').length; i++) {
       document.getElementsByName('select')[i].checked = false;
     }
   }
+
+});
+
+document.getElementById('change').addEventListener('click', function () {
+
+  if (document.getElementById('radiobutton_0')) {
+
+    const name = document.getElementById('detail_name_text').value;
+    const value = document.getElementById('detail_value_text').value;
+
+    var selected;
+    var flag = 0;
+    for (var i = 0; i < document.getElementsByName('select').length; i++) {
+
+      if (document.getElementsByName('select')[i].checked === true) {
+        selected = document.getElementsByName('select')[i].value;
+        flag = 1;
+        break;
+      }
+    }
+
+    if (flag === 1) {
+      const id_ = document.getElementById('id_selected').value;
+
+      product = onload_data.items.find(item => item.id === id_);
+
+      const data = {
+        id: id_,
+        new_name: name,
+        new_value: value,
+        prev_product_name: product.details[selected].detail_name,
+        prev_product_value: product.details[selected].detail_value
+      };
+
+      fetch('/server/warehouse_admin/update_details.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => response.json())
+        .then(data => {
+
+          fetch('/server/warehouse_admin/database_extract.php',)
+            .then(jsonResponse => jsonResponse.json())
+            .then(data => {
+              onload_data = data;
+              var selected_cat = category_id(data);
+              items_select(data, selected_cat);
+            })
+            .catch(error => console.error('Error:', error));
+        })
+        .catch(error => console.error('Error:', error));
+    } else {
+      alert('Πρέπει να επιλέξετε κάποια λεπτομέρια του προιόντος');
+    }
+  }
+});
+
+document.getElementById('add').addEventListener('click', function () {
+
+  const name = document.getElementById('detail_name_text').value;
+  const value = document.getElementById('detail_value_text').value;
+  const id_ = document.getElementById('id_selected').value;
+
+  fetch('/server/warehouse_admin/update_details.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .then(data => {
+
+      
+    })
+
 
 });
 
@@ -144,6 +223,11 @@ document.getElementById('cat_list').addEventListener('change', function () {
       onload_data = data;
       selected_cat = category_id(data);
       items_select(data, selected_cat);
+
+      document.getElementById('id_selected').value = '';
+      document.getElementById('name_selected').value = '';
+      document.getElementById('detail_select').innerHTML = '';
+
     })
     .catch(error => console.error('Error:', error));
 });
@@ -242,6 +326,7 @@ function items_select(data, selected_cat) {
   });
 
 }
+
 
 function upload_data() {
 
