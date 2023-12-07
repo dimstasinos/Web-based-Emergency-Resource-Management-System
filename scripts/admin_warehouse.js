@@ -1,4 +1,5 @@
 var onload_data;
+var item_selected=0;
 
 document.addEventListener('DOMContentLoaded', function () {
   fetch('/server/warehouse_admin/database_extract.php',)
@@ -37,7 +38,7 @@ document.getElementById("table_admin").addEventListener("click", function (event
 
 
   if (event.target.tagName === "TD") {
-
+    item_selected=1;
     document.getElementById('detail_name_text').value = '';
     document.getElementById('detail_value_text').value = '';
     document.getElementById('detail_select').innerHTML = '';
@@ -48,10 +49,6 @@ document.getElementById("table_admin").addEventListener("click", function (event
 
     const product = onload_data.items.find(item => item.id === item_id);
     const category = onload_data.categories.find(cat_name => cat_name.id === product.category);
-
-
-
-    const det_num = product.details.length;
 
     var flag = 0;
 
@@ -135,6 +132,67 @@ document.getElementById('clear').addEventListener('click', function () {
 
 });
 
+document.getElementById('delete').addEventListener('click', function(){
+
+  if (document.getElementById('radiobutton_0')) {
+
+    const name = document.getElementById('detail_name_text').value;
+    const value = document.getElementById('detail_value_text').value;
+    
+    var selected;
+    var flag = 0;
+    for (var i = 0; i < document.getElementsByName('select').length; i++) {
+
+      if (document.getElementsByName('select')[i].checked === true) {
+        selected = document.getElementsByName('select')[i].value;
+        flag = 1;
+        break;
+      }
+    }
+
+    if (flag === 1) {
+      const id_ = document.getElementById('id_selected').value;
+
+      product = onload_data.items.find(item => item.id === id_);
+
+      const data = {
+        id: id_,
+        detail_name: name,
+        detail_value: value
+      };
+
+      fetch('/server/warehouse_admin/delete_details.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => response.json())
+        .then(data => {
+
+          fetch('/server/warehouse_admin/database_extract.php',)
+            .then(jsonResponse => jsonResponse.json())
+            .then(data => {
+              onload_data = data;
+              var selected_cat = category_id(data);
+              items_select(data, selected_cat);
+              radiobutton_refresh();
+            })
+            .catch(error => console.error('Error:', error));
+        })
+        .catch(error => console.error('Error:', error));
+    } else {
+      alert('Πρέπει να επιλέξετε κάποια λεπτομέρια του προιόντος');
+    }
+  }else if(item_selected===0){
+    alert('Επέλεξε κάποιο προιόν');
+  }else{
+    alert('Το προιόν δεν έχει κάποια λεπτομέρια για να σβήσετε')
+  }
+
+});
+
 document.getElementById('change').addEventListener('click', function () {
 
   if (document.getElementById('radiobutton_0')) {
@@ -189,6 +247,10 @@ document.getElementById('change').addEventListener('click', function () {
     } else {
       alert('Πρέπει να επιλέξετε κάποια λεπτομέρια του προιόντος');
     }
+  }else if(item_selected===0){
+    alert('Επέλεξε κάποιο προιόν');
+  }else{
+    alert('Το προιόν δεν έχει κάποια λεπτομέρια για να τροποποιήσετε')
   }
 });
 
@@ -198,19 +260,40 @@ document.getElementById('add').addEventListener('click', function () {
   const value = document.getElementById('detail_value_text').value;
   const id_ = document.getElementById('id_selected').value;
 
-  fetch('/server/warehouse_admin/update_details.php', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
-    .then(response => response.json())
-    .then(data => {
 
-      
+  if(item_selected===1){
+  if (name !== '' || value !== '') {
+    const data = {
+      id: id_,
+      detail_name: name,
+      detail_value: value
+    };
+    fetch('/server/warehouse_admin/add_details.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
     })
-
+      .then(response => response.json())
+      .then(data => {
+        
+        fetch('/server/warehouse_admin/database_extract.php',)
+          .then(jsonResponse => jsonResponse.json())
+          .then(data => {
+            onload_data = data;
+            var selected_cat = category_id(data);
+            items_select(data, selected_cat);
+            radiobutton_refresh();
+          })
+          .catch(error => console.error('Error:', error));
+      })
+  }else{
+    alert('Δώσε κάποια τιμή στις λεπτομέριες του προιόντος');
+  }
+  }else{
+    alert('Επέλεξε κάποιο προιόν');
+  }
 
 });
 
@@ -324,6 +407,85 @@ function items_select(data, selected_cat) {
       table.appendChild(row_table);
     }
   });
+
+}
+
+function radiobutton_refresh() {
+
+  document.getElementById('detail_select').innerHTML='';
+
+  const item_id = document.getElementById('id_selected').value;
+
+  const product = onload_data.items.find(item => item.id === item_id);
+  const category = onload_data.categories.find(cat_name => cat_name.id === product.category);
+
+  var flag = 0;
+
+  for (let item of product.details) {
+
+    if (item.detail_name === "" && item.detail_value === "") {
+      flag = 1;
+    } else {
+      flag = 0;
+      break;
+    }
+
+  }
+
+  if (flag === 0) {
+    var i = 0;
+    product.details.forEach(item => {
+
+      const radio_button = document.createElement('input');
+      radio_button.type = 'radio';
+      radio_button.name = 'select';
+      radio_button.id = 'radiobutton_' + i;
+      radio_button.value = i;
+
+      const radio_button_label = document.createElement('label');
+      radio_button_label.setAttribute('for', 'radiobutton_' + i);
+      radio_button_label.textContent = item.detail_name + ': ' + item.detail_value;
+      i++;
+
+      document.getElementById('detail_select').appendChild(radio_button);
+      document.getElementById('detail_select').appendChild(radio_button_label);
+    });
+
+    document.getElementById("id_selected").value = product.id;
+    document.getElementById("name_selected").value = product.name;
+
+    for (var i = 0; i < document.getElementById("cat_selected").options.length; i++) {
+      if (document.getElementById("cat_selected").options[i].value === category.category_name) {
+        document.getElementById("cat_selected").selectedIndex = i;
+        break;
+      }
+    }
+
+    var radio_button = document.getElementsByName('select');
+
+    for (var i = 0; i < radio_button.length; i++) {
+      radio_button[i].addEventListener('change', function () {
+        if (this.checked) {
+          document.getElementById('detail_name_text').value = product.details[this.value].detail_name;
+          document.getElementById('detail_value_text').value = product.details[this.value].detail_value;
+        }
+      });
+    }
+    document.getElementById('detail_name_text').value="";
+    document.getElementById('detail_value_text').value="";
+
+  } else {
+
+    document.getElementById("id_selected").value = product.id;
+    document.getElementById("name_selected").value = product.name;
+
+    for (var i = 0; i < document.getElementById("cat_selected").options.length; i++) {
+      if (document.getElementById("cat_selected").options[i].value === category.category_name) {
+        document.getElementById("cat_selected").selectedIndex = i;
+        break;
+      }
+    }
+  }
 
 }
 
