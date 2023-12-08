@@ -7,6 +7,7 @@ $data = json_decode($receive);
 
 $db = db_connect();
 try {
+
   $update_stmt = $db->prepare("UPDATE item_details SET item_detail_name
   =?, item_detail_value=? where item_detail_id=?
   and item_detail_name=? and item_detail_value=?");

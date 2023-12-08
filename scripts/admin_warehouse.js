@@ -1,5 +1,5 @@
 var onload_data;
-var item_selected=0;
+var item_selected = 0;
 
 document.addEventListener('DOMContentLoaded', function () {
   fetch('/server/warehouse_admin/database_extract.php',)
@@ -38,7 +38,7 @@ document.getElementById("table_admin").addEventListener("click", function (event
 
 
   if (event.target.tagName === "TD") {
-    item_selected=1;
+    item_selected = 1;
     document.getElementById('detail_name_text').value = '';
     document.getElementById('detail_value_text').value = '';
     document.getElementById('detail_select').innerHTML = '';
@@ -132,13 +132,13 @@ document.getElementById('clear').addEventListener('click', function () {
 
 });
 
-document.getElementById('delete').addEventListener('click', function(){
+document.getElementById('delete').addEventListener('click', function () {
 
   if (document.getElementById('radiobutton_0')) {
 
     const name = document.getElementById('detail_name_text').value;
     const value = document.getElementById('detail_value_text').value;
-    
+
     var selected;
     var flag = 0;
     for (var i = 0; i < document.getElementsByName('select').length; i++) {
@@ -185,9 +185,9 @@ document.getElementById('delete').addEventListener('click', function(){
     } else {
       alert('Πρέπει να επιλέξετε κάποια λεπτομέρια του προιόντος');
     }
-  }else if(item_selected===0){
+  } else if (item_selected === 0) {
     alert('Επέλεξε κάποιο προιόν');
-  }else{
+  } else {
     alert('Το προιόν δεν έχει κάποια λεπτομέρια για να σβήσετε')
   }
 
@@ -247,9 +247,9 @@ document.getElementById('change').addEventListener('click', function () {
     } else {
       alert('Πρέπει να επιλέξετε κάποια λεπτομέρια του προιόντος');
     }
-  }else if(item_selected===0){
+  } else if (item_selected === 0) {
     alert('Επέλεξε κάποιο προιόν');
-  }else{
+  } else {
     alert('Το προιόν δεν έχει κάποια λεπτομέρια για να τροποποιήσετε')
   }
 });
@@ -261,37 +261,47 @@ document.getElementById('add').addEventListener('click', function () {
   const id_ = document.getElementById('id_selected').value;
 
 
-  if(item_selected===1){
-  if (name !== '' || value !== '') {
-    const data = {
-      id: id_,
-      detail_name: name,
-      detail_value: value
-    };
-    fetch('/server/warehouse_admin/add_details.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-      .then(response => response.json())
-      .then(data => {
-        
-        fetch('/server/warehouse_admin/database_extract.php',)
-          .then(jsonResponse => jsonResponse.json())
-          .then(data => {
-            onload_data = data;
-            var selected_cat = category_id(data);
-            items_select(data, selected_cat);
-            radiobutton_refresh();
-          })
-          .catch(error => console.error('Error:', error));
+  if (item_selected === 1) {
+
+    if (name !== '' || value !== '') {
+
+      var check=duplicate_check();
+
+      console.log("test " + check);
+
+      if(check===0){
+      const data = {
+        id: id_,
+        detail_name: name,
+        detail_value: value
+      };
+      fetch('/server/warehouse_admin/add_details.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
       })
-  }else{
-    alert('Δώσε κάποια τιμή στις λεπτομέριες του προιόντος');
-  }
-  }else{
+        .then(response => response.json())
+        .then(data => {
+
+          fetch('/server/warehouse_admin/database_extract.php',)
+            .then(jsonResponse => jsonResponse.json())
+            .then(data => {
+              onload_data = data;
+              var selected_cat = category_id(data);
+              items_select(data, selected_cat);
+              radiobutton_refresh();
+            })
+            .catch(error => console.error('Error:', error));
+        })
+      }else{
+        alert('Οι τιμές που δώσατε υπάρχουν ήδη στο προιόν');
+      }
+    } else {
+      alert('Δώσε κάποια τιμή στις λεπτομέριες του προιόντος');
+    }
+  } else {
     alert('Επέλεξε κάποιο προιόν');
   }
 
@@ -412,7 +422,7 @@ function items_select(data, selected_cat) {
 
 function radiobutton_refresh() {
 
-  document.getElementById('detail_select').innerHTML='';
+  document.getElementById('detail_select').innerHTML = '';
 
   const item_id = document.getElementById('id_selected').value;
 
@@ -471,8 +481,8 @@ function radiobutton_refresh() {
         }
       });
     }
-    document.getElementById('detail_name_text').value="";
-    document.getElementById('detail_value_text').value="";
+    document.getElementById('detail_name_text').value = "";
+    document.getElementById('detail_value_text').value = "";
 
   } else {
 
@@ -489,6 +499,30 @@ function radiobutton_refresh() {
 
 }
 
+function duplicate_check() {
+
+
+  if (document.getElementById('radiobutton_0')) {
+    var check=0;
+    var id = document.getElementById('id_selected').value;
+    var name = document.getElementById('detail_name_text').value;
+    var value = document.getElementById('detail_value_text').value;
+
+    const product = onload_data.items.find(item => item.id === id);
+
+    product.details.forEach(detail => {
+      
+      if (name === detail.detail_name && value === detail.detail_value) {
+        
+       check=1;
+      }
+
+    });
+
+  }
+
+  return check;
+}
 
 function upload_data() {
 
