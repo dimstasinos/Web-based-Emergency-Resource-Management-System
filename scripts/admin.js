@@ -1,57 +1,110 @@
-// script.js
-
-$(document).ready(function() {
-    // Make an AJAX request to get all location IDs
+$(document).ready(function () {
+    // Make an AJAX request to get all location data
     $.ajax({
-        url: 'get_all_location_ids.php',
+        url: '/server/location.php',
         method: 'GET',
-        success: function(data) {
+        success: function (data) {
             try {
-                var allLocationIds = JSON.parse(data);
+                // Ensure data is an array
+                var allLocationData = Array.isArray(data.locdata) ? data.locdata : [data.locdata];
 
-                // Iterate through each location ID
-                allLocationIds.forEach(function(locationId) {
-                    // Make an AJAX request to get location data for the current ID
-                    $.ajax({
-                        url: 'get_location.php',
-                        method: 'GET',
-                        data: { locationId: locationId },
-                        success: function(data) {
-                            try {
-                                var locData = JSON.parse(data);
-                                var lat = locData.lat;
-                                var long = locData.long;
+                console.log('All Location Data:', allLocationData);
 
-                                // Call the function to create and pin the marker
-                                createAndPinMarker(lat, long);
-                            } catch (error) {
-                                console.error('Error parsing JSON:', error);
-                            }
-                        },
-                        error: function(error) {
-                            console.error('Error fetching data:', error);
-                        }
-                    });
+                // Iterate through each location data
+                allLocationData.forEach(function (locationData) {
+                    // Call the function to create and pin the marker
+                    createAndPinMarker(locationData);
                 });
             } catch (error) {
-                console.error('Error parsing JSON:', error);
+                console.error('Error processing location data:', error);
             }
         },
-        error: function(error) {
-            console.error('Error fetching data:', error);
+        error: function (error) {
+            console.error('Error fetching location data:', error);
         }
     });
 
-    // Function to create and pin the Leaflet marker
-    function createAndPinMarker(lat, long) {
-        var map = L.map('map').setView([lat, long], 13);
+    function createAndPinMarker(data) {
+        console.log('Received data:', data);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
+        // Check if data has the expected properties
+        if (data && data.lat && data.longi && data.type) {
+            var lat = data.lat;
+            var long = data.longi;
+            var type = data.type;
 
-        L.marker([latitude, longitude]).addTo(map)
-            .bindPopup('Your Marker Popup Text')
-            .openPopup();
+            // Customize marker based on type
+            var markerColor;
+            var popupContent;
+
+            switch (type) {
+                case 'base':
+                    markerColor = 'green';
+                    popupContent = '<b>Base</b><br>Base Location';
+                    break;
+                // Add other cases for different types
+                case 'vehicle':
+                    markerColor = 'blue';
+                    popupContent = 'Username: ' + data.username + '<br>Load: ' + data.load +
+                        '<br>Condition: ' + data.condition;
+                    // Connect vehicle marker to tasks with straight lines
+                    connectMarkers([lat, long], tasksMarkers[data.username]);
+                    break;
+                // Add cases for other types
+                default:
+                    console.error('Unknown marker type:', type);
+                    return;
+            }
+
+            // Create and add the marker to the map
+            var marker = L.marker([lat, long], { icon: L.divIcon({ className: 'map-marker', html: markerColor }) }).addTo(map);
+            marker.bindPopup(popupContent).openPopup();
+
+            // Store the marker for future reference
+            switch (type) {
+                case 'base':
+                    baseMarker = marker;
+                    break;
+                case 'vehicle':
+                    vehiclesMarkers[data.username] = marker;
+                    break;
+                case 'request':
+                    requestsMarkers[data.id] = marker;
+                    break;
+                case 'offer':
+                    offersMarkers[data.id] = marker;
+                    break;
+            }
+        } else {
+            console.error('Invalid data structure:', data);
+        }
     }
-});
+
+    // Create and add the marker to the map
+    var marker = L.marker([lat, long], { icon: L.divIcon({ className: 'map-marker', html: markerColor }) }).addTo(map);
+    marker.bindPopup(popupContent).openPopup();
+
+    // Store the marker for future reference
+    switch (type) {
+        case 'base':
+            baseMarker = marker;
+            break;
+        case 'vehicle':
+            vehiclesMarkers[data.username] = marker;
+            break;
+        case 'request':
+            requestsMarkers[data.id] = marker;
+            break;
+        case 'offer':
+            offersMarkers[data.id] = marker;
+            break;
+    }
+}
+)
+// Connect two markers with a straight line
+    function connectMarkers(coords1, coords2) {
+        if (coords1 && coords2) {
+            var line = L.polyline([coords1, coords2.getLatLng()], { color: 'black' }).addTo(map);
+        }
+    }
+;
