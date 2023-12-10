@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
       return jsonResponse.json();
     })
     .then(data => {
+    
       if (data != null) {
         categories_select(data);
         selected_cat = category_id(data);
@@ -86,7 +87,7 @@ document.getElementById("table_admin").addEventListener("click", function (event
       document.getElementById("name_selected").value = product.name;
 
       for (var i = 0; i < document.getElementById("cat_selected").options.length; i++) {
-        if (document.getElementById("cat_selected").options[i].value === category.category_name) {
+        if (document.getElementById("cat_selected").options[i].value === category.id) {
           document.getElementById("cat_selected").selectedIndex = i;
           break;
         }
@@ -108,7 +109,7 @@ document.getElementById("table_admin").addEventListener("click", function (event
       document.getElementById("name_selected").value = product.name;
 
       for (var i = 0; i < document.getElementById("cat_selected").options.length; i++) {
-        if (document.getElementById("cat_selected").options[i].value === category.category_name) {
+        if (document.getElementById("cat_selected").options[i].value === category.id) {
           document.getElementById("cat_selected").selectedIndex = i;
           break;
         }
@@ -265,37 +266,37 @@ document.getElementById('add').addEventListener('click', function () {
 
     if (name !== '' || value !== '') {
 
-      var check=duplicate_check();
+      var check = duplicate_check();
 
-      console.log("test " + check);
-
-      if(check===0){
-      const data = {
-        id: id_,
-        detail_name: name,
-        detail_value: value
-      };
-      fetch('/server/warehouse_admin/add_details.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-        .then(response => response.json())
-        .then(data => {
-
-          fetch('/server/warehouse_admin/database_extract.php',)
-            .then(jsonResponse => jsonResponse.json())
-            .then(data => {
-              onload_data = data;
-              var selected_cat = category_id(data);
-              items_select(data, selected_cat);
-              radiobutton_refresh();
-            })
-            .catch(error => console.error('Error:', error));
+      if (check === 0) {
+        const data = {
+          id: id_,
+          detail_name: name,
+          detail_value: value
+        };
+        fetch('/server/warehouse_admin/add_details.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
         })
-      }else{
+          .then(response => response.json())
+          .then(data => {
+
+            fetch('/server/warehouse_admin/database_extract.php',)
+              .then(jsonResponse => jsonResponse.json())
+              .then(data => {
+                onload_data = data;
+                var selected_cat = category_id(data);
+                items_select(data, selected_cat);
+                radiobutton_refresh();
+              })
+              .catch(error => console.error('Error:', error));
+          })
+          .catch(error => console.error('Error:', error));
+
+      } else {
         alert('Οι τιμές που δώσατε υπάρχουν ήδη στο προιόν');
       }
     } else {
@@ -307,6 +308,47 @@ document.getElementById('add').addEventListener('click', function () {
 
 });
 
+document.getElementById('cat_change_button').addEventListener('click', function () {
+
+  if (document.getElementById('id_selected').value !== "") {
+
+    const id = document.getElementById('id_selected').value;
+    const new_category_id = document.getElementById('cat_selected').value;
+
+
+    const data = {
+      id: id,
+      new_cat: new_category_id,
+    };
+
+    fetch('/server/warehouse_admin/category_change.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => {
+
+        fetch('/server/warehouse_admin/database_extract.php')
+          .then(jsonResponse => jsonResponse.json())
+          .then(data => {
+            onload_data = data;
+            var selected_cat = category_id(data);
+            items_select(data, selected_cat);
+            radiobutton_refresh();
+          })
+          .catch(error => console.error('Error:', error));
+      })
+      .catch(error => console.error('Error:', error));
+
+
+  } else {
+    alert('Επέλεξε κάποιο προιόν');
+  }
+
+});
 
 document.getElementById('cat_list').addEventListener('change', function () {
 
@@ -314,7 +356,7 @@ document.getElementById('cat_list').addEventListener('change', function () {
     .then(jsonResponse => jsonResponse.json())
     .then(data => {
       onload_data = data;
-      selected_cat = category_id(data);
+      const selected_cat = category_id(data);
       items_select(data, selected_cat);
 
       document.getElementById('id_selected').value = '';
@@ -332,8 +374,9 @@ document.getElementById('online_data').addEventListener('click', function () {
     .then(data => {
       onload_data = data;
       categories_select(data);
-      selected_cat = category_id(data);
+      const selected_cat = category_id(data);
       items_select(data, selected_cat);
+      categories_select_product(data);
     })
     .catch(error => console.error('Error:', error));
 });
@@ -356,6 +399,7 @@ function categories_select(data) {
     if (category.category_name !== "" && category.category_name !== "-----") {
       let select_add = document.createElement("option");
       select_add.textContent = category.category_name;
+      select_add.value = category.category_name;
       list.appendChild(select_add);
     }
   });
@@ -369,6 +413,7 @@ function categories_select_product(data) {
   data.categories.forEach(category => {
     let select_add = document.createElement("option");
     select_add.textContent = category.category_name;
+    select_add.value = category.id;
     list.appendChild(select_add);
   });
 
@@ -465,7 +510,7 @@ function radiobutton_refresh() {
     document.getElementById("name_selected").value = product.name;
 
     for (var i = 0; i < document.getElementById("cat_selected").options.length; i++) {
-      if (document.getElementById("cat_selected").options[i].value === category.category_name) {
+      if (document.getElementById("cat_selected").options[i].value === category.id) {
         document.getElementById("cat_selected").selectedIndex = i;
         break;
       }
@@ -490,7 +535,7 @@ function radiobutton_refresh() {
     document.getElementById("name_selected").value = product.name;
 
     for (var i = 0; i < document.getElementById("cat_selected").options.length; i++) {
-      if (document.getElementById("cat_selected").options[i].value === category.category_name) {
+      if (document.getElementById("cat_selected").options[i].value === category.id) {
         document.getElementById("cat_selected").selectedIndex = i;
         break;
       }
@@ -503,7 +548,7 @@ function duplicate_check() {
 
 
   if (document.getElementById('radiobutton_0')) {
-    var check=0;
+    var check = 0;
     var id = document.getElementById('id_selected').value;
     var name = document.getElementById('detail_name_text').value;
     var value = document.getElementById('detail_value_text').value;
@@ -511,10 +556,10 @@ function duplicate_check() {
     const product = onload_data.items.find(item => item.id === id);
 
     product.details.forEach(detail => {
-      
+
       if (name === detail.detail_name && value === detail.detail_value) {
-        
-       check=1;
+
+        check = 1;
       }
 
     });
