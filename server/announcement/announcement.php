@@ -1,6 +1,6 @@
 <?php
 
-include("Mysql_connection.php");
+include("../Mysql_connection.php");
 
 $db = db_connect();
 
@@ -20,21 +20,22 @@ if ($response->num_rows > 0) {
     );
 
     $announcements[] = $announcement_array;
+  }
 }
 
 
-  $data = array(
-    "announcements" => $announcements,
-  );
+
+$data = array(
+  "announcements" => $announcements,
+);
 
 
-  $db->close();
+$db->close();
 
-  $json_data = json_encode($data);
+$json_data = json_encode($data);
 
-  header('Content-Type: application/json');
+header('Content-Type: application/json');
 
-  echo $json_data;
-}
+echo $json_data;
 
 ?>
