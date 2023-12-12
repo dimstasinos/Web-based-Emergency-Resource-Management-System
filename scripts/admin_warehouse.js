@@ -13,12 +13,13 @@ document.addEventListener('DOMContentLoaded', function () {
       return jsonResponse.json();
     })
     .then(data => {
-    
+
       if (data != null) {
         categories_select(data);
         selected_cat = category_id(data);
         items_select(data, selected_cat);
         categories_select_product(data);
+        category_select_det(data);
         onload_data = data;
       }
       else {
@@ -27,8 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let select_add = document.createElement("option");
         select_add.textContent = "Η Βάση δεδομένων είναι κενή";
         list.appendChild(select_add);
-
-
+        document.getElementById('add_new_cat').disabled = true;
 
       }
     })
@@ -314,39 +314,119 @@ document.getElementById('cat_change_button').addEventListener('click', function 
 
     const id = document.getElementById('id_selected').value;
     const new_category_id = document.getElementById('cat_selected').value;
+    const old_category_id = category_id(onload_data);
 
 
-    const data = {
-      id: id,
-      new_cat: new_category_id,
-    };
+    if (new_category_id !== old_category_id) {
+      const data = {
+        id: id,
+        new_cat: new_category_id,
+      };
 
-    fetch('/server/warehouse_admin/category_change.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-      .then(response => response.json())
-      .then(data => {
-
-        fetch('/server/warehouse_admin/database_extract.php')
-          .then(jsonResponse => jsonResponse.json())
-          .then(data => {
-            onload_data = data;
-            var selected_cat = category_id(data);
-            items_select(data, selected_cat);
-            radiobutton_refresh();
-          })
-          .catch(error => console.error('Error:', error));
+      fetch('/server/warehouse_admin/category_change.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
       })
-      .catch(error => console.error('Error:', error));
+        .then(response => response.json())
+        .then(data => {
 
+          fetch('/server/warehouse_admin/database_extract.php')
+            .then(jsonResponse => jsonResponse.json())
+            .then(data => {
+              onload_data = data;
+              var selected_cat = category_id(data);
+              items_select(data, selected_cat);
+              radiobutton_refresh();
+            })
+            .catch(error => console.error('Error:', error));
+        })
+        .catch(error => console.error('Error:', error));
 
+    } else {
+      alert("Επέλεξε μια διαφορετική κατηγορία.");
+    }
   } else {
     alert('Επέλεξε κάποιο προιόν');
   }
+
+
+
+});
+
+document.getElementById('category').addEventListener('change', function () {
+
+  document.getElementById('cat_name').value = '';
+  document.getElementById('id_cat').value = '';
+  document.getElementById('cat_name').value = document.getElementById('category').options[document.getElementById('category').selectedIndex].textContent;
+  document.getElementById('id_cat').value = document.getElementById('category').value;
+
+});
+
+
+document.getElementById('add_new_cat').addEventListener('click', function () {
+
+
+  if (document.getElementById('new_cat_name').value !== '') {
+
+    const input = document.getElementById('new_cat_name').value.toLowerCase();
+
+    const check = onload_data.categories.find(cat => cat.category_name.toLowerCase() === input);
+
+    if (check === undefined) {
+
+
+      var id_check = onload_data.categories[0].id;
+
+      for (var i = 0; i < onload_data.categories.length; i++) {
+        if (parseInt(onload_data.categories[i].id) > id_check) {
+          id_check = onload_data.categories[i].id;
+        }
+      }
+      id_check++;
+      const data = {
+        id: id_check,
+        new_cat: document.getElementById('new_cat_name').value
+      };
+
+
+      fetch('/server/warehouse_admin/add_category.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+
+          fetch('/server/warehouse_admin/database_extract.php')
+            .then(jsonResponse => jsonResponse.json())
+            .then(data => {
+              onload_data = data;
+              categories_select(data);
+              categories_select_product(data);
+              category_select_det(data);
+              items_select(data, id_check);
+              document.getElementById('cat_list').value = document.getElementById('new_cat_name').value;
+            })
+            .catch(error => console.error('Error:', error));
+        })
+        .catch(error => console.error('Error:', error));
+
+
+    } else {
+      alert('Αυτή η κατηγορία υπάρχει ήδη')
+    }
+
+
+  } else {
+    alert('Δώστε ένα όνομα');
+  }
+
 
 });
 
@@ -377,8 +457,119 @@ document.getElementById('online_data').addEventListener('click', function () {
       const selected_cat = category_id(data);
       items_select(data, selected_cat);
       categories_select_product(data);
+      category_select_det(data);
+      document.getElementById('add_new_cat').disabled = false;
+
     })
     .catch(error => console.error('Error:', error));
+});
+
+document.getElementById('cat_name_change').addEventListener('click', function () {
+
+  if (document.getElementById('id_cat').value !== '') {
+    if (document.getElementById('cat_name').value !== '') {
+
+      const input = document.getElementById('cat_name').value.toLowerCase();
+
+      const check = onload_data.categories.find(cat => cat.category_name.toLowerCase() === input);
+
+      if (check === undefined) {
+
+        var id = document.getElementById('id_cat').value;
+        var name = document.getElementById('cat_name').value;
+
+        const data = {
+          id: id,
+          new_name: name
+        };
+
+
+        fetch('/server/warehouse_admin/update_category.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+
+            fetch('/server/warehouse_admin/database_extract.php')
+              .then(jsonResponse => jsonResponse.json())
+              .then(data => {
+                onload_data = data;
+                categories_select(data);
+                categories_select_product(data);
+                category_select_det(data);
+                selected_cat = category_id(data);
+                items_select(data, selected_cat);
+              })
+              .catch(error => console.error('Error:', error));
+          })
+          .catch(error => console.error('Error:', error));
+
+
+
+      } else {
+        alert('Αυτή η κατηγορία υπάρχει ήδη')
+      }
+    } else {
+      alert('Το όνομα δεν μπορεί να είναι κενό')
+    }
+  } else {
+    alert('Επέλεξε μια κατηγορία');
+  }
+
+
+});
+
+document.getElementById('cat_name_delete').addEventListener('click', function () {
+
+  if (document.getElementById('id_cat').value !== '') {
+    if (document.getElementById('cat_name').value !== '') {
+
+      var id = document.getElementById('id_cat').value;
+      var name = document.getElementById('cat_name').value;
+
+      const data = {
+        id: id,
+        new_name: name
+      };
+
+      fetch('/server/warehouse_admin/update_category.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+
+          fetch('/server/warehouse_admin/database_extract.php')
+            .then(jsonResponse => jsonResponse.json())
+            .then(data => {
+              onload_data = data;
+              categories_select(data);
+              categories_select_product(data);
+              category_select_det(data);
+              selected_cat = category_id(data);
+              items_select(data, selected_cat);
+            })
+            .catch(error => console.error('Error:', error));
+        })
+        .catch(error => console.error('Error:', error));
+
+
+    } else {
+      alert('Το όνομα δεν μπορεί να είναι κενό')
+    }
+  } else {
+    alert('Επέλεξε μια κατηγορία');
+  }
+
 });
 
 function category_id(data) {
@@ -403,6 +594,7 @@ function categories_select(data) {
       list.appendChild(select_add);
     }
   });
+
 }
 
 function categories_select_product(data) {
@@ -411,12 +603,33 @@ function categories_select_product(data) {
   list.innerHTML = '';
 
   data.categories.forEach(category => {
-    let select_add = document.createElement("option");
-    select_add.textContent = category.category_name;
-    select_add.value = category.id;
-    list.appendChild(select_add);
+    if (category.category_name !== "" && category.category_name !== "-----") {
+      let select_add = document.createElement("option");
+      select_add.textContent = category.category_name;
+      select_add.value = category.id;
+      list.appendChild(select_add);
+    }
   });
 
+}
+
+function category_select_det(data) {
+  const list = document.getElementById("category");
+  list.innerHTML = '';
+
+  data.categories.forEach(category => {
+    if (category.category_name !== "" && category.category_name !== "-----") {
+      let select_add = document.createElement("option");
+      select_add.textContent = category.category_name;
+      select_add.value = category.id;
+      list.appendChild(select_add);
+    }
+  });
+
+  document.getElementById('cat_name').value = '';
+  document.getElementById('id_cat').value = '';
+  document.getElementById('cat_name').value = document.getElementById('category').options[document.getElementById('category').selectedIndex].textContent;
+  document.getElementById('id_cat').value = document.getElementById('category').value;
 }
 
 function items_select(data, selected_cat) {
