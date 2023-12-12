@@ -16,17 +16,17 @@ document.addEventListener('DOMContentLoaded', function () {
         idCell.textContent = item.id;
         row.appendChild(idCell);
 
-        const titleCell = document.createElement('td');
-        titleCell.textContent = item.title;
-        row.appendChild(titleCell);
+        const textCell = document.createElement('td');
+        textCell.textContent = item.text;
+        row.appendChild(textCell);
 
         const dateCell = document.createElement('td');
         dateCell.textContent = item.date;
         row.appendChild(dateCell);
 
-        const contentCell = document.createElement('td');
-        contentCell.textContent = item.content;
-        row.appendChild(contentCell);
+        const quantityCell = document.createElement('td');
+        quantityCell.textContent = item.quantity;
+        row.appendChild(quantityCell);
 
 
         tableBody.appendChild(row);
@@ -41,14 +41,14 @@ document.addEventListener('DOMContentLoaded', function () {
 document.getElementById('upload-button').addEventListener('click', function () {
   var form = document.getElementById("announcement-form");
 
-  title = document.getElementById('title').value;
+  text = document.getElementById('text').value;
   date = document.getElementById('date').value;
-  text = document.getElementById('content').value;
+  quantity = document.getElementById('quantity').value;
 
   const data = {
-    title: title,
+    text: text,
     date: date,
-    text: text
+    quantity: quantity
   };
 
   fetch("/server/announcement/announcement_upload.php", {
@@ -76,17 +76,17 @@ document.getElementById('upload-button').addEventListener('click', function () {
             idCell.textContent = item.id;
             row.appendChild(idCell);
 
-            const titleCell = document.createElement('td');
-            titleCell.textContent = item.title;
-            row.appendChild(titleCell);
+            const textCell = document.createElement('td');
+            textCell.textContent = item.text;
+            row.appendChild(textCell);
 
             const dateCell = document.createElement('td');
             dateCell.textContent = item.date;
             row.appendChild(dateCell);
 
-            const contentCell = document.createElement('td');
-            contentCell.textContent = item.content;
-            row.appendChild(contentCell);
+            const quantityCell = document.createElement('td');
+            quantityCell.textContent = item.quantity;
+            row.appendChild(quantityCell);
 
 
             tableBody.appendChild(row);
@@ -98,4 +98,8 @@ document.getElementById('upload-button').addEventListener('click', function () {
 
         .catch(error => console.error('Error fetching data:', error));
     });
+  });
+
+  document.addEventListener("DOMContentLoaded",function(){
+    fetch('/server/warehouse_admin/database_extract.php')
   });
