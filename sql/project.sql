@@ -41,3 +41,12 @@ create TABLE announcements (
     date DATE,
     content TEXT
 );
+
+
+CREATE TABLE locations (
+  id int NOT NULL AUTO_INCREMENT,
+  lat varchar(255) NOT NULL,
+  longi varchar(255) NOT NULL,
+  type varchar(255) NOT NULL,
+  PRIMARY KEY (id)
+) ;
