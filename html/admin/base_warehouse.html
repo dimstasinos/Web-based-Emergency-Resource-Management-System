@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -53,7 +53,7 @@
           <label for="cat_selected">Καταηγορία</label>
           <select id="cat_selected"></select>
         </div>
-        <div id="cat_change"> 
+        <div id="cat_change">
           <button type="button" id="cat_change_button">Αλλαγή κατηγορίας</button>
         </div>
         <div id="detail_select"></div>
@@ -75,6 +75,34 @@
         </div>
       </fieldset>
     </form>
+  </div>
+
+  <div id="category_options">
+    <fieldset>
+      <legend>Καταηγορία</legend>
+      <div>
+        <label for="category">Καταηγορία</label>
+        <select id="category"></select>
+      </div>
+      <div>
+        <label for="id_cat">ID</label>
+        <input type="text" id="id_cat" disabled>
+        <label for="cat_name">Όνομα</label>
+        <input type="text" id="cat_name">
+      </div>
+      <div>
+        <button type="button" id="cat_name_change">Τροποποίηση</button>
+        <button type="button" id="cat_name_delete">Διαγραφή</button>
+      </div>
+      <div id="new_cat">
+        <p>Εισαγωγή νέας κατηγορίας:</p>
+        <label for="new_cat_name">Όνομα</label>
+        <input type="text" id="new_cat_name">
+      </div>
+      <div>
+        <button type="button" id="add_new_cat">Προσθήκη</button>
+      </div>
+    </fieldset>
   </div>
 
 
