@@ -6,14 +6,14 @@ $data = json_decode($receive);
 
 $db = db_connect();
 
-$add_stmt = $db->prepare("INSERT INTO announcements(title,date,content) VALUES (?,?,?)");
+$add_stmt = $db->prepare("INSERT INTO announcements(text,date,quantity) VALUES (?,?,?)");
   
 
     $add_stmt->bind_param(
-      "sss",
-      $data->title,
+      "ssi",
+      $data->text,
       $data->date,
-      $data->text
+      $data->quantity
     );
   
     $add_stmt->execute();
