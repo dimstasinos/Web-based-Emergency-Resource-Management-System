@@ -14,9 +14,9 @@ if ($response->num_rows > 0) {
   while ($row = $response->fetch_assoc()) {
     $announcement_array = array(
       "id" => $row["id"],
-      "title" => $row["title"],
+      "text" => $row["text"],
       "date" => $row["date"],
-      "content" => $row["content"]
+      "quantity" => $row["quantity"]
     );
 
     $announcements[] = $announcement_array;
