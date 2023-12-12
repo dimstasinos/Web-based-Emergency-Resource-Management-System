@@ -1,6 +1,4 @@
 {
-  "code": 1,
-  "message": "Retrieved successfully",
   "items": [
     {
       "id": "16",
@@ -1265,104 +1263,115 @@
           "detail_value": ""
         }
       ]
+    },
+    {
+      "id": "121",
+      "name": "Duct Tape",
+      "category": "23",
+      "details": [
+        {
+          "detail_name": "",
+          "detail_value": ""
+        }
+      ]
     }
   ],
   "categories": [
     {
-      "id": "10",
-      "category_name": ""
-    },
-    {
-      "id": "13",
-      "category_name": "-----"
-    },
-    {
-      "id": "9",
-      "category_name": "2d hacker"
-    },
-    {
-      "id": "29",
-      "category_name": "Animal Food"
-    },
-    {
-      "id": "25",
-      "category_name": "Baby Essentials"
+      "id": "5",
+      "category_name": "Food"
     },
     {
       "id": "6",
       "category_name": "Beverages"
     },
     {
-      "id": "22",
-      "category_name": "Cleaning Supplies"
-    },
-    {
-      "id": "33",
-      "category_name": "Cleaning Supplies."
-    },
-    {
       "id": "7",
       "category_name": "Clothing"
-    },
-    {
-      "id": "28",
-      "category_name": "Cold weather"
-    },
-    {
-      "id": "27",
-      "category_name": "Electronic Devices"
-    },
-    {
-      "id": "30",
-      "category_name": "Financial support"
-    },
-    {
-      "id": "14",
-      "category_name": "Flood"
-    },
-    {
-      "id": "5",
-      "category_name": "Food"
     },
     {
       "id": "8",
       "category_name": "Hacker of class"
     },
     {
-      "id": "34",
-      "category_name": "Hot Weather"
+      "id": "9",
+      "category_name": "2d hacker"
     },
     {
-      "id": "26",
-      "category_name": "Insect Repellents"
-    },
-    {
-      "id": "24",
-      "category_name": "Kitchen Supplies"
-    },
-    {
-      "id": "16",
-      "category_name": "Medical Supplies"
-    },
-    {
-      "id": "15",
-      "category_name": "new cat"
-    },
-    {
-      "id": "21",
-      "category_name": "Personal Hygiene "
-    },
-    {
-      "id": "19",
-      "category_name": "Shoes"
+      "id": "10",
+      "category_name": ""
     },
     {
       "id": "11",
       "category_name": "Test"
     },
     {
+      "id": "13",
+      "category_name": "-----"
+    },
+    {
+      "id": "14",
+      "category_name": "Flood"
+    },
+    {
+      "id": "15",
+      "category_name": "new cat"
+    },
+    {
+      "id": "16",
+      "category_name": "Medical Supplies"
+    },
+    {
+      "id": "19",
+      "category_name": "Shoes"
+    },
+    {
+      "id": "21",
+      "category_name": "Personal Hygiene "
+    },
+    {
+      "id": "22",
+      "category_name": "Cleaning Supplies"
+    },
+    {
       "id": "23",
       "category_name": "Tools"
+    },
+    {
+      "id": "24",
+      "category_name": "Kitchen Supplies"
+    },
+    {
+      "id": "25",
+      "category_name": "Baby Essentials"
+    },
+    {
+      "id": "26",
+      "category_name": "Insect Repellents"
+    },
+    {
+      "id": "27",
+      "category_name": "Electronic Devices"
+    },
+    {
+      "id": "28",
+      "category_name": "Cold weather"
+    },
+    {
+      "id": "29",
+      "category_name": "Animal Food"
+    },
+    {
+      "id": "30",
+      "category_name": "Financial support"
+    },
+    {
+      "id": "33",
+      "category_name": "Cleaning Supplies."
+    },
+    {
+      "id": "34",
+      "category_name": "Hot Weather"
     }
   ]
 }

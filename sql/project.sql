@@ -11,18 +11,33 @@ insert into credentials(cred_id,username,password) VALUES ('1','giorgosnik','230
 
 create table item_category (
   category_id INT not null,
-  category_name VARCHAR(15) not null,
+  category_name VARCHAR(50) not null,
   primary key(category_id)
   );
 
 create table items (
   item_id INT NOT NULL,
-  item_name VARCHAR(15) not null,
+  item_name VARCHAR(100) not null,
   item_category INT not null,
-  item_detail_name VARCHAR(15),
-  item_value float,
   primary key(item_id),
   CONSTRAINT TABLE_CAT
   FOREIGN KEY (item_category) REFERENCES item_category(category_id)
   on update CASCADE on delete CASCADE
+);
+
+create table item_details(
+  item_detail_id int not null,
+  item_detail_name VARCHAR(100) default null,
+  item_value VARCHAR(100) default null,
+  CONSTRAINT TABLE_DET
+  FOREIGN KEY (item_detail_id) REFERENCES items(item_id)
+  on update CASCADE on delete CASCADE
+);
+
+
+create TABLE announcements (
+    id INTEGER PRIMARY KEY ,
+    title TEXT,
+    date DATE,
+    content TEXT
 );

@@ -1,25 +1,84 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width initial-scale=1">
-    <title>Αποθήκη</title>
-  </head>
 
-  <body>
-      <h1>Αποθήκη</h1>
-      <p>Διαχειριστής</p>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width initial-scale=1">
+  <link rel="stylesheet" href="/css/admin_database.css">
+  <title>Αποθήκη</title>
+</head>
 
-      <label for="online_data">Ενημέρωση βάσης από κοινό αποθετήριο</label>
-      <button id="online_data">Ενημέρωση</button>
-      <div>
-        <select id="cat">
-          
-        </select>
-      </div>
-      
-    
+<body>
+  <h1>Αποθήκη</h1>
+  <p>Διαχειριστής</p>
 
-    <script src="/scripts/admin_warehouse.js"></script>
-  </body>
+  <label for="online_data">Ενημέρωση βάσης από κοινό αποθετήριο</label>
+  <button id="online_data">Ενημέρωση</button>
+
+  <form id="json_upload" enctype="multipart/form-data">
+    <label for="json_file">Αρχείο JSON</label>
+    <input type="file" id="json_file" name="json_file" accept=".json" />
+    <button type="button" id="submit_button" onclick="upload_data()">Upload</button>
+  </form>
+
+  <div>
+    <label for="cat_list">Καταηγορίες ειδών</label>
+    <select id="cat_list"></select>
+  </div>
+
+  <div>
+    <table id="table_admin">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Όνομα</th>
+          <th>Καταηγορία</th>
+          <th>Λεπτομέριες</th>
+        </tr>
+      </thead>
+      <tbody id="items_table"></tbody>
+    </table>
+  </div>
+
+
+  <div>
+    <form id="products">
+      <fieldset>
+        <legend>Προιόν:</legend>
+        <div id="product_select">
+          <label for="id_selected">ID</label>
+          <input type="text" id="id_selected" disabled>
+          <label for="name_selected">Όνομα</label>
+          <input type="text" id="name_selected">
+          <label for="cat_selected">Καταηγορία</label>
+          <select id="cat_selected"></select>
+        </div>
+        <div id="cat_change"> 
+          <button type="button" id="cat_change_button">Αλλαγή κατηγορίας</button>
+        </div>
+        <div id="detail_select"></div>
+
+        <div>Λεπτομέριες προίντος:</div>
+        <div id="details">
+          <div>
+            <label for="detail_name_text">Όνομα</label>
+            <input type="text" id="detail_name_text">
+            <label for="detail_value_text">Τιμή</label>
+            <input type="text" id="detail_value_text">
+          </div>
+          <div>
+            <button type="button" id="clear">Καθαρισμός</button>
+            <button type="button" id="change">Τροποποίηση</button>
+            <button type="button" id="add">Προσθήκη</button>
+            <button type="button" id="delete">Διαγραφή</button>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+
+
+  <script src="/scripts/admin_warehouse.js"></script>
+</body>
+
 </html>
