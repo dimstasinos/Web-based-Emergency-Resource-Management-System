@@ -2,7 +2,7 @@ var onload_data;
 var item_selected = 0;
 
 document.addEventListener('DOMContentLoaded', function () {
-  fetch('/server/warehouse_admin/database_extract.php',)
+  fetch('/server/warehouse_admin/database_extract.php')
     .then(jsonResponse => {
 
       const isEmpty = jsonResponse.headers.get('Content-Length');

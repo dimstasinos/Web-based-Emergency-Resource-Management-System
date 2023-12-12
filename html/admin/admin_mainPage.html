@@ -6,7 +6,6 @@
   <link rel="stylesheet" href="/css/admin_mainPageStyle.css">
   <link rel="stylesheet" href="/leaflet/leaflet.css" />
   <script src="/leaflet/leaflet.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="/scripts/admin.js"></script>
   <style> 
     #map { 
@@ -32,15 +31,7 @@
 
   <script>
 
-    var map = L.map('map').setView([37.9838, 23.7275], 13);  //Athens
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    // Marker vashs
-    var baseMarker = L.marker([37.9755, 23.7348], ).addTo(map);
-    baseMarker.bindPopup("<b>Base</b><br>Base location").openPopup();  
+   
 
   </script>
 </body>
