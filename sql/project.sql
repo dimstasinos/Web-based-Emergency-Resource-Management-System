@@ -47,6 +47,6 @@ CREATE TABLE locations (
   id int NOT NULL AUTO_INCREMENT,
   lat varchar(255) NOT NULL,
   longi varchar(255) NOT NULL,
-  type enum( 'veh', 'req', 'off' ) NOT NULL,
+  typeloc enum( 'veh', 'req', 'off' ) NOT NULL,
   PRIMARY KEY (id)
 ) ;
