@@ -9,11 +9,11 @@ document.addEventListener('DOMContentLoaded', function () {
       if (isEmpty === '0') {
         return null;
       }
-
+      
       return jsonResponse.json();
     })
     .then(data => {
-
+      
       if (data != null) {
         categories_select(data);
         selected_cat = category_id(data);
