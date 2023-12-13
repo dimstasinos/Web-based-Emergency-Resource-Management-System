@@ -29,13 +29,13 @@ document.addEventListener('DOMContentLoaded', function () {
         var select_add = document.createElement("option");
         select_add.textContent = "Η Βάση δεδομένων είναι κενή";
         list.appendChild(select_add);
-        
+
         const list_2 = document.getElementById("cat_selected");
         list_2.innerHTML = '';
         var select_add_2 = document.createElement("option");
         select_add_2.textContent = "Η Βάση δεδομένων είναι κενή";
         list_2.appendChild(select_add_2);
-        
+
         const list_3 = document.getElementById("cat_new");
         list_3.innerHTML = '';
         var select_add_3 = document.createElement("option");
@@ -620,6 +620,7 @@ document.getElementById('add_product').addEventListener('click', function () {
         name: document.getElementById('name_new').value
       };
 
+      console.log(data);
 
       fetch('/server/warehouse_admin/add_product.php', {
         method: 'POST',
@@ -637,9 +638,27 @@ document.getElementById('add_product').addEventListener('click', function () {
             .then(data => {
               onload_data = data;
               categories_select(data);
-              categories_select_product(data);
-              category_select_det(data);
-              items_select(data, id_check);
+              items_select(data, document.getElementById('cat_new').value);
+              
+              document.getElementById('detail_name_text').value = '';
+              document.getElementById('detail_value_text').value = '';
+              document.getElementById('detail_select').innerHTML = '';
+
+              const product = onload_data.items.find(item => item.id === id_check);
+              console.log(product);
+              const category = onload_data.categories.find(cat_name => cat_name.id === product.category);
+          
+                document.getElementById("id_selected").value = product.id;
+                document.getElementById("name_selected").value = product.name;
+          
+                for (var i = 0; i < document.getElementById("cat_selected").options.length; i++) {
+                  if (document.getElementById("cat_selected").options[i].value === category.id) {
+                    document.getElementById("cat_selected").selectedIndex = i;
+                    break;
+                  }
+                }
+              
+
             })
             .catch(error => console.error('Error:', error));
         })
@@ -726,7 +745,7 @@ function categories_select_new(data) {
     if (category.category_name !== "" && category.category_name !== "-----") {
       let select_add = document.createElement("option");
       select_add.textContent = category.category_name;
-      select_add.value = category.category_name;
+      select_add.value = category.id;
       list.appendChild(select_add);
     }
   });
