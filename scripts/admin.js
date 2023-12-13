@@ -14,6 +14,12 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(response => response.json())
     .then(data => {
       console.log(data);
+
+      allLocationData.forEach(function (locationData) {
+        // Call the function to create and pin the marker
+        createAndPinMarker(locationData);
+      });
+
     })
     .catch(error => console.error('Error:', error));
 
