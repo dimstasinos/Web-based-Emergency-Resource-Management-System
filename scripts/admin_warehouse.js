@@ -207,9 +207,9 @@ document.getElementById('delete').addEventListener('click', function () {
       alert('Πρέπει να επιλέξετε κάποια λεπτομέρια του προιόντος');
     }
   } else if (item_selected === 0) {
-    alert('Επέλεξε κάποιο προιόν');
+    alert('Επίλεξε κάποιο προιόν');
   } else {
-    alert('Το προιόν δεν έχει κάποια λεπτομέρια για να σβήσετε')
+    alert('Το προιόν δεν έχει κάποια λεπτομέρεια για να σβήσετε')
   }
 
 });
@@ -269,9 +269,9 @@ document.getElementById('change').addEventListener('click', function () {
       alert('Πρέπει να επιλέξετε κάποια λεπτομέρια του προιόντος');
     }
   } else if (item_selected === 0) {
-    alert('Επέλεξε κάποιο προιόν');
+    alert('Επίλεξε κάποιο προιόν');
   } else {
-    alert('Το προιόν δεν έχει κάποια λεπτομέρια για να τροποποιήσετε')
+    alert('Το προιόν δεν έχει κάποια λεπτομέρεια για να τροποποιήσετε')
   }
 });
 
@@ -320,10 +320,10 @@ document.getElementById('add').addEventListener('click', function () {
         alert('Οι τιμές που δώσατε υπάρχουν ήδη στο προιόν');
       }
     } else {
-      alert('Δώσε κάποια τιμή στις λεπτομέριες του προιόντος');
+      alert('Δώσε κάποια τιμή στις λεπτομέρειες του προιόντος');
     }
   } else {
-    alert('Επέλεξε κάποιο προιόν');
+    alert('Επίλεξε κάποιο προιόν');
   }
 
 });
@@ -366,10 +366,10 @@ document.getElementById('cat_change_button').addEventListener('click', function 
         .catch(error => console.error('Error:', error));
 
     } else {
-      alert("Επέλεξε μια διαφορετική κατηγορία.");
+      alert("Επίλεξε μια διαφορετική κατηγορία.");
     }
   } else {
-    alert('Επέλεξε κάποιο προιόν');
+    alert('Επίλεξε κάποιο προιόν');
   }
 
 
@@ -541,7 +541,7 @@ document.getElementById('cat_name_change').addEventListener('click', function ()
       alert('Το όνομα δεν μπορεί να είναι κενό')
     }
   } else {
-    alert('Επέλεξε μια κατηγορία');
+    alert('Επίλεξε μια κατηγορία');
   }
 
 
@@ -589,7 +589,7 @@ document.getElementById('cat_name_delete').addEventListener('click', function ()
       alert('Το όνομα δεν μπορεί να είναι κενό')
     }
   } else {
-    alert('Επέλεξε μια κατηγορία');
+    alert('Επίλεξε μια κατηγορία');
   }
 
 });
