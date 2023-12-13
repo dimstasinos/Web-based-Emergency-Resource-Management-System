@@ -12,7 +12,7 @@ insert into credentials(cred_id,username,password) VALUES ('1','giorgosnik','230
 create table item_category (
   category_id INT not null,
   category_name VARCHAR(50) not null,
-  primary key(category_id)
+  primary key(category_id,category_name)
   );
 
 create table items (
@@ -27,8 +27,8 @@ create table items (
 
 create table item_details(
   item_detail_id int not null,
-  item_detail_name VARCHAR(100) default null,
-  item_value VARCHAR(100) default null,
+  item_detail_name VARCHAR(100),
+  item_detail_value VARCHAR(100),
   CONSTRAINT TABLE_DET
   FOREIGN KEY (item_detail_id) REFERENCES items(item_id)
   on update CASCADE on delete CASCADE

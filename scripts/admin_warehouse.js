@@ -2,7 +2,7 @@ var onload_data;
 var item_selected = 0;
 
 document.addEventListener('DOMContentLoaded', function () {
-  fetch('/server/warehouse_admin/database_extract.php',)
+  fetch('/server/warehouse_admin/database_extract.php')
     .then(jsonResponse => {
 
       const isEmpty = jsonResponse.headers.get('Content-Length');
@@ -449,6 +449,8 @@ document.getElementById('cat_list').addEventListener('change', function () {
 
 document.getElementById('online_data').addEventListener('click', function () {
 
+
+  document.getElementById('online_data').disabled=true;
   fetch('/server/warehouse_admin/online_database.php',)
     .then(jsonResponse => jsonResponse.json())
     .then(data => {
@@ -459,9 +461,11 @@ document.getElementById('online_data').addEventListener('click', function () {
       categories_select_product(data);
       category_select_det(data);
       document.getElementById('add_new_cat').disabled = false;
+      document.getElementById('online_data').disabled=false;
 
     })
     .catch(error => console.error('Error:', error));
+
 });
 
 document.getElementById('cat_name_change').addEventListener('click', function () {

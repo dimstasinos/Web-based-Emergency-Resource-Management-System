@@ -4,6 +4,13 @@ include("Mysql_connection.php");
 
 $db = db_connect();
 
+$sql = "SELECT * FROM locations";
+
+
+
+header('Content-Type: application/json');
+echo json_encode($data);
+/*
 if ($db !== null && $db instanceof mysqli) {
     if (isset($_GET['locationId'])) {
         // Fetch individual location data
@@ -35,5 +42,5 @@ if ($db !== null && $db instanceof mysqli) {
     $db->close();
 } else {
     echo json_encode(array('error' => 'Database connection error'));
-}
+}*/
 ?>
