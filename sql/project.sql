@@ -50,3 +50,9 @@ CREATE TABLE locations (
   typeloc enum( 'veh', 'req', 'off' ) NOT NULL,
   PRIMARY KEY (id)
 ) ;
+
+CREATE TABLE item_quantity (
+	item_qua_id int not null,
+    item_qua int not null,
+    primary key (item_qua_id)
+);

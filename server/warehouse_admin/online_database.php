@@ -37,9 +37,6 @@ foreach ($json_data->items as $value) {
 
 
 $db->close();
-
 header('Content-Type: application/json');
-$response = json_encode($json_data);
-
-echo $response;
+echo json_encode(['status' => 'success']);
 ?>
