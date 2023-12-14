@@ -32,7 +32,7 @@
         <tr>
           <th>ID</th>
           <th>Όνομα</th>
-          <th>Καταηγορία</th>
+          <th>Κατηγορία</th>
           <th>Λεπτομέριες</th>
         </tr>
       </thead>
@@ -46,19 +46,28 @@
       <fieldset>
         <legend>Προιόν:</legend>
         <div id="product_select">
+          <p>Το προιόν που επιλεχθηκε:</p>
           <label for="id_selected">ID</label>
           <input type="text" id="id_selected" disabled>
           <label for="name_selected">Όνομα</label>
           <input type="text" id="name_selected">
           <label for="cat_selected">Κατηγορία</label>
           <select id="cat_selected"></select>
-        </div>
-        <div id="cat_change">
           <button type="button" id="cat_change_button">Αλλαγή κατηγορίας</button>
         </div>
-        <div id="detail_select"></div>
-
+      
+         <div>
+          <p>Προσθήκη προιόντος:</p>
+          <label for="name_new">Όνομα</label>
+          <input type="text" id="name_new">
+          <label for="cat_new">Κατηγορία</label>
+          <select id="cat_new"></select>
+          <button type="button" id="add_product">Προσθήκη</button>
+         </div>
+       
+      
         <div>Λεπτομέριες προίντος:</div>
+        <div id="detail_select"></div>
         <div id="details">
           <div>
             <label for="detail_name_text">Όνομα</label>
@@ -79,7 +88,7 @@
 
   <div id="category_options">
     <fieldset>
-      <legend>Καταηγορία</legend>
+      <legend>Κατηγορία</legend>
       <div>
         <label for="category">Κατηγορία</label>
         <select id="category"></select>

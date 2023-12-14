@@ -5,61 +5,34 @@ document.addEventListener('DOMContentLoaded', function () {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
-  // Marker vashs
-  var baseMarker = L.marker([37.9755, 23.7348],).addTo(map);
-  baseMarker.bindPopup("<b>Base</b><br>Base location").openPopup();
 
-  
   fetch('/server/location.php')
     .then(response => response.json())
     .then(data => {
       console.log(data);
+      createAndPinMarker(data);
+
     })
     .catch(error => console.error('Error:', error));
 
 
 });
 
-/*$(document).ready(function () {
-  // Make an AJAX request to get all location data
-  $.ajax({
-    url: '/server/location.php',
-    method: 'GET',
-    success: function (data) {
-      try {
-        // Ensure data is an array
-        var allLocationData = Array.isArray(data.locdata) ? data.locdata : [data.locdata];
 
-        console.log('All Location Data:', allLocationData);
 
-        // Iterate through each location data
-        allLocationData.forEach(function (locationData) {
-          // Call the function to create and pin the marker
-          createAndPinMarker(locationData);
-        });
-      } catch (error) {
-        console.error('Error processing location data:', error);
-      }
-    },
-    error: function (error) {
-      console.error('Error fetching location data:', error);
-    }
-  });*/
 
-/*function createAndPinMarker(data) {
-  console.log('Received data:', data);
-
-  // Check if data has the expected properties
-  if (data && data.lat && data.longi && data.type) {
+function createAndPinMarker(data) {
+ 
     var lat = data.lat;
     var long = data.longi;
-    var type = data.type;
+    var typeloc = data.typeloc;
 
     // Customize marker based on type
     var markerColor;
     var popupContent;
-
-    switch (type) {
+}
+/*
+    switch (typeloc) {
       case 'base':
         markerColor = 'green';
         popupContent = '<b>Base</b><br>Base Location';
@@ -74,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
         break;
       // Add cases for other types
       default:
-        console.error('Unknown marker type:', type);
+        console.error('Unknown marker type:', typeloc);
         return;
     }
 
@@ -83,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
     marker.bindPopup(popupContent).openPopup();
 
     // Store the marker for future reference
-    switch (type) {
+    switch (typeloc) {
       case 'base':
         baseMarker = marker;
         break;
@@ -97,11 +70,9 @@ document.addEventListener('DOMContentLoaded', function () {
         offersMarkers[data.id] = marker;
         break;
     }
-  } else {
-    console.error('Invalid data structure:', data);
   }
-}
 
+/*
 // Create and add the marker to the map
 var marker = L.marker([lat, long], { icon: L.divIcon({ className: 'map-marker', html: markerColor }) }).addTo(map);
 marker.bindPopup(popupContent).openPopup();
@@ -122,11 +93,12 @@ switch (type) {
     break;
 }
 
-
+/*
 // Connect two markers with a straight line
 function connectMarkers(coords1, coords2) {
 if (coords1 && coords2) {
   var line = L.polyline([coords1, coords2.getLatLng()], { color: 'black' }).addTo(map);
 }
 }
-;*/
+;
+*/
