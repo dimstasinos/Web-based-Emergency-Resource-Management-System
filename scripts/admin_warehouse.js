@@ -261,6 +261,7 @@ document.getElementById('change').addEventListener('click', function () {
               onload_data = data;
               var selected_cat = category_id(data);
               items_select(data, selected_cat);
+              radiobutton_refresh();
             })
             .catch(error => console.error('Error:', error));
         })
@@ -287,8 +288,9 @@ document.getElementById('add').addEventListener('click', function () {
     if (name !== '' || value !== '') {
 
       var check = duplicate_check();
-
+      
       if (check === 0) {
+        
         const data = {
           id: id_,
           detail_name: name,
@@ -317,6 +319,7 @@ document.getElementById('add').addEventListener('click', function () {
           .catch(error => console.error('Error:', error));
 
       } else {
+        
         alert('Οι τιμές που δώσατε υπάρχουν ήδη στο προιόν');
       }
     } else {
@@ -472,14 +475,19 @@ document.getElementById('online_data').addEventListener('click', function () {
   fetch('/server/warehouse_admin/online_database.php',)
     .then(jsonResponse => jsonResponse.json())
     .then(data => {
-      onload_data = data;
-      categories_select(data);
-      const selected_cat = category_id(data);
-      items_select(data, selected_cat);
-      categories_select_product(data);
-      category_select_det(data);
-      document.getElementById('add_new_cat').disabled = false;
-      document.getElementById('online_data').disabled = false;
+      fetch('/server/warehouse_admin/database_extract.php',)
+        .then(jsonResponse => jsonResponse.json())
+        .then(data => {
+          onload_data = data;
+          categories_select(data);
+          const selected_cat = category_id(data);
+          items_select(data, selected_cat);
+          categories_select_product(data);
+          category_select_det(data);
+          document.getElementById('add_new_cat').disabled = false;
+          document.getElementById('online_data').disabled = false;
+        })
+        .catch(error => console.error('Error:', error));
 
     })
     .catch(error => console.error('Error:', error));
@@ -620,7 +628,7 @@ document.getElementById('add_product').addEventListener('click', function () {
         name: document.getElementById('name_new').value
       };
 
-      console.log(data);
+     
 
       fetch('/server/warehouse_admin/add_product.php', {
         method: 'POST',
@@ -642,22 +650,24 @@ document.getElementById('add_product').addEventListener('click', function () {
               
               document.getElementById('detail_name_text').value = '';
               document.getElementById('detail_value_text').value = '';
+              document.getElementById('name_new').value = '';
+
+
               document.getElementById('detail_select').innerHTML = '';
 
-              const product = onload_data.items.find(item => item.id === id_check);
-              console.log(product);
+              const product = onload_data.items.find(item => parseInt(item.id) === id_check);            
               const category = onload_data.categories.find(cat_name => cat_name.id === product.category);
-          
-                document.getElementById("id_selected").value = product.id;
-                document.getElementById("name_selected").value = product.name;
-          
-                for (var i = 0; i < document.getElementById("cat_selected").options.length; i++) {
-                  if (document.getElementById("cat_selected").options[i].value === category.id) {
-                    document.getElementById("cat_selected").selectedIndex = i;
-                    break;
-                  }
+
+              document.getElementById("id_selected").value = product.id;
+              document.getElementById("name_selected").value = product.name;
+
+              for (var i = 0; i < document.getElementById("cat_selected").options.length; i++) {
+                if (document.getElementById("cat_selected").options[i].value === category.id) {
+                  document.getElementById("cat_selected").selectedIndex = i;
+                  break;
                 }
-              
+              }
+              item_selected=1;
 
             })
             .catch(error => console.error('Error:', error));
@@ -672,6 +682,21 @@ document.getElementById('add_product').addEventListener('click', function () {
   } else {
     alert('Δώστε ένα όνομα');
   }
+
+});
+
+document.getElementById('quantity_button').addEventListener('click', function() {
+
+  
+ if(document.getElementById('quantity_selected').value>0){
+
+
+
+
+ }else{
+  alert("Δεν γίνεται να εισάγετε αρνητική τιμή.");
+ }
+
 
 });
 
@@ -765,12 +790,15 @@ function items_select(data, selected_cat) {
       const name_table = document.createElement('td');
       const category_table = document.createElement('td');
       const detail_table = document.createElement('td');
+      const item_quantity = document.createElement('td');
 
       id_table.textContent = item.id;
       name_table.textContent = item.name;
-
+      item_quantity.textContent = item.quantity;
       const category = data.categories.find(category => category.id === item.category);
       category_table.textContent = category.category_name;
+
+
 
       const detail_get = item.details.map(detail => {
         if (detail.detail_name && detail.detail_value) {
@@ -790,7 +818,7 @@ function items_select(data, selected_cat) {
       row_table.appendChild(name_table);
       row_table.appendChild(category_table);
       row_table.appendChild(detail_table);
-
+      row_table.appendChild(item_quantity);
 
       table.appendChild(row_table);
     }
@@ -879,9 +907,10 @@ function radiobutton_refresh() {
 
 function duplicate_check() {
 
+  var check = 0;
 
   if (document.getElementById('radiobutton_0')) {
-    var check = 0;
+    
     var id = document.getElementById('id_selected').value;
     var name = document.getElementById('detail_name_text').value;
     var value = document.getElementById('detail_value_text').value;

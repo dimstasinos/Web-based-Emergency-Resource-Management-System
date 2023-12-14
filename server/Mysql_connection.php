@@ -6,8 +6,9 @@ function db_connect()
 
   $name = "localhost";
   $user = "root";
-  $password = "3003";
-  $database_name = "project";
+  $password = "2002";
+
+  $database_name = "web";
 
   $db = new mysqli($name, $user, $password, $database_name);
 
