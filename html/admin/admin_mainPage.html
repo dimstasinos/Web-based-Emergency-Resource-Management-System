@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrator</title>
   <link rel="stylesheet" href="/css/admin_mainPageStyle.css">
-  <link rel="stylesheet" href="/leaflet/leaflet.css" />
-  <script src="/leaflet/leaflet.js"></script>
-  <script src="/scripts/admin.js"></script>
-  <style> 
-    #map { 
-      height: 500px; 
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 500px;
     }
   </style>
-  
 </head>
 
 <body>
@@ -20,21 +19,45 @@
     <h1>Administrator</h1>
   </div>
   <div class="sidebar">
-    <a href="#map">Map</a>
-    <a href="#map">DataBase</a>
+    <a href="#">Map</a>
+    <a href="#">DataBase</a>
     <a href="#">Logout</a>
   </div>
   <div class="main">
- 
     <div id="map"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+
+        var map = L.map('map').setView([37.9838, 23.7275], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+//////////BASE MARKER LOCATION///////////
+        var BaseMarker = L.marker([37.9838, 23.7275], {
+          draggable: true
+        }).addTo(map);
+
+        BaseMarker.on('dragend', function (event) {
+          var marker = event.target;
+          var position = marker.getLatLng();
+
+          //Base Location confirm
+          var isConfirmed = confirm('Do you want to confirm this location?');
+          if (isConfirmed) {
+            //confirmation 
+            alert('Base Location confirmed: ' + position.lat + ', ' + position.lng);
+          } else {
+            //cancellation
+            alert('Base Location not confirmed');
+          }
+        });
+      });
+
+      
+    </script>
   </div>
-
-  <script>
-
-   
-
-  </script>
 </body>
-
 
 </html>

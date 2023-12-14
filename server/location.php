@@ -5,7 +5,7 @@ include("Mysql_connection.php");
 $db = db_connect();
 
 $mysql = "SELECT * FROM locations";
-$response = $db ->query($mysql);
+$response = $db->query($mysql);
 
 
 $locations = array();
@@ -31,6 +31,10 @@ $data = array(
 );
 
 
+$db->close();
 
+$json_data = json_encode($data);
 
-?>
+header('Content-Type: application/json');
+
+echo $json_data;
