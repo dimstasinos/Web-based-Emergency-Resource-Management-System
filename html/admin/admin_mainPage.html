@@ -13,7 +13,6 @@
     }
   </style>
 </head>
-
 <body>
   <div class="header">
     <h1>Administrator</h1>
@@ -55,6 +54,29 @@
         });
       });
 
+
+      /*
+////////////////VEHICLE MARKER////////////////////
+      var vehIcon = L.icon({
+
+        iconSize: [300, 300], 
+          iconAnchor: [15, 15] 
+        });
+
+     
+      var vehMarker = L.marker([37.9838, 23.7275], {
+          draggable: true,
+          icon: vehIcon 
+        }).addTo(map);   
+
+        // Event listener for marker dragend event
+        vehMarker.on('dragend', function (event) {
+          var marker = event.target;
+          var position = marker.getLatLng();
+          alert('Location confirmed: ' + position.lat + ', ' + position.lng);
+        });
+
+*/
       
     </script>
   </div>

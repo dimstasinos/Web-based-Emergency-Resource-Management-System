@@ -50,3 +50,48 @@ CREATE TABLE locations (
   typeloc enum( 'veh', 'req', 'off' ) NOT NULL,
   PRIMARY KEY (id)
 ) ;
+
+CREATE TABLE citizen (
+    citizen_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(20) NOT NULL,
+    UNIQUE (phone_number)
+);
+
+CREATE TABLE vehicles (
+    vehusername VARCHAR(255) PRIMARY KEY,
+    vehload INT,
+    vehstatus VARCHAR(255),
+    vehtasks INT,
+    citizen_id INT,
+    FOREIGN KEY (citizen_id) REFERENCES citizen(citizen_id)
+);
+
+CREATE TABLE requests (
+    citizen_name VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(20) NOT NULL,
+    submission_date DATE,
+    request_type VARCHAR(255),
+    quantity INT,
+    pickup_date DATE,
+    veh_username VARCHAR(255),
+    citizen_id INT,
+    PRIMARY KEY (citizen_name, submission_date),
+    FOREIGN KEY (veh_username) REFERENCES vehicles(vehusername),
+    FOREIGN KEY (citizen_id) REFERENCES citizen(citizen_id)
+);
+
+CREATE TABLE offers (
+    citizen_name VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(20) NOT NULL,
+    submission_date DATE,
+    offer_type VARCHAR(255),
+    quantity INT,
+    pickup_date DATE,
+    veh_username VARCHAR(255),
+    citizen_id INT,
+    PRIMARY KEY (citizen_name, submission_date),
+    FOREIGN KEY (veh_username) REFERENCES vehicles(vehusername),
+    FOREIGN KEY (citizen_id) REFERENCES citizen(citizen_id)
+);
+

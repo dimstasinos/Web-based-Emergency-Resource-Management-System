@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }).addTo(map);
 
 
-  fetch('/server/location.php')
+  fetch('/server/map_admin/location.php')
     .then(response => response.json())
     .then(data => {
       console.log(data);
@@ -18,9 +18,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-
-
-
+   fetch('/server/map_admin/requests.php')
+   .then(response => response.json())
+   .then(data => {
+     console.log(data);
+ 
+   })
+   .catch(error => console.error('Error:', error));
+/*
 function createAndPinMarker(data) {
  
     var lat = data.lat;
@@ -31,21 +36,26 @@ function createAndPinMarker(data) {
     var markerColor;
     var popupContent;
 }
-/*
+
     switch (typeloc) {
-      case 'base':
+      case 'off':
         markerColor = 'green';
         popupContent = '<b>Base</b><br>Base Location';
         break;
-      // Add other cases for different types
-      case 'vehicle':
+
+        case 'veh':
         markerColor = 'blue';
         popupContent = 'Username: ' + data.username + '<br>Load: ' + data.load +
           '<br>Condition: ' + data.condition;
-        // Connect vehicle marker to tasks with straight lines
-        connectMarkers([lat, long], tasksMarkers[data.username]);
+
+          connectMarkers([lat, long], tasksMarkers[data.username]);
         break;
-      // Add cases for other types
+      
+        case 'req':
+        markerColor = 'red';
+        popupContent = 'Username: ' + data.username + '<br>Load: ' + data.load +
+          '<br>Condition: ' + data.condition;
+
       default:
         console.error('Unknown marker type:', typeloc);
         return;
@@ -57,43 +67,19 @@ function createAndPinMarker(data) {
 
     // Store the marker for future reference
     switch (typeloc) {
-      case 'base':
-        baseMarker = marker;
-        break;
-      case 'vehicle':
+      case 'veh':
         vehiclesMarkers[data.username] = marker;
         break;
-      case 'request':
+      case 'req':
         requestsMarkers[data.id] = marker;
         break;
-      case 'offer':
+      case 'off':
         offersMarkers[data.id] = marker;
         break;
     }
   }
 
-/*
-// Create and add the marker to the map
-var marker = L.marker([lat, long], { icon: L.divIcon({ className: 'map-marker', html: markerColor }) }).addTo(map);
-marker.bindPopup(popupContent).openPopup();
 
-// Store the marker for future reference
-switch (type) {
-  case 'base':
-    baseMarker = marker;
-    break;
-  case 'vehicle':
-    vehiclesMarkers[data.username] = marker;
-    break;
-  case 'request':
-    requestsMarkers[data.id] = marker;
-    break;
-  case 'offer':
-    offersMarkers[data.id] = marker;
-    break;
-}
-
-/*
 // Connect two markers with a straight line
 function connectMarkers(coords1, coords2) {
 if (coords1 && coords2) {
