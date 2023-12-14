@@ -52,21 +52,28 @@
           <input type="text" id="id_selected" disabled>
           <label for="name_selected">Όνομα</label>
           <input type="text" id="name_selected">
-          <label for="cat_selected">Κατηγορία</label>
-          <select id="cat_selected"></select>
-          <button type="button" id="cat_change_button">Αλλαγή κατηγορίας</button>
+          <div>
+            <label for="cat_selected">Κατηγορία</label>
+            <select id="cat_selected"></select>
+            <button type="button" id="cat_change_button">Αλλαγή κατηγορίας</button>
+          </div>
+          <div>
+            <label for="quantity_selected">Ποσότητα:</label>
+            <input type="number" id="quantity_selected" value="0" min="0">
+            <button type="button" id="quantity_button">Αλλαγή ποσότητας</button>
+          </div>
         </div>
-      
-         <div>
+
+        <div>
           <p>Προσθήκη προιόντος:</p>
           <label for="name_new">Όνομα</label>
           <input type="text" id="name_new">
           <label for="cat_new">Κατηγορία</label>
           <select id="cat_new"></select>
           <button type="button" id="add_product">Προσθήκη</button>
-         </div>
-       
-      
+        </div>
+
+
         <div>Λεπτομέριες προίντος:</div>
         <div id="detail_select"></div>
         <div id="details">

@@ -685,6 +685,21 @@ document.getElementById('add_product').addEventListener('click', function () {
 
 });
 
+document.getElementById('quantity_button').addEventListener('click', function() {
+
+  
+ if(document.getElementById('quantity_selected').value>0){
+
+
+
+
+ }else{
+  alert("Δεν γίνεται να εισάγετε αρνητική τιμή.");
+ }
+
+
+});
+
 function category_id(data) {
 
   var list_select = document.getElementById("cat_list");
@@ -779,7 +794,7 @@ function items_select(data, selected_cat) {
 
       id_table.textContent = item.id;
       name_table.textContent = item.name;
-
+      item_quantity.textContent = item.quantity;
       const category = data.categories.find(category => category.id === item.category);
       category_table.textContent = category.category_name;
 
