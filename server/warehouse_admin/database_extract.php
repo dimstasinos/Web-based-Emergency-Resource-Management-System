@@ -19,7 +19,7 @@ if ($response->num_rows > 0) {
     );
 
     $quantity = array();
-    $mysql = $db->prepare("SELECT * from item_quantity where item_qua_id=?");
+    $mysql = $db->prepare("SELECT item_qua from item_quantity where item_qua_id=?");
     $mysql->bind_param("i", $row["item_id"]);
     $mysql->execute();
     $quantity_response = $mysql->get_result();

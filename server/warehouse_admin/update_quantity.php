@@ -13,8 +13,8 @@ try {
   item_qua_id=?");
 
   $update_stmt->bind_param(
-    "si",
-    $data->new_qua,
+    "ii",
+    $data->quantity,
     $data->id
   );
 
