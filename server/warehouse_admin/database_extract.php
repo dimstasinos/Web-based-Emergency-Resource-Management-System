@@ -35,9 +35,27 @@ if ($response->num_rows > 0) {
     }
 
     $item_array["details"] = $details;
+
+    $mysql = $db->prepare("SELECT * from item_quantity where item_qua_id=?");
+    $mysql->bind_param("i", $row["item_id"]);
+    $mysql->execute();
+    $quantity_response = $mysql->get_result();
+
+    if ($quantity_response->num_rows > 0) {
+      while ($qua_row = $quantity_response->fetch_assoc()) {
+        $detail_array = array(
+          "quantity" => $qua_row["item_qua"]    
+        );
+        $details[] = $detail_array;
+      }
+    }
+
+
+
     $items[] = $item_array;
   }
 }
+
 
 $mysql = "SELECT * from item_category";
 $response = $db->query($mysql);
@@ -50,13 +68,14 @@ if ($response->num_rows > 0) {
       "id" => $row['category_id'],
       "category_name" => $row['category_name']
     );
-    $categories[]= $category;
+    $categories[] = $category;
   }
 
   $data = array(
     "items" => $items,
-    "categories"=> $categories,
+    "categories" => $categories,
   );
+
 
 
   $db->close();
@@ -67,5 +86,3 @@ if ($response->num_rows > 0) {
 
   echo $json_data;
 }
-
-?>
