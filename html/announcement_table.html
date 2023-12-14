@@ -51,6 +51,48 @@
         <button type="button" id="upload-button">Upload</button>
 
     </form>
+    <label for="online_data">Ενημέρωση βάσης από κοινό αποθετήριο</label>
+  <button id="online_data">Ενημέρωση</button>
+
+  <form id="json_upload" enctype="multipart/form-data">
+    <label for="json_file">Αρχείο JSON</label>
+    <input type="file" id="json_file" name="json_file" accept=".json" />
+    <button type="button" id="submit_button" onclick="upload_data()">Upload</button>
+  </form>
+
+  <div>
+    <label for="cat_list">Κατηγορίες ειδών</label>
+    <select id="cat_list"></select>
+  </div>
+
+  <div>
+    <table id="table_admin">
+      <thead>
+        <tr>
+
+          <th>Όνομα</th>
+          <th>Kατηγορία</th>
+          <th>Λεπτομέρειες</th>
+          <th>Ποσότητα</th>
+        </tr>
+      </thead>
+      <tbody id="items_table"></tbody>
+    </table>
+  </div>
+
+
+  <div>
+    <form id="products">
+      <fieldset>
+        <legend>Προιόν:</legend>
+        <div id="product_select">
+          <label for="id_selected">ID</label>
+          <input type="text" id="id_selected" disabled>
+          <label for="name_selected">Όνομα</label>
+          <input type="text" id="name_selected">
+ </div>
+        
+        
     
     <script src="/scripts/announcement.js"></script>
 </body>

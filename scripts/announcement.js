@@ -100,6 +100,42 @@ document.getElementById('upload-button').addEventListener('click', function () {
     });
   });
 
-  document.addEventListener("DOMContentLoaded",function(){
+
+  document.addEventListener('DOMContentLoaded', function () {
     fetch('/server/warehouse_admin/database_extract.php')
+      .then(jsonResponse => {
+  
+        const isEmpty = jsonResponse.headers.get('Content-Length');
+        if (isEmpty === '0') {
+          return null;
+        }
+        
+        return jsonResponse.json();
+      })
+      .then(data => {
+        
+        if (data != null) {
+          categories_select(data);
+          selected_cat = category_id(data);
+          items_select(data, selected_cat);
+          categories_select_product(data);
+          category_select_det(data);
+          onload_data = data;
+        }
+        else {
+          const list = document.getElementById("cat_list");
+          list.innerHTML = '';
+          let select_add = document.createElement("option");
+          select_add.textContent = "Η Βάση δεδομένων είναι κενή";
+          list.appendChild(select_add);
+          document.getElementById('add_new_cat').disabled = true;
+  
+        }
+      })
+      .catch(error => console.error('Error:', error));
   });
+  
+
+  /*document.addEventListener("DOMContentLoaded",function(){
+    fetch('/server/warehouse_admin/database_extract.php')
+  });*/
