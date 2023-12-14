@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
-
    fetch('/server/map_admin/requests.php')
    .then(response => response.json())
    .then(data => {
@@ -25,6 +24,34 @@ document.addEventListener('DOMContentLoaded', function () {
  
    })
    .catch(error => console.error('Error:', error));
+
+
+
+   fetch('/server/map_admin/offers.php')
+   .then(response => response.json())
+   .then(data => {
+     console.log(data);
+ 
+   })
+   .catch(error => console.error('Error:', error));
+  
+   fetch('/server/map_admin/vehicles.php')
+   .then(response => response.json())
+   .then(data => {
+     console.log(data);
+ 
+   })
+   .catch(error => console.error('Error:', error));
+
+   fetch('/server/map_admin/citizen.php')
+   .then(response => response.json())
+   .then(data => {
+     console.log(data);
+ 
+   })
+   .catch(error => console.error('Error:', error));
+  
+
 /*
 function createAndPinMarker(data) {
  

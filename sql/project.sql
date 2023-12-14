@@ -96,10 +96,9 @@ CREATE TABLE offers (
     FOREIGN KEY (citizen_id) REFERENCES citizen(citizen_id)
 );
 
-=======
+
 CREATE TABLE item_quantity (
 	item_qua_id int not null,
     item_qua int not null,
     primary key (item_qua_id)
 );
->>>>>>> 2d7558ca54ae89f9ba4635d1d0510a8da7564450
