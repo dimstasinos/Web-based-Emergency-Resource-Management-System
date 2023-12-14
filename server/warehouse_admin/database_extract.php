@@ -18,6 +18,22 @@ if ($response->num_rows > 0) {
       "category" => $row["item_category"]
     );
 
+    $quantity = array();
+    $mysql = $db->prepare("SELECT * from item_quantity where item_qua_id=?");
+    $mysql->bind_param("i", $row["item_id"]);
+    $mysql->execute();
+    $quantity_response = $mysql->get_result();
+
+    if ($quantity_response->num_rows > 0) {
+      $quantiry_array = $qua_row["item_qua"];
+
+      $quantity = $quantiry_array;
+    } else {
+      $quantity = "0";
+    }
+
+    $item_array["quantity"] = $quantity;
+
     $details = array();
     $mysql = $db->prepare("SELECT * FROM item_details where item_detail_id=?");
     $mysql->bind_param("i", $row["item_id"]);
@@ -35,22 +51,6 @@ if ($response->num_rows > 0) {
     }
 
     $item_array["details"] = $details;
-
-    $mysql = $db->prepare("SELECT * from item_quantity where item_qua_id=?");
-    $mysql->bind_param("i", $row["item_id"]);
-    $mysql->execute();
-    $quantity_response = $mysql->get_result();
-
-    if ($quantity_response->num_rows > 0) {
-      while ($qua_row = $quantity_response->fetch_assoc()) {
-        $detail_array = array(
-          "quantity" => $qua_row["item_qua"]    
-        );
-        $details[] = $detail_array;
-      }
-    }
-
-
 
     $items[] = $item_array;
   }
