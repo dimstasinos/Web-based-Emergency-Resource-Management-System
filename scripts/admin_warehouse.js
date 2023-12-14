@@ -9,27 +9,47 @@ document.addEventListener('DOMContentLoaded', function () {
       if (isEmpty === '0') {
         return null;
       }
-      
+
       return jsonResponse.json();
     })
     .then(data => {
-      
+
       if (data != null) {
         categories_select(data);
         selected_cat = category_id(data);
         items_select(data, selected_cat);
         categories_select_product(data);
         category_select_det(data);
+        categories_select_new(data);
         onload_data = data;
       }
       else {
         const list = document.getElementById("cat_list");
         list.innerHTML = '';
-        let select_add = document.createElement("option");
+        var select_add = document.createElement("option");
         select_add.textContent = "Η Βάση δεδομένων είναι κενή";
         list.appendChild(select_add);
-        document.getElementById('add_new_cat').disabled = true;
 
+        const list_2 = document.getElementById("cat_selected");
+        list_2.innerHTML = '';
+        var select_add_2 = document.createElement("option");
+        select_add_2.textContent = "Η Βάση δεδομένων είναι κενή";
+        list_2.appendChild(select_add_2);
+
+        const list_3 = document.getElementById("cat_new");
+        list_3.innerHTML = '';
+        var select_add_3 = document.createElement("option");
+        select_add_3.textContent = "Η Βάση δεδομένων είναι κενή";
+        list_3.appendChild(select_add_3);
+
+        const list_4 = document.getElementById("category");
+        list_4.innerHTML = '';
+        var select_add_4 = document.createElement("option");
+        select_add_4.textContent = "Η Βάση δεδομένων είναι κενή";
+        list_4.appendChild(select_add_4);
+
+        document.getElementById('add_new_cat').disabled = true;
+        document.getElementById('add_product').disabled = true;
       }
     })
     .catch(error => console.error('Error:', error));
@@ -365,7 +385,6 @@ document.getElementById('category').addEventListener('change', function () {
 
 });
 
-
 document.getElementById('add_new_cat').addEventListener('click', function () {
 
 
@@ -449,8 +468,7 @@ document.getElementById('cat_list').addEventListener('change', function () {
 
 document.getElementById('online_data').addEventListener('click', function () {
 
-
-  document.getElementById('online_data').disabled=true;
+  document.getElementById('online_data').disabled = true;
   fetch('/server/warehouse_admin/online_database.php',)
     .then(jsonResponse => jsonResponse.json())
     .then(data => {
@@ -461,7 +479,7 @@ document.getElementById('online_data').addEventListener('click', function () {
       categories_select_product(data);
       category_select_det(data);
       document.getElementById('add_new_cat').disabled = false;
-      document.getElementById('online_data').disabled=false;
+      document.getElementById('online_data').disabled = false;
 
     })
     .catch(error => console.error('Error:', error));
@@ -508,6 +526,7 @@ document.getElementById('cat_name_change').addEventListener('click', function ()
                 category_select_det(data);
                 selected_cat = category_id(data);
                 items_select(data, selected_cat);
+                categories_select_new(data);
               })
               .catch(error => console.error('Error:', error));
           })
@@ -534,14 +553,12 @@ document.getElementById('cat_name_delete').addEventListener('click', function ()
     if (document.getElementById('cat_name').value !== '') {
 
       var id = document.getElementById('id_cat').value;
-      var name = document.getElementById('cat_name').value;
 
       const data = {
-        id: id,
-        new_name: name
+        id: id
       };
 
-      fetch('/server/warehouse_admin/update_category.php', {
+      fetch('/server/warehouse_admin/delete_category.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -561,6 +578,7 @@ document.getElementById('cat_name_delete').addEventListener('click', function ()
               category_select_det(data);
               selected_cat = category_id(data);
               items_select(data, selected_cat);
+              categories_select_new(data);
             })
             .catch(error => console.error('Error:', error));
         })
@@ -572,6 +590,87 @@ document.getElementById('cat_name_delete').addEventListener('click', function ()
     }
   } else {
     alert('Επίλεξε μια κατηγορία');
+  }
+
+});
+
+document.getElementById('add_product').addEventListener('click', function () {
+
+
+  if (document.getElementById('name_new').value !== '') {
+
+    const input = document.getElementById('name_new').value.toLowerCase();
+
+    const check = onload_data.items.find(item => item.name.toLowerCase() === input);
+
+    if (check === undefined) {
+
+      var id_check = onload_data.items[0].id;
+
+      for (var i = 0; i < onload_data.items.length; i++) {
+        if (parseInt(onload_data.items[i].id) > id_check) {
+          id_check = onload_data.items[i].id;
+        }
+      }
+
+      id_check++;
+      const data = {
+        id: id_check,
+        category: document.getElementById('cat_new').value,
+        name: document.getElementById('name_new').value
+      };
+
+      console.log(data);
+
+      fetch('/server/warehouse_admin/add_product.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+
+          fetch('/server/warehouse_admin/database_extract.php')
+            .then(jsonResponse => jsonResponse.json())
+            .then(data => {
+              onload_data = data;
+              categories_select(data);
+              items_select(data, document.getElementById('cat_new').value);
+              
+              document.getElementById('detail_name_text').value = '';
+              document.getElementById('detail_value_text').value = '';
+              document.getElementById('detail_select').innerHTML = '';
+
+              const product = onload_data.items.find(item => item.id === id_check);
+              console.log(product);
+              const category = onload_data.categories.find(cat_name => cat_name.id === product.category);
+          
+                document.getElementById("id_selected").value = product.id;
+                document.getElementById("name_selected").value = product.name;
+          
+                for (var i = 0; i < document.getElementById("cat_selected").options.length; i++) {
+                  if (document.getElementById("cat_selected").options[i].value === category.id) {
+                    document.getElementById("cat_selected").selectedIndex = i;
+                    break;
+                  }
+                }
+              
+
+            })
+            .catch(error => console.error('Error:', error));
+        })
+        .catch(error => console.error('Error:', error));
+
+
+    } else {
+      alert('Αυτό το προιόν υπάρχει ήδη')
+    }
+
+  } else {
+    alert('Δώστε ένα όνομα');
   }
 
 });
@@ -634,6 +733,23 @@ function category_select_det(data) {
   document.getElementById('id_cat').value = '';
   document.getElementById('cat_name').value = document.getElementById('category').options[document.getElementById('category').selectedIndex].textContent;
   document.getElementById('id_cat').value = document.getElementById('category').value;
+}
+
+function categories_select_new(data) {
+
+  const list = document.getElementById("cat_new");
+
+  list.innerHTML = '';
+
+  data.categories.forEach(category => {
+    if (category.category_name !== "" && category.category_name !== "-----") {
+      let select_add = document.createElement("option");
+      select_add.textContent = category.category_name;
+      select_add.value = category.id;
+      list.appendChild(select_add);
+    }
+  });
+
 }
 
 function items_select(data, selected_cat) {
