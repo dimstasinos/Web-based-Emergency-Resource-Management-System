@@ -1,6 +1,7 @@
 var onload_data;
 
 document.addEventListener('DOMContentLoaded', function () {
+    console.log ("hi");
 
     fetch('/server/request/request.php')
         .then(response => response.json())
@@ -68,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
+console.log ("hi");
 
 
 document.getElementById('upload-button').addEventListener('click', function () {
@@ -132,9 +134,7 @@ document.getElementById('upload-button').addEventListener('click', function () {
         });
 
 
-
     document.getElementById("table_admin_request").addEventListener("click", function (event) {
-        console.log("Test: "+product.name);
 
         if (event.target.tagName === "td") {
             
@@ -145,7 +145,7 @@ document.getElementById('upload-button').addEventListener('click', function () {
             const product = onload_data.items.find(item => item.id === item_id);
 
             
-            document.getElementById("weneed").value = product.name;
+            document.getElementById("weneed").value = product;
         }
     });
 
