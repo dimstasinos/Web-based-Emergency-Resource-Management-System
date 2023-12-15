@@ -1,7 +1,7 @@
 <?php
 
 include("../Mysql_connection.php");
-
+try {
 $db = db_connect();
 
 $mysql = "SELECT * from items";
@@ -25,9 +25,9 @@ if ($response->num_rows > 0) {
     $quantity_response = $mysql->get_result();
 
     if ($quantity_response->num_rows > 0) {
-      $quantiry_array = $qua_row["item_qua"];
+      $quantity_row = $quantity_response->fetch_assoc();
+      $quantity = (string)$quantity_row["item_qua"];
 
-      $quantity = $quantiry_array;
     } else {
       $quantity = "0";
     }
@@ -76,13 +76,15 @@ if ($response->num_rows > 0) {
     "categories" => $categories,
   );
 
+}
 
+$db->close();
+$json_data = json_encode($data);
+header('Content-Type: application/json');
 
-  $db->close();
+echo $json_data;
 
-  $json_data = json_encode($data);
-
+} catch (Exception $error) {
   header('Content-Type: application/json');
-
-  echo $json_data;
+  echo json_encode(['status' => 'error', "Error: " . $error->getMessage()]);
 }

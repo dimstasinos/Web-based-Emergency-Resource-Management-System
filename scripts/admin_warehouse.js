@@ -476,24 +476,27 @@ document.getElementById('online_data').addEventListener('click', function () {
     .then(response => response.json())
     .then(data => {
       if (data.status === "error") {
-        console.error('PHP Error:', data.Error);
+        console.error('Server Error:', data.Error);
       } else {
-      fetch('/server/warehouse_admin/database_extract.php',)
-        .then(jsonResponse => jsonResponse.json())
-        .then(data => {
-         
-            onload_data = data;
-            categories_select(data);
-            const selected_cat = category_id(data);
-            items_select(data, selected_cat);
-            categories_select_product(data);
-            category_select_det(data);
-            document.getElementById('add_new_cat').disabled = false;
-            document.getElementById('online_data').disabled = false;
+        fetch('/server/warehouse_admin/database_extract.php',)
+          .then(jsonResponse => jsonResponse.json())
+          .then(data => {
+            if (data.status === "error") {
+              console.error('Server Error:', data.Error);
+            } else {
+              onload_data = data;
+              categories_select(data);
+              const selected_cat = category_id(data);
+              items_select(data, selected_cat);
+              categories_select_product(data);
+              category_select_det(data);
+              document.getElementById('add_new_cat').disabled = false;
+              document.getElementById('online_data').disabled = false;
+            }
           }
-        )
-        .catch(error => console.error('Error:', error));
-        }
+          )
+          .catch(error => console.error('Error:', error));
+      }
     })
     .catch(error => console.error('Error:', error));
 

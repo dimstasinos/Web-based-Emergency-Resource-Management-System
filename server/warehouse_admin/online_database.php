@@ -9,9 +9,11 @@ try {
 
   $delete_items = "DELETE FROM items;";
   $delete_categories = "DELETE FROM item_category";
+  $delete_quantities = "DELETE FROM item_quantity";
 
   $db->query($delete_items);
   $db->query($delete_categories);
+  $db->query($delete_quantities);
 
   foreach ($json_data->categories as $value) {
     $cat_name = trim($value->category_name);
@@ -28,7 +30,7 @@ try {
 
     $items_stmt->close();
 
-    $quantity_stmt = $db->prepare("INSERT INTO item_quantity VALUES (?)");
+    $quantity_stmt = $db->prepare("INSERT INTO item_quantity VALUES (?,0)");
     $quantity_stmt->bind_param("i", $value->id);
     $quantity_stmt->execute();
   }
