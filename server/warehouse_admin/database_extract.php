@@ -1,6 +1,7 @@
 <?php
 
 include("../Mysql_connection.php");
+
 try {
 $db = db_connect();
 
@@ -70,21 +71,20 @@ if ($response->num_rows > 0) {
     );
     $categories[] = $category;
   }
-
-  $data = array(
-    "items" => $items,
-    "categories" => $categories,
-  );
-
 }
 
+$data = array(
+  "items" => $items,
+  "categories" => $categories,
+);
+
 $db->close();
+
 $json_data = json_encode($data);
 header('Content-Type: application/json');
-
 echo $json_data;
 
 } catch (Exception $error) {
   header('Content-Type: application/json');
-  echo json_encode(['status' => 'error', "Error: " . $error->getMessage()]);
+  echo json_encode(['status' => 'error', "Error" => $error->getMessage()]);
 }

@@ -3,22 +3,14 @@ var item_selected = 0;
 
 document.addEventListener('DOMContentLoaded', function () {
   fetch('/server/warehouse_admin/database_extract.php')
-    .then(jsonResponse => {
-
-      const isEmpty = jsonResponse.headers.get('Content-Length');
-      if (isEmpty === '0') {
-        return null;
-      }
-
-      return jsonResponse.json();
-    })
+    .then(jsonResponse => jsonResponse.json())
     .then(data => {
       if (data.status === "error") {
         console.error('Server Error:', data.Error);
       } else {
-        if (data != null) {
+        if (data.categories.length !== 0 && data.items.length !== 0) {
           categories_select(data);
-          selected_cat = category_id(data);
+          selected_cat = document.getElementById("cat_list").value;
           items_select(data, selected_cat);
           categories_select_product(data);
           category_select_det(data);
@@ -204,7 +196,7 @@ document.getElementById('delete').addEventListener('click', function () {
                 console.error('Server Error:', data.Error);
               } else {
                 onload_data = data;
-                var selected_cat = category_id(data);
+                var selected_cat = document.getElementById("cat_list").value;
                 items_select(data, selected_cat);
                 radiobutton_refresh();
               }
@@ -273,7 +265,7 @@ document.getElementById('change').addEventListener('click', function () {
                   console.error('Server Error:', data.Error);
                 } else {
                   onload_data = data;
-                  var selected_cat = category_id(data);
+                  var selected_cat = document.getElementById("cat_list").value;
                   items_select(data, selected_cat);
                   radiobutton_refresh();
                 }
@@ -331,7 +323,7 @@ document.getElementById('add').addEventListener('click', function () {
                     console.error('Server Error:', data.Error);
                   } else {
                     onload_data = data;
-                    var selected_cat = category_id(data);
+                    var selected_cat = document.getElementById("cat_list").value;
                     items_select(data, selected_cat);
                     radiobutton_refresh();
                   }
@@ -360,7 +352,7 @@ document.getElementById('cat_change_button').addEventListener('click', function 
 
     const id = document.getElementById('id_selected').value;
     const new_category_id = document.getElementById('cat_selected').value;
-    const old_category_id = category_id(onload_data);
+    const old_category_id = document.getElementById("cat_list").value;
 
 
     if (new_category_id !== old_category_id) {
@@ -388,9 +380,9 @@ document.getElementById('cat_change_button').addEventListener('click', function 
                   console.error('Server Error:', data.Error);
                 } else {
                   onload_data = data;
-                  var selected_cat = category_id(data);
-                  items_select(data, selected_cat);
+                  items_select(data, new_category_id);
                   radiobutton_refresh();
+                  document.getElementById("cat_list").value = new_category_id;
                 }
               })
               .catch(error => console.error('Error:', error));
@@ -467,8 +459,10 @@ document.getElementById('add_new_cat').addEventListener('click', function () {
                   categories_select(data);
                   categories_select_product(data);
                   category_select_det(data);
+                  categories_select_new(data);
                   items_select(data, id_check);
-                  document.getElementById('cat_list').value = document.getElementById('new_cat_name').value;
+                  document.getElementById('detail_select').innerHTML="";
+                  document.getElementById('cat_list').value = id_check;
                 }
               })
               .catch(error => console.error('Error:', error));
@@ -494,7 +488,7 @@ document.getElementById('cat_list').addEventListener('change', function () {
         console.error('Server Error:', data.Error);
       } else {
         onload_data = data;
-        const selected_cat = category_id(data);
+        const selected_cat = document.getElementById("cat_list").value;
         items_select(data, selected_cat);
 
         document.getElementById('id_selected').value = '';
@@ -522,7 +516,7 @@ document.getElementById('online_data').addEventListener('click', function () {
             } else {
               onload_data = data;
               categories_select(data);
-              const selected_cat = category_id(data);
+              const selected_cat = document.getElementById("cat_list").value;
               items_select(data, selected_cat);
               categories_select_product(data);
               category_select_det(data);
@@ -583,9 +577,10 @@ document.getElementById('cat_name_change').addEventListener('click', function ()
                     categories_select(data);
                     categories_select_product(data);
                     category_select_det(data);
-                    selected_cat = category_id(data);
-                    items_select(data, selected_cat);
                     categories_select_new(data);
+                    
+
+
                   }
                 })
                 .catch(error => console.error('Error:', error));
@@ -639,7 +634,7 @@ document.getElementById('cat_name_delete').addEventListener('click', function ()
                   categories_select(data);
                   categories_select_product(data);
                   category_select_det(data);
-                  selected_cat = category_id(data);
+                  selected_cat = document.getElementById("cat_list").value;
                   items_select(data, selected_cat);
                   categories_select_new(data);
                 }
@@ -704,8 +699,7 @@ document.getElementById('add_product').addEventListener('click', function () {
                   console.error('Server Error:', data.Error);
                 } else {
                   onload_data = data;
-                  categories_select(data);
-                  items_select(data, document.getElementById('cat_new').value);
+                  
 
                   document.getElementById('detail_name_text').value = '';
                   document.getElementById('detail_value_text').value = '';
@@ -726,6 +720,9 @@ document.getElementById('add_product').addEventListener('click', function () {
                       break;
                     }
                   }
+                  
+                  
+                  items_select(data, document.getElementById('cat_new').value);
                   item_selected = 1;
                 }
               })
@@ -778,9 +775,7 @@ document.getElementById('quantity_button').addEventListener('click', function ()
                   console.error('Server Error:', data.Error);
                 } else {
                   onload_data = data;
-                  categories_select(data);
-                  categories_select_product(data);
-                  var selected_cat = category_id(data);
+                  var selected_cat = document.getElementById("cat_list").value;
                   items_select(data, selected_cat);
                   category_select_det(data);
                 }
@@ -819,7 +814,7 @@ function categories_select(data) {
     if (category.category_name !== "" && category.category_name !== "-----") {
       let select_add = document.createElement("option");
       select_add.textContent = category.category_name;
-      select_add.value = category.category_name;
+      select_add.value = category.id;
       list.appendChild(select_add);
     }
   });
