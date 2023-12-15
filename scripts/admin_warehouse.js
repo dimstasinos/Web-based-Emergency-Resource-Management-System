@@ -105,7 +105,8 @@ document.getElementById("table_admin").addEventListener("click", function (event
 
       document.getElementById("id_selected").value = product.id;
       document.getElementById("name_selected").value = product.name;
-
+      document.getElementById("quantity_selected").value = product.quantity;
+      
       for (var i = 0; i < document.getElementById("cat_selected").options.length; i++) {
         if (document.getElementById("cat_selected").options[i].value === category.id) {
           document.getElementById("cat_selected").selectedIndex = i;
@@ -127,6 +128,7 @@ document.getElementById("table_admin").addEventListener("click", function (event
 
       document.getElementById("id_selected").value = product.id;
       document.getElementById("name_selected").value = product.name;
+      document.getElementById("quantity_selected").value = product.quantity;
 
       for (var i = 0; i < document.getElementById("cat_selected").options.length; i++) {
         if (document.getElementById("cat_selected").options[i].value === category.id) {
@@ -490,6 +492,7 @@ document.getElementById('online_data').addEventListener('click', function () {
               items_select(data, selected_cat);
               categories_select_product(data);
               category_select_det(data);
+              document.getElementById("detail_select").innerHTML="";
               document.getElementById('add_new_cat').disabled = false;
               document.getElementById('online_data').disabled = false;
             }
@@ -697,7 +700,7 @@ document.getElementById('add_product').addEventListener('click', function () {
 document.getElementById('quantity_button').addEventListener('click', function () {
 
   if (document.getElementById('quantity_selected').value !== "") {
-    if (document.getElementById('quantity_selected').value > 0) {
+    if (document.getElementById('quantity_selected').value >= 0) {
 
       const id = document.getElementById('id_selected').value;
       const quantity = document.getElementById("quantity_selected").value;
@@ -706,7 +709,7 @@ document.getElementById('quantity_button').addEventListener('click', function ()
         id: id,
         quantity: quantity,
       }
-
+   
       fetch('/server/warehouse_admin/update_quantity.php', {
         method: 'POST',
         headers: {
@@ -716,7 +719,7 @@ document.getElementById('quantity_button').addEventListener('click', function ()
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data);
+          
 
           fetch('/server/warehouse_admin/database_extract.php')
             .then(jsonResponse => jsonResponse.json())
@@ -725,9 +728,8 @@ document.getElementById('quantity_button').addEventListener('click', function ()
               categories_select(data);
               categories_select_product(data);
               var selected_cat = category_id(data);
-              category_select_det(data);
               items_select(data, selected_cat);
-              document.getElementById('cat_list').value = document.getElementById('new_cat_name').value;
+              category_select_det(data);
             })
             .catch(error => console.error('Error:', error));
         })
