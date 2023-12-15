@@ -6,13 +6,12 @@ $data = json_decode($receive);
 
 $db = db_connect();
 
-$add_stmt = $db->prepare("INSERT INTO announcements(text,date,quantity) VALUES (?,?,?)");
+$add_stmt = $db->prepare("INSERT INTO announcements(text,date,quantity) VALUES (?,now(),?)");
   
 
     $add_stmt->bind_param(
-      "ssi",
+      "si",
       $data->text,
-      $data->date,
       $data->quantity
     );
   
