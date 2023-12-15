@@ -1,3 +1,5 @@
+var onload_data;
+
 document.addEventListener('DOMContentLoaded', function () {
 
   fetch('/server/announcement/announcement.php')
@@ -75,9 +77,9 @@ document.getElementById('upload-button').addEventListener('click', function () {
   var form = document.getElementById("announcement-form");
 
   text = document.getElementById('text').value;
-  if(document.getElementById('quantity').value>0){
-  quantity = document.getElementById('quantity').value;
-  }else{
+  if (document.getElementById('quantity').value > 0) {
+    quantity = document.getElementById('quantity').value;
+  } else {
     alert("Η ποσότητα πρέπει να είναι θετική.")
   };
   const data = {
@@ -150,7 +152,7 @@ document.getElementById("table_admin").addEventListener("click", function (event
     const category = onload_data.categories.find(cat_name => cat_name.id === product.category);
 
 
-   
+
     document.getElementById("text").value = product.name;
   }
 });
@@ -164,7 +166,7 @@ document.getElementById('cat_list').addEventListener('change', function () {
       const selected_cat = category_id(data);
       items_select(data, selected_cat);
 
-     
+
       document.getElementById('text').value = '';
 
     })
@@ -196,7 +198,7 @@ function items_select(data, selected_cat) {
 
       id_table.textContent = item.id;
       name_table.textContent = item.name;
-
+      item_quantity.textContent = item.quantity;
       const category = data.categories.find(category => category.id === item.category);
       category_table.textContent = category.category_name;
 
@@ -242,5 +244,8 @@ function categories_select(data) {
       list.appendChild(select_add);
     }
   });
+  window.setTimeout(function () {
+    window.location.reload();
+  }, 10000);
 
 }

@@ -102,3 +102,10 @@ CREATE TABLE item_quantity (
     item_qua int not null,
     primary key (item_qua_id)
 );
+
+create table request(
+id INT AUTO_INCREMENT PRIMARY KEY,
+weneed TEXT NOT NULL,
+date DATE NOT NULL,
+persons INT NOT NULL
+);
