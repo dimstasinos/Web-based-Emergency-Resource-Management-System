@@ -51,7 +51,6 @@ CREATE TABLE locations (
   PRIMARY KEY (id)
 ) ;
 
-<<<<<<< HEAD
 CREATE TABLE citizen (
     citizen_id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
