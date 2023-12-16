@@ -1,5 +1,5 @@
-var onload_data;
-var item_selected = 0;
+let onload_data;
+let item_selected = 0;
 
 document.addEventListener('DOMContentLoaded', function () {
   fetch('/server/warehouse_admin/database_extract.php')
@@ -20,25 +20,25 @@ document.addEventListener('DOMContentLoaded', function () {
         else {
           const list = document.getElementById("cat_list");
           list.innerHTML = '';
-          var select_add = document.createElement("option");
+          let select_add = document.createElement("option");
           select_add.textContent = "Η Βάση δεδομένων είναι κενή";
           list.appendChild(select_add);
 
           const list_2 = document.getElementById("cat_selected");
           list_2.innerHTML = '';
-          var select_add_2 = document.createElement("option");
+          let select_add_2 = document.createElement("option");
           select_add_2.textContent = "Η Βάση δεδομένων είναι κενή";
           list_2.appendChild(select_add_2);
 
           const list_3 = document.getElementById("cat_new");
           list_3.innerHTML = '';
-          var select_add_3 = document.createElement("option");
+          let select_add_3 = document.createElement("option");
           select_add_3.textContent = "Η Βάση δεδομένων είναι κενή";
           list_3.appendChild(select_add_3);
 
           const list_4 = document.getElementById("category");
           list_4.innerHTML = '';
-          var select_add_4 = document.createElement("option");
+          let select_add_4 = document.createElement("option");
           select_add_4.textContent = "Η Βάση δεδομένων είναι κενή";
           list_4.appendChild(select_add_4);
 
@@ -66,7 +66,7 @@ document.getElementById("table_admin").addEventListener("click", function (event
     const product = onload_data.items.find(item => item.id === item_id);
     const category = onload_data.categories.find(cat_name => cat_name.id === product.category);
 
-    var flag = 0;
+    let flag = 0;
 
     for (let item of product.details) {
 
@@ -80,7 +80,7 @@ document.getElementById("table_admin").addEventListener("click", function (event
     }
 
     if (flag === 0) {
-      var i = 0;
+      let i = 0;
       product.details.forEach(item => {
 
         const radio_button = document.createElement('input');
@@ -102,16 +102,16 @@ document.getElementById("table_admin").addEventListener("click", function (event
       document.getElementById("name_selected").value = product.name;
       document.getElementById("quantity_selected").value = product.quantity;
 
-      for (var i = 0; i < document.getElementById("cat_selected").options.length; i++) {
+      for (let i = 0; i < document.getElementById("cat_selected").options.length; i++) {
         if (document.getElementById("cat_selected").options[i].value === category.id) {
           document.getElementById("cat_selected").selectedIndex = i;
           break;
         }
       }
 
-      var radio_button = document.getElementsByName('select');
+      let radio_button = document.getElementsByName('select');
 
-      for (var i = 0; i < radio_button.length; i++) {
+      for (let i = 0; i < radio_button.length; i++) {
         radio_button[i].addEventListener('change', function () {
           if (this.checked) {
             document.getElementById('detail_name_text').value = product.details[this.value].detail_name;
@@ -125,7 +125,7 @@ document.getElementById("table_admin").addEventListener("click", function (event
       document.getElementById("name_selected").value = product.name;
       document.getElementById("quantity_selected").value = product.quantity;
 
-      for (var i = 0; i < document.getElementById("cat_selected").options.length; i++) {
+      for (let i = 0; i < document.getElementById("cat_selected").options.length; i++) {
         if (document.getElementById("cat_selected").options[i].value === category.id) {
           document.getElementById("cat_selected").selectedIndex = i;
           break;
@@ -143,7 +143,7 @@ document.getElementById('clear').addEventListener('click', function () {
   document.getElementById('detail_value_text').value = '';
 
   if (document.getElementById('radiobutton_0')) {
-    for (var i = 0; i < document.getElementsByName('select').length; i++) {
+    for (let i = 0; i < document.getElementsByName('select').length; i++) {
       document.getElementsByName('select')[i].checked = false;
     }
   }
@@ -157,9 +157,9 @@ document.getElementById('delete').addEventListener('click', function () {
     const name = document.getElementById('detail_name_text').value;
     const value = document.getElementById('detail_value_text').value;
 
-    //var selected;
-    var flag = 0;
-    for (var i = 0; i < document.getElementsByName('select').length; i++) {
+    //let selected;
+    let flag = 0;
+    for (let i = 0; i < document.getElementsByName('select').length; i++) {
 
       if (document.getElementsByName('select')[i].checked === true) {
         //selected = document.getElementsByName('select')[i].value;
@@ -196,7 +196,7 @@ document.getElementById('delete').addEventListener('click', function () {
                 console.error('Server Error:', data.Error);
               } else {
                 onload_data = data;
-                var selected_cat = document.getElementById("cat_list").value;
+                let selected_cat = document.getElementById("cat_list").value;
                 items_select(data, selected_cat);
                 radiobutton_refresh();
               }
@@ -222,9 +222,9 @@ document.getElementById('change').addEventListener('click', function () {
     const name = document.getElementById('detail_name_text').value;
     const value = document.getElementById('detail_value_text').value;
 
-    var selected;
-    var flag = 0;
-    for (var i = 0; i < document.getElementsByName('select').length; i++) {
+    let selected;
+    let flag = 0;
+    for (let i = 0; i < document.getElementsByName('select').length; i++) {
 
       if (document.getElementsByName('select')[i].checked === true) {
         selected = document.getElementsByName('select')[i].value;
@@ -238,8 +238,8 @@ document.getElementById('change').addEventListener('click', function () {
       product = onload_data.items.find(item => item.id === id_);
 
 
-      var check = false;
-      for (var i = 0; i < product.details.length; i++) {
+      let check = false;
+      for (let i = 0; i < product.details.length; i++) {
         if (product.details[i].detail_name === name && product.details[i].detail_value === value) {
           check = true;
         }
@@ -275,7 +275,7 @@ document.getElementById('change').addEventListener('click', function () {
                     console.error('Server Error:', data.Error);
                   } else {
                     onload_data = data;
-                    var selected_cat = document.getElementById("cat_list").value;
+                    let selected_cat = document.getElementById("cat_list").value;
                     items_select(data, selected_cat);
                     radiobutton_refresh();
                   }
@@ -306,8 +306,8 @@ document.getElementById('add').addEventListener('click', function () {
 
   if (item_selected === 1) {
 
-    var selected = false;
-    for (var i = 0; i < document.getElementsByName("select").length; i++) {
+    let selected = false;
+    for (let i = 0; i < document.getElementsByName("select").length; i++) {
       if (document.getElementsByName("select")[i].checked) {
         selected = true;
         break;
@@ -318,7 +318,7 @@ document.getElementById('add').addEventListener('click', function () {
 
       if (name !== '' || value !== '') {
 
-        var check = duplicate_check();
+        let check = duplicate_check();
 
         if (check === 0) {
 
@@ -346,7 +346,7 @@ document.getElementById('add').addEventListener('click', function () {
                       console.error('Server Error:', data.Error);
                     } else {
                       onload_data = data;
-                      var selected_cat = document.getElementById("cat_list").value;
+                      let selected_cat = document.getElementById("cat_list").value;
                       items_select(data, selected_cat);
                       radiobutton_refresh();
                     }
@@ -448,9 +448,9 @@ document.getElementById('add_new_cat').addEventListener('click', function () {
     if (check === undefined) {
 
 
-      var id_check = onload_data.categories[0].id;
+      let id_check = onload_data.categories[0].id;
 
-      for (var i = 0; i < onload_data.categories.length; i++) {
+      for (let i = 0; i < onload_data.categories.length; i++) {
         if (parseInt(onload_data.categories[i].id) > id_check) {
           id_check = onload_data.categories[i].id;
         }
@@ -580,16 +580,16 @@ document.getElementById('cat_name_change').addEventListener('click', function ()
 
       if (check === undefined) {
 
-        var id = document.getElementById('id_cat').value;
-        var name = document.getElementById('cat_name').value;
+        let id = document.getElementById('id_cat').value;
+        let name = document.getElementById('cat_name').value;
 
         const data = {
           id: id,
           new_name: name
         };
 
-        var current_cat = document.getElementById("category").value;
-        var current_cat_1 = document.getElementById("cat_list").value;
+        let current_cat = document.getElementById("category").value;
+        let current_cat_1 = document.getElementById("cat_list").value;
         fetch('/server/warehouse_admin/update_category.php', {
           method: 'POST',
           headers: {
@@ -644,7 +644,7 @@ document.getElementById('cat_name_delete').addEventListener('click', function ()
   if (document.getElementById('id_cat').value !== '') {
     if (document.getElementById('cat_name').value !== '') {
 
-      var id = document.getElementById('id_cat').value;
+      let id = document.getElementById('id_cat').value;
 
       const data = {
         id: id
@@ -702,9 +702,9 @@ document.getElementById('add_product').addEventListener('click', function () {
 
     if (check === undefined) {
 
-      var id_check = onload_data.items[0].id;
+      let id_check = onload_data.items[0].id;
 
-      for (var i = 0; i < onload_data.items.length; i++) {
+      for (let i = 0; i < onload_data.items.length; i++) {
         if (parseInt(onload_data.items[i].id) > id_check) {
           id_check = onload_data.items[i].id;
         }
@@ -750,7 +750,7 @@ document.getElementById('add_product').addEventListener('click', function () {
                   document.getElementById("id_selected").value = product.id;
                   document.getElementById("name_selected").value = product.name;
 
-                  for (var i = 0; i < document.getElementById("cat_selected").options.length; i++) {
+                  for (let i = 0; i < document.getElementById("cat_selected").options.length; i++) {
                     if (document.getElementById("cat_selected").options[i].value === category.id) {
                       document.getElementById("cat_selected").selectedIndex = i;
                       break;
@@ -813,7 +813,7 @@ document.getElementById('quantity_button').addEventListener('click', function ()
                   console.error('Server Error:', data.Error);
                 } else {
                   onload_data = data;
-                  var selected_cat = document.getElementById("cat_list").value;
+                  let selected_cat = document.getElementById("cat_list").value;
                   items_select(data, selected_cat);
                 }
               })
@@ -835,9 +835,9 @@ document.getElementById('quantity_button').addEventListener('click', function ()
 
 function category_id(data) {
 
-  var list_select = document.getElementById("cat_list");
-  var category_select = list_select.options[list_select.selectedIndex].text;
-  var category = data.categories.find(category => category.category_name === category_select);
+  let list_select = document.getElementById("cat_list");
+  let category_select = list_select.options[list_select.selectedIndex].text;
+  let category = data.categories.find(category => category.category_name === category_select);
   return category.id;
 }
 
@@ -968,7 +968,7 @@ function radiobutton_refresh() {
   const product = onload_data.items.find(item => item.id === item_id);
   const category = onload_data.categories.find(cat_name => cat_name.id === product.category);
 
-  var flag = 0;
+  let flag = 0;
 
   for (let item of product.details) {
 
@@ -982,7 +982,7 @@ function radiobutton_refresh() {
   }
 
   if (flag === 0) {
-    var i = 0;
+    let i = 0;
     product.details.forEach(item => {
 
       const radio_button = document.createElement('input');
@@ -1003,16 +1003,16 @@ function radiobutton_refresh() {
     document.getElementById("id_selected").value = product.id;
     document.getElementById("name_selected").value = product.name;
 
-    for (var i = 0; i < document.getElementById("cat_selected").options.length; i++) {
+    for (let i = 0; i < document.getElementById("cat_selected").options.length; i++) {
       if (document.getElementById("cat_selected").options[i].value === category.id) {
         document.getElementById("cat_selected").selectedIndex = i;
         break;
       }
     }
 
-    var radio_button = document.getElementsByName('select');
+    let radio_button = document.getElementsByName('select');
 
-    for (var i = 0; i < radio_button.length; i++) {
+    for (let i = 0; i < radio_button.length; i++) {
       radio_button[i].addEventListener('change', function () {
         if (this.checked) {
           document.getElementById('detail_name_text').value = product.details[this.value].detail_name;
@@ -1028,7 +1028,7 @@ function radiobutton_refresh() {
     document.getElementById("id_selected").value = product.id;
     document.getElementById("name_selected").value = product.name;
 
-    for (var i = 0; i < document.getElementById("cat_selected").options.length; i++) {
+    for (let i = 0; i < document.getElementById("cat_selected").options.length; i++) {
       if (document.getElementById("cat_selected").options[i].value === category.id) {
         document.getElementById("cat_selected").selectedIndex = i;
         break;
@@ -1040,13 +1040,13 @@ function radiobutton_refresh() {
 
 function duplicate_check() {
 
-  var check = 0;
+  let check = 0;
 
   if (document.getElementById('radiobutton_0')) {
 
-    var id = document.getElementById('id_selected').value;
-    var name = document.getElementById('detail_name_text').value;
-    var value = document.getElementById('detail_value_text').value;
+    let id = document.getElementById('id_selected').value;
+    let name = document.getElementById('detail_name_text').value;
+    let value = document.getElementById('detail_value_text').value;
 
     const product = onload_data.items.find(item => item.id === id);
 
