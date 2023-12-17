@@ -1,40 +1,37 @@
 var onload_data;
 
 document.addEventListener('DOMContentLoaded', function () {
+    console.log ("hi");
 
-  fetch('/server/announcement/announcement.php')
+  fetch('/server/request/request.php')
     .then(response => response.json())
     .then(data => {
+      const tablebody = document.getElementById("table_request");
 
-
-      const tableBody = document.getElementById('table_announcement');
-
-      data.announcements.forEach(item => {
-
+      data.request.forEach(item => {
         const row = document.createElement('tr');
-
 
         const idCell = document.createElement('td');
         idCell.textContent = item.id;
         row.appendChild(idCell);
 
-        const textCell = document.createElement('td');
-        textCell.textContent = item.text;
-        row.appendChild(textCell);
+        const weneedCell = document.createElement('td');
+        weneedCell.textContent = item.weneed;
+        row.appendChild(weneedCell);
 
         const dateCell = document.createElement('td');
         dateCell.textContent = item.date;
         row.appendChild(dateCell);
 
-        const quantityCell = document.createElement('td');
-        quantityCell.textContent = item.quantity;
-        row.appendChild(quantityCell);
+        const personsCell = document.createElement('td');
+        personsCell.textContent = item.persons;
+        row.appendChild(personsCell);
 
 
-        tableBody.appendChild(row);
-
+        tablebody.appendChild(row);
 
       });
+
 
     })
     .catch(error => console.error('Error fetching data:', error));
@@ -72,22 +69,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
+console.log ("hi");
+
 
 document.getElementById('upload-button').addEventListener('click', function () {
-  var form = document.getElementById("announcement-form");
+  var form = document.getElementById("request-announcement-form");
 
-  text = document.getElementById('text').value;
-  if (document.getElementById('quantity').value > 0) {
-    quantity = document.getElementById('quantity').value;
+  text = document.getElementById('weneed').value;
+  if (document.getElementById('persons').value > 0) {
+    persons = document.getElementById('persons').value;
   } else {
-    alert("Η ποσότητα πρέπει να είναι θετική.")
+    alert("Το πλήθος πρέπει να είναι θετικό.")
   };
   const data = {
-    text: text,
-    quantity: quantity
+    weneed: weneed,
+    persons: persons
   };
 
-  fetch("/server/announcement/announcement_upload.php", {
+
+  fetch("/server/request/request_upload.php", {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -96,34 +96,32 @@ document.getElementById('upload-button').addEventListener('click', function () {
   })
     .then(response => response.json())
     .then(data => {
-      fetch('/server/announcement/announcement.php')
+      fetch('/server/request/request.php')
         .then(response => response.json())
         .then(data => {
-          document.getElementById("table_announcement").innerHTML = "";
+          document.getElementById("request-table_announcement").innerHTML = "";
 
-          const tableBody = document.getElementById('table_announcement');
+          const tableBody = document.getElementById('table_request');
 
           data.announcements.forEach(item => {
 
             const row = document.createElement('tr');
 
-
             const idCell = document.createElement('td');
             idCell.textContent = item.id;
             row.appendChild(idCell);
 
-            const textCell = document.createElement('td');
-            textCell.textContent = item.text;
-            row.appendChild(textCell);
+            const weneedCell = document.createElement('td');
+            weneedCell.textContent = item.weneed;
+            row.appendChild(weneedCell);
 
             const dateCell = document.createElement('td');
             dateCell.textContent = item.date;
             row.appendChild(dateCell);
 
-            const quantityCell = document.createElement('td');
-            quantityCell.textContent = item.quantity;
-            row.appendChild(quantityCell);
-
+            const personsCell = document.createElement('td');
+            personsCell.textContent = item.persons;
+            row.appendChild(personsCell);
 
             tableBody.appendChild(row);
 
@@ -134,29 +132,24 @@ document.getElementById('upload-button').addEventListener('click', function () {
 
         .catch(error => console.error('Error fetching data:', error));
     });
+
+
 });
-
-
-
-document.getElementById("table_admin").addEventListener("click", function (event) {
+document.getElementById("table_admin_request").addEventListener("click", function (event) {
 
 
   if (event.target.tagName === "TD") {
-    item_selected = 1;
 
     const selected_row = event.target.closest("tr");
     const row_items = Array.from(selected_row.cells).map(cell => cell.textContent);
     const item_id = row_items[0];
 
     const product = onload_data.items.find(item => item.id === item_id);
-    const category = onload_data.categories.find(cat_name => cat_name.id === product.category);
 
 
-
-    document.getElementById("text").value = product.name;
+    document.getElementById("weneed").value = product.name;
   }
 });
-
 document.getElementById('cat_list').addEventListener('change', function () {
 
   fetch('/server/warehouse_admin/database_extract.php',)
@@ -167,12 +160,13 @@ document.getElementById('cat_list').addEventListener('change', function () {
       items_select(data, selected_cat);
 
 
-      document.getElementById('text').value = '';
+      document.getElementById('weneed').value = '';
 
     })
     .catch(error => console.error('Error:', error));
-});
 
+
+});
 function category_id(data) {
 
   var list_select = document.getElementById("cat_list");
@@ -194,11 +188,10 @@ function items_select(data, selected_cat) {
       const name_table = document.createElement('td');
       const category_table = document.createElement('td');
       const detail_table = document.createElement('td');
-      const item_quantity = document.createElement('td');
+
 
       id_table.textContent = item.id;
       name_table.textContent = item.name;
-      item_quantity.textContent = item.quantity;
       const category = data.categories.find(category => category.id === item.category);
       category_table.textContent = category.category_name;
 
@@ -222,7 +215,6 @@ function items_select(data, selected_cat) {
       row_table.appendChild(name_table);
       row_table.appendChild(category_table);
       row_table.appendChild(detail_table);
-      row_table.appendChild(item_quantity);
 
       table.appendChild(row_table);
     }
@@ -244,8 +236,6 @@ function categories_select(data) {
       list.appendChild(select_add);
     }
   });
-  window.setTimeout(function () {
-    window.location.reload();
-  }, 10000);
 
 }
+

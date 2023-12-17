@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Announcements</title>
+  <title>Requests</title>
   <style>
     table {
       border-collapse: collapse;
@@ -26,7 +26,7 @@
 
 <body>
 
-  <h2>Announcements</h2>
+  <h2>Requests</h2>
 
   <table id="table">
     <thead>
@@ -34,10 +34,10 @@
         <th>Number</th>
         <th>We Need</th>
         <th>Date</th>
-        <th>Quantity(KG)</th>
+        <th>Persons</th>
       </tr>
     </thead>
-    <tbody id="table_announcement">
+    <tbody id="table_request">
  
     </tbody>
 
@@ -49,14 +49,13 @@
   </div>
 
   <div>
-    <table id="table_admin">
+    <table id="table_admin_request">
       <thead>
         <tr>
           <th>ID</th>
           <th>Όνομα</th>
           <th>Kατηγορία</th>
           <th>Λεπτομέρειες</th>
-          <th>Ποσότητα</th>
         </tr>
       </thead>
       <tbody id="items_table"></tbody>
@@ -65,18 +64,18 @@
 
 
 
-  <form id="announcement-form">
-    <label for="text">We need:</label>
-    <input type="text" id="text" name="text" disabled><br>
+  <form id="request-announcement-form">
+    <label for="weneed">We need:</label>
+    <input type="text" id="weneed" name="weneed" disabled><br>
 
 
-    <label for="quantity">Quantity:</label>
-    <input type="number" id="quantity" value="1" name="quantity" min="1" max="10" >
+    <label for="persons">Persons:</label>
+    <input type="number" id="persons" value="1" name="persons" min="1" max="10" >
     <button type="button" id="upload-button">Upload</button>
 
   </form>
 
-  <script src="/scripts/announcement.js"></script>
+  <script src="/scripts/request.js"></script>
 </body>
 
 </html>

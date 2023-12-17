@@ -2,6 +2,7 @@
 
 include("../Mysql_connection.php");
 
+try {
 $db = db_connect();
 
 $mysql = "SELECT * from items";
@@ -19,15 +20,15 @@ if ($response->num_rows > 0) {
     );
 
     $quantity = array();
-    $mysql = $db->prepare("SELECT * from item_quantity where item_qua_id=?");
+    $mysql = $db->prepare("SELECT item_qua from item_quantity where item_qua_id=?");
     $mysql->bind_param("i", $row["item_id"]);
     $mysql->execute();
     $quantity_response = $mysql->get_result();
 
     if ($quantity_response->num_rows > 0) {
-      $quantiry_array = $qua_row["item_qua"];
+      $quantity_row = $quantity_response->fetch_assoc();
+      $quantity = (string)$quantity_row["item_qua"];
 
-      $quantity = $quantiry_array;
     } else {
       $quantity = "0";
     }
@@ -70,19 +71,20 @@ if ($response->num_rows > 0) {
     );
     $categories[] = $category;
   }
+}
 
-  $data = array(
-    "items" => $items,
-    "categories" => $categories,
-  );
+$data = array(
+  "items" => $items,
+  "categories" => $categories,
+);
 
+$db->close();
 
+$json_data = json_encode($data);
+header('Content-Type: application/json');
+echo $json_data;
 
-  $db->close();
-
-  $json_data = json_encode($data);
-
+} catch (Exception $error) {
   header('Content-Type: application/json');
-
-  echo $json_data;
+  echo json_encode(['status' => 'error', "Error" => $error->getMessage()]);
 }

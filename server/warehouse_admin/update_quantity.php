@@ -13,8 +13,8 @@ try {
   item_qua_id=?");
 
   $update_stmt->bind_param(
-    "si",
-    $data->new_qua,
+    "ii",
+    $data->quantity,
     $data->id
   );
 
@@ -25,7 +25,7 @@ try {
   echo json_encode(['status' => 'success']);
 } catch (Exception $error) {
   header('Content-Type: application/json');
-  echo json_encode(['status' => 'error', "Error: " . $error->getMessage()]);
+  echo json_encode(['status' => 'error', "Error" => $error->getMessage()]);
 }
 
 ?>

@@ -14,15 +14,24 @@ $add_stmt->bind_param(
   $data->name,
   $data->category
 );
-
 $add_stmt->execute();
+$add_stmt->close();
+$add_stmt = $db->prepare("INSERT INTO item_quantity VALUES (?,0)");
+
+$add_stmt->bind_param(
+  "i",
+  $data->id
+);
+$add_stmt->execute();
+
+
 $db->close();
 
 header('Content-Type: application/json');
 echo json_encode(['status' => 'success']);
 } catch (Exception $error) {
 header('Content-Type: application/json');
-echo json_encode(['status' => 'error', "Error: " . $error->getMessage()]);
+echo json_encode(['status' => 'error', "Error" => $error->getMessage()]);
 }
 
 ?>
