@@ -54,6 +54,11 @@ create TABLE announcements (
   content TEXT
 );
 
+CREATE TABLE base(
+	lat varchar(255) NOT NULL,
+	longi varchar(255) NOT NULL
+);
+
 CREATE TABLE locations (
   id int NOT NULL AUTO_INCREMENT,
   lat varchar(255) NOT NULL,

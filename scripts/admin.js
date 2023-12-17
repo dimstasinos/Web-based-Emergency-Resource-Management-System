@@ -8,10 +8,24 @@ document.addEventListener('DOMContentLoaded', function () {
   }).addTo(map);
 
 
-  //////////BASE MARKER LOCATION///////////
-  var BaseMarker = L.marker([37.9838, 23.7275], {
-    draggable: true
-  }).addTo(map);
+
+
+
+  fetch("/server/warehouse_admin/database_extract.php")
+    .then((jsonResponse) => jsonResponse.json())
+    .then((data) => {
+      if (data.status === "error") {
+        console.error("Server Error:", data.Error);
+      } else {
+        //////////BASE MARKER LOCATION///////////
+        var BaseMarker = L.marker([37.9838, 23.7275], {
+          draggable: true
+        }).addTo(map);
+      }
+    })
+    .catch((error) => console.error("Error:", error));
+
+
 
   BaseMarker.on('dragend', function (event) {
     var marker = event.target;
