@@ -4,6 +4,7 @@ include("../Mysql_connection.php");
 
 $db = db_connect();
 
+try{
 $mysql = "SELECT * FROM request";
 $response = $db->query($mysql);
 
@@ -35,6 +36,11 @@ if ($response->num_rows > 0) {
   header('Content-Type: application/json');
   
   echo $json_data;
+}
+catch (Exception $error) {
+  header('Content-Type: application/json');
+  echo json_encode(['status' => 'error', "Error" => $error->getMessage()]);
+}
   
   ?>
 

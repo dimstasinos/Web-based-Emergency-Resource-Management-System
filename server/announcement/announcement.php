@@ -3,6 +3,7 @@
 include("../Mysql_connection.php");
 
 $db = db_connect();
+try{
 
 $mysql = "SELECT * from announcements";
 $response = $db->query($mysql);
@@ -37,5 +38,11 @@ $json_data = json_encode($data);
 header('Content-Type: application/json');
 
 echo $json_data;
+}
+
+catch (Exception $error) {
+  header('Content-Type: application/json');
+  echo json_encode(['status' => 'error', "Error" => $error->getMessage()]);
+}
 
 ?>
