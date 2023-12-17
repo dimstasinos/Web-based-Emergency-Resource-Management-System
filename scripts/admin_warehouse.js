@@ -575,6 +575,9 @@ document
 
           let current_cat = document.getElementById("category").value;
           let current_cat_1 = document.getElementById("cat_list").value;
+          let current_cat_2 = document.getElementById("cat_new").value;
+          let current_cat_3 = document.getElementById("cat_selected").value;
+
           fetch("/server/warehouse_admin/update_category.php", {
             method: "POST",
             headers: {
@@ -601,9 +604,8 @@ document
                       items_select(data, current_cat_1);
                       document.getElementById("category").value = current_cat;
                       document.getElementById("cat_list").value = current_cat_1;
-                      document.getElementById("cat_selected").value =
-                        current_cat_1;
-                      console.log(current_cat_1);
+                      document.getElementById("cat_selected").value = current_cat_3;
+                      document.getElementById("cat_new").value = current_cat_2;
                     }
                   })
                   .catch((error) => console.error("Error:", error));
@@ -632,6 +634,12 @@ document
           id: id,
         };
 
+        let current_cat = document.getElementById("category").value;
+        let current_cat_1 = document.getElementById("cat_list").value;
+        let current_cat_2 = document.getElementById("cat_new").value;
+        let current_cat_3 = document.getElementById("cat_selected").value;
+
+
         fetch("/server/warehouse_admin/delete_category.php", {
           method: "POST",
           headers: {
@@ -657,6 +665,10 @@ document
                     selected_cat = document.getElementById("cat_list").value;
                     items_select(data, selected_cat);
                     categories_select_new(data);
+                    document.getElementById("category").value = current_cat;
+                    document.getElementById("cat_list").value = current_cat_1;
+                    document.getElementById("cat_selected").value = current_cat_3;
+                    document.getElementById("cat_new").value = current_cat_2;
                   }
                 })
                 .catch((error) => console.error("Error:", error));
