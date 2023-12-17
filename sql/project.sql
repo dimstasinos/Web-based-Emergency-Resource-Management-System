@@ -2,19 +2,12 @@ create database project;
 
 use project;
 
-create table user (
-  user_id INT AUTO_INCREMENT PRIMARY KEY,
-  user_name VARCHAR(50),
-  user_surname VARCHAR(50),
-  user_category VARCHAR(50)
-  typeloc enum('veh', 'req', 'off') NOT NULL,
-);
-
-create table credentials (
-  cred_id INT NOT NULL,
+create table users (
+  user_id INT AUTO_INCREMENT,
   username VARCHAR(50),
   password VARCHAR(50),
-  FOREIGN KEY(cred_id) REFERENCES user(user_id)
+  user_type enum ('citizen', 'rescuer', 'admin') NOT NULL,
+  primary key (user_id)
 );
 
 insert into
@@ -69,19 +62,26 @@ CREATE TABLE locations (
 );
 
 CREATE TABLE citizen (
-  citizen_id INT PRIMARY KEY AUTO_INCREMENT,
-  name VARCHAR(255) NOT NULL,
-  phone_number VARCHAR(20) NOT NULL,
-  PRIMARY KEY (citizen_id)
+citizen_id INT,
+f_name VARCHAR(50),
+l_name VARCHAR(50),
+phone_number VARCHAR(20) NOT NULL,
+lat varchar(255) NOT NULL,
+longi varchar(255) NOT NULL,
+primary key (citizen_id,phone_number),
+CONSTRAINT TABLE_USER
+FOREIGN KEY (citizen_id) REFERENCES users(user_id)
+on update CASCADE on delete cascade
 );
-
-CREATE TABLE vehicles (
-  vehusername VARCHAR(255) PRIMARY KEY,
-  vehload INT,
-  vehstatus VARCHAR(255),
-  vehtasks INT,
-  citizen_id INT,
-  FOREIGN KEY (citizen_id) REFERENCES citizen(citizen_id)
+create table vehicle(
+vehicle_id INT,
+resquer_id INT,
+lat varchar(255) NOT NULL,
+longi varchar(255) NOT NULL,
+primary key (vehicle_id),
+CONSTRAINT vehicle_user
+FOREIGN KEY (vehicle_id) REFERENCES users(user_id)
+on update CASCADE on delete cascade
 );
 
 CREATE TABLE requests (
