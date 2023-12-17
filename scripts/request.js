@@ -5,31 +5,35 @@ document.addEventListener('DOMContentLoaded', function () {
   fetch('/server/request/request.php')
     .then(response => response.json())
     .then(data => {
-      const tablebody = document.getElementById("table_request");
+      if (data.status === "error") {
+        console.error("Server Error:", data.Error);
+      } else {
+        const tablebody = document.getElementById("table_request");
 
-      data.request.forEach(item => {
-        const row = document.createElement('tr');
+        data.request.forEach(item => {
+          const row = document.createElement('tr');
 
-        const idCell = document.createElement('td');
-        idCell.textContent = item.id;
-        row.appendChild(idCell);
+          const idCell = document.createElement('td');
+          idCell.textContent = item.id;
+          row.appendChild(idCell);
 
-        const weneedCell = document.createElement('td');
-        weneedCell.textContent = item.weneed;
-        row.appendChild(weneedCell);
+          const weneedCell = document.createElement('td');
+          weneedCell.textContent = item.weneed;
+          row.appendChild(weneedCell);
 
-        const dateCell = document.createElement('td');
-        dateCell.textContent = item.date;
-        row.appendChild(dateCell);
+          const dateCell = document.createElement('td');
+          dateCell.textContent = item.date;
+          row.appendChild(dateCell);
 
-        const personsCell = document.createElement('td');
-        personsCell.textContent = item.persons;
-        row.appendChild(personsCell);
+          const personsCell = document.createElement('td');
+          personsCell.textContent = item.persons;
+          row.appendChild(personsCell);
 
 
-        tablebody.appendChild(row);
+          tablebody.appendChild(row);
 
-      });
+        });
+      }
 
 
     })
@@ -94,41 +98,49 @@ document.getElementById('upload-button').addEventListener('click', function () {
   })
     .then(response => response.json())
     .then(data => {
-      fetch('/server/request/request.php')
-        .then(response => response.json())
-        .then(data => {
-          document.getElementById("table_request").innerHTML = "";
+      if (data.status === "error") {
+        console.error("Server Error:", data.Error);
+      } else {
+        fetch('/server/request/request.php')
+          .then(response => response.json())
+          .then(data => {
+            if (data.status === "error") {
+              console.error("Server Error:", data.Error);
+            } else {
+              document.getElementById("table_request").innerHTML = "";
 
-          const tableBody = document.getElementById('table_request');
+              const tableBody = document.getElementById('table_request');
 
-          data.request.forEach(item => {
+              data.request.forEach(item => {
 
-            const row = document.createElement('tr');
+                const row = document.createElement('tr');
 
-            const idCell = document.createElement('td');
-            idCell.textContent = item.id;
-            row.appendChild(idCell);
+                const idCell = document.createElement('td');
+                idCell.textContent = item.id;
+                row.appendChild(idCell);
 
-            const weneedCell = document.createElement('td');
-            weneedCell.textContent = item.weneed;
-            row.appendChild(weneedCell);
+                const weneedCell = document.createElement('td');
+                weneedCell.textContent = item.weneed;
+                row.appendChild(weneedCell);
 
-            const dateCell = document.createElement('td');
-            dateCell.textContent = item.date;
-            row.appendChild(dateCell);
+                const dateCell = document.createElement('td');
+                dateCell.textContent = item.date;
+                row.appendChild(dateCell);
 
-            const personsCell = document.createElement('td');
-            personsCell.textContent = item.persons;
-            row.appendChild(personsCell);
+                const personsCell = document.createElement('td');
+                personsCell.textContent = item.persons;
+                row.appendChild(personsCell);
 
-            tableBody.appendChild(row);
+                tableBody.appendChild(row);
 
 
-          });
+              });
+            }
 
-        })
+          })
 
-        .catch(error => console.error('Error fetching data:', error));
+          .catch(error => console.error('Error fetching data:', error));
+      }
     });
 
 
@@ -153,12 +165,17 @@ document.getElementById('cat_list').addEventListener('change', function () {
   fetch('/server/warehouse_admin/database_extract.php',)
     .then(jsonResponse => jsonResponse.json())
     .then(data => {
-      onload_data = data;
-      const selected_cat = category_id(data);
-      items_select(data, selected_cat);
+      if (data.status === "error") {
+        console.error("Server Error:", data.Error);
+      } else {
+        onload_data = data;
+        const selected_cat = category_id(data);
+        items_select(data, selected_cat);
 
 
-      document.getElementById('weneed').value = '';
+        document.getElementById('weneed').value = '';
+
+      }
 
     })
     .catch(error => console.error('Error:', error));
@@ -252,7 +269,7 @@ function searchfunction() {
       } else {
         tr[i].style.display = "none";
       }
-    }       
+    }
   }
 }
 

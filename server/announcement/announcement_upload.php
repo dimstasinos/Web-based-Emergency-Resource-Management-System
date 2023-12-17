@@ -6,6 +6,7 @@ $data = json_decode($receive);
 
 $db = db_connect();
 
+try {
 $add_stmt = $db->prepare("INSERT INTO announcements(text,date,quantity) VALUES (?,now(),?)");
   
 
@@ -19,4 +20,11 @@ $add_stmt = $db->prepare("INSERT INTO announcements(text,date,quantity) VALUES (
     $db->close();
     header('Content-Type: application/json');
     echo json_encode(['status' => 'success',$data]);
+
+  }
+  catch (Exception $error) {
+    header('Content-Type: application/json');
+    echo json_encode(['status' => 'error', "Error" => $error->getMessage()]);
+  }
+
 ?>
