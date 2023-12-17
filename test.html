@@ -1,55 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Table from JSON</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accept/Decline Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        .action-buttons button {
+            margin-right: 5px;
+        }
+    </style>
 </head>
 <body>
 
-<table border="1">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Age</th>
-      <th>City</th>
-    </tr>
-  </thead>
-  <tbody id="table-body"></tbody>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>John Doe</td>
+            <td>john.doe@example.com</td>
+            <td class="action-buttons">
+                <button onclick="acceptRequest()">Accept</button>
+                <button onclick="declineRequest()">Decline</button>
+            </td>
+        </tr>
+        <!-- Add more rows as needed -->
+    </tbody>
 </table>
 
 <script>
-  // JSON data embedded directly in the script
-  const jsonData = [
-    {"name": "John", "age": 25, "city": "New York"},
-    {"name": "Jane", "age": 30, "city": "Los Angeles"},
-    {"name": "Bob", "age": 22, "city": "Chicago"}
-  ];
+    function acceptRequest() {
+        // Add your logic for accepting here
+        alert("Request Accepted");
+    }
 
-  // Get the table body element
-  const tableBody = document.getElementById('table-body');
-
-  // Loop through the data and populate the table
-  jsonData.forEach(item => {
-    // Create a new row
-    const row = document.createElement('tr');
-
-    // Create cells for each property in the JSON data
-    const nameCell = document.createElement('td');
-    nameCell.textContent = item.name;
-    row.appendChild(nameCell);
-
-    const ageCell = document.createElement('td');
-    ageCell.textContent = item.age;
-    row.appendChild(ageCell);
-
-    const cityCell = document.createElement('td');
-    cityCell.textContent = item.city;
-    row.appendChild(cityCell);
-
-    // Append the row to the table body
-    tableBody.appendChild(row);
-  });
+    function declineRequest() {
+        // Add your logic for declining here
+        alert("Request Declined");
+    }
 </script>
 
 </body>

@@ -9,47 +9,48 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
-
-  fetch("/server/warehouse_admin/database_extract.php")
+  fetch("/server/map_admin/base.php")
     .then((jsonResponse) => jsonResponse.json())
     .then((data) => {
       if (data.status === "error") {
         console.error("Server Error:", data.Error);
       } else {
         //////////BASE MARKER LOCATION///////////
-        var BaseMarker = L.marker([37.9838, 23.7275], {
+        var BaseMarker = L.marker([data.base_location[0].lat, data.base_location[0].longi], {
           draggable: true
         }).addTo(map);
+
+        BaseMarker.on('dragend', function (event) {
+          var marker = event.target;
+          var position = marker.getLatLng();
+
+          //Base Location confirm
+          var isConfirmed = confirm('Do you want to confirm this location?');
+          if (isConfirmed) {
+            //confirmation 
+            alert('Base Location confirmed: ' + position.lat + ', ' + position.lng);
+          } else {
+            //cancellation
+            alert('Base Location not confirmed');
+          }
+        });
+
+
+
+
       }
     })
     .catch((error) => console.error("Error:", error));
 
 
 
-  BaseMarker.on('dragend', function (event) {
-    var marker = event.target;
-    var position = marker.getLatLng();
-
-    //Base Location confirm
-    var isConfirmed = confirm('Do you want to confirm this location?');
-    if (isConfirmed) {
-      //confirmation 
-      alert('Base Location confirmed: ' + position.lat + ', ' + position.lng);
-    } else {
-      //cancellation
-      alert('Base Location not confirmed');
-    }
-  });
-
-
-  fetch('/server/location.php')
+  /*fetch('/server/location.php')
     .then(response => response.json())
     .then(data => {
       console.log(data);
 
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => console.error('Error:', error));*/
 
 
   fetch('/server/map_admin/requests.php')
@@ -57,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(data => {
       console.log(data);
 
-      var map = L.map('map').setView([37.9838, 23.7275], 13);
+      
 
       var requestsData = data.requests;
 
@@ -81,9 +82,9 @@ document.addEventListener('DOMContentLoaded', function () {
     .catch(error => console.error('Error:', error));
 
 
+});
 
-
-
+/*
   fetch('/server/map_admin/offers.php')
     .then(response => response.json())
     .then(data => {
@@ -108,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .catch(error => console.error('Error:', error));
 
-});
+});*/
 /*
 function createAndPinMarker(data) {
  
@@ -165,17 +166,17 @@ var vehIcon = L.icon({
     iconAnchor: [15, 15] 
   });
 
- 
+ */
+/*
 var vehMarker = L.marker([37.9838, 23.7275], {
     draggable: true,
     icon: vehIcon 
   }).addTo(map);   
 
   // Event listener for marker dragend event
+  /*
   vehMarker.on('dragend', function (event) {
     var marker = event.target;
     var position = marker.getLatLng();
     alert('Location confirmed: ' + position.lat + ', ' + position.lng);
-  });
-
-*/
+  });*/

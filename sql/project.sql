@@ -7,6 +7,7 @@ create table user (
   user_name VARCHAR(50),
   user_surname VARCHAR(50),
   user_category VARCHAR(50)
+  typeloc enum('veh', 'req', 'off') NOT NULL,
 );
 
 create table credentials (
@@ -71,7 +72,7 @@ CREATE TABLE citizen (
   citizen_id INT PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
   phone_number VARCHAR(20) NOT NULL,
-  UNIQUE (phone_number)
+  PRIMARY KEY (citizen_id)
 );
 
 CREATE TABLE vehicles (
