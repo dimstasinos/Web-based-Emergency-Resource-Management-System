@@ -1,55 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accept/Decline List</title>
-    <style>
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            border: 1px solid #ddd;
-            margin: 5px;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-        }
-        .action-buttons button {
-            margin-left: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Leaflet Marker Filters</title>
+  <link rel="stylesheet" href="/css/admin_mainPageStyle.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
+
 <body>
+  <div id="map" style="height: 400px;"></div>
 
-<ul>
-    <li>
-        <span>Name: John Doe</span>
-        <span>Email: john.doe@example.com</span>
-        <div class="action-buttons">
-            <button onclick="acceptRequest(this)">Accept</button>
-            <button onclick="declineRequest(this)">Decline</button>
-        </div>
-    </li>
-    <!-- Add more list items as needed -->
-</ul>
+  <!-- Add the missing HTML form for filters -->
+  <form id="filterForm">
+    <label for="capitalFilter">Capital</label>
+    <input type="checkbox" id="capitalFilter" checked>
 
-<script>
-    function acceptRequest(button) {
-        // Add your logic for accepting here
-        var listItem = button.closest('li');
-        listItem.style.backgroundColor = 'lightgreen';
-        alert("Request Accepted");
-    }
+    <label for="cityFilter">City</label>
+    <input type="checkbox" id="cityFilter" checked>
 
-    function declineRequest(button) {
-        // Add your logic for declining here
-        var listItem = button.closest('li');
-        listItem.style.backgroundColor = 'lightcoral';
-        alert("Request Declined");
-    }
-</script>
+    <label for="townFilter">Town</label>
+    <input type="checkbox" id="townFilter" checked>
+  </form>
 
+  <script>
+    $(document).ready(function () {
+      var map = L.map('map').setView([37.9838, 23.7275], 13);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+
+      // Prepare Marker Data and Attributes
+      var markers = [
+        { name: "City 1", loc: [11.111, 22.222], type: "Capital" },
+        { name: "City 2", loc: [12.111, 23.222], type: "City" },
+        { name: "City 3", loc: [13.111, 24.222], type: "Town" }
+      ];
+
+      // Create a LayerGroup to Hold the Markers
+      var markersLayer = new L.LayerGroup();
+      map.addLayer(markersLayer);
+
+      // Handle Filter Selections
+      $('#filterForm input').change(function () {
+        var filteredMarkers = [];
+
+        // Iterate through Markers and Filter Based on Selections
+        for (let marker of markers) {
+          if (marker.type === "Capital" && $('#capitalFilter').is(':checked')) {
+            filteredMarkers.push(marker);
+          } else if (marker.type === "City" && $('#cityFilter').is(':checked')) {
+            filteredMarkers.push(marker);
+          } else if (marker.type === "Town" && $('#townFilter').is(':checked')) {
+            filteredMarkers.push(marker);
+          }
+        }
+
+        // Clear Existing Markers from the LayerGroup
+        markersLayer.clearLayers();
+
+        // Add Filtered Markers to the LayerGroup
+        for (let marker of filteredMarkers) {
+          L.marker(marker.loc).addTo(markersLayer);
+        }
+      });
+
+      // Initial markers on the map
+      for (let marker of markers) {
+        L.marker(marker.loc).addTo(markersLayer);
+      }
+    });
+  </script>
 </body>
+
 </html>
