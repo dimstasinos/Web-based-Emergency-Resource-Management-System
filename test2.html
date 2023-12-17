@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accept/Decline List</title>
+    <style>
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            border: 1px solid #ddd;
+            margin: 5px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .action-buttons button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<ul>
+    <li>
+        <span>Name: John Doe</span>
+        <span>Email: john.doe@example.com</span>
+        <div class="action-buttons">
+            <button onclick="acceptRequest(this)">Accept</button>
+            <button onclick="declineRequest(this)">Decline</button>
+        </div>
+    </li>
+    <!-- Add more list items as needed -->
+</ul>
+
+<script>
+    function acceptRequest(button) {
+        // Add your logic for accepting here
+        var listItem = button.closest('li');
+        listItem.style.backgroundColor = 'lightgreen';
+        alert("Request Accepted");
+    }
+
+    function declineRequest(button) {
+        // Add your logic for declining here
+        var listItem = button.closest('li');
+        listItem.style.backgroundColor = 'lightcoral';
+        alert("Request Declined");
+    }
+</script>
+
+</body>
+</html>
