@@ -629,6 +629,7 @@ document
     if (document.getElementById("id_cat").value !== "") {
       if (document.getElementById("cat_name").value !== "") {
         let id = document.getElementById("id_cat").value;
+        let cate_name = onload_data.categories.find(cat => cat.id = id);
 
         const data = {
           id: id,
@@ -665,10 +666,18 @@ document
                     selected_cat = document.getElementById("cat_list").value;
                     items_select(data, selected_cat);
                     categories_select_new(data);
-                    document.getElementById("category").value = current_cat;
-                    document.getElementById("cat_list").value = current_cat_1;
-                    document.getElementById("cat_selected").value = current_cat_3;
-                    document.getElementById("cat_new").value = current_cat_2;
+                    if (current_cat !== cate_name) {
+                      document.getElementById("category").value = current_cat;
+                    }
+                    if (current_cat_1 !== cate_name) {
+                      document.getElementById("cat_list").value = current_cat_1;
+                    }
+                    if (current_cat_2 !== cate_name) {
+                      document.getElementById("cat_new").value = current_cat_2;
+                    }
+                    if (current_cat_3 !== cate_name) {
+                      document.getElementById("cat_selected").value = current_cat_3;
+                    }
                   }
                 })
                 .catch((error) => console.error("Error:", error));
