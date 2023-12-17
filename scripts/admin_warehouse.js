@@ -663,13 +663,13 @@ document
                     categories_select(data);
                     categories_select_product(data);
                     category_select_det(data);
-                    selected_cat = document.getElementById("cat_list").value;
-                    items_select(data, selected_cat);
+                    
                     categories_select_new(data);
                     if (current_cat !== cate_name) {
                       document.getElementById("category").value = current_cat;
                     }
                     if (current_cat_1 !== cate_name) {
+                      items_select(data, current_cat_1);
                       document.getElementById("cat_list").value = current_cat_1;
                     }
                     if (current_cat_2 !== cate_name) {
@@ -678,6 +678,8 @@ document
                     if (current_cat_3 !== cate_name) {
                       document.getElementById("cat_selected").value = current_cat_3;
                     }
+
+
                   }
                 })
                 .catch((error) => console.error("Error:", error));
