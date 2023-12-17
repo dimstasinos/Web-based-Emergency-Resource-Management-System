@@ -558,18 +558,83 @@ document.getElementById("cat_name_change").addEventListener("click", function ()
         (cat) => cat.category_name.toLowerCase() === input
       );
 
-      if (check === undefined) {
-        let id = document.getElementById("id_cat").value;
-        let name = document.getElementById("cat_name").value;
+        if (check === undefined) {
+          let id = document.getElementById("id_cat").value;
+          let name = document.getElementById("cat_name").value;
 
+          const data = {
+            id: id,
+            new_name: name,
+          };
+
+          let current_cat = document.getElementById("category").value;
+          let current_cat_1 = document.getElementById("cat_list").value;
+          let current_cat_2 = document.getElementById("cat_new").value;
+          let current_cat_3 = document.getElementById("cat_selected").value;
+
+          fetch("/server/warehouse_admin/update_category.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.status === "error") {
+                console.error("Server Error:", data.Error);
+              } else {
+                fetch("/server/warehouse_admin/database_extract.php")
+                  .then((jsonResponse) => jsonResponse.json())
+                  .then((data) => {
+                    if (data.status === "error") {
+                      console.error("Server Error:", data.Error);
+                    } else {
+                      onload_data = data;
+                      categories_select(data);
+                      categories_select_product(data);
+                      category_select_det(data);
+                      categories_select_new(data);
+                      items_select(data, current_cat_1);
+                      document.getElementById("category").value = current_cat;
+                      document.getElementById("cat_list").value = current_cat_1;
+                      document.getElementById("cat_selected").value = current_cat_3;
+                      document.getElementById("cat_new").value = current_cat_2;
+                    }
+                  })
+                  .catch((error) => console.error("Error:", error));
+              }
+            })
+            .catch((error) => console.error("Error:", error));
+        } else {
+          alert("Αυτή η κατηγορία υπάρχει ήδη");
+        }
+      } else {
+        alert("Το όνομα δεν μπορεί να είναι κενό");
+      }
+    } else {
+      alert("Επίλεξε μια κατηγορία");
+    }
+  });
+
+document
+  .getElementById("cat_name_delete")
+  .addEventListener("click", function () {
+    if (document.getElementById("id_cat").value !== "") {
+      if (document.getElementById("cat_name").value !== "") {
+        let id = document.getElementById("id_cat").value;
+        let cate_name = onload_data.categories.find(cat => cat.id = id);
         const data = {
           id: id,
-          new_name: name,
         };
 
         let current_cat = document.getElementById("category").value;
         let current_cat_1 = document.getElementById("cat_list").value;
-        fetch("/server/warehouse_admin/update_category.php", {
+        let current_cat_2 = document.getElementById("cat_new").value;
+        let current_cat_3 = document.getElementById("cat_selected").value;
+
+
+        fetch("/server/warehouse_admin/delete_category.php", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -592,12 +657,28 @@ document.getElementById("cat_name_change").addEventListener("click", function ()
                     categories_select_product(data);
                     category_select_det(data);
                     categories_select_new(data);
-                    items_select(data, current_cat_1);
-                    document.getElementById("category").value = current_cat;
-                    document.getElementById("cat_list").value = current_cat_1;
-                    document.getElementById("cat_selected").value =
-                      current_cat_1;
-                    console.log(current_cat_1);
+
+
+                    if (current_cat !== cate_name.id) {
+                      document.getElementById("category").value = current_cat;
+                    }
+                    if (current_cat_1 !== cate_name.id) {
+                      items_select(data, current_cat_1);
+                      document.getElementById("cat_list").value = current_cat_1;
+                    }else{
+                      let selected_cat =
+                      document.getElementById("cat_list").value;
+                      items_select(data, selected_cat);
+                    }
+                    if (current_cat_2 !== cate_name.id) {
+                      document.getElementById("cat_new").value = current_cat_2;
+                    }
+                    if (current_cat_3 !== cate_name.id) {
+                      document.getElementById("cat_selected").value = current_cat_3;
+                    }
+                    document.getElementById("id_cat").value="";
+                    document.getElementById("cat_name").value="";
+
                   }
                 })
                 .catch((error) => console.error("Error:", error));
@@ -605,9 +686,6 @@ document.getElementById("cat_name_change").addEventListener("click", function ()
           })
           .catch((error) => console.error("Error:", error));
       } else {
-        alert("Αυτή η κατηγορία υπάρχει ήδη");
-      }
-    } else {
       alert("Το όνομα δεν μπορεί να είναι κενό");
     }
   } else {
