@@ -5,6 +5,36 @@ document.addEventListener('DOMContentLoaded', function () {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
+  
+  document.addEventListener('DOMContentLoaded', function () {
+
+    var map = L.map('map').setView([37.9838, 23.7275], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+//////////BASE MARKER LOCATION///////////
+    var BaseMarker = L.marker([37.9838, 23.7275], {
+      draggable: true
+    }).addTo(map);
+
+    BaseMarker.on('dragend', function (event) {
+      var marker = event.target;
+      var position = marker.getLatLng();
+
+      //Base Location confirm
+      var isConfirmed = confirm('Do you want to confirm this location?');
+      if (isConfirmed) {
+        //confirmation 
+        alert('Base Location confirmed: ' + position.lat + ', ' + position.lng);
+      } else {
+        //cancellation
+        alert('Base Location not confirmed');
+      }
+    });
+  });
+
+
 
   fetch('/server/location.php')
     .then(response => response.json())
@@ -118,4 +148,28 @@ if (coords1 && coords2) {
 }
 }
 ;
+*/
+
+
+      /*
+////////////////VEHICLE MARKER////////////////////
+      var vehIcon = L.icon({
+
+        iconSize: [300, 300], 
+          iconAnchor: [15, 15] 
+        });
+
+     
+      var vehMarker = L.marker([37.9838, 23.7275], {
+          draggable: true,
+          icon: vehIcon 
+        }).addTo(map);   
+
+        // Event listener for marker dragend event
+        vehMarker.on('dragend', function (event) {
+          var marker = event.target;
+          var position = marker.getLatLng();
+          alert('Location confirmed: ' + position.lat + ', ' + position.lng);
+        });
+
 */
