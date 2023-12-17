@@ -13,7 +13,7 @@ create table users (
 insert into
   user(user_name, user_surname, user_category)
 VALUES
-('Giorgos', 'Nikolaou', 'Diaswsths');
+  ('Giorgos', 'Nikolaou', 'Diaswsths');
 
 insert into
   credentials(cred_id, username, password)
@@ -49,8 +49,8 @@ create TABLE announcements (
 );
 
 CREATE TABLE base(
-	lat varchar(255) NOT NULL,
-	longi varchar(255) NOT NULL
+  lat varchar(255) NOT NULL,
+  longi varchar(255) NOT NULL
 );
 
 CREATE TABLE locations (
@@ -62,40 +62,35 @@ CREATE TABLE locations (
 );
 
 CREATE TABLE citizen (
-citizen_id INT,
-f_name VARCHAR(50),
-l_name VARCHAR(50),
-phone_number VARCHAR(20) NOT NULL,
-lat varchar(255) NOT NULL,
-longi varchar(255) NOT NULL,
-primary key (citizen_id,phone_number),
-CONSTRAINT TABLE_USER
-FOREIGN KEY (citizen_id) REFERENCES users(user_id)
-on update CASCADE on delete cascade
-);
-create table vehicle(
-vehicle_id INT,
-resquer_id INT,
-lat varchar(255) NOT NULL,
-longi varchar(255) NOT NULL,
-primary key (vehicle_id),
-CONSTRAINT vehicle_user
-FOREIGN KEY (vehicle_id) REFERENCES users(user_id)
-on update CASCADE on delete cascade
+  citizen_id INT,
+  f_name VARCHAR(50),
+  l_name VARCHAR(50),
+  phone_number VARCHAR(20) NOT NULL,
+  lat varchar(255) NOT NULL,
+  longi varchar(255) NOT NULL,
+  primary key (citizen_id, phone_number),
+  CONSTRAINT TABLE_USER FOREIGN KEY (citizen_id) REFERENCES users(user_id) on update CASCADE on delete cascade
 );
 
-CREATE TABLE requests (
-  citizen_name VARCHAR(255) NOT NULL,
-  phone_number VARCHAR(20) NOT NULL,
+create table vehicle(
+  vehicle_id INT,
+  resquer_id INT,
+  lat varchar(255) NOT NULL,
+  longi varchar(255) NOT NULL,
+  primary key (vehicle_id),
+  CONSTRAINT vehicle_user FOREIGN KEY (vehicle_id) REFERENCES users(user_id) on update CASCADE on delete cascade
+);
+
+CREATE TABLE requests_accept (
   submission_date DATE,
   request_type VARCHAR(255),
   quantity INT,
   pickup_date DATE,
-  veh_username VARCHAR(255),
+  req_veh_id INT,
   citizen_id INT,
   PRIMARY KEY (citizen_name, submission_date),
-  FOREIGN KEY (veh_username) REFERENCES vehicles(vehusername),
-  FOREIGN KEY (citizen_id) REFERENCES citizen(citizen_id)
+  FOREIGN KEY (req_veh_id) REFERENCES vehicles(vehicle_id) on update CASCADE on delete CASCADE,
+  FOREIGN KEY (citizen_id) REFERENCES citizen(citizen_id) on update CASCADE on delete CASCADE
 );
 
 CREATE TABLE offers (

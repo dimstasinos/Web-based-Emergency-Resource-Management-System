@@ -34,31 +34,15 @@ document.addEventListener('DOMContentLoaded', function () {
             alert('Base Location not confirmed');
           }
         });
-
-
-
-
       }
     })
     .catch((error) => console.error("Error:", error));
-
-
-
-  /*fetch('/server/location.php')
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-
-    })
-    .catch(error => console.error('Error:', error));*/
 
 
   fetch('/server/map_admin/requests.php')
     .then(response => response.json())
     .then(data => {
       console.log(data);
-
-      
 
       var requestsData = data.requests;
 
@@ -80,9 +64,17 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     })
     .catch(error => console.error('Error:', error));
-
-
 });
+
+
+  /*fetch('/server/location.php')
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+
+    })
+    .catch(error => console.error('Error:', error));*/
+
 
 /*
   fetch('/server/map_admin/offers.php')
