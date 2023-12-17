@@ -246,6 +246,6 @@ function categories_select(data) {
   });
   window.setTimeout(function () {
     window.location.reload();
-  }, 10000);
+  }, 60000);
 
 }

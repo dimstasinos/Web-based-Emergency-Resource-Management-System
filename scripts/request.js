@@ -1,7 +1,6 @@
 var onload_data;
 
 document.addEventListener('DOMContentLoaded', function () {
-    console.log ("hi");
 
   fetch('/server/request/request.php')
     .then(response => response.json())
@@ -69,13 +68,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
-console.log ("hi");
 
 
 document.getElementById('upload-button').addEventListener('click', function () {
   var form = document.getElementById("request-announcement-form");
 
-  text = document.getElementById('weneed').value;
+  weneed = document.getElementById('weneed').value;
   if (document.getElementById('persons').value > 0) {
     persons = document.getElementById('persons').value;
   } else {
@@ -99,11 +97,11 @@ document.getElementById('upload-button').addEventListener('click', function () {
       fetch('/server/request/request.php')
         .then(response => response.json())
         .then(data => {
-          document.getElementById("request-table_announcement").innerHTML = "";
+          document.getElementById("table_request").innerHTML = "";
 
           const tableBody = document.getElementById('table_request');
 
-          data.announcements.forEach(item => {
+          data.request.forEach(item => {
 
             const row = document.createElement('tr');
 
@@ -238,4 +236,24 @@ function categories_select(data) {
   });
 
 }
+
+function searchfunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("search");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("table_admin_request");
+  tr = table.getElementsByTagName("Όνομα");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("Όνομα")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+
 
