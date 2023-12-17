@@ -630,7 +630,6 @@ document
       if (document.getElementById("cat_name").value !== "") {
         let id = document.getElementById("id_cat").value;
         let cate_name = onload_data.categories.find(cat => cat.id = id);
-
         const data = {
           id: id,
         };
@@ -663,22 +662,28 @@ document
                     categories_select(data);
                     categories_select_product(data);
                     category_select_det(data);
-                    
                     categories_select_new(data);
-                    if (current_cat !== cate_name) {
+
+
+                    if (current_cat !== cate_name.id) {
                       document.getElementById("category").value = current_cat;
                     }
-                    if (current_cat_1 !== cate_name) {
+                    if (current_cat_1 !== cate_name.id) {
                       items_select(data, current_cat_1);
                       document.getElementById("cat_list").value = current_cat_1;
+                    }else{
+                      let selected_cat =
+                      document.getElementById("cat_list").value;
+                      items_select(data, selected_cat);
                     }
-                    if (current_cat_2 !== cate_name) {
+                    if (current_cat_2 !== cate_name.id) {
                       document.getElementById("cat_new").value = current_cat_2;
                     }
-                    if (current_cat_3 !== cate_name) {
+                    if (current_cat_3 !== cate_name.id) {
                       document.getElementById("cat_selected").value = current_cat_3;
                     }
-
+                    document.getElementById("id_cat").value="";
+                    document.getElementById("cat_name").value="";
 
                   }
                 })

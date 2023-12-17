@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
-  
+
   document.addEventListener('DOMContentLoaded', function () {
 
     var map = L.map('map').setView([37.9838, 23.7275], 13);
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
-//////////BASE MARKER LOCATION///////////
+    //////////BASE MARKER LOCATION///////////
     var BaseMarker = L.marker([37.9838, 23.7275], {
       draggable: true
     }).addTo(map);
@@ -43,25 +43,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     })
     .catch(error => console.error('Error:', error));
-  });
+});
 
 
-     fetch('/server/map_admin/requests.php')
-     .then(response => response.json())
-     .then(data => {
-       console.log(data);
-  
-       var map = L.map('map').setView([37.9838, 23.7275], 13);
+fetch('/server/map_admin/requests.php')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
 
-       var requestsData = data.requests;
-  
-       for (var i = 0; i < requestsData.length; i++) {
-         var request = requestsData[i];
-  
-         var requestMarker = L.marker([request.lat, request.longi], {
-         }).addTo(map);
+    var map = L.map('map').setView([37.9838, 23.7275], 13);
 
-         var popupContent = `<b>Name:</b> ${request.citizen_name}<br>
+    var requestsData = data.requests;
+
+    for (var i = 0; i < requestsData.length; i++) {
+      var request = requestsData[i];
+
+      var requestMarker = L.marker([request.lat, request.longi], {
+      }).addTo(map);
+
+      var popupContent = `<b>Name:</b> ${request.citizen_name}<br>
                              <b>Phone:</b> ${request.phone_number}<br>
                              <b>Date:</b> ${request.submission_date}<br>
                              <b>Type:</b> ${request.request_type}<br>
@@ -69,39 +69,39 @@ document.addEventListener('DOMContentLoaded', function () {
                              <b>Pickup Date:</b> ${request.pickup_date}<br>
                              <b>Vehicle Username:</b> ${request.veh_username}`;
 
-         requestMarker.bindPopup(popupContent);
-       }
-     })
-     .catch(error => console.error('Error:', error));
-  
-  
+      requestMarker.bindPopup(popupContent);
+    }
+  })
+  .catch(error => console.error('Error:', error));
 
 
 
-   fetch('/server/map_admin/offers.php')
-   .then(response => response.json())
-   .then(data => {
-     console.log(data);
- 
-   })
-   .catch(error => console.error('Error:', error));
-  
-   fetch('/server/map_admin/vehicles.php')
-   .then(response => response.json())
-   .then(data => {
-     console.log(data);
- 
-   })
-   .catch(error => console.error('Error:', error));
 
-   fetch('/server/map_admin/citizen.php')
-   .then(response => response.json())
-   .then(data => {
-     console.log(data);
- 
-   })
-   .catch(error => console.error('Error:', error));
-  
+
+fetch('/server/map_admin/offers.php')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+
+  })
+  .catch(error => console.error('Error:', error));
+
+fetch('/server/map_admin/vehicles.php')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+
+  })
+  .catch(error => console.error('Error:', error));
+
+fetch('/server/map_admin/citizen.php')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+
+  })
+  .catch(error => console.error('Error:', error));
+
 
 /*
 function createAndPinMarker(data) {
@@ -151,25 +151,25 @@ if (coords1 && coords2) {
 */
 
 
-      /*
+/*
 ////////////////VEHICLE MARKER////////////////////
-      var vehIcon = L.icon({
+var vehIcon = L.icon({
 
-        iconSize: [300, 300], 
-          iconAnchor: [15, 15] 
-        });
+  iconSize: [300, 300], 
+    iconAnchor: [15, 15] 
+  });
 
-     
-      var vehMarker = L.marker([37.9838, 23.7275], {
-          draggable: true,
-          icon: vehIcon 
-        }).addTo(map);   
+ 
+var vehMarker = L.marker([37.9838, 23.7275], {
+    draggable: true,
+    icon: vehIcon 
+  }).addTo(map);   
 
-        // Event listener for marker dragend event
-        vehMarker.on('dragend', function (event) {
-          var marker = event.target;
-          var position = marker.getLatLng();
-          alert('Location confirmed: ' + position.lat + ', ' + position.lng);
-        });
+  // Event listener for marker dragend event
+  vehMarker.on('dragend', function (event) {
+    var marker = event.target;
+    var position = marker.getLatLng();
+    alert('Location confirmed: ' + position.lat + ', ' + position.lng);
+  });
 
 */
