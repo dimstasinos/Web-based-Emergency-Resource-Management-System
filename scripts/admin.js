@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
               .catch((error) => console.error("Error:", error));
 
           } else {
-            //cancellation
+            BaseMarker.setLatLng([data.base_location.lat, data.base_location.lng])
             alert('Base Location not confirmed');
           }
         });
