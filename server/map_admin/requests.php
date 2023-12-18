@@ -22,7 +22,7 @@ if ($response->num_rows > 0) {
 
     $mysql = "SELECT f_name,l_name,phone_number FROM citizen ";
 
-
+    
 
 
     $requests[] = $request_array;
