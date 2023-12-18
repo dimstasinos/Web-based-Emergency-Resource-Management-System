@@ -9,16 +9,16 @@ $db = db_connect();
 
 try{
 
-  $add_cat_stmt = $db->prepare("UPDATE items SET item_category=?
+  $update_cat_stmt = $db->prepare("UPDATE items SET item_category=?
   where item_id=?");
 
-  $add_cat_stmt->bind_param(
+  $update_cat_stmt->bind_param(
     "ii",
     $data->new_cat,
     $data->id
   );
 
-  $add_cat_stmt->execute();
+  $update_cat_stmt->execute();
   $db->close();
 
   header('Content-Type: application/json');

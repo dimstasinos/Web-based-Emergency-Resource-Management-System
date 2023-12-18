@@ -13,13 +13,13 @@ try {
     while ($row = $response->fetch_assoc()) {
       $base_array = array(
         "lat" => $row["lat"],
-        "longi" => $row["longi"],
+        "lng" => $row["longi"],
 
       );
     }
   }
 
-  $base[] = $base_array;
+  $base = $base_array;
 
   $data = array(
     "base_location" => $base,

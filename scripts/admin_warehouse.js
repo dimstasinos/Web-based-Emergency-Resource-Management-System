@@ -321,6 +321,7 @@ document.getElementById("add").addEventListener("click", function () {
         let check = duplicate_check();
 
         if (check === 0) {
+          
           const data = {
             id: id_,
             detail_name: name,

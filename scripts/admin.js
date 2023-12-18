@@ -15,20 +15,44 @@ document.addEventListener('DOMContentLoaded', function () {
       if (data.status === "error") {
         console.error("Server Error:", data.Error);
       } else {
+
         //////////BASE MARKER LOCATION///////////
-        var BaseMarker = L.marker([data.base_location[0].lat, data.base_location[0].longi], {
+        var BaseMarker = L.marker([data.base_location.lat, data.base_location.lng], {
           draggable: true
         }).addTo(map);
 
         BaseMarker.on('dragend', function (event) {
-          var marker = event.target;
-          var position = marker.getLatLng();
+          let marker = event.target;
+          let position = marker.getLatLng();
 
           //Base Location confirm
-          var isConfirmed = confirm('Do you want to confirm this location?');
+          let isConfirmed = confirm('Do you want to confirm this location?');
           if (isConfirmed) {
-            //confirmation 
-            alert('Base Location confirmed: ' + position.lat + ', ' + position.lng);
+
+            const new_position = {
+              lati: position.lat,
+              long: position.lng,
+            };
+
+            fetch("/server/map_admin/base_upload.php", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(new_position),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.status === "error") {
+                  console.error("Server Error:", data.Error);
+                } else {
+                  
+                  //confirmation 
+                  alert('Base Location confirmed: ' + position.lat + ', ' + position.lng);
+                }
+              })
+              .catch((error) => console.error("Error:", error));
+
           } else {
             //cancellation
             alert('Base Location not confirmed');
@@ -38,42 +62,42 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .catch((error) => console.error("Error:", error));
 
-
-  fetch('/server/map_admin/requests.php')
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-
-      var requestsData = data.requests;
-
-      for (var i = 0; i < requestsData.length; i++) {
-        var request = requestsData[i];
-
-        var requestMarker = L.marker([request.lat, request.longi], {
-        }).addTo(map);
-
-        var popupContent = `<b>Name:</b> ${request.citizen_name}<br>
-                             <b>Phone:</b> ${request.phone_number}<br>
-                             <b>Date:</b> ${request.submission_date}<br>
-                             <b>Type:</b> ${request.request_type}<br>
-                             <b>Quantity:</b> ${request.quantity}<br>
-                             <b>Pickup Date:</b> ${request.pickup_date}<br>
-                             <b>Vehicle Username:</b> ${request.veh_username}`;
-
-        requestMarker.bindPopup(popupContent);
-      }
-    })
-    .catch(error => console.error('Error:', error));
 });
+/*fetch('/server/map_admin/requests.php')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+
+    var requestsData = data.requests;
+
+    for (var i = 0; i < requestsData.length; i++) {
+      var request = requestsData[i];
+
+      var requestMarker = L.marker([request.lat, request.longi], {
+      }).addTo(map);
+
+      var popupContent = `<b>Name:</b> ${request.citizen_name}<br>
+                           <b>Phone:</b> ${request.phone_number}<br>
+                           <b>Date:</b> ${request.submission_date}<br>
+                           <b>Type:</b> ${request.request_type}<br>
+                           <b>Quantity:</b> ${request.quantity}<br>
+                           <b>Pickup Date:</b> ${request.pickup_date}<br>
+                           <b>Vehicle Username:</b> ${request.veh_username}`;
+
+      requestMarker.bindPopup(popupContent);
+    }
+  })
+  .catch(error => console.error('Error:', error));
+});*/
 
 
-  /*fetch('/server/location.php')
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
+/*fetch('/server/location.php')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
 
-    })
-    .catch(error => console.error('Error:', error));*/
+  })
+  .catch(error => console.error('Error:', error));*/
 
 
 /*
