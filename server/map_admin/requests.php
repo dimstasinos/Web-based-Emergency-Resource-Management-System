@@ -4,7 +4,7 @@ include("Mysql_connection.php");
 
 $db = db_connect();
 
-$mysql = "SELECT submission_date,persons,pickup_date FROM requests";
+$mysql = "SELECT submission_date,persons,pickup_date FROM citizen_requests";
 $response = $db->query($mysql);
 
 
