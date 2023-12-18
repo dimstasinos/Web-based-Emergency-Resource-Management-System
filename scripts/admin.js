@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data.status === "error") {
                   console.error("Server Error:", data.Error);
                 } else {
-                  
+
                   //confirmation 
                   alert('Base Location confirmed: ' + position.lat + ', ' + position.lng);
                 }
@@ -62,33 +62,36 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .catch((error) => console.error("Error:", error));
 
-});
-/*fetch('/server/map_admin/requests.php')
-  .then(response => response.json())
-  .then(data => {
-    console.log(data);
 
-    var requestsData = data.requests;
 
-    for (var i = 0; i < requestsData.length; i++) {
-      var request = requestsData[i];
 
-      var requestMarker = L.marker([request.lat, request.longi], {
-      }).addTo(map);
+  fetch('/server/map_admin/requests.php')
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
 
-      var popupContent = `<b>Name:</b> ${request.citizen_name}<br>
+      var requestsData = data.requests;
+
+      for (var i = 0; i < requestsData.length; i++) {
+        var request = requestsData[i];
+
+        var requestMarker = L.marker([request.lat, request.longi], {
+        }).addTo(map);
+
+        var popupContent = `<b>Name:</b> ${request.citizen_name}<br>
                            <b>Phone:</b> ${request.phone_number}<br>
                            <b>Date:</b> ${request.submission_date}<br>
-                           <b>Type:</b> ${request.request_type}<br>
                            <b>Quantity:</b> ${request.quantity}<br>
                            <b>Pickup Date:</b> ${request.pickup_date}<br>
                            <b>Vehicle Username:</b> ${request.veh_username}`;
 
-      requestMarker.bindPopup(popupContent);
-    }
-  })
-  .catch(error => console.error('Error:', error));
-});*/
+        requestMarker.bindPopup(popupContent);
+      }
+    })
+    .catch(error => console.error('Error:', error));
+
+
+});
 
 
 /*fetch('/server/location.php')

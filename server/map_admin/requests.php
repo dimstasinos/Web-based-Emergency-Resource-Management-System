@@ -4,7 +4,7 @@ include("Mysql_connection.php");
 
 $db = db_connect();
 
-$mysql = "SELECT * FROM requests";
+$mysql = "SELECT submission_date,persons,pickup_date FROM requests";
 $response = $db->query($mysql);
 
 
@@ -13,20 +13,23 @@ $requests = array();
 if ($response->num_rows > 0) {
 
   while ($row = $response->fetch_assoc()) {
+
     $request_array = array(
-      "citizen_name" => $row["citizen_name"],
-      "phone_number" => $row["phone_number"],
       "submission_date" => $row["submission_date"],
-      "request_type" => $row["request_type"],
-      "quantity" => $row["quantity"],
-      "pickup_date" => $row["pickup_date"],
-      "veh_username" => $row["veh_username"],
-      "citizen_id" => $row["citizen_id"]     
+      "quantity" => $row["persons"],
+      "pickup_date" => $row["pickup_date"]
     );
+
+    $mysql = "SELECT f_name,l_name,phone_number FROM citizen ";
+
+
+
 
     $requests[] = $request_array;
   }
 }
+
+
 
 
 

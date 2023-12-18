@@ -66,8 +66,8 @@ citizen_id INT,
 f_name VARCHAR(50),
 l_name VARCHAR(50),
 phone_number VARCHAR(20) NOT NULL,
-lat varchar(255) NOT NULL,
-longi varchar(255) NOT NULL,
+lat float NOT NULL,
+longi float NOT NULL,
 primary key (citizen_id,phone_number),
 CONSTRAINT TABLE_USER
 FOREIGN KEY (citizen_id) REFERENCES users(user_id)
@@ -88,14 +88,14 @@ on update CASCADE on delete cascade
 
 CREATE TABLE citizen_requests (
   citizen_requert_id INT auto_increment,
-  submission_date DATE,
+  submission_date DATETIME,
   persons INT,
-  pickup_date DATE,
+  pickup_date DATETIME,
   req_veh_id INT,
   req_citizen_id INT,
   req_item_id INT,
   primary key (citizen_requert_id),
-  FOREIGN KEY (req_veh_id) REFERENCES vehicles(vehicle_id)
+  FOREIGN KEY (req_veh_id) REFERENCES vehicle(vehicle_id)
   on update CASCADE on delete CASCADE,
   FOREIGN KEY (req_citizen_id) REFERENCES citizen(citizen_id)
   on update CASCADE on delete CASCADE
@@ -130,3 +130,16 @@ create table request(
 
 INSERT INTO base VALUES
 ('37.9838','23.7275');
+
+INSERT INTO users VALUES
+(NULL,'dista',2002,'citizen'),
+(NULL,'kourt',1234,'rescuer');
+
+INSERT INTO vehicle VALUES
+(NULL,2,"tracker",37.96477144899956,23.732011585729495);
+
+INSERT INTO citizen VALUES
+(1,'Dimitris','Stasinos','698',37.983310135428795,23.717597956722077);
+
+INSERT INTO citizen_requests VALUES
+(NULL,now(),2,NULL,NULL,1,15);
