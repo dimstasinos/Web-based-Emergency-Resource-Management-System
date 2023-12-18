@@ -62,23 +62,28 @@ CREATE TABLE locations (
 );
 
 CREATE TABLE citizen (
-  citizen_id INT,
-  f_name VARCHAR(50),
-  l_name VARCHAR(50),
-  phone_number VARCHAR(20) NOT NULL,
-  lat varchar(255) NOT NULL,
-  longi varchar(255) NOT NULL,
-  primary key (citizen_id, phone_number),
-  CONSTRAINT TABLE_USER FOREIGN KEY (citizen_id) REFERENCES users(user_id) on update CASCADE on delete cascade
+citizen_id INT,
+f_name VARCHAR(50),
+l_name VARCHAR(50),
+phone_number VARCHAR(20) NOT NULL,
+lat varchar(255) NOT NULL,
+longi varchar(255) NOT NULL,
+primary key (citizen_id,phone_number),
+CONSTRAINT TABLE_USER
+FOREIGN KEY (citizen_id) REFERENCES users(user_id)
+on update CASCADE on delete cascade
 );
 
 create table vehicle(
-  vehicle_id INT,
-  resquer_id INT,
-  lat varchar(255) NOT NULL,
-  longi varchar(255) NOT NULL,
-  primary key (vehicle_id),
-  CONSTRAINT vehicle_user FOREIGN KEY (vehicle_id) REFERENCES users(user_id) on update CASCADE on delete cascade
+vehicle_id INT,
+resquer_id INT,
+vehicle_username VARCHAR(50),
+lat varchar(255) NOT NULL,
+longi varchar(255) NOT NULL,
+primary key (vehicle_id),
+CONSTRAINT vehicle_user
+FOREIGN KEY (vehicle_id) REFERENCES users(user_id)
+on update CASCADE on delete cascade
 );
 
 CREATE TABLE citizen_requests (
@@ -122,3 +127,6 @@ create table request(
   date DATE NOT NULL,
   persons INT NOT NULL
 );
+
+INSERT INTO base VALUES
+('37.9838','23.7275');
