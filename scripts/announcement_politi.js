@@ -2,7 +2,7 @@ var onload_data;
 
 document.addEventListener('DOMContentLoaded', function () {
 
-  fetch('/server/announcement/announcement.php')
+  fetch('/server/announcement/announcement_politis.php')
     .then(response => response.json())
     .then(data => {
       if (data.status === "error") {
@@ -41,5 +41,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     })
     .catch(error => console.error('Error fetching data:', error));
+
+    function acceptRequest() {
+      
+      alert("Request Accepted");
+  }
+
+  function declineRequest() {
+       
+      alert("Request Declined");
+  }
 
 });
