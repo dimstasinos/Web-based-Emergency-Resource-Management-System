@@ -81,16 +81,19 @@ create table vehicle(
   CONSTRAINT vehicle_user FOREIGN KEY (vehicle_id) REFERENCES users(user_id) on update CASCADE on delete cascade
 );
 
-CREATE TABLE requests_accept (
+CREATE TABLE citizen_requests (
+  citizen_requert_id INT auto_increment,
   submission_date DATE,
-  request_type VARCHAR(255),
-  quantity INT,
+  persons INT,
   pickup_date DATE,
   req_veh_id INT,
-  citizen_id INT,
-  PRIMARY KEY (citizen_name, submission_date),
-  FOREIGN KEY (req_veh_id) REFERENCES vehicles(vehicle_id) on update CASCADE on delete CASCADE,
-  FOREIGN KEY (citizen_id) REFERENCES citizen(citizen_id) on update CASCADE on delete CASCADE
+  req_citizen_id INT,
+  req_item_id INT,
+  primary key (citizen_requert_id),
+  FOREIGN KEY (req_veh_id) REFERENCES vehicles(vehicle_id)
+  on update CASCADE on delete CASCADE,
+  FOREIGN KEY (req_citizen_id) REFERENCES citizen(citizen_id)
+  on update CASCADE on delete CASCADE
 );
 
 CREATE TABLE offers (
