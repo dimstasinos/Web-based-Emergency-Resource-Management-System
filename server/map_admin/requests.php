@@ -20,9 +20,14 @@ if ($response->num_rows > 0) {
       "pickup_date" => $row["pickup_date"]
     );
 
-    $mysql = "SELECT f_name,l_name,phone_number FROM citizen ";
-
+    $mysql = "SELECT f_name,l_name,phone_number FROM citizen INNER JOIN 
+    citizen_requests ON citizen.citizen_id=citizen_requests.req_citizen_id";
     
+    $request_array = array(
+      ""
+
+    );
+
 
 
     $requests[] = $request_array;

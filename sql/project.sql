@@ -143,3 +143,5 @@ INSERT INTO citizen VALUES
 
 INSERT INTO citizen_requests VALUES
 (NULL,now(),2,NULL,NULL,1,15);
+
+SELECT f_name,l_name,phone_number FROM citizen INNER JOIN citizen_requests ON citizen.citizen_id=citizen_requests.req_citizen_id; 
