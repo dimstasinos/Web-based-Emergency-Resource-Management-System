@@ -65,42 +65,135 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-  fetch('/server/map_admin/requests.php')
+  fetch('/server/map_admin/citizen_requests.php')
     .then(response => response.json())
     .then(data => {
 
       var requestsData = data.requests;
+      var markers = [];
 
       for (var i = 0; i < requestsData.length; i++) {
         var request = requestsData[i];
 
-        var requestMarker = L.marker([request.lati, request.long], {
-          icon: L.icon({
-            iconUrl: `/leaflet/images/marker-icon-red.png`,
-            shadowUrl: `/leaflet/images/marker-shadow.png`,
-            iconAnchor: [12, 41],
-            popupAnchor: [1, -34],
-          })
-        }).addTo(map);
+        if (i !== 0) {
+            var check=false;
+          for (var j = 0; j < i; j++) {
 
-        requestMarker.id = request.citizen_request_id;
+            if (requestsData[j].citizen_id === request.citizen_id) {
+              check=true;
+              break
+            }
 
-        if (request.pickup_date !== null && request.veh_username !== null) {
-          var popupContent = `<b>Name:</b> ${request.first_name + " " + request.last_name}<br>
-                           <b>Phone:</b> ${request.phone_number}<br>
-                           <b>Date of Submission:</b> ${request.submission_date}<br>
-                           <b>Quantity:</b> ${request.quantity}<br>
-                           <b>Pickup Date:</b> ${request.pickup_date}<br>
-                           <b>Vehicle Username:</b> ${request.veh_username}`;
-        } else {
-          var popupContent = `<b>Name:</b> ${request.first_name + " " + request.last_name}<br>
-          <b>Phone:</b> ${request.phone_number}<br>
-          <b>Date of Submission:</b> ${request.submission_date}<br>
-          <b>Quantity:</b> ${request.quantity}<br>`;
+          }
+          if (check===false) {
+
+            var requestMarker = L.marker([request.lati, request.long], {
+              icon: L.icon({
+                iconUrl: `/leaflet/images/marker-icon-red.png`,
+                shadowUrl: `/leaflet/images/marker-shadow.png`,
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+              }),
+              marker_id: request.citizen_request_id
+            }).addTo(map);
+
+
+
+            if (request.pickup_date !== null && request.veh_username !== null) {
+
+              var popupContent = `
+                <div style="height: 100px; overflow-y: auto;">
+                <b>Name:</b> ${request.first_name + " " + request.last_name}<br>
+                <b>Phone:</b> ${request.phone_number}<br>
+                <b>Date of Submission:</b> ${request.submission_date}<br>
+                <b>Quantity:</b> ${request.quantity}<br>
+                <b>Pickup Date:</b> ${request.pickup_date}<br>
+                <b>Vehicle Username:</b> ${request.veh_username}
+                </div>`;
+            } else {
+              var popupContent = `
+                <div style="height: 100px; overflow-y: auto;">
+                <b>Name:</b> ${request.first_name + " " + request.last_name}<br>
+                <b>Phone:</b> ${request.phone_number}<br>
+                <b>Date of Submission:</b> ${request.submission_date}<br>
+                <b>Quantity:</b> ${request.quantity}<br>
+                </div>`;
+            }
+
+            requestMarker.bindPopup(popupContent);
+
+          } else {
+
+            console.log(request.citizen_request_id);
+            marker_search = markers.find(marker => marker.options.marker_id = request.citizen_id)
+
+            if (request.pickup_date !== null && request.veh_username !== null) {
+
+              var popupContent = `
+                <div style="height: 100px; overflow-y: auto;">
+                <b>Name:</b> ${request.first_name + " " + request.last_name}<br>
+                <b>Phone:</b> ${request.phone_number}<br>
+                <b>Date of Submission:</b> ${request.submission_date}<br>
+                <b>Quantity:</b> ${request.quantity}<br>
+                <b>Pickup Date:</b> ${request.pickup_date}<br>
+                <b>Vehicle Username:</b> ${request.veh_username}
+                </div>`;
+            } else {
+              var popupContent = `
+                <div style="height: 100px; overflow-y: auto;">
+                <b>Name:</b> ${request.first_name + " " + request.last_name}<br>
+                <b>Phone:</b> ${request.phone_number}<br>
+                <b>Date of Submission:</b> ${request.submission_date}<br>
+                <b>Quantity:</b> ${request.quantity}<br>
+                </div>`;
+            }
+
+            cur_content = marker_search.getPopup().getContent();
+            marker_search.getPopup().setContent(cur_content + popupContent);
+
+          }
+
+        } else if (i === 0) {
+
+          var requestMarker = L.marker([request.lati, request.long], {
+            icon: L.icon({
+              iconUrl: `/leaflet/images/marker-icon-red.png`,
+              shadowUrl: `/leaflet/images/marker-shadow.png`,
+              iconAnchor: [12, 41],
+              popupAnchor: [1, -34],
+              marker_id: request.citizen_request_id
+            })
+          }).addTo(map);
+
+
+          markers.push(requestMarker);
+
+          if (request.pickup_date !== null && request.veh_username !== null) {
+
+            var popupContent = `
+              <div style="height: 100px; overflow-y: auto;">
+              <b>Name:</b> ${request.first_name + " " + request.last_name}<br>
+              <b>Phone:</b> ${request.phone_number}<br>
+              <b>Date of Submission:</b> ${request.submission_date}<br>
+              <b>Quantity:</b> ${request.quantity}<br>
+              <b>Pickup Date:</b> ${request.pickup_date}<br>
+              <b>Vehicle Username:</b> ${request.veh_username}
+              </div>`;
+          } else {
+            var popupContent = `
+              <div style="height: 100px; overflow-y: auto;">
+              <b>Name:</b> ${request.first_name + " " + request.last_name}<br>
+              <b>Phone:</b> ${request.phone_number}<br>
+              <b>Date of Submission:</b> ${request.submission_date}<br>
+              <b>Quantity:</b> ${request.quantity}<br>
+              </div>`;
+          }
+
+          requestMarker.bindPopup(popupContent);
         }
-
-        requestMarker.bindPopup(popupContent);
       }
+
+
     })
     .catch(error => console.error('Error:', error));
 
