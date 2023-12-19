@@ -64,13 +64,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
+  var markers = [];
   fetch('/server/map_admin/citizen_requests.php')
     .then(response => response.json())
     .then(data => {
 
       var requestsData = data.requests;
-      var markers = [];
+      
 
       for (var i = 0; i < requestsData.length; i++) {
         var request = requestsData[i];
@@ -98,54 +98,55 @@ document.addEventListener('DOMContentLoaded', function () {
             }).addTo(map);
 
 
-
             if (request.pickup_date !== null && request.veh_username !== null) {
 
               var popupContent = `
                 <div style="height: 100px; overflow-y: auto;">
+                <b>Request</b><br>
                 <b>Name:</b> ${request.first_name + " " + request.last_name}<br>
                 <b>Phone:</b> ${request.phone_number}<br>
                 <b>Date of Submission:</b> ${request.submission_date}<br>
                 <b>Quantity:</b> ${request.quantity}<br>
                 <b>Pickup Date:</b> ${request.pickup_date}<br>
-                <b>Vehicle Username:</b> ${request.veh_username}
-                </div>`;
+                <b>Vehicle Username:</b> ${request.veh_username}<br><br>
+                `;
             } else {
               var popupContent = `
                 <div style="height: 100px; overflow-y: auto;">
+                <b>Request</b><br>
                 <b>Name:</b> ${request.first_name + " " + request.last_name}<br>
                 <b>Phone:</b> ${request.phone_number}<br>
                 <b>Date of Submission:</b> ${request.submission_date}<br>
-                <b>Quantity:</b> ${request.quantity}<br>
-                </div>`;
+                <b>Quantity:</b> ${request.quantity}<br><br>
+               `;
             }
 
             requestMarker.bindPopup(popupContent);
 
           } else {
 
-            console.log(request.citizen_request_id);
+           
             marker_search = markers.find(marker => marker.options.marker_id = request.citizen_id)
 
             if (request.pickup_date !== null && request.veh_username !== null) {
 
               var popupContent = `
-                <div style="height: 100px; overflow-y: auto;">
+                <b>Request</b><br>
                 <b>Name:</b> ${request.first_name + " " + request.last_name}<br>
                 <b>Phone:</b> ${request.phone_number}<br>
                 <b>Date of Submission:</b> ${request.submission_date}<br>
                 <b>Quantity:</b> ${request.quantity}<br>
                 <b>Pickup Date:</b> ${request.pickup_date}<br>
-                <b>Vehicle Username:</b> ${request.veh_username}
-                </div>`;
+                <b>Vehicle Username:</b> ${request.veh_username}<br><br>
+                `;
             } else {
               var popupContent = `
-                <div style="height: 100px; overflow-y: auto;">
+                <b>Request</b><br>
                 <b>Name:</b> ${request.first_name + " " + request.last_name}<br>
                 <b>Phone:</b> ${request.phone_number}<br>
                 <b>Date of Submission:</b> ${request.submission_date}<br>
-                <b>Quantity:</b> ${request.quantity}<br>
-                </div>`;
+                <b>Quantity:</b> ${request.quantity}<br><br>
+                `;
             }
 
             cur_content = marker_search.getPopup().getContent();
@@ -172,21 +173,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
             var popupContent = `
               <div style="height: 100px; overflow-y: auto;">
+              <b>Request</b><br>
               <b>Name:</b> ${request.first_name + " " + request.last_name}<br>
               <b>Phone:</b> ${request.phone_number}<br>
               <b>Date of Submission:</b> ${request.submission_date}<br>
               <b>Quantity:</b> ${request.quantity}<br>
               <b>Pickup Date:</b> ${request.pickup_date}<br>
-              <b>Vehicle Username:</b> ${request.veh_username}
-              </div>`;
+              <b>Vehicle Username:</b> ${request.veh_username}<br><br>
+             `;
           } else {
             var popupContent = `
               <div style="height: 100px; overflow-y: auto;">
+              <b>Request</b><br>
               <b>Name:</b> ${request.first_name + " " + request.last_name}<br>
               <b>Phone:</b> ${request.phone_number}<br>
               <b>Date of Submission:</b> ${request.submission_date}<br>
-              <b>Quantity:</b> ${request.quantity}<br>
-              </div>`;
+              <b>Quantity:</b> ${request.quantity}<br><br>
+             `;
           }
 
           requestMarker.bindPopup(popupContent);
