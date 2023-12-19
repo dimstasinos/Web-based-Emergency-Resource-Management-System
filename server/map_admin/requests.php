@@ -22,10 +22,11 @@ if ($response->num_rows > 0) {
 
     $mysql = "SELECT f_name,l_name,phone_number FROM citizen INNER JOIN 
     citizen_requests ON citizen.citizen_id=citizen_requests.req_citizen_id";
-    
-    $request_array = array(
-      ""
 
+    $request_array = array(
+      "f_name" => $row["f_name"],
+      "l_name" => $row["l_name"],
+      "phone_number" => $row["phone_number"]
     );
 
 
