@@ -68,22 +68,36 @@ document.addEventListener('DOMContentLoaded', function () {
   fetch('/server/map_admin/requests.php')
     .then(response => response.json())
     .then(data => {
-      console.log(data);
 
       var requestsData = data.requests;
 
       for (var i = 0; i < requestsData.length; i++) {
         var request = requestsData[i];
 
-        var requestMarker = L.marker([request.lat, request.longi], {
+        var requestMarker = L.marker([request.lati, request.long], {
+          icon: L.icon({
+            iconUrl: `/leaflet/images/marker-icon-red.png`,
+            shadowUrl: `/leaflet/images/marker-shadow.png`,
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+          })
         }).addTo(map);
 
-        var popupContent = `<b>Name:</b> ${request.citizen_name}<br>
+        requestMarker.id = request.citizen_request_id;
+
+        if (request.pickup_date !== null && request.veh_username !== null) {
+          var popupContent = `<b>Name:</b> ${request.first_name + " " + request.last_name}<br>
                            <b>Phone:</b> ${request.phone_number}<br>
-                           <b>Date:</b> ${request.submission_date}<br>
+                           <b>Date of Submission:</b> ${request.submission_date}<br>
                            <b>Quantity:</b> ${request.quantity}<br>
                            <b>Pickup Date:</b> ${request.pickup_date}<br>
                            <b>Vehicle Username:</b> ${request.veh_username}`;
+        } else {
+          var popupContent = `<b>Name:</b> ${request.first_name + " " + request.last_name}<br>
+          <b>Phone:</b> ${request.phone_number}<br>
+          <b>Date of Submission:</b> ${request.submission_date}<br>
+          <b>Quantity:</b> ${request.quantity}<br>`;
+        }
 
         requestMarker.bindPopup(popupContent);
       }
