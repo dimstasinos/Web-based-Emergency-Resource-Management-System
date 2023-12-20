@@ -3,56 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accept/Decline Table</title>
+    <title>Leaflet GeoJSON Layer Control</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        table, th, td {
-            border: 1px solid black;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        .action-buttons button {
-            margin-right: 5px;
+        #map {
+            height: 400px;
         }
     </style>
 </head>
 <body>
 
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>John Doe</td>
-            <td>john.doe@example.com</td>
-            <td class="action-buttons">
-                <button onclick="acceptRequest()">Accept</button>
-                <button onclick="declineRequest()">Decline</button>
-            </td>
-        </tr>
-        <!-- Add more rows as needed -->
-    </tbody>
-</table>
+<div id="map"></div>
+<div id="category-filters"></div>
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 <script>
-    function acceptRequest() {
-        // Add your logic for accepting here
-        alert("Request Accepted");
-    }
+    var map = L.map('map').setView([0, 0], 2);
 
-    function declineRequest() {
-        // Add your logic for declining here
-        alert("Request Declined");
+    // Create custom marker icons for different categories
+    var customIcons = {
+        "category1": L.icon({
+            iconUrl: 'leaflet/images/marker-icon-green.png',
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -16]
+        }),
+        "category2": L.icon({
+            iconUrl: '/leaflet/images/marker-icon.png',
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -16]
+        }),
+        // Add more categories as needed
+    };
+
+    // Sample GeoJSON data with categories
+    var geojsonFeatures = [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [0, 0]
+            },
+            "properties": {
+                "name": "Marker 1",
+                "category": "category1"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [10, 0]
+            },
+            "properties": {
+                "name": "Marker 2",
+                "category": "category2"
+            }
+        }
+        // Add more GeoJSON features as needed
+    ];
+
+    // Create a GeoJSON layer with dynamic custom icons
+    var geojsonLayer = L.geoJSON(geojsonFeatures, {
+        pointToLayer: function (feature, latlng) {
+            var category = feature.properties.category;
+            return L.marker(latlng, { icon: customIcons[category] });
+        }
+    }).addTo(map);
+
+    // Create a base layer group
+    var baseLayers = {
+        "OpenStreetMap": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'),
+        // Add more base layers as needed
+    };
+
+    // Create an overlay layer group for each category
+    var overlayLayers = {};
+    Object.keys(customIcons).forEach(function (category) {
+        overlayLayers[category] = L.layerGroup();
+    });
+
+    // Add GeoJSON features to the appropriate overlay layer
+    geojsonLayer.eachLayer(function (layer) {
+        var category = layer.feature.properties.category;
+        overlayLayers[category].addLayer(layer);
+    });
+
+    // Add the layers control to the map
+    L.control.layers(baseLayers, overlayLayers).addTo(map);
+
+    // Function to toggle visibility of markers based on category
+    function toggleMarkers(category) {
+        overlayLayers[category].eachLayer(function (layer) {
+            if (document.getElementById(category).checked) {
+                map.addLayer(layer);
+            } else {
+                map.removeLayer(layer);
+            }
+        });
     }
 </script>
 
