@@ -3,13 +3,14 @@
 include("../Mysql_connection.php");
 
 $db = db_connect();
-
+$features = array();
+/*
 $mysql = "SELECT DISTINCT req_citizen_id FROM citizen_requests;";
 $response = $db->query($mysql);
 
 $check;
 
-$features = array();
+
 
 if ($response->num_rows > 0) {
   while ($requests_row = $response->fetch_assoc()) {
@@ -28,10 +29,10 @@ if ($response->num_rows > 0) {
     $location["latitude"] = $citizen_row["latitude"];
     $location["longitude"] = $citizen_row["longitude"];
 
-    $corninates = array((float)$location["latitude"], (float)$location["longitude"]);
+    $coordinates = array((float)$location["latitude"], (float)$location["longitude"]);
     $gemetry = array(
       "type" => "Point",
-      "cordinates" => $corninates
+      "coordinates" => $coordinates
     );
 
 
@@ -78,7 +79,7 @@ if ($response->num_rows > 0) {
   }
 }
 
-
+*/
 $mysql = "SELECT * from base";
 $response = $db->query($mysql);
 $response_row=$response->fetch_assoc();
@@ -87,22 +88,21 @@ $base_array = array(
   "longitude" => $response_row["longitude"],
 );
 
-$corninates = array((float)$location["latitude"], (float)$location["longitude"]);
+$coordinates = array((float)$base_array["latitude"], (float)$base_array["longitude"]);
 $gemetry = array(
   "type" => "Point",
-  "cordinates" => $corninates
+  "coordinates" => $coordinates
 );
 
+$category["category"]= "base";
 
 $feature = array(
   "type" => "Feature",
   "geometry" => $gemetry,
-  "category" => "Base",
+  "properties" => $category,
 );
 
 $features[] = $feature;
-
-
 
 $featureCollection = array(
   "type" => "FeatureCollection",

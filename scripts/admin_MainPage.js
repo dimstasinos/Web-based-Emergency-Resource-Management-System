@@ -9,23 +9,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var customMarkers = {
     "base": L.icon({
-      iconUrl: 
+      iconUrl: '/leaflet/images/offices.png',
+      iconSize: [50, 50],
+      iconAnchor: [20, 20],
+      popupAnchor: [0, 0],
+      shadowAnchor: [10,10]
     })
 
-  }
-
-
+  };
 
   fetch('/server/map_admin/map.php')
     .then(response => response.json())
     .then(data => {
+
+      console.log(data);
+
+     
+
       
-      
-
-
-
-
-
 
 
     })
