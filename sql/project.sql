@@ -49,8 +49,8 @@ create TABLE announcements (
 );
 
 CREATE TABLE base(
-  lat varchar(255) NOT NULL,
-  longi varchar(255) NOT NULL
+  latitude varchar(255) NOT NULL,
+  longitude varchar(255) NOT NULL
 );
 
 

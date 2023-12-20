@@ -25,10 +25,10 @@ if ($response->num_rows > 0) {
     $citizen_data["first_name"] = $citizen_row["f_name"];
     $citizen_data["last_name"] = $citizen_row["l_name"];
     $citizen_data["phone_number"] = $citizen_row["phone_number"];
-    $location["latitude"] = (string)$citizen_row["latitude"];
-    $location["longitude"] = (string)$citizen_row["longitude"];
+    $location["latitude"] = $citizen_row["latitude"];
+    $location["longitude"] = $citizen_row["longitude"];
 
-    $corninates= array((float)$location["latitude"],(float)$location["longitude"]);
+    $corninates = array((float)$location["latitude"], (float)$location["longitude"]);
     $gemetry = array(
       "type" => "Point",
       "cordinates" => $corninates
@@ -51,24 +51,24 @@ if ($response->num_rows > 0) {
       $request_array["citizen_id"] = $citizen_row["req_citizen_id"];
       $request_array["item_id"] = $citizen_row["req_item_id"];
 
-      if($citizen_row["req_veh_id"]==null){
-        $check=1;
+      if ($citizen_row["req_veh_id"] == null) {
+        $check = 1;
       }
 
       $requests_details[] = $request_array;
     }
 
-    if($check==1){
-      $citizen_data["category"]="request_pending";
-    }else{
-      $citizen_data["category"]="request_accepted";
+    if ($check == 1) {
+      $citizen_data["category"] = "request_pending";
+    } else {
+      $citizen_data["category"] = "request_accepted";
     }
 
 
     $citizen_data["details"] = $requests_details;
     $properties = $citizen_data;
- 
-    
+
+
     $feature = array(
       "type" => "Feature",
       "geometry" => $gemetry,
@@ -77,6 +77,31 @@ if ($response->num_rows > 0) {
     $features[] = $feature;
   }
 }
+
+
+$mysql = "SELECT * from base";
+$response = $db->query($mysql);
+$response_row=$response->fetch_assoc();
+$base_array = array(
+  "latitude" => $response_row["latitude"],
+  "longitude" => $response_row["longitude"],
+);
+
+$corninates = array((float)$location["latitude"], (float)$location["longitude"]);
+$gemetry = array(
+  "type" => "Point",
+  "cordinates" => $corninates
+);
+
+
+$feature = array(
+  "type" => "Feature",
+  "geometry" => $gemetry,
+  "category" => "Base",
+);
+
+$features[] = $feature;
+
 
 
 $featureCollection = array(

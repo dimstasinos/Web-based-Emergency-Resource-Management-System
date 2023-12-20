@@ -7,12 +7,43 @@ document.addEventListener('DOMContentLoaded', function () {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
+  var customMarkers = {
+    "base": L.icon({
+      iconUrl: 
+    })
+
+  }
+
+
+
+  fetch('/server/map_admin/map.php')
+    .then(response => response.json())
+    .then(data => {
+      
+      
+
+
+
+
+
+
+
+    })
+    .catch(error => console.error('Error:', error));
+
+
+
 
 
 
 
 
 });
+
+
+
+
+
 
 
 /*fetch('/server/location.php')
