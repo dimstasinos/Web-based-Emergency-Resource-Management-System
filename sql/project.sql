@@ -143,3 +143,84 @@ INSERT INTO citizen VALUES
 
 INSERT INTO citizen_requests VALUES
 (NULL,now(),2,NULL,NULL,1,15);
+
+SELECT f_name,l_name,phone_number FROM citizen INNER JOIN citizen_requests ON citizen.citizen_id=citizen_requests.req_citizen_id; 
+
+delimiter $
+
+drop procedure if exists citizenRequest$
+
+create procedure citizenRequest()
+begin
+declare cit_id int;
+declare request_id int;
+declare c_request_id int;
+declare flag int;
+declare flag_2 int;
+declare request_id int;
+declare sub_data DATETIME;
+declare quantity INT;
+declare pick_date DATETIME;
+declare vehicle_id INT;
+declare citi_id INT;
+declare item_id int;
+declare first_name varchar(50);
+declare last_name varchar(50);
+declare telephone_number varchar(20);
+declare latitude varchar(100);
+declare longitude varchar(100);
+declare item_name varchar(100);
+declare vehicle_username varchar(100);
+
+declare cursor_1 cursor for
+	SELECT DISTINCT req_citizen_id
+	FROM citizen_requests;
+
+declare continue handler for not found set flag=1;
+declare continue handler for not found set flag_2=1;
+
+open cursor_1;
+set flag=0;
+
+repeat
+	fetch cursor_1 into cit_id;
+    
+    if flag=0 then
+    select citizen_id,f_name,l_name,phone_number,lat,longi
+    into citi_id,first_name,last_name,telephone_number,latitude,longitude
+    from citizen
+    where citizen_id=cit_id;
+   
+	declare cursor_2 cursor for
+		select citizen_requert_id 
+		from citizen_requests
+		where req_citizen_id=cit_id;
+   
+	open cursor_2;
+	set flag_2=0;
+   
+    repeat
+		fetch cursor_2 into request_id;
+   
+	if flag_2=0 then
+   
+		select citizen_requert_id,submission_date,persons,pickup_date,req_veh_id,req_item_id 
+		into c_request_id,sub_data,quantity,pick_date,vehicle_id,item_id
+		from citizen_requests
+		where citizen_requert_id=request_id;
+   
+	end if;
+    
+   until flag_2=1 end repeat;
+   
+  close cursor_2;
+
+end if;
+until flag=1 end repeat;
+close cursor_1;
+
+end$
+
+delimiter ;
+
+call citizenRequest(1);

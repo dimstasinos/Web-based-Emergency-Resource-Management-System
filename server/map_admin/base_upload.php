@@ -24,7 +24,7 @@ try {
   $db->close();
 
   header('Content-Type: application/json');
-  echo json_encode(['status' => 'success', "data:" => $data]);
+  echo json_encode(['status' => 'success']);
 
 } catch (Exception $error) {
   header('Content-Type: application/json');
