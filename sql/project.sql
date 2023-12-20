@@ -145,3 +145,33 @@ INSERT INTO citizen_requests VALUES
 (NULL,now(),2,NULL,NULL,1,15);
 
 SELECT f_name,l_name,phone_number FROM citizen INNER JOIN citizen_requests ON citizen.citizen_id=citizen_requests.req_citizen_id; 
+
+delimiter $
+
+drop procedure if exists citizenRequest$
+
+create procedure citizenRequest(in cit_id int)
+begin
+declare citizen_id_req int;
+declare flag int;
+
+declare cursor_1 CURSOR for
+select requert_id from citizen_requests  where req_citizen_id=cit_id;
+
+declare continue handler for not found set flag=1;
+open cursor_1;
+set flag=0;
+repeat
+  fetch cursor_1 into citizen_id_req;
+   if(flag=0) then
+    SELECT * FROM citizen_requests where requert_id=citizen_id_req;
+    end if;
+  until flag=1
+end repeat;
+close cursor_1;
+
+end$
+
+delimiter ;
+
+call citizenRequest(1);

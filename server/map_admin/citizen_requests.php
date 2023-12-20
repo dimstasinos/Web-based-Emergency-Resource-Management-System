@@ -55,27 +55,42 @@ if ($response->num_rows > 0) {
     if ($requests_rensponse->num_rows > 0) {
       $requests_row = $requests_rensponse->fetch_assoc();
       $request_array["veh_username"] = $requests_row["vehicle_username"];
-    }else{
-      $request_array["veh_username"] =null;
+    } else {
+      $request_array["veh_username"] = null;
     }
 
     $requests[] = $request_array;
   }
 }
 
-
-
-
+header('Content-Type: application/json');
+echo json_encode($requests);
 
 $data = array(
-  "requests" => $requests,
+  "type" => "FeatureCollection",
+  "features" => array(),
 );
 
 
-$db->close();
+$citizen_info = [];
 
-$json_data = json_encode($data);
 
-header('Content-Type: application/json');
+for ($i = 0; $i < sizeof($requests); $i++) {
 
-echo $json_data;
+  $citizen_info = array(
+    "first_name" => $request[$i].["first_name"],
+    "last_name" => $request[$i].["last_name"],
+    "phone_number" => $request[$i].["phone_number"],
+    "lati" => $request[$i].["lati"],
+    "long" => $request[$i].["long"],
+    "citizen_request_id" => $request[$i].["citizen_request_id"],
+    "submission_date" => $request[$i].["submission_date"],
+    "quantity" => $request[$i].["quantity"],
+    "pickup_date" => $request[$i].["pickup_date"],
+    "vehicle_id" => $request[$i].["vehicle_id"],
+    "citizen_id" => $request[$i].["citizen_id"],
+    "item_id" => $request[$i].["item_id"],
+    "item_name" => $request[$i].["item_name"],
+    "veh_username" => $request[$i].["veh_username"],
+  );
+}

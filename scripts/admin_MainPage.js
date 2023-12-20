@@ -42,11 +42,12 @@ document.addEventListener('DOMContentLoaded', function () {
               body: JSON.stringify(new_position),
             })
               .then((response) => response.json())
-              .then((data) => {
-                if (data.status === "error") {
-                  console.error("Server Error:", data.Error);
+              .then((upload) => {
+                if (upload.status === "error") {
+                  console.error("Server Error:", upload.Error);
                 } else {
-
+                  data.base_location.lat=position.lat;
+                  data.base_location.lng=position.lng;
                   //confirmation 
                   alert('Base Location confirmed: ' + position.lat + ', ' + position.lng);
                 }
