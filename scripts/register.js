@@ -1,5 +1,3 @@
-var onload_data;
-
 document.addEventListener('DOMContentLoaded', function () {
 
     var map = L.map('map').setView([37.9838, 23.7275], 13);
