@@ -20,6 +20,7 @@ create table items (
   item_id INT NOT NULL,
   item_name VARCHAR(100) not null,
   item_category INT not null,
+  item_quantity int,
   primary key(item_id),
   CONSTRAINT TABLE_CAT FOREIGN KEY (item_category) REFERENCES item_category(category_id) on update CASCADE on delete CASCADE
 );
@@ -90,13 +91,6 @@ CREATE TABLE offers (
   PRIMARY KEY (citizen_name, submission_date),
   FOREIGN KEY (veh_username) REFERENCES vehicles(vehusername),
   FOREIGN KEY (citizen_id) REFERENCES citizen(citizen_id)
-);
-
-CREATE TABLE item_quantity (
-  item_qua_id int not null,
-  item_qua int not null,
-  primary key (item_qua_id),
-  CONSTRAINT TABLE_QUA FOREIGN KEY (item_qua_id) REFERENCES items(item_id) on update CASCADE on delete CASCADE
 );
 
 create table request(

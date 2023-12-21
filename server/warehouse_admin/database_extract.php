@@ -16,24 +16,9 @@ if ($response->num_rows > 0) {
     $item_array = array(
       "id" => $row["item_id"],
       "name" => $row["item_name"],
-      "category" => $row["item_category"]
+      "category" => $row["item_category"],
+      "quantity" => $row["item_quantity"]
     );
-
-    $quantity = array();
-    $mysql = $db->prepare("SELECT item_qua from item_quantity where item_qua_id=?");
-    $mysql->bind_param("i", $row["item_id"]);
-    $mysql->execute();
-    $quantity_response = $mysql->get_result();
-
-    if ($quantity_response->num_rows > 0) {
-      $quantity_row = $quantity_response->fetch_assoc();
-      $quantity = (string)$quantity_row["item_qua"];
-
-    } else {
-      $quantity = "0";
-    }
-
-    $item_array["quantity"] = $quantity;
 
     $details = array();
     $mysql = $db->prepare("SELECT * FROM item_details where item_detail_id=?");

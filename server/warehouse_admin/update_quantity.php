@@ -9,8 +9,8 @@ $db = db_connect();
 
 try {
 
-  $update_stmt = $db->prepare("UPDATE item_quantity SET item_qua=? where 
-  item_qua_id=?");
+  $update_stmt = $db->prepare("UPDATE items SET item_quantity=? where 
+  item_id=?");
 
   $update_stmt->bind_param(
     "ii",

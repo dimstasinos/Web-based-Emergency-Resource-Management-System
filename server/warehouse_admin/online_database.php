@@ -24,15 +24,10 @@ try {
   }
 
   foreach ($json_data->items as $value) {
-    $items_stmt = $db->prepare("INSERT INTO items VALUES (?,?,?)");
+    $items_stmt = $db->prepare("INSERT INTO items VALUES (?,?,?,0)");
     $items_stmt->bind_param("isi", $value->id, $value->name, $value->category);
     $items_stmt->execute();
-
     $items_stmt->close();
-
-    $quantity_stmt = $db->prepare("INSERT INTO item_quantity VALUES (?,0)");
-    $quantity_stmt->bind_param("i", $value->id);
-    $quantity_stmt->execute();
   }
 
   foreach ($json_data->items as $value) {

@@ -6,7 +6,7 @@ $data = json_decode($receive);
 
 $db = db_connect();
 try {
-$add_stmt = $db->prepare("INSERT INTO items VALUES (?,?,?)");
+$add_stmt = $db->prepare("INSERT INTO items VALUES (?,?,?,0)");
 
 $add_stmt->bind_param(
   "isi",
@@ -16,14 +16,6 @@ $add_stmt->bind_param(
 );
 $add_stmt->execute();
 $add_stmt->close();
-$add_stmt = $db->prepare("INSERT INTO item_quantity VALUES (?,0)");
-
-$add_stmt->bind_param(
-  "i",
-  $data->id
-);
-$add_stmt->execute();
-
 
 $db->close();
 
