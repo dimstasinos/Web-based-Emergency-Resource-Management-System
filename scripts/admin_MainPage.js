@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // Create a custom marker for the feature
-        const customMarker = L.marker([feature.geometry.coordinates], {
+        const customMarker = L.marker([feature.geometry.coordinates[0], feature.geometry.coordinates[1]], {
           icon: (function() {
             if (category === "Base") {
               return L.icon({
@@ -56,24 +56,30 @@ document.addEventListener('DOMContentLoaded', function () {
                 shadowAnchor: [10, 10]
               });
             } else {
-            
-            
+              // Default icon for other categories
+              return L.icon({
+                iconUrl: 'path/to/default_marker.png', // Set the path to your default marker icon
+                iconSize: [30, 30],
+                iconAnchor: [15, 15],
+                popupAnchor: [0, -15]
+              });
             }
           })()
         });
         
 
-  // Add the marker to the category layer
-  categoryLayers[category].addLayer(customMarker);
-});
 
-// Add control to toggle layers
-L.control.layers(null, categoryLayers).addTo(map);
+        // Add the marker to the category layer
+        categoryLayers[category].addLayer(customMarker);
+      });
+
+      // Add control to toggle layers
+      L.control.layers(null, categoryLayers).addTo(map);
 
 
 
     })
-    .catch (error => console.error('Error:', error));
+    .catch(error => console.error('Error:', error));
 
 
 
