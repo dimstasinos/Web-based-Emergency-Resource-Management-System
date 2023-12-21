@@ -19,7 +19,7 @@ try {
 
 
 
-  $citizen_stmt = $db->prepare("INSERT INTO citizen(f_name,l_name,phone_number,lat,longi) VALUES (?,?,?,?,?)");
+  $citizen_stmt = $db->prepare("INSERT INTO citizen(f_name,l_name,phone_number,latitude,longitude) VALUES (?,?,?,?,?)");
   $citizen_stmt->bind_param(
     "sssss",
     $data->f_name,
