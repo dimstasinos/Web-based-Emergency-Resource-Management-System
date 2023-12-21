@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width initial-scale=1">
+  <link rel="stylesheet" href="/leaflet/leaflet.css">
   <title>Register</title>
 </head>
 
@@ -35,6 +36,9 @@
         <label for="confpass">Confirm Password</label>
         <input type="password" id="confpass" placeholder="Re-Enter password" required>
       </div>
+      <div class="main">
+        <div id="map"></div>
+      </div>
       <div class="login">
         <p>Already have an account?
           <a href="login_page"><br><strong>Login</strong></a>
@@ -45,7 +49,9 @@
       </div>
     </form>
     
+    
   <script src="/scripts/register.js"></script>
+  <script src="/leaflet/leaflet.js"></script>
 </body>
 
 
