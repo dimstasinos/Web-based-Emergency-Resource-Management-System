@@ -62,7 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
             let marker = event.target;
             let position = marker.getLatLng();
 
-            //Base Location confirm
             let newPositionConfirmed = confirm('Do you want to confirm this location?');
 
             if (newPositionConfirmed) {
@@ -101,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else if (category === "Request Pending") {
 
           var info_citizen = `<div style="max-height: 200px; overflow-y: auto;">
-          <p><strong>Citizen</strong><br>
+          <strong>Citizen</strong><br>
           <strong>Name:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
           <strong>Phone number:</strong> ${feature.properties.phone_number}<br>
           ----------------------------------`;
@@ -109,37 +108,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
           feature.properties.details.forEach((request) => {
             info = `<br><strong>Request</strong><br>
-            <strong>Pickup date:</strong> ${request.submission_date}<br>
-            <strong>Itam name:</strong> ${request.item_name}<br>
+            <strong>Submission date:</strong> ${request.submission_date}<br>
+            <strong>Item:</strong> ${request.item_name}<br>
             <strong>Quantity:</strong> ${request.quantity}<br>
             ----------------------------------`;
             info_citizen = info_citizen + info;
           });
 
-          info_citizen = info_citizen + `</p></div>`;
+          info_citizen = info_citizen + `</div>`;
 
           customMarkers.bindPopup(info_citizen);
 
         } else if (category === "Request Accepted") {
 
           var info_citizen = `<div style="max-height: 200px; overflow-y: auto;">
-          <p><strong>Citizen</strong><br>
+          <strong>Citizen</strong><br>
           <strong>Name:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
           <strong>Phone number:</strong> ${feature.properties.phone_number}<br>
           ----------------------------------`;
 
           feature.properties.details.forEach((request) => {
             info = `<br><strong>Request</strong><br>
-            <strong>Pickup date:</strong> ${request.submission_date}<br>
-            <strong>Itam name:</strong> ${request.item_name}<br>
+            <strong>Submission date:</strong> ${request.submission_date}<br>
+            <strong>Item:</strong> ${request.item_name}<br>
             <strong>Quantity:</strong> ${request.quantity}<br>
-            <strong>Quantity:</strong> ${request.quantity}<br>
-            <strong>Quantity:</strong> ${request.quantity}<br>
+            <strong>Pickup date:</strong> ${request.pickup_date}<br>
+            <strong>Vehicle username:</strong> ${request.vehicle_username}<br>
             ----------------------------------`;
             info_citizen = info_citizen + info;
           });
 
-          info_citizen = info_citizen + `</p></div>`;
+          info_citizen = info_citizen + `</div>`;
           customMarkers.bindPopup(info_citizen);
         }
 
