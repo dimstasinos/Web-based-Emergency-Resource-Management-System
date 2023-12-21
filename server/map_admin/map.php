@@ -51,6 +51,25 @@ if ($response->num_rows > 0) {
       $request_array["citizen_id"] = $citizen_row["req_citizen_id"];
       $request_array["item_id"] = $citizen_row["req_item_id"];
 
+      $mysql = $db->prepare("SELECT item_name FROM items where item_id=?");
+      $mysql->bind_param("i", $request_array["item_id"]);
+      $mysql->execute();
+      $item_rensponse = $mysql->get_result();
+      $item_row = $item_rensponse->fetch_assoc();
+      $request_array["item_name"] = $item_row["item_name"];
+
+      if ($citizen_row["req_veh_id"] != null) {
+        $mysql = $db->prepare("SELECT vehicle_username FROM vehicle where vehicle_id=?");
+        $mysql->bind_param("i", $request_array["vehicle_id"]);
+        $mysql->execute();
+        $vehicle_rensponse = $mysql->get_result();
+        $vehicle_row = $vehicle_rensponse->fetch_assoc();
+        $request_array["vehicle_username"] = $vehicle_row["vehicle_username"];
+      }else{
+        $request_array["vehicle_username"] = null;
+      }
+
+
       if ($citizen_row["req_veh_id"] == null) {
         $check = 1;
       }
@@ -59,9 +78,9 @@ if ($response->num_rows > 0) {
     }
 
     if ($check == 1) {
-      $citizen_data["category"] = "Request pending";
+      $citizen_data["category"] = "Request Pending";
     } else {
-      $citizen_data["category"] = "Request accepted";
+      $citizen_data["category"] = "Request Accepted";
     }
 
 
@@ -79,9 +98,13 @@ if ($response->num_rows > 0) {
 }
 
 
+
+
+
+
 $mysql = "SELECT * from base";
 $response = $db->query($mysql);
-$response_row=$response->fetch_assoc();
+$response_row = $response->fetch_assoc();
 $base_array = array(
   "latitude" => $response_row["latitude"],
   "longitude" => $response_row["longitude"],
@@ -93,7 +116,7 @@ $gemetry = array(
   "coordinates" => $coordinates
 );
 
-$category["category"]= "Base";
+$category["category"] = "Base";
 
 $feature = array(
   "type" => "Feature",

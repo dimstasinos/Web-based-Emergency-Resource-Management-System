@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function () {
 
   var map = L.map('map').setView([37.9838, 23.7275], 13);
@@ -32,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 popupAnchor: [0, 0],
                 shadowAnchor: [10, 10]
               });
-            } else if (category === "Request pending") {
+            } else if (category === "Request Pending") {
 
               return L.icon({
                 iconUrl: '/leaflet/images/request-red.png',
@@ -40,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 iconAnchor: [15, 15],
                 popupAnchor: [0, -15]
               });
-            } else if (category === "Request accepted") {
+            } else if (category === "Request Accepted") {
               return L.icon({
                 iconUrl: '/leaflet/images/request-green.png',
                 iconSize: [30, 30],
@@ -52,7 +51,13 @@ document.addEventListener('DOMContentLoaded', function () {
           draggable: category === "Base"
         });
 
+
         if (category === "Base") {
+
+
+          customMarkers.bindPopup('<strong>Base</strong>');
+
+
           customMarkers.on('dragend', function (event) {
             let marker = event.target;
             let position = marker.getLatLng();
@@ -66,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 lati: position.lat,
                 long: position.lng,
               };
-              
+
               fetch("/server/map_admin/base_upload.php", {
                 method: "POST",
                 headers: {
@@ -80,8 +85,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.error("Server Error:", data.Error);
                   } else {
 
-                    feature.geometry.coordinates[0]=position.lat;
-                    feature.geometry.coordinates[1]=position.lng;
+                    feature.geometry.coordinates[0] = position.lat;
+                    feature.geometry.coordinates[1] = position.lng;
                     alert('Base Location confirmed: ' + position.lat + ', ' + position.lng);
                   }
                 })
@@ -93,7 +98,52 @@ document.addEventListener('DOMContentLoaded', function () {
               alert('Base Location not confirmed');
             }
           });
+        } else if (category === "Request Pending") {
+
+          var info_citizen = `<div style="max-height: 200px; overflow-y: auto;">
+          <p><strong>Citizen</strong><br>
+          <strong>Name:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
+          <strong>Phone number:</strong> ${feature.properties.phone_number}<br>
+          ----------------------------------`;
+
+
+          feature.properties.details.forEach((request) => {
+            info = `<br><strong>Request</strong><br>
+            <strong>Pickup date:</strong> ${request.submission_date}<br>
+            <strong>Itam name:</strong> ${request.item_name}<br>
+            <strong>Quantity:</strong> ${request.quantity}<br>
+            ----------------------------------`;
+            info_citizen = info_citizen + info;
+          });
+
+          info_citizen = info_citizen + `</p></div>`;
+
+          customMarkers.bindPopup(info_citizen);
+
+        } else if (category === "Request Accepted") {
+
+          var info_citizen = `<div style="max-height: 200px; overflow-y: auto;">
+          <p><strong>Citizen</strong><br>
+          <strong>Name:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
+          <strong>Phone number:</strong> ${feature.properties.phone_number}<br>
+          ----------------------------------`;
+
+          feature.properties.details.forEach((request) => {
+            info = `<br><strong>Request</strong><br>
+            <strong>Pickup date:</strong> ${request.submission_date}<br>
+            <strong>Itam name:</strong> ${request.item_name}<br>
+            <strong>Quantity:</strong> ${request.quantity}<br>
+            <strong>Quantity:</strong> ${request.quantity}<br>
+            <strong>Quantity:</strong> ${request.quantity}<br>
+            ----------------------------------`;
+            info_citizen = info_citizen + info;
+          });
+
+          info_citizen = info_citizen + `</p></div>`;
+          customMarkers.bindPopup(info_citizen);
         }
+
+
 
         markersLayers[category].addLayer(customMarkers);
         markersLayers[category].addTo(map);
