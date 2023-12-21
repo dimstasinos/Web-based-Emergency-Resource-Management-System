@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width initial-scale=1">
   <link rel="stylesheet" href="/leaflet/leaflet.css">
+  <link rel="stylesheet" href="/css/register_page.css">
+  <script src="/scripts/register.js"></script>
   <title>Register</title>
 </head>
 
@@ -20,7 +22,8 @@
       <div class="lnameBox">
         <label for="lname">Last Name</label>
         <input type="username" id="lname" placeholder="Enter Last Name" maxlength="12" required>
-      </div>  <div class="phoneBox">
+      </div>
+      <div class="phoneBox">
         <label for="user">Phone Number</label>
         <input type="tel" id="phone" placeholder="Enter Phone Number" maxlength="12" required>
       </div>
@@ -36,9 +39,9 @@
         <label for="confpass">Confirm Password</label>
         <input type="password" id="confpass" placeholder="Re-Enter password" required>
       </div>
-      <div class="main">
-        <div id="map"></div>
-      </div>
+
+      <div id="map"></div>
+
       <div class="login">
         <p>Already have an account?
           <a href="login_page"><br><strong>Login</strong></a>
@@ -48,10 +51,10 @@
         <button type="button" id="registerButton"><strong>REGISTER</strong></button>
       </div>
     </form>
+
+
     
-    
-  <script src="/scripts/register.js"></script>
-  <script src="/leaflet/leaflet.js"></script>
+    <script src="/leaflet/leaflet.js"></script>
 </body>
 
 

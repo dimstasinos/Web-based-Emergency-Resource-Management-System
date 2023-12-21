@@ -1,4 +1,5 @@
 var onload_data;
+
 document.addEventListener('DOMContentLoaded', function () {
 
     var map = L.map('map').setView([37.9838, 23.7275], 13);
@@ -6,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
+
 });
 
 document.getElementById("registerButton").addEventListener('click', function () {
