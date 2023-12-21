@@ -102,6 +102,9 @@ if ($response->num_rows > 0) {
 
 
 
+
+
+
 $mysql = "SELECT * from base";
 $response = $db->query($mysql);
 $response_row = $response->fetch_assoc();
