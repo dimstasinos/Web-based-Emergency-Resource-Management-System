@@ -10,16 +10,6 @@ create table users (
   primary key (user_id)
 );
 
-insert into
-  user(user_name, user_surname, user_category)
-VALUES
-  ('Giorgos', 'Nikolaou', 'Diaswsths');
-
-insert into
-  credentials(cred_id, username, password)
-VALUES
-  ('1', 'giorgosnik', '23041978');
-
 create table item_category (
   category_id INT not null,
   category_name VARCHAR(50) not null,
@@ -121,22 +111,67 @@ INSERT INTO
 VALUES
   (37.9838, 23.7275);
 
-INSERT INTO users VALUES
-(NULL,'dista',2002,'citizen'),
-(NULL,'kourt',1234,'citizen'),
-(NULL,'vasiliki',1234,'citizen');
+INSERT INTO
+  users
+VALUES
+  (NULL, 'dista', 2002, 'citizen'),
+  (NULL, 'kourt', 1234, 'citizen'),
+  (NULL, 'vasiliki', 1234, 'citizen');
 
-INSERT INTO vehicle VALUES
-(NULL,2,"tracker",37.96477144899956,23.732011585729495);
+INSERT INTO
+  vehicle
+VALUES
+  (
+    NULL,
+    2,
+    "tracker",
+    37.96477144899956,
+    23.732011585729495
+  );
 
-INSERT INTO citizen VALUES
-(1,'Dimitris','Stasinos','698',37.9593578107923,23.753819428699714),
-(2,'Marios','Kourtakis','698',37.95989919257204,23.701968353689313),
-(3,'Vasilis','Pistiolas','698',37.98547493214612,23.716905583907558);
+INSERT INTO
+  citizen
+VALUES
+  (
+    1,
+    'Dimitris',
+    'Stasinos',
+    '698',
+    37.9593578107923,
+    23.753819428699714
+  ),
+  (
+    2,
+    'Marios',
+    'Kourtakis',
+    '698',
+    37.95989919257204,
+    23.701968353689313
+  ),
+  (
+    3,
+    'Vasilis',
+    'Pistiolas',
+    '698',
+    37.98547493214612,
+    23.716905583907558
+  );
 
-INSERT INTO citizen_requests VALUES
-(NULL,now(),5,NULL,NULL,2,17),
-(NULL,now(),2,now(),1,1,16),
-(NULL,now(),5,NULL,NULL,2,18),
-(NULL,now(),5,now(),1,3,18),
-(NULL,now(),2,NULL,NULL,1,16);
+INSERT INTO
+  citizen_requests
+VALUES
+  (NULL, now(), 5, NULL, NULL, 2, 17),
+  (NULL, now(), 2, now(), 1, 1, 16),
+  (NULL, now(), 5, NULL, NULL, 2, 18),
+  (NULL, now(), 5, now(), 1, 3, 18),
+  (NULL, now(), 2, NULL, NULL, 1, 16);
+
+  insert into
+  user(user_name, user_surname, user_category)
+VALUES
+  ('Giorgos', 'Nikolaou', 'Diaswsths');
+
+insert into
+  credentials(cred_id, username, password)
+VALUES
+  ('1', 'giorgosnik', '23041978');
