@@ -53,30 +53,25 @@ CREATE TABLE base(
   longitude varchar(255) NOT NULL
 );
 
-
 CREATE TABLE citizen (
-citizen_id INT,
-f_name VARCHAR(50),
-l_name VARCHAR(50),
-phone_number VARCHAR(20) NOT NULL,
-latitude  float NOT NULL,
-longitude float NOT NULL,
-primary key (citizen_id,phone_number),
-CONSTRAINT TABLE_USER
-FOREIGN KEY (citizen_id) REFERENCES users(user_id)
-on update CASCADE on delete cascade
+  citizen_id INT,
+  f_name VARCHAR(50),
+  l_name VARCHAR(50),
+  phone_number VARCHAR(20) NOT NULL,
+  latitude float NOT NULL,
+  longitude float NOT NULL,
+  primary key (citizen_id, phone_number),
+  CONSTRAINT TABLE_USER FOREIGN KEY (citizen_id) REFERENCES users(user_id) on update CASCADE on delete cascade
 );
 
 create table vehicle(
-vehicle_id INT,
-resquer_id INT,
-vehicle_username VARCHAR(50),
-lat varchar(255) NOT NULL,
-longi varchar(255) NOT NULL,
-primary key (vehicle_id),
-CONSTRAINT vehicle_user
-FOREIGN KEY (vehicle_id) REFERENCES users(user_id)
-on update CASCADE on delete cascade
+  vehicle_id INT auto_increment,
+  resquer_id INT,
+  vehicle_username VARCHAR(50),
+  lat varchar(255) NOT NULL,
+  longi varchar(255) NOT NULL,
+  primary key (vehicle_id),
+  CONSTRAINT vehicle_user FOREIGN KEY (vehicle_id) REFERENCES users(user_id) on update CASCADE on delete cascade
 );
 
 CREATE TABLE citizen_requests (
@@ -88,10 +83,9 @@ CREATE TABLE citizen_requests (
   req_citizen_id INT,
   req_item_id INT,
   primary key (requert_id),
-  FOREIGN KEY (req_veh_id) REFERENCES vehicle(vehicle_id)
-  on update CASCADE on delete CASCADE,
-  FOREIGN KEY (req_citizen_id) REFERENCES citizen(citizen_id)
-  on update CASCADE on delete CASCADE
+  FOREIGN KEY (req_veh_id) REFERENCES vehicle(vehicle_id) on update CASCADE on delete CASCADE,
+  FOREIGN KEY (req_citizen_id) REFERENCES citizen(citizen_id) on update CASCADE on delete CASCADE,
+  FOREIGN KEY (req_item_id) REFERENCES items(item_id) on update CASCADE on delete CASCADE
 );
 
 CREATE TABLE offers (
@@ -111,7 +105,8 @@ CREATE TABLE offers (
 CREATE TABLE item_quantity (
   item_qua_id int not null,
   item_qua int not null,
-  primary key (item_qua_id)
+  primary key (item_qua_id),
+  CONSTRAINT TABLE_QUA FOREIGN KEY (item_qua_id) REFERENCES items(item_id) on update CASCADE on delete CASCADE
 );
 
 create table request(
@@ -121,19 +116,27 @@ create table request(
   persons INT NOT NULL
 );
 
-INSERT INTO base VALUES
-('37.9838','23.7275');
+INSERT INTO
+  base
+VALUES
+  (37.9838, 23.7275);
 
 INSERT INTO users VALUES
 (NULL,'dista',2002,'citizen'),
-(NULL,'kourt',1234,'rescuer');
+(NULL,'kourt',1234,'citizen'),
+(NULL,'vasiliki',1234,'citizen');
 
 INSERT INTO vehicle VALUES
 (NULL,2,"tracker",37.96477144899956,23.732011585729495);
 
 INSERT INTO citizen VALUES
-(1,'Dimitris','Stasinos','698',37.983310135428795,23.717597956722077);
+(1,'Dimitris','Stasinos','698',37.9593578107923,23.753819428699714),
+(2,'Marios','Kourtakis','698',37.95989919257204,23.701968353689313),
+(3,'Vasilis','Pistiolas','698',37.98547493214612,23.716905583907558);
 
 INSERT INTO citizen_requests VALUES
-(NULL,now(),2,NULL,NULL,1,15);
-
+(NULL,now(),5,NULL,NULL,2,17),
+(NULL,now(),2,now(),1,1,16),
+(NULL,now(),5,NULL,NULL,2,18),
+(NULL,now(),5,now(),1,3,18),
+(NULL,now(),2,NULL,NULL,1,16);
