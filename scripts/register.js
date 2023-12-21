@@ -16,6 +16,8 @@ document.getElementById("registerButton").addEventListener('click', function () 
         username: username,
         password: password
     };
+
+    console.log(data);
     fetch('/server/registerpage/register_page.php', {
         method: 'POST',
         headers: {
