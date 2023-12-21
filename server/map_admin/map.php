@@ -4,13 +4,12 @@ include("../Mysql_connection.php");
 
 $db = db_connect();
 $features = array();
-/*
+
+
 $mysql = "SELECT DISTINCT req_citizen_id FROM citizen_requests;";
 $response = $db->query($mysql);
 
 $check;
-
-
 
 if ($response->num_rows > 0) {
   while ($requests_row = $response->fetch_assoc()) {
@@ -60,9 +59,9 @@ if ($response->num_rows > 0) {
     }
 
     if ($check == 1) {
-      $citizen_data["category"] = "request_pending";
+      $citizen_data["category"] = "Request pending";
     } else {
-      $citizen_data["category"] = "request_accepted";
+      $citizen_data["category"] = "Request accepted";
     }
 
 
@@ -79,7 +78,7 @@ if ($response->num_rows > 0) {
   }
 }
 
-*/
+
 $mysql = "SELECT * from base";
 $response = $db->query($mysql);
 $response_row=$response->fetch_assoc();
@@ -94,7 +93,7 @@ $gemetry = array(
   "coordinates" => $coordinates
 );
 
-$category["category"]= "base";
+$category["category"]= "Base";
 
 $feature = array(
   "type" => "Feature",

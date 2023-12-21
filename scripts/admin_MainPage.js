@@ -13,24 +13,67 @@ document.addEventListener('DOMContentLoaded', function () {
       iconSize: [50, 50],
       iconAnchor: [20, 20],
       popupAnchor: [0, 0],
-      shadowAnchor: [10,10]
+      shadowAnchor: [10, 10]
+    }),
+    "request_pending": L.icon({
+      iconUrl: '/leaflet/images/request-red.png',
+      iconSize: [50, 50],
+      iconAnchor: [20, 20],
+      popupAnchor: [0, 0],
+      shadowAnchor: [10, 10]
+    }),
+    "request_accepted": L.icon({
+      iconUrl: '/leaflet/images/request-green.png',
+      iconSize: [50, 50],
+      iconAnchor: [20, 20],
+      popupAnchor: [0, 0],
+      shadowAnchor: [10, 10]
     })
-
   };
 
   fetch('/server/map_admin/map.php')
     .then(response => response.json())
     .then(data => {
+      const categoryLayers = {};
 
-      
+      data.features.forEach(feature => {
+        const category = feature.properties.category;
 
-     
+        // Create a new layer if it doesn't exist
+        if (!categoryLayers[category]) {
+          categoryLayers[category] = L.layerGroup();
+        }
 
-      
+        // Create a custom marker for the feature
+        const customMarker = L.marker([feature.geometry.coordinates], {
+          icon: (function() {
+            if (category === "Base") {
+              return L.icon({
+                iconUrl: '/leaflet/images/offices.png',
+                iconSize: [50, 50],
+                iconAnchor: [20, 20],
+                popupAnchor: [0, 0],
+                shadowAnchor: [10, 10]
+              });
+            } else {
+            
+            
+            }
+          })()
+        });
+        
+
+  // Add the marker to the category layer
+  categoryLayers[category].addLayer(customMarker);
+});
+
+// Add control to toggle layers
+L.control.layers(null, categoryLayers).addTo(map);
+
 
 
     })
-    .catch(error => console.error('Error:', error));
+    .catch (error => console.error('Error:', error));
 
 
 
