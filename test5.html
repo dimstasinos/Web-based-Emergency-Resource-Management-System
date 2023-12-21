@@ -1,1 +1,45 @@
-<div>test</div>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaflet Dashed Line</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 400px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+  // Create a Leaflet map centered at a specific location
+  var map = L.map('map').setView([0, 0], 2);
+
+  // Add OpenStreetMap tile layer
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  // Define two marker locations
+  var marker1 = L.marker([0, 0]).addTo(map);
+  var marker2 = L.marker([10, 10]).addTo(map);
+
+  // Create a polyline with a dashed line and add it to the map
+  var polyline = L.polyline([
+    [marker1.getLatLng().lat, marker1.getLatLng().lng],
+    [marker2.getLatLng().lat, marker2.getLatLng().lng]
+  ], {
+    color: 'blue',
+    dashArray: '5, 10', // Set the dash pattern (5 pixels dashed, 10 pixels gap)
+    weight: 2 // Set the line weight
+  }).addTo(map);
+</script>
+
+</body>
+</html>
