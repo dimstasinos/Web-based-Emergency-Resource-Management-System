@@ -214,7 +214,7 @@ $base_array = array(
 );
 
 $coordinates = array((float)$base_array["latitude"], (float)$base_array["longitude"]);
-$gemetry = array(
+$geometry = array(
   "type" => "Point",
   "coordinates" => $coordinates
 );
@@ -223,7 +223,7 @@ $category["category"] = "Base";
 
 $feature = array(
   "type" => "Feature",
-  "geometry" => $gemetry,
+  "geometry" => $geometry,
   "properties" => $category,
 );
 

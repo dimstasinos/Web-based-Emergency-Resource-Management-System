@@ -46,16 +46,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 iconAnchor: [15, 15],
                 popupAnchor: [0, -15]
               });
-            }else if (category === "Request Accepted") {
+            } else if (category === "Offer Accepted") {
               return L.icon({
                 iconUrl: '/leaflet/images/offer-green.png',
                 iconSize: [30, 30],
                 iconAnchor: [15, 15],
                 popupAnchor: [0, -15]
               });
-            }else if (category === "Request Pending") {
+            } else if (category === "Offer Pending") {
               return L.icon({
-                iconUrl: '/leaflet/images/request-red.png',
+                iconUrl: '/leaflet/images/offer-red.png',
                 iconSize: [30, 30],
                 iconAnchor: [15, 15],
                 popupAnchor: [0, -15]
@@ -68,9 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (category === "Base") {
 
-
           customMarkers.bindPopup('<strong>Base</strong>');
-
 
           customMarkers.on('dragend', function (event) {
             let marker = event.target;
@@ -154,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
           info_citizen = info_citizen + `</div>`;
           customMarkers.bindPopup(info_citizen);
-        } else if (category === "Offer Accepted") {
+        }else if (category === "Offer Accepted") {
           var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
           <strong>Citizen</strong><br>
           <strong>Name:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
@@ -162,19 +160,40 @@ document.addEventListener('DOMContentLoaded', function () {
           ----------------------------------`;
 
           feature.properties.details.forEach((offer) => {
-            info = `<br><strong>Request</strong><br>
+            info = `<br><strong>Offer</strong><br>
             <strong>Submission date:</strong> ${offer.submission_date}<br>
-            <strong>Item:</strong> ${offer.item_name}<br>
-            <strong>Quantity:</strong> ${offer.quantity}<br>
             <strong>Pickup date:</strong> ${offer.pickup_date}<br>
-            <strong>Vehicle username:</strong> ${offer.vehicle_username}<br>
-            ----------------------------------`;
+            <strong>Vehicle username:</strong> ${offer.vehicle_username}<br>`
+            offer.items.forEach((item) => {
+              `<strong>Item:</strong> ${item.item_name}<br>
+               <strong>Quantity:</strong> ${item.quantity}<br>`
+            });
+            `----------------------------------`;
             info_citizen = info_citizen + info;
           });
 
           info_citizen = info_citizen + `</div>`;
           customMarkers.bindPopup(info_citizen);
+        } else if (category === "Offer Pending") {
+          var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
+          <strong>Citizen</strong><br>
+          <strong>Name:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
+          <strong>Phone number:</strong> ${feature.properties.phone_number}<br>
+          ----------------------------------`;
+          console.log(feature.properties);
+          feature.properties.details.forEach((offer) => {
+            info = `<br><strong>Offer</strong><br>
+            <strong>Submission date:</strong> ${offer.submission_date}<br>`
+            offer.items.forEach((item) => {
+              `<strong>Item:</strong> ${item.item_name}<br>
+               <strong>Quantity:</strong> ${item.quantity}<br>`
+            });
+            `----------------------------------`;
+            info_citizen = info_citizen + info;
+          });
 
+          info_citizen = info_citizen + `</div>`;
+          customMarkers.bindPopup(info_citizen);
         }
 
 
