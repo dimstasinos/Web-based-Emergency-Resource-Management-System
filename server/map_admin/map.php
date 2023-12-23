@@ -15,12 +15,12 @@ if ($response->num_rows > 0) {
   while ($requests_row = $response->fetch_assoc()) {
 
     $check = 0;
-    $mysql = $db->prepare("SELECT f_name,l_name,phone_number,latitude,longitude FROM citizen
+    $citizen_info = $db->prepare("SELECT f_name,l_name,phone_number,latitude,longitude FROM citizen
     where citizen_id=?");
-    $mysql->bind_param("i", $requests_row["req_citizen_id"]);
-    $mysql->execute();
-    $citizen_rensponse = $mysql->get_result();
-    $citizen_row = $citizen_rensponse->fetch_assoc();
+    $citizen_info->bind_param("i", $requests_row["req_citizen_id"]);
+    $citizen_info->execute();
+    $citizen_response = $citizen_info->get_result();
+    $citizen_row = $citizen_response->fetch_assoc();
 
     $citizen_data["first_name"] = $citizen_row["f_name"];
     $citizen_data["last_name"] = $citizen_row["l_name"];
@@ -35,34 +35,37 @@ if ($response->num_rows > 0) {
     );
 
 
-    $mysql = $db->prepare("SELECT * FROM citizen_requests where req_citizen_id=?");
-    $mysql->bind_param("i", $requests_row["req_citizen_id"]);
-    $mysql->execute();
-    $citizen_rensponse = $mysql->get_result();
+    $request_citizen = $db->prepare("SELECT * FROM citizen_requests where req_citizen_id=?");
+    $request_citizen->bind_param("i", $requests_row["req_citizen_id"]);
+    $request_citizen->execute();
+    $requests_response  = $request_citizen->get_result();
     $requests_details = array();
 
-    while ($citizen_row = $citizen_rensponse->fetch_assoc()) {
+    while ($citizen_request_row = $requests_response->fetch_assoc()) {
 
-      $request_array["requert_id"] = $citizen_row["requert_id"];
-      $request_array["submission_date"] = $citizen_row["submission_date"];
-      $request_array["quantity"] = $citizen_row["persons"];
-      $request_array["pickup_date"] = $citizen_row["pickup_date"];
-      $request_array["vehicle_id"] = $citizen_row["req_veh_id"];
-      $request_array["citizen_id"] = $citizen_row["req_citizen_id"];
-      $request_array["item_id"] = $citizen_row["req_item_id"];
 
-      $mysql = $db->prepare("SELECT item_name FROM items where item_id=?");
-      $mysql->bind_param("i", $request_array["item_id"]);
-      $mysql->execute();
-      $item_rensponse = $mysql->get_result();
+      $request_array = array(
+        "request_id" => $citizen_request_row["request_id"],
+        "submission_date" => $citizen_request_row["submission_date"],
+        "quantity" => $citizen_request_row["persons"],
+        "pickup_date" => $citizen_request_row["pickup_date"],
+        "vehicle_id" => $citizen_request_row["req_veh_id"],
+        "citizen_id" => $citizen_request_row["req_citizen_id"],
+        "item_id" => $citizen_request_row["req_item_id"]
+      );
+
+      $item_info = $db->prepare("SELECT item_name FROM items where item_id=?");
+      $item_info->bind_param("i", $request_array["item_id"]);
+      $item_info->execute();
+      $item_rensponse = $item_info->get_result();
       $item_row = $item_rensponse->fetch_assoc();
       $request_array["item_name"] = $item_row["item_name"];
 
-      if ($citizen_row["req_veh_id"] != null) {
-        $mysql = $db->prepare("SELECT vehicle_username FROM vehicle where vehicle_id=?");
-        $mysql->bind_param("i", $request_array["vehicle_id"]);
-        $mysql->execute();
-        $vehicle_rensponse = $mysql->get_result();
+      if ($citizen_request_row["req_veh_id"] != null) {
+        $vehicle_info = $db->prepare("SELECT vehicle_username FROM vehicle where vehicle_id=?");
+        $vehicle_info->bind_param("i", $request_array["vehicle_id"]);
+        $vehicle_info->execute();
+        $vehicle_rensponse = $vehicle_info->get_result();
         $vehicle_row = $vehicle_rensponse->fetch_assoc();
         $request_array["vehicle_username"] = $vehicle_row["vehicle_username"];
       } else {
@@ -70,7 +73,7 @@ if ($response->num_rows > 0) {
       }
 
 
-      if ($citizen_row["req_veh_id"] == null) {
+      if ($citizen_request_row["req_veh_id"] == null) {
         $check = 1;
       }
 
@@ -85,21 +88,22 @@ if ($response->num_rows > 0) {
 
 
     $citizen_data["details"] = $requests_details;
-    $properties = $citizen_data;
+
 
 
     $feature = array(
       "type" => "Feature",
       "geometry" => $geometry,
-      "properties" => $properties,
+      "properties" => $citizen_data,
     );
+
     $features[] = $feature;
   }
 }
 
 
-$mysql = "SELECT DISTINCT offer_citizen_id FROM citizen_offers;";
-$response = $db->query($mysql);
+$citizen_offer = "SELECT DISTINCT offer_citizen_id FROM citizen_offers;";
+$response = $db->query($citizen_offer);
 
 $check = 0;
 
@@ -109,11 +113,11 @@ if ($response->num_rows > 0) {
 
     $check = 0;
 
-    $mysql = $db->prepare("SELECT f_name,l_name,phone_number,latitude,longitude FROM citizen
+    $citizen_info = $db->prepare("SELECT f_name,l_name,phone_number,latitude,longitude FROM citizen
     where citizen_id=?");
-    $mysql->bind_param("i", $offer_row["offer_citizen_id"]);
-    $mysql->execute();
-    $citizen_rensponse = $mysql->get_result();
+    $citizen_info->bind_param("i", $offer_row["offer_citizen_id"]);
+    $citizen_info->execute();
+    $citizen_rensponse = $citizen_info->get_result();
     $citizen_row = $citizen_rensponse->fetch_assoc();
 
     $citizen_data["first_name"] = $citizen_row["f_name"];
@@ -128,48 +132,55 @@ if ($response->num_rows > 0) {
       "coordinates" => $coordinates
     );
 
-    $mysql = $db->prepare("SELECT * FROM citizen_offers where offer_citizen_id=?");
-    $mysql->bind_param("i", $offer_row["offer_citizen_id"]);
-    $mysql->execute();
-    $citizen_rensponse = $mysql->get_result();
+    $offer_citizen = $db->prepare("SELECT * FROM citizen_offers where offer_citizen_id=?");
+    $offer_citizen->bind_param("i", $offer_row["offer_citizen_id"]);
+    $offer_citizen->execute();
+    $offer_rensponse = $offer_citizen->get_result();
     $offer_details = array();
 
-    while ($citizen_row = $citizen_rensponse->fetch_assoc()) {
-
-      $offer_array["offer_id"] = $citizen_row["offer_id"];
-      $offer_array["submission_date"] = $citizen_row["submission_date"];
-      $offer_array["pickup_date"] = $citizen_row["pickup_date"];
-      $offer_array["vehicle_id"] = $citizen_row["offer_veh_id"];
-      $offer_array["citizen_id"] = $citizen_row["offer_citizen_id"];
+    while ($citizen_offer_row = $offer_rensponse->fetch_assoc()) {
 
 
-      $mysql = $db->prepare("SELECT * FROM offer_items where offer_id_item=?");
-      $mysql->bind_param("i", $offer_array["offer_id"]);
-      $mysql->execute();
-      $item_rensponse = $mysql->get_result();
+      $offer_array = array(
+        "offer_id" => $citizen_offer_row["offer_id"],
+        "submission_date" => $citizen_offer_row["submission_date"],
+        "pickup_date" => $citizen_offer_row["pickup_date"],
+        "vehicle_id" => $citizen_offer_row["offer_veh_id"],
+        "citizen_id" => $citizen_offer_row["offer_citizen_id"]
+      );
+
+
+      $item_info = $db->prepare("SELECT * FROM offer_items where offer_id_item=?");
+      $item_info->bind_param("i", $offer_array["offer_id"]);
+      $item_info->execute();
+      $item_rensponse = $item_info->get_result();
       $items_info = array();
+
       while ($item_row = $item_rensponse->fetch_assoc()) {
 
-        $item_details["item_id"] = $item_row["item_id_offer"];
-        $item_details["quantity"] = $item_row["quantity"];
+        $item_details = array(
+          "item_id" =>$item_row["item_id_offer"],
+          "quantity" =>  $item_row["quantity"]
+        );
+        
+        
 
-
-        $mysql = $db->prepare("SELECT item_name FROM items where item_id=?");
-        $mysql->bind_param("i", $item_details["item_id"]);
-        $mysql->execute();
-        $item_rensponse_name = $mysql->get_result();
+        $item_name = $db->prepare("SELECT item_name FROM items where item_id=?");
+        $item_name->bind_param("i", $item_details["item_id"]);
+        $item_name->execute();
+        $item_rensponse_name = $item_name->get_result();
         $item_name_row = $item_rensponse_name->fetch_assoc();
         $item_details["item_name"] = $item_name_row["item_name"];
-        
+
         $items_info[] = $item_details;
       }
 
 
-      if ($citizen_row["offer_veh_id"] != null) {
-        $mysql = $db->prepare("SELECT vehicle_username FROM vehicle where vehicle_id=?");
-        $mysql->bind_param("i", $offer_array["vehicle_id"]);
-        $mysql->execute();
-        $vehicle_rensponse = $mysql->get_result();
+      if ($citizen_offer_row["offer_veh_id"] != null) {
+        $vehicle_info = $db->prepare("SELECT vehicle_username FROM vehicle where vehicle_id=?");
+        $vehicle_info->bind_param("i", $offer_array["vehicle_id"]);
+        $vehicle_info->execute();
+        $vehicle_rensponse = $vehicle_info->get_result();
         $vehicle_row = $vehicle_rensponse->fetch_assoc();
         $offer_array["vehicle_username"] = $vehicle_row["vehicle_username"];
       } else {
@@ -178,7 +189,7 @@ if ($response->num_rows > 0) {
 
       $offer_array["items"] = $items_info;
 
-      if ($citizen_row["offer_veh_id"] == null) {
+      if ($citizen_offer_row["offer_veh_id"] == null) {
         $check = 1;
       }
 
@@ -192,12 +203,12 @@ if ($response->num_rows > 0) {
     }
 
     $citizen_data["details"] = $offer_details;
-    $properties = $citizen_data;
+
 
     $feature = array(
       "type" => "Feature",
       "geometry" => $geometry,
-      "properties" => $properties,
+      "properties" => $citizen_data,
     );
     $features[] = $feature;
   }
@@ -205,8 +216,13 @@ if ($response->num_rows > 0) {
 
 
 
-$mysql = "SELECT * from base";
-$response = $db->query($mysql);
+$truck_info = "SELECT * FROM vehilce";
+$truck_response = $db->
+
+
+
+$base_info = "SELECT * from base";
+$response = $db->query($base_info);
 $response_row = $response->fetch_assoc();
 $base_array = array(
   "latitude" => $response_row["latitude"],

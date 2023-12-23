@@ -117,9 +117,8 @@ document.addEventListener('DOMContentLoaded', function () {
           <strong>Phone number:</strong> ${feature.properties.phone_number}<br>
           ----------------------------------`;
 
-
           feature.properties.details.forEach((request) => {
-            info = `<br><strong>Request</strong><br>
+            var info = `<br><strong>Request</strong><br>
             <strong>Submission date:</strong> ${request.submission_date}<br>
             <strong>Item:</strong> ${request.item_name}<br>
             <strong>Quantity:</strong> ${request.quantity}<br>
@@ -140,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
           ----------------------------------`;
 
           feature.properties.details.forEach((request) => {
-            info = `<br><strong>Request</strong><br>
+            var info = `<br><strong>Request</strong><br>
             <strong>Submission date:</strong> ${request.submission_date}<br>
             <strong>Item:</strong> ${request.item_name}<br>
             <strong>Quantity:</strong> ${request.quantity}<br>
@@ -152,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
           info_citizen = info_citizen + `</div>`;
           customMarkers.bindPopup(info_citizen);
-        }else if (category === "Offer Accepted") {
+        } else if (category === "Offer Accepted") {
           var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
           <strong>Citizen</strong><br>
           <strong>Name:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
@@ -160,36 +159,39 @@ document.addEventListener('DOMContentLoaded', function () {
           ----------------------------------`;
 
           feature.properties.details.forEach((offer) => {
-            info = `<br><strong>Offer</strong><br>
+            var info = `<br><strong>Offer</strong><br>
             <strong>Submission date:</strong> ${offer.submission_date}<br>
             <strong>Pickup date:</strong> ${offer.pickup_date}<br>
-            <strong>Vehicle username:</strong> ${offer.vehicle_username}<br>`
+            <strong>Vehicle username:</strong> ${offer.vehicle_username}<br>`;
+
             offer.items.forEach((item) => {
-              `<strong>Item:</strong> ${item.item_name}<br>
-               <strong>Quantity:</strong> ${item.quantity}<br>`
+              info = info + `<br><strong>Item:</strong> ${item.item_name}<br>
+               <strong>Quantity:</strong> ${item.quantity}<br>`;
             });
-            `----------------------------------`;
-            info_citizen = info_citizen + info;
+
+            info_citizen = info_citizen + info + ` ----------------------------------`;
           });
 
           info_citizen = info_citizen + `</div>`;
           customMarkers.bindPopup(info_citizen);
+
         } else if (category === "Offer Pending") {
           var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
           <strong>Citizen</strong><br>
           <strong>Name:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
           <strong>Phone number:</strong> ${feature.properties.phone_number}<br>
           ----------------------------------`;
-          console.log(feature.properties);
+
           feature.properties.details.forEach((offer) => {
-            info = `<br><strong>Offer</strong><br>
+            var info = `<br><strong>Offer</strong><br>
             <strong>Submission date:</strong> ${offer.submission_date}<br>`
+
             offer.items.forEach((item) => {
-              `<strong>Item:</strong> ${item.item_name}<br>
+              info = info + `<br><strong>Item:</strong> ${item.item_name}<br>
                <strong>Quantity:</strong> ${item.quantity}<br>`
             });
-            `----------------------------------`;
-            info_citizen = info_citizen + info;
+   
+            info_citizen = info_citizen + info + ` ----------------------------------`;
           });
 
           info_citizen = info_citizen + `</div>`;
