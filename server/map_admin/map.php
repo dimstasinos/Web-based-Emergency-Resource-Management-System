@@ -39,6 +39,7 @@ if ($response->num_rows > 0) {
     $request_citizen->bind_param("i", $requests_row["req_citizen_id"]);
     $request_citizen->execute();
     $requests_response  = $request_citizen->get_result();
+
     $requests_details = array();
 
     while ($citizen_request_row = $requests_response->fetch_assoc()) {
@@ -159,11 +160,11 @@ if ($response->num_rows > 0) {
       while ($item_row = $item_rensponse->fetch_assoc()) {
 
         $item_details = array(
-          "item_id" =>$item_row["item_id_offer"],
+          "item_id" => $item_row["item_id_offer"],
           "quantity" =>  $item_row["quantity"]
         );
-        
-        
+
+
 
         $item_name = $db->prepare("SELECT item_name FROM items where item_id=?");
         $item_name->bind_param("i", $item_details["item_id"]);
@@ -217,7 +218,38 @@ if ($response->num_rows > 0) {
 
 
 $truck_info = "SELECT * FROM vehilce";
-$truck_response = $db->
+$truck_response = $db->query($truck_info);
+
+if ($truck_response->num_rows > 0) {
+  while ($truck_row = $truck_response->fetch_assoc()) {
+
+    $truck_array = array(
+      "vehicle_id" => $truck_row["vehicle_id"],
+      "vehicle_username" => $truck_row["vehicle_username"]
+    );
+
+    $location["latitude"] = $truck_row["latitude"];
+    $location["longitude"] = $truck_row["longitude"];
+
+    $coordinates = array((float)$location["latitude"], (float)$location["longitude"]);
+    $geometry = array(
+      "type" => "Point",
+      "coordinates" => $coordinates
+    );
+
+
+    $storage_veh = $db->prepare("SELECT * FROM vehicle_storage where str_vehicle_id=?");
+    $storage_veh->bind_param("i", $truck_array["vehicle_id"]);
+    $storage_veh->execute();
+    $storage_response  = $storage_veh->get_result();
+
+    while ($storage_row = $storage_response->fetch_assoc()) {
+
+
+    }
+
+  }
+}
 
 
 
