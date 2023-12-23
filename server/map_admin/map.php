@@ -238,16 +238,21 @@ if ($truck_response->num_rows > 0) {
     );
 
 
-    $storage_veh = $db->prepare("SELECT * FROM vehicle_storage where str_vehicle_id=?");
+    $storage_veh = $db->prepare("SELECT * FROM citizen_requests where req_veh_id=?");
     $storage_veh->bind_param("i", $truck_array["vehicle_id"]);
     $storage_veh->execute();
     $storage_response  = $storage_veh->get_result();
 
-    while ($storage_row = $storage_response->fetch_assoc()) {
+    while($storage_row = $storage_response->fetch_assoc()){
+      $storage_array = array(
+        "request_id" => $storage_row["request_id"],
+        "quantity" => $storage_row["persons"],
+        "item_id" => $storage_row["req_item_id"]
+      );
 
+      
 
     }
-
   }
 }
 
