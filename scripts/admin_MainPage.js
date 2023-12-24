@@ -60,9 +60,24 @@ document.addEventListener('DOMContentLoaded', function () {
                 iconAnchor: [15, 15],
                 popupAnchor: [0, -15]
               });
+            } else if (category === "Truck Active") {
+              return L.icon({
+                iconUrl: '/leaflet/images/marker-truck-green.png',
+                iconSize: [30, 30],
+                iconAnchor: [15, 15],
+                popupAnchor: [0, -15]
+              });
+            }else if (category === "Offer Pending") {
+              return L.icon({
+                iconUrl: '/leaflet/images/marker-truck-red.png',
+                iconSize: [30, 30],
+                iconAnchor: [15, 15],
+                popupAnchor: [0, -15]
+              });
             }
           })(),
-          draggable: category === "Base"
+          draggable: category === "Base",
+          draggable: category === "Truck Active"
         });
 
 
@@ -196,6 +211,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
           info_citizen = info_citizen + `</div>`;
           customMarkers.bindPopup(info_citizen);
+        }else if (category === "Truck Active"){
+
+          
         }
 
 
