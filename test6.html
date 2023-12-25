@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaflet Map Example</title>
+  
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <!-- Leaflet PolylineDecorator JS -->
+  <script src="https://unpkg.com/leaflet-polylinedecorator/dist/leaflet.polylineDecorator.js"></script>
+  
+  <style>
+    #map {
+      height: 400px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="map"></div>
+
+  <script>
+    // Create a Leaflet map centered at [51.505, -0.09]
+    var map = L.map('map').setView([51.505, -0.09], 13);
+
+    // Add OpenStreetMap as the base layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Create two draggable markers and add them to the map
+    var marker1 = L.marker([51.5, -0.09], { draggable: true }).addTo(map);
+    var marker2 = L.marker([51.51, -0.1], { draggable: true }).addTo(map);
+
+    // Create a polyline connecting the draggable markers
+    var latlngs = [marker1.getLatLng(), marker2.getLatLng()];
+    var polyline = L.polyline(latlngs, { color: 'blue' }).addTo(map);
+
+    // Update the polyline when markers are dragged
+    marker1.on('drag', updatePolyline);
+    marker2.on('drag', updatePolyline);
+
+    // Function to update the polyline when markers are dragged
+    function updatePolyline() {
+      latlngs = [marker1.getLatLng(), marker2.getLatLng()];
+      polyline.setLatLngs(latlngs);
+    }
+  </script>
+
+</body>
+</html>
