@@ -1,9 +1,25 @@
-document.getElementById('check').addEventListener("click", function() {
+document.getElementById('loginbutton').addEventListener('click', function () {
+  username = document.getElementById("username").value;
+  password = document.getElementById("pass").value;
 
+  const data = {
+    username: username,
+    password: password
+  };
+  console.log(data);
+  fetch('/server/loginpage/login_page.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
 
-  if (document.getElementById("check").checked) {
-      document.getElementById("pass").type = "text";
-  } else {
-    document.getElementById("pass").type = "password";
-  }
+  })
+    .then(response => response.json())
+    .then((data) => {
+      if (data.status === "error") {
+        console.error("Server Error:", data.Error);
+      }
+    })
+
 });

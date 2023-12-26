@@ -4,12 +4,23 @@ include("../Mysql_connection.php");
 
 $db = db_connect();
 try{
-
-$mysql = "SELECT * from users";
+    $username = $_GET['username'];
+    $password = $_GET['pass'];
+    
+$mysql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
 $response = $db->query($mysql);
 
 $loginpage = array();
 
+
+
+if ($response->num_rows > 0) {
+        
+        echo "Login successful!";
+    } else {
+        // Invalid login
+        echo "Invalid login credentials";
+    }
 if ($response->num_rows > 0) {
 
   while ($row = $response->fetch_assoc()) {
@@ -23,7 +34,6 @@ if ($response->num_rows > 0) {
     $loginpage[] = $loginpage_array;
   }
 }
-
 
 
 $data = array(
