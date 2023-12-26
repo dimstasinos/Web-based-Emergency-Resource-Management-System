@@ -1,3 +1,4 @@
 {
-  "php.debug.executablePath": ""
+  "php.debug.executablePath": "",
+  "livePreview.defaultPreviewPath": "/html/admin/chart.html"
 }

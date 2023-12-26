@@ -6,13 +6,15 @@ document.addEventListener('DOMContentLoaded', function () {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
+  var polyline;
+  var markersLayers = {};
+  markersLayers["lines"] = L.layerGroup();
 
   fetch('/server/map_admin/map.php')
     .then(response => response.json())
     .then(data => {
 
-      const markersLayers = {};
-
+      
       data.features.forEach(feature => {
         const category = feature.properties.category;
 
@@ -60,9 +62,24 @@ document.addEventListener('DOMContentLoaded', function () {
                 iconAnchor: [15, 15],
                 popupAnchor: [0, -15]
               });
+            } else if (category === "Truck Active") {
+              return L.icon({
+                iconUrl: '/leaflet/images/marker-truck-green.png',
+                iconSize: [50, 50],
+                iconAnchor: [15, 15],
+                popupAnchor: [0, -15]
+              });
+            } else if (category === "Truck Inactive") {
+              return L.icon({
+                iconUrl: '/leaflet/images/marker-truck-red.png',
+                iconSize: [40, 30],
+                iconAnchor: [15, 15],
+                popupAnchor: [0, -15]
+              });
             }
           })(),
-          draggable: category === "Base"
+          draggable: category === "Base",
+          draggable: category === "Truck Active"
         });
 
 
@@ -190,36 +207,128 @@ document.addEventListener('DOMContentLoaded', function () {
               info = info + `<br><strong>Item:</strong> ${item.item_name}<br>
                <strong>Quantity:</strong> ${item.quantity}<br>`
             });
-   
+
             info_citizen = info_citizen + info + ` ----------------------------------`;
           });
 
           info_citizen = info_citizen + `</div>`;
           customMarkers.bindPopup(info_citizen);
+        } else if (category === "Truck Active") {
+          var info_truck = `<div style="max-height: 150px; overflow-y: auto;">
+          <strong>Truck</strong><br>
+          <strong>Username:</strong> ${feature.properties.vehicle_username}<br>
+          <strong>Status:</strong> ${feature.properties.category}<br>
+          ----------------------------------`;
+
+          feature.properties.requests.forEach((cargo) => {
+            var info = `<br><strong>Request</strong><br>
+            <strong>Item name:</strong> ${cargo.item_name}<br>
+            <strong>Quantity:</strong> ${cargo.quantity}<br>`
+
+            data.features.forEach((detail) => {
+
+              if (detail.properties.category === "Request Pending" || detail.properties.category === "Request Accepted") {
+                detail.properties.details.forEach((id) => {
+                  if (id.request_id === cargo.request_id) {
+                    
+                    const line = L.polyline([
+                      [feature.geometry.coordinates[0], feature.geometry.coordinates[1]],
+                      [detail.geometry.coordinates[0], detail.geometry.coordinates[1]]
+                    ], {
+                      color: 'blue',
+                      dashArray: '5, 10'
+                    }).addTo(markersLayers["lines"]);
+
+                   
+                  }
+
+
+                });
+              }
+            });
+
+
+            info_truck = info_truck + info + ` ----------------------------------`;
+          });
+
+          feature.properties.offers.forEach((cargo) => {
+            var info = `<br><strong>Offer</strong><br>`
+
+            cargo.items.forEach((item) => {
+              info = info + `<br><strong>Item:</strong> ${item.item_name}<br>
+              <strong>Quantity:</strong> ${item.quantity}<br>`
+            });
+
+            info_truck = info_truck + info + ` ----------------------------------`;
+          });
+
+          info_truck = info_truck + `</div>`;
+          customMarkers.bindPopup(info_truck);
         }
-
-
 
         markersLayers[category].addLayer(customMarkers);
         markersLayers[category].addTo(map);
+
+        if (category === "Truck Active") {
+          customMarkers.on('dragend', function (event) {
+            const marker = event.target;
+            const position = marker.getLatLng();
+
+            markersLayers["lines"].eachLayer(line => {
+              const line_position = line.getLatLngs();
+              const line_end1 = line_position[0].lat === feature.geometry.coordinates[0] && line_position[0].lng === feature.geometry.coordinates[1];
+              const line_end2 = line_position[1].lat === feature.geometry.coordinates[0] && line_position[1].lng === feature.geometry.coordinates[1];
+
+              if (line_end1 || line_end2) {
+                let line_update;
+                if (line_end1) {
+                  line_update = [position.lat, position.lng];
+                } else {
+                  line_update = line_position[0];
+                }
+
+                if (line_end2) {
+                  line.setLatLngs([
+                    line_update,
+                    [position.lat, position.lng]
+                  ]);
+                } else {
+                  line.setLatLngs([
+                    line_update,
+                    line_position[1]
+                  ]);
+                }
+              }
+            });
+
+            feature.geometry.coordinates[0] = position.lat;
+            feature.geometry.coordinates[1] = position.lng;
+          });
+        }
+
+
       });
 
-
-
-
       L.control.layers(null, markersLayers,).addTo(map);
-
-
 
     })
     .catch(error => console.error('Error:', error));
 
 
-
-
-
-
-
+    function updatePolyline() {
+      if (polyline) {
+        map.removeLayer(polyline);
+      }
+      if (markersLayers["Truck Active"]) {
+        var latlngs = markersLayers["Truck Active"].getLayers().map(function (marker) {
+          return marker.getLatLng();
+        });
+        polyline = L.polyline(latlngs, { color: 'blue' }).addTo(markersLayers["lines"]);
+      }
+    }
+  
+    // Initial polyline update
+    updatePolyline();
 
 });
 

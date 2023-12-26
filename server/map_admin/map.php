@@ -217,8 +217,10 @@ if ($response->num_rows > 0) {
 
 
 
-$truck_info = "SELECT * FROM vehilce";
+$truck_info = "SELECT * FROM vehicle";
 $truck_response = $db->query($truck_info);
+
+$truck_check=0;
 
 if ($truck_response->num_rows > 0) {
   while ($truck_row = $truck_response->fetch_assoc()) {
@@ -238,16 +240,99 @@ if ($truck_response->num_rows > 0) {
     );
 
 
-    $storage_veh = $db->prepare("SELECT * FROM vehicle_storage where str_vehicle_id=?");
-    $storage_veh->bind_param("i", $truck_array["vehicle_id"]);
-    $storage_veh->execute();
-    $storage_response  = $storage_veh->get_result();
+    $storage_veh_req = $db->prepare("SELECT * FROM citizen_requests where req_veh_id=?");
+    $storage_veh_req->bind_param("i", $truck_array["vehicle_id"]);
+    $storage_veh_req->execute();
+    $storage_response_req  = $storage_veh_req->get_result();
 
-    while ($storage_row = $storage_response->fetch_assoc()) {
-
-
+    if ($storage_response_req->num_rows > 0) {
+      $truck_check=1;
     }
 
+    $cargo_array_req = array();
+
+    while ($storage_req_row = $storage_response_req->fetch_assoc()) {
+      $storage_array = array(
+        "request_id" => $storage_req_row["request_id"],
+        "quantity" => $storage_req_row["persons"],
+        "item_id" => $storage_req_row["req_item_id"]
+      );
+
+      $item_name = $db->prepare("SELECT item_name FROM items where item_id=?");
+      $item_name->bind_param("i", $storage_req_row["req_item_id"]);
+      $item_name->execute();
+      $item_rensponse_name = $item_name->get_result();
+      $item_name_row = $item_rensponse_name->fetch_assoc();
+      $storage_array["item_name"] = $item_name_row["item_name"];
+
+      $cargo_array_req[] = $storage_array;
+    }
+
+
+    $storage_veh_off = $db->prepare("SELECT offer_id FROM citizen_offers where offer_veh_id=?");
+    $storage_veh_off->bind_param("i", $truck_array["vehicle_id"]);
+    $storage_veh_off->execute();
+    $storage_response_off  = $storage_veh_off->get_result();
+
+    if ($storage_response_off->num_rows > 0) {
+      $truck_check=1;
+    }
+    $cargo_array_off = array();
+
+    while ($storage_off_row = $storage_response_off->fetch_assoc()) {
+
+      $item_offers = $db->prepare("SELECT * FROM offer_items where offer_id_item=?");
+      $item_offers->bind_param("i", $storage_off_row["offer_id"]);
+      $item_offers->execute();
+      $item_rensponse = $item_offers->get_result();
+
+      $items = array();
+
+      while ($item_row = $item_rensponse->fetch_assoc()) {
+
+        $item_array = array(
+          "item_id" => $item_row["item_id_offer"],
+          "quantity" => $item_row["quantity"],
+        );
+
+        $item_name = $db->prepare("SELECT item_name FROM items where item_id=?");
+        $item_name->bind_param("i",  $item_array["item_id"]);
+        $item_name->execute();
+        $item_rensponse_name = $item_name->get_result();
+        $item_name_row = $item_rensponse_name->fetch_assoc();
+        $item_array["item_name"] = $item_name_row["item_name"];
+
+
+        $items[] = $item_array;
+      }
+      $offer = array(
+        "offer_id" => $storage_off_row["offer_id"],
+        "items" => $items
+      );
+
+      $cargo_array_off[] = $offer;
+    }
+
+   
+    if($truck_check==1){
+      $truck_array["category"] = "Truck Active";
+    }else{
+      $truck_array["category"] = "Truck Ιnactive";
+    }
+    
+    $truck_array["requests"] = $cargo_array_req;
+    $truck_array["offers"] = $cargo_array_off;
+    
+
+
+
+    $feature = array(
+      "type" => "Feature",
+      "geometry" => $geometry,
+      "properties" => $truck_array,
+    );
+
+    $features[] = $feature;
   }
 }
 
