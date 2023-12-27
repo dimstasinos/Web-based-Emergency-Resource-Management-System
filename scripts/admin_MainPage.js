@@ -342,9 +342,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       });
 
-      linesLayer.eachLayer(layer =>{
-        console.log(getLayersId(layer));
-      });
+      
 
 
 
