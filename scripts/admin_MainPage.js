@@ -7,9 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }).addTo(map);
 
   var markersLayers = {};
-   markersLayers["lines"] = L.layerGroup();
 
-  var linesLayer = L.layerGroup().addTo(map);
+  markersLayers["Lines"] = L.layerGroup();
 
   fetch('/server/map_admin/map.php')
     .then(response => response.json())
@@ -71,17 +70,35 @@ document.addEventListener('DOMContentLoaded', function () {
             } else if (category === "Truck Inactive") {
               return L.icon({
                 iconUrl: '/leaflet/images/marker-truck-red.png',
-                iconSize: [40, 30],
+                iconSize: [50, 50],
                 iconAnchor: [15, 15],
                 popupAnchor: [0, -15]
               });
             }
           })(),
-          draggable: category === "Base",
-          draggable: category === "Truck Active"
+          draggable: category === "Base" ||
+            category === "Truck Active" ||
+            category === "Truck Inactive",
+          id: (function () {
+            if (category === "Base") {
+              return "Base";
+            } else if (category === "Request Pending") {
+              return "Request Pending";
+            } else if (category === "Request Accepted") {
+              return "Request Accepted";
+            } else if (category === "Offer Accepted") {
+              return "Offer Accepted";
+            } else if (category === "Offer Pending") {
+              return "Offer Pending";
+            } else if (category === "Truck Active") {
+              return "Truck Active";
+            } else if (category === "Truck Inactive") {
+              return "Truck Inactive";
+            }
+          })(),
         });
-    
-        var line = {};
+
+
 
         if (category === "Base") {
 
@@ -127,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
           });
         } else if (category === "Request Pending") {
-
+          var requests = [];
           var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
           <strong>Citizen</strong><br>
           <strong>Name:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
@@ -135,17 +152,33 @@ document.addEventListener('DOMContentLoaded', function () {
           ----------------------------------`;
 
           feature.properties.details.forEach((request) => {
-            var info = `<br><strong>Request</strong><br>
+            if (request.vehicle_id === null) {
+              var info = `<br><strong>Request</strong><br>
             <strong>Submission date:</strong> ${request.submission_date}<br>
             <strong>Item:</strong> ${request.item_name}<br>
             <strong>Quantity:</strong> ${request.quantity}<br>
             ----------------------------------`;
+            } else {
+              var info = `<br><strong>Request</strong><br>
+              <strong>Submission date:</strong> ${request.submission_date}<br>
+              <strong>Item:</strong> ${request.item_name}<br>
+              <strong>Quantity:</strong> ${request.quantity}<br>
+              <strong>Pickup date:</strong> ${request.pickup_date}<br>
+              <strong>Vehicle username:</strong> ${request.vehicle_username}<br>
+              ----------------------------------`;
+            }
             info_citizen = info_citizen + info;
+            requests.push(request.request_id);
           });
+
 
           info_citizen = info_citizen + `</div>`;
 
+
           customMarkers.bindPopup(info_citizen);
+          customMarkers.options.request_id = requests;
+
+
 
         } else if (category === "Request Accepted") {
 
@@ -236,8 +269,11 @@ document.addEventListener('DOMContentLoaded', function () {
                       [detail.geometry.coordinates[0], detail.geometry.coordinates[1]]
                     ], {
                       color: 'blue',
-                      dashArray: '5, 10'
-                    }).addTo(linesLayer);
+                      dashArray: '5, 10',
+                      interactive: false,
+                      truck_id: parseInt(feature.properties.vehicle_id),
+                      request_id: id.request_id
+                    }).addTo(markersLayers["Lines"]);
                   }
                 });
               }
@@ -260,17 +296,19 @@ document.addEventListener('DOMContentLoaded', function () {
           info_truck = info_truck + `</div>`;
           customMarkers.bindPopup(info_truck);
         }
-        
+
 
         markersLayers[category].addLayer(customMarkers);
         markersLayers[category].addTo(map);
+
 
         if (category === "Truck Active") {
           customMarkers.on('drag', function (event) {
             const marker = event.target;
             const position = marker.getLatLng();
 
-            markersLayers["lines"].eachLayer(line => {
+
+            markersLayers["Lines"].eachLayer(line => {
               const line_position = line.getLatLngs();
               const line_end1 = line_position[0].lat === feature.geometry.coordinates[0] && line_position[0].lng === feature.geometry.coordinates[1];
               const line_end2 = line_position[1].lat === feature.geometry.coordinates[0] && line_position[1].lng === feature.geometry.coordinates[1];
@@ -302,52 +340,46 @@ document.addEventListener('DOMContentLoaded', function () {
           });
 
 
-
-          map.on('layerremove', function (event) {
-            var removedLayer = event.layer;
-            console.log(removedLayer);
-            if (removedLayer === "Request Pending") {
-              const marker = event.target;
-              const position = marker.getLatLng();
-
-              markersLayers["lines"].eachLayer(line => {
-                const line_position = line.getLatLngs();
-                const line_end1 = line_position[0].lat === marker.geometry.coordinates[0] && line_position[0].lng === feature.geometry.coordinates[1];
-                const line_end2 = line_position[1].lat === marker.geometry.coordinates[0] && line_position[1].lng === feature.geometry.coordinates[1];
-
-                if (line_end1 || line_end2) {
-                 linesLayer.removeLayer(line);
-                }
-              });
-
-            }
-          });
-
-
-          /*map.on('layeradd', function (event) {
-            var addedLayer = event.layer;
-            if (addedLayer === markerGroup1) {
-              linesLayer.addLayer(line1);
-            } else if (addedLayer === markerGroup2) {
-              linesLayer.addLayer(line1);
-              linesLayer.addLayer(line2);
-            } else if (addedLayer === markerGroup3) {
-              linesLayer.addLayer(line2);
-            }
-          });*/
-
-
         }
-
-
       });
 
-      
+
+      map.on('layerremove', function (event) {
+        var removedLayer = event.layer;
+
+        if (removedLayer.options.id === "Request Pending") {
+
+          markersLayers["Lines"].eachLayer(line => {
+
+            if (removedLayer.options.request_id.find(id => id === line.options.request_id)) {
+              line.setStyle({ opacity: 0 });
+            }
+
+          });
+        }
+      });
+
+      map.on('layeradd', function (event) {
+        var addLayer = event.layer;
+
+        if (addLayer.options.id === "Request Pending") {
+
+          markersLayers["Lines"].eachLayer(line => {
+
+            if (addLayer.options.request_id.find(id => id === line.options.request_id)) {
+              line.setStyle({ opacity: 1 });
+            }
+
+          });
+        }
+      });
 
 
+      markersLayers["Lines"].addTo(map);
 
-      markersLayers["lines"]=linesLayer;
-      L.control.layers(null,markersLayers).addTo(map);
+      //console.log(markersLayers);
+      L.control.layers(null, markersLayers).addTo(map);
+
 
     })
     .catch(error => console.error('Error:', error));

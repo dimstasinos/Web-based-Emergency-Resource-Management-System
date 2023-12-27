@@ -224,7 +224,7 @@ $truck_check=0;
 
 if ($truck_response->num_rows > 0) {
   while ($truck_row = $truck_response->fetch_assoc()) {
-
+    $truck_check=0;
     $truck_array = array(
       "vehicle_id" => $truck_row["vehicle_id"],
       "vehicle_username" => $truck_row["vehicle_username"]
@@ -317,7 +317,7 @@ if ($truck_response->num_rows > 0) {
     if($truck_check==1){
       $truck_array["category"] = "Truck Active";
     }else{
-      $truck_array["category"] = "Truck Ιnactive";
+      $truck_array["category"] = "Truck Inactive";
     }
     
     $truck_array["requests"] = $cargo_array_req;

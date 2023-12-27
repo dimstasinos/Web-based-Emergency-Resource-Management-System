@@ -1,0 +1,38 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Marker 1",
+        "group": "Group A"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0, 0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Marker 2",
+        "group": "Group A"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10, 10]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Marker 3",
+        "group": "Group B"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5, -5]
+      }
+    }
+  ]
+}

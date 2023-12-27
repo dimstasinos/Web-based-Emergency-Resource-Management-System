@@ -1,90 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaflet Map with Markers and Lines</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaflet GeoJSON Example</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 400px;
+    }
+  </style>
 </head>
 <body>
-    <div id="map" style="height: 400px;"></div>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var map = L.map('map').setView([37.9838, 23.7275], 13);
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(map);
+<div id="map"></div>
 
-            var markersLayers = {};
-            markersLayers["lines"] = L.layerGroup();
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+  var map = L.map('map').setView([0, 0], 2);
 
-            // Assuming linesLayer is a layer group for lines
-            var linesLayer = L.layerGroup().addTo(map);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
 
-            fetch('/server/map_admin/map.php')
-                .then(response => response.json())
-                .then(data => {
+  var groups = {};
 
-                    data.features.forEach(feature => {
-                        const category = feature.properties.category;
+  fetch('example.geojson')
+    .then(response => response.json())
+    .then(data => {
+      data.features.forEach(feature => {
+        var groupName = feature.properties.group || 'default';
 
-                        if (!markersLayers[category]) {
-                            markersLayers[category] = L.layerGroup();
-                        }
+        if (!groups[groupName]) {
+          groups[groupName] = { markers: L.layerGroup().addTo(map), polyline: null };
+        }
 
-                        const customMarkers = L.marker([feature.geometry.coordinates[0], feature.geometry.coordinates[1]], {
-                            icon: getCategoryIcon(category),
-                            draggable: category === "Base" || category === "Truck Active",
-                        });
+        var marker = L.marker(feature.geometry.coordinates)
+          .bindPopup('<b>Name:</b> ' + feature.properties.name);
 
-                        if (category === "Truck Active") {
-                            var line = L.polyline([
-                                [feature.geometry.coordinates[0], feature.geometry.coordinates[1]],
-                                [someInitialLat, someInitialLng] // Set initial coordinates for the line
-                            ], {
-                                color: 'blue',
-                                dashArray: '5, 10'
-                            }).addTo(linesLayer);
+        marker.addTo(groups[groupName].markers);
+      });
 
-                            customMarkers.on('drag', function (event) {
-                                const marker = event.target;
-                                const position = marker.getLatLng();
+      // Δημιουργία γραμμών μεταξύ των markers σε κάθε ομάδα
+      Object.keys(groups).forEach(groupName => {
+        var coordinates = groups[groupName].markers.getLayers().map(marker => marker.getLatLng());
+        if (coordinates.length > 1) {
+          groups[groupName].polyline = L.polyline(coordinates, { color: getRandomColor() }).addTo(map);
+        }
+      });
 
-                                // Update the line coordinates dynamically
-                                line.setLatLngs([
-                                    [position.lat, position.lng],
-                                    [someInitialLat, someInitialLng]
-                                ]);
+      L.control.layers(null, groups).addTo(map);
 
-                                // Also update your data if needed
-                                feature.geometry.coordinates[0] = position.lat;
-                                feature.geometry.coordinates[1] = position.lng;
-                            });
-
-                            // Store the line in a property of the marker
-                            customMarkers.line = line;
-                        }
-
-                        markersLayers[category].addLayer(customMarkers);
-                        markersLayers[category].addTo(map);
-
-                    });
-
-                    L.control.layers(null, {
-                        'Markers': markersLayers,
-                        'Lines': linesLayer
-                    }).addTo(map);
-
-                })
-                .catch(error => console.error('Error:', error));
-
-            // Function to get the appropriate icon based on category
-            function getCategoryIcon(category) {
-                // Your existing icon logic goes here
+      map.on('layerremove', function (event) {
+        if (event.layer instanceof L.Marker) {
+          // Αφαίρεση του marker συνοδευτικής γραμμής
+          Object.values(groups).forEach(group => {
+            if (group.markers.hasLayer(event.layer) && group.polyline) {
+              group.polyline.remove();
             }
-        });
-    </script>
+          });
+        }
+      });
+    });
+
+  function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+</script>
+
 </body>
 </html>
