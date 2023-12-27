@@ -342,6 +342,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
       });
 
+      linesLayer.eachLayer(layer =>{
+        console.log(getLayersId(layer));
+      });
+
+
+
       markersLayers["lines"]=linesLayer;
       L.control.layers(null,markersLayers).addTo(map);
 
