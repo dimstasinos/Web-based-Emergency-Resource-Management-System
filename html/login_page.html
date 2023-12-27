@@ -12,27 +12,23 @@
   <div id="loginbox">
     <img src="/images/loginuser.png" alt="Login image" id="loginuser">
     <h1>Login</h1>
-    <form action="/server/login.php" method="post">
-      <div id="userBox">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" placeholder="Enter username" maxlength="12" required>
-      </div>
-      <div id="passBox">
-        <label for="pass">Password</label>
-        <input type="password" id="pass" name="password" placeholder="Enter password" required>
-      </div>
-      <div id="showPass">
-        <input type="checkbox" id="check">
-        <label for="check">Show password</label>
-      </div>
+    <form id="loginForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+      
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+    
+      <input type="checkbox" id="check">
+      <label for="check">Show password</label>
+    
       <div id="register">
         <p>Don't have an account?
           <a href="/html/register_page"><br><strong>Register</strong></a>
         </p>
       </div>
-      <div>
-        <button type="button" id="loginButton"><strong>LOGIN</strong></button>
-      </div>
+      
+      <button type="button" onclick="validateForm()" id="loginButoon">Login</button>
     </form>
   </div>
 

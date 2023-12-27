@@ -1,6 +1,6 @@
-document.getElementById('loginButton').addEventListener('click', function () {
+/*document.getElementById('loginButton').addEventListener('click', function () {
   username = document.getElementById("username").value;
-  password = document.getElementById("pass").value;
+  password = document.getElementById("password").value;
 
   const data = {
     username: username,
@@ -22,4 +22,19 @@ document.getElementById('loginButton').addEventListener('click', function () {
       }
     })
 
-});
+});*/
+
+
+function validateForm() {
+var username = document.getElementById("username").value;
+var password = document.getElementById("password").value;
+
+if(username === "" || password === ""){
+  alert("Both username and password required.");
+}
+else{
+  document.getElementById("loginForm").submit();
+}
+
+
+}
