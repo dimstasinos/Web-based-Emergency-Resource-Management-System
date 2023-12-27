@@ -7,8 +7,8 @@ try {
   $username = $_POST['username'];
   $password = $_POST['password'];
 
-  $user_check == false;
-  $pass_check == false;
+  $user_check = false;
+  $pass_check = false;
 
 
   $mysql = "SELECT * FROM users WHERE username = '$username'";
@@ -18,7 +18,7 @@ try {
 
   if ($response1->num_rows > 0) {
 
-    $user_check == true;
+    $user_check = true;
   }
 
   $mysql = "SELECT username FROM users WHERE password = '$password'";
@@ -26,7 +26,7 @@ try {
   
   if ($response2->num_rows > 0) {
 
-    $pass_check == true;
+    $pass_check = true;
   }
 
   if ($user_check == true && $pass_check == true) {
