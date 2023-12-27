@@ -14,16 +14,16 @@ try {
   $mysql = "SELECT * FROM users WHERE username = '$username'";
   $response1 = $db->query($mysql);
 
-  $mysql = "SELECT username FROM users WHERE password = '$password'";
-  $response2 = $db->query($mysql);
-
-
+ 
 
   if ($response1->num_rows > 0) {
 
     $user_check = true;
   }
 
+  $mysql = "SELECT username FROM users WHERE password = '$password'";
+  $response2 = $db->query($mysql);
+  
   if ($response2->num_rows > 0) {
 
     $pass_check = true;
@@ -31,7 +31,6 @@ try {
 
   if ($user_check = true && $pass_check = true) {
     header("Location: /html/admin/admin_mainPage.html");
-    exit();
   } else if ($user_check = false) {
     echo "Username is wrong.";
   } else if ($pass_check = false) {
