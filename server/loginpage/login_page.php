@@ -4,8 +4,8 @@ include("../Mysql_connection.php");
 
 $db = db_connect();
 try {
-  $username = $_GET['username'];
-  $password = $_GET['password'];
+  $username = $_POST['username'];
+  $password = $_POST['password'];
 
   $user_check = false;
   $pass_check = false;
@@ -30,7 +30,8 @@ try {
   }
 
   if ($user_check = true && $pass_check = true) {
-    echo "Login Successful.";
+    header("Location: /html/admin/admin_mainPage.html");
+    exit();
   } else if ($user_check = false) {
     echo "Username is wrong.";
   } else if ($pass_check = false) {
