@@ -1,3 +1,4 @@
+
 create database project;
 
 use project;
@@ -188,3 +189,8 @@ insert into vehicle_storage values
 (1,7,NULL),
 (1,9,NULL),
 (1,NULL,2);
+
+INSERT INTO request VALUES (Bread, '2023-01-01', 5);
+INSERT INTO request VALUES (Shoes, '2023-02-15', 10);
+INSERT INTO request VALUES (Tape, '2023-03-10', 2);
+INSERT INTO request VALUES (Chips, '2023-04-05', 15);

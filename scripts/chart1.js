@@ -31,3 +31,11 @@ new Chart(Servchart, {
     },
 });
 
+//////NEW REQUESTS////////
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("/server/chart/newreq.php")
+      .then((jsonResponse) => jsonResponse.json())
+      .then((data) => {
+      })
+      .catch((error) => console.error("Error:", error));
+  });
