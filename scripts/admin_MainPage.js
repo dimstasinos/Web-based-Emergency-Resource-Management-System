@@ -6,18 +6,17 @@ document.addEventListener('DOMContentLoaded', function () {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
-  var polyline;
   var markersLayers = {};
-  markersLayers["lines"] = L.layerGroup();
+   markersLayers["lines"] = L.layerGroup();
+
+  var linesLayer = L.layerGroup().addTo(map);
 
   fetch('/server/map_admin/map.php')
     .then(response => response.json())
     .then(data => {
 
-      
       data.features.forEach(feature => {
         const category = feature.properties.category;
-
 
         if (!markersLayers[category]) {
           markersLayers[category] = L.layerGroup();
@@ -81,7 +80,8 @@ document.addEventListener('DOMContentLoaded', function () {
           draggable: category === "Base",
           draggable: category === "Truck Active"
         });
-
+    
+        var line = {};
 
         if (category === "Base") {
 
@@ -230,23 +230,18 @@ document.addEventListener('DOMContentLoaded', function () {
               if (detail.properties.category === "Request Pending" || detail.properties.category === "Request Accepted") {
                 detail.properties.details.forEach((id) => {
                   if (id.request_id === cargo.request_id) {
-                    
-                    const line = L.polyline([
+
+                    const line_details = L.polyline([
                       [feature.geometry.coordinates[0], feature.geometry.coordinates[1]],
                       [detail.geometry.coordinates[0], detail.geometry.coordinates[1]]
                     ], {
                       color: 'blue',
                       dashArray: '5, 10'
-                    }).addTo(markersLayers["lines"]);
-
-                   
+                    }).addTo(linesLayer);
                   }
-
-
                 });
               }
             });
-
 
             info_truck = info_truck + info + ` ----------------------------------`;
           });
@@ -265,12 +260,13 @@ document.addEventListener('DOMContentLoaded', function () {
           info_truck = info_truck + `</div>`;
           customMarkers.bindPopup(info_truck);
         }
+        
 
         markersLayers[category].addLayer(customMarkers);
         markersLayers[category].addTo(map);
 
         if (category === "Truck Active") {
-          customMarkers.on('dragend', function (event) {
+          customMarkers.on('drag', function (event) {
             const marker = event.target;
             const position = marker.getLatLng();
 
@@ -304,31 +300,53 @@ document.addEventListener('DOMContentLoaded', function () {
             feature.geometry.coordinates[0] = position.lat;
             feature.geometry.coordinates[1] = position.lng;
           });
+
+
+
+          map.on('layerremove', function (event) {
+            var removedLayer = event.layer;
+            console.log(removedLayer);
+            if (removedLayer === "Request Pending") {
+              const marker = event.target;
+              const position = marker.getLatLng();
+
+              markersLayers["lines"].eachLayer(line => {
+                const line_position = line.getLatLngs();
+                const line_end1 = line_position[0].lat === marker.geometry.coordinates[0] && line_position[0].lng === feature.geometry.coordinates[1];
+                const line_end2 = line_position[1].lat === marker.geometry.coordinates[0] && line_position[1].lng === feature.geometry.coordinates[1];
+
+                if (line_end1 || line_end2) {
+                 linesLayer.removeLayer(line);
+                }
+              });
+
+            }
+          });
+
+
+          /*map.on('layeradd', function (event) {
+            var addedLayer = event.layer;
+            if (addedLayer === markerGroup1) {
+              linesLayer.addLayer(line1);
+            } else if (addedLayer === markerGroup2) {
+              linesLayer.addLayer(line1);
+              linesLayer.addLayer(line2);
+            } else if (addedLayer === markerGroup3) {
+              linesLayer.addLayer(line2);
+            }
+          });*/
+
+
         }
 
 
       });
 
-      L.control.layers(null, markersLayers,).addTo(map);
+      markersLayers["lines"]=linesLayer;
+      L.control.layers(null,markersLayers).addTo(map);
 
     })
     .catch(error => console.error('Error:', error));
-
-
-    function updatePolyline() {
-      if (polyline) {
-        map.removeLayer(polyline);
-      }
-      if (markersLayers["Truck Active"]) {
-        var latlngs = markersLayers["Truck Active"].getLayers().map(function (marker) {
-          return marker.getLatLng();
-        });
-        polyline = L.polyline(latlngs, { color: 'blue' }).addTo(markersLayers["lines"]);
-      }
-    }
-  
-    // Initial polyline update
-    updatePolyline();
 
 });
 
