@@ -1,4 +1,4 @@
-document.getElementById('loginbutton').addEventListener('click', function () {
+document.getElementById('loginButton').addEventListener('click', function () {
   username = document.getElementById("username").value;
   password = document.getElementById("pass").value;
 
