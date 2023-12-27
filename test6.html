@@ -1,56 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Leaflet Map Example</title>
-  
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-  <!-- Leaflet PolylineDecorator JS -->
-  <script src="https://unpkg.com/leaflet-polylinedecorator/dist/leaflet.polylineDecorator.js"></script>
-  
-  <style>
-    #map {
-      height: 400px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Map with Markers and Lines</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
+    <div id="map" style="height: 400px;"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var map = L.map('map').setView([37.9838, 23.7275], 13);
 
-  <div id="map"></div>
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
 
-  <script>
-    // Create a Leaflet map centered at [51.505, -0.09]
-    var map = L.map('map').setView([51.505, -0.09], 13);
+            var markersLayers = {};
+            markersLayers["lines"] = L.layerGroup();
 
-    // Add OpenStreetMap as the base layer
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
+            // Assuming linesLayer is a layer group for lines
+            var linesLayer = L.layerGroup().addTo(map);
 
-    // Create two draggable markers and add them to the map
-    var marker1 = L.marker([51.5, -0.09], { draggable: true }).addTo(map);
-    var marker2 = L.marker([51.51, -0.1], { draggable: true }).addTo(map);
+            fetch('/server/map_admin/map.php')
+                .then(response => response.json())
+                .then(data => {
 
-    // Create a polyline connecting the draggable markers
-    var latlngs = [marker1.getLatLng(), marker2.getLatLng()];
-    var polyline = L.polyline(latlngs, { color: 'blue' }).addTo(map);
+                    data.features.forEach(feature => {
+                        const category = feature.properties.category;
 
-    // Update the polyline when markers are dragged
-    marker1.on('drag', updatePolyline);
-    marker2.on('drag', updatePolyline);
+                        if (!markersLayers[category]) {
+                            markersLayers[category] = L.layerGroup();
+                        }
 
-    // Function to update the polyline when markers are dragged
-    function updatePolyline() {
-      latlngs = [marker1.getLatLng(), marker2.getLatLng()];
-      polyline.setLatLngs(latlngs);
-    }
-  </script>
+                        const customMarkers = L.marker([feature.geometry.coordinates[0], feature.geometry.coordinates[1]], {
+                            icon: getCategoryIcon(category),
+                            draggable: category === "Base" || category === "Truck Active",
+                        });
 
+                        if (category === "Truck Active") {
+                            var line = L.polyline([
+                                [feature.geometry.coordinates[0], feature.geometry.coordinates[1]],
+                                [someInitialLat, someInitialLng] // Set initial coordinates for the line
+                            ], {
+                                color: 'blue',
+                                dashArray: '5, 10'
+                            }).addTo(linesLayer);
+
+                            customMarkers.on('drag', function (event) {
+                                const marker = event.target;
+                                const position = marker.getLatLng();
+
+                                // Update the line coordinates dynamically
+                                line.setLatLngs([
+                                    [position.lat, position.lng],
+                                    [someInitialLat, someInitialLng]
+                                ]);
+
+                                // Also update your data if needed
+                                feature.geometry.coordinates[0] = position.lat;
+                                feature.geometry.coordinates[1] = position.lng;
+                            });
+
+                            // Store the line in a property of the marker
+                            customMarkers.line = line;
+                        }
+
+                        markersLayers[category].addLayer(customMarkers);
+                        markersLayers[category].addTo(map);
+
+                    });
+
+                    L.control.layers(null, {
+                        'Markers': markersLayers,
+                        'Lines': linesLayer
+                    }).addTo(map);
+
+                })
+                .catch(error => console.error('Error:', error));
+
+            // Function to get the appropriate icon based on category
+            function getCategoryIcon(category) {
+                // Your existing icon logic goes here
+            }
+        });
+    </script>
 </body>
 </html>
