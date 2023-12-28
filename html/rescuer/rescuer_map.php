@@ -1,11 +1,12 @@
 <?php
 session_start();
 
-if(!$_SESSION["username"]){
-  header("/html/login_page.html");
+if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
+  header("Location: /html/login_page.php");
+  exit();
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,11 +26,12 @@ if(!$_SESSION["username"]){
   <div class="sidebar">
     <a href="#">Map</a>
     <a href="#">DataBase</a>
-    <a href="#">Logout</a>
+    <a href="/server/logout.php">Logout</a>
   </div>
   <div class="main">
     <div id="map"></div>
   </div>
+  <p id="text"></p>
   <script src="/leaflet/leaflet.js"></script>
 </body>
 

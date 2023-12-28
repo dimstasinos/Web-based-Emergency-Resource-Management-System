@@ -42,11 +42,12 @@ try {
 
       if ($type_row["user_type"] == "rescuer") {
         $id=$type_row["user_id"];
-        $mysql = "SELECT f_name,l_name FROM rescuer WHERE rescuer_id='$id'";
+        $mysql = "SELECT rescuer_vehicle_id,f_name,l_name FROM rescuer WHERE rescuer_id='$id'";
         $response_rescuer_info = $db->query($mysql);
         $name_row = $response_rescuer_info->fetch_assoc();
         $_SESSION["Name"]=$name_row["f_name"] . " " . $name_row["l_name"];
-
+        $_SESSION["type"]=$type_row["user_type"];
+        $_SESSION["truck_id"]=$name_row["rescuer_vehicle_id"];
         $response = ["status" => "success", "Location" => "/html/rescuer/rescuer_map.php"];
         header("Content-Type: application/json");
         echo json_encode($response);

@@ -6,7 +6,7 @@ document.getElementById("loginButton").addEventListener("click", function () {
     formData.append("username", document.getElementById("username").value);
     formData.append("password", document.getElementById("password").value);
 
-    fetch("/server/login_page.php", {
+    fetch("/server/login.php", {
       method: "POST",
       body: formData,
     }).then((jsonResponse) => jsonResponse.json())

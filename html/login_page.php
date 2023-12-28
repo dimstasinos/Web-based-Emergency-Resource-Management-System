@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+if (isset($_SESSION['username'])) {
+  if ($_SESSION['type'] == "rescuer") {
+    header("Location: /html/rescuer/rescuer_map.php");
+    exit();
+  }
+
+  exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -15,19 +27,19 @@
     <form id="loginForm" action="/server/loginpage/login_page.php" method="post">
       <label for="username">Username:</label>
       <input type="text" id="username" name="username" required>
-      
+
       <label for="password">Password:</label>
       <input type="password" id="password" name="password" required>
-    
+
       <input type="checkbox" id="check">
       <label for="check">Show password</label>
-    
+
       <div id="register">
         <p>Don't have an account?
           <a href="/html/register_page"><br><strong>Register</strong></a>
         </p>
       </div>
-      
+
       <button type="button" id="loginButton">Login</button>
     </form>
   </div>
