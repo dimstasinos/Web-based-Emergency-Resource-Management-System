@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+if(!$_SESSION["username"]){
+  header("/html/login_page.html");
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,6 +16,7 @@
   <link rel="stylesheet" href="/css/rescuer_map.css">
   <link rel="stylesheet" href="/leaflet/leaflet.css">
   <script src="/scripts/rescuer_map.js"></script>
+</head>
 
 <body>
   <div class="header">
@@ -23,4 +32,5 @@
   </div>
   <script src="/leaflet/leaflet.js"></script>
 </body>
-</head>
+
+</html>
