@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
           draggable: category === "Base" ||
             category === "Truck Active" ||
             category === "Truck Inactive",
-          id: (function () {
+          category: (function () {
             if (category === "Base") {
               return "Base";
             } else if (category === "Request Pending") {
@@ -94,6 +94,23 @@ document.addEventListener('DOMContentLoaded', function () {
               return "Truck Active";
             } else if (category === "Truck Inactive") {
               return "Truck Inactive";
+            }
+          })(),
+          id: (function () {
+            if (category === "Base") {
+              return 1;
+            } else if (category === "Request Pending") {
+              return parseInt(feature.properties.citizen_id);
+            } else if (category === "Request Accepted") {
+              return parseInt(feature.properties.citizen_id);
+            } else if (category === "Offer Accepted") {
+              return parseInt(feature.properties.citizen_id);
+            } else if (category === "Offer Pending") {
+              return parseInt(feature.properties.citizen_id);
+            } else if (category === "Truck Active") {
+              return parseInt(feature.properties.vehicle_id);
+            } else if (category === "Truck Inactive") {
+              return parseInt(feature.properties.vehicle_id);
             }
           })(),
         });
@@ -179,9 +196,8 @@ document.addEventListener('DOMContentLoaded', function () {
           customMarkers.options.request_id = requests;
 
 
-
         } else if (category === "Request Accepted") {
-
+          var requests = [];
           var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
           <strong>Citizen</strong><br>
           <strong>Name:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
@@ -197,11 +213,14 @@ document.addEventListener('DOMContentLoaded', function () {
             <strong>Vehicle username:</strong> ${request.vehicle_username}<br>
             ----------------------------------`;
             info_citizen = info_citizen + info;
+            requests.push(request.request_id);
           });
 
           info_citizen = info_citizen + `</div>`;
           customMarkers.bindPopup(info_citizen);
+          customMarkers.options.request_id = requests;
         } else if (category === "Offer Accepted") {
+          var offers = [];
           var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
           <strong>Citizen</strong><br>
           <strong>Name:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
@@ -219,11 +238,13 @@ document.addEventListener('DOMContentLoaded', function () {
                <strong>Quantity:</strong> ${item.quantity}<br>`;
             });
 
+            offers.push(offer.offer_id);
             info_citizen = info_citizen + info + ` ----------------------------------`;
           });
 
           info_citizen = info_citizen + `</div>`;
           customMarkers.bindPopup(info_citizen);
+          customMarkers.options.offer_id = offers;
 
         } else if (category === "Offer Pending") {
           var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
@@ -290,6 +311,28 @@ document.addEventListener('DOMContentLoaded', function () {
               <strong>Quantity:</strong> ${item.quantity}<br>`
             });
 
+            data.features.forEach((detail) => {
+              if (detail.properties.category === "Offer Pending" || detail.properties.category === "Offer Accepted") {
+                detail.properties.details.forEach((id) => {
+                  if (id.offer_id === cargo.offer_id) {
+
+                    const line_details = L.polyline([
+                      [feature.geometry.coordinates[0], feature.geometry.coordinates[1]],
+                      [detail.geometry.coordinates[0], detail.geometry.coordinates[1]]
+                    ], {
+                      color: 'blue',
+                      dashArray: '5, 10',
+                      interactive: false,
+                      truck_id: parseInt(feature.properties.vehicle_id),
+                      offer_id: id.offer_id
+                    }).addTo(markersLayers["Lines"]);
+
+                  }
+                });
+              }
+
+            });
+
             info_truck = info_truck + info + ` ----------------------------------`;
           });
 
@@ -339,6 +382,32 @@ document.addEventListener('DOMContentLoaded', function () {
             feature.geometry.coordinates[1] = position.lng;
           });
 
+          customMarkers.on('dragend', function (event) {
+            const marker = event.target;
+
+            if(marker.options.category==="Truck Active"){
+              const position = marker.getLatLng();
+              
+              const data = {
+                id: marker.options.id,
+                lat: position.lat,
+                lng: position.lng,
+              };
+              
+              fetch("/server/map_admin/truck_upload.php", {
+                method: "POST",
+                headers:{
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              })
+              .then((response) => response.json())
+              .then(data => {
+                
+              })  
+              .catch((error) => console.error("Error:", error));
+            }
+          });
 
         }
       });
@@ -347,14 +416,25 @@ document.addEventListener('DOMContentLoaded', function () {
       map.on('layerremove', function (event) {
         var removedLayer = event.layer;
 
-        if (removedLayer.options.id === "Request Pending") {
-
+        if (removedLayer.options.category === "Request Pending") {
           markersLayers["Lines"].eachLayer(line => {
-
             if (removedLayer.options.request_id.find(id => id === line.options.request_id)) {
               line.setStyle({ opacity: 0 });
             }
+          });
+        } else if (removedLayer.options.category === "Request Accepted") {
 
+          markersLayers["Lines"].eachLayer(line => {
+            if (removedLayer.options.request_id.find(id => id === line.options.request_id)) {
+              line.setStyle({ opacity: 0 });
+            }
+          });
+        } else if (removedLayer.options.category === "Offer Accepted") {
+
+          markersLayers["Lines"].eachLayer(line => {
+            if (removedLayer.options.offer_id.find(id => id === line.options.offer_id)) {
+              line.setStyle({ opacity: 0 });
+            }
           });
         }
       });
@@ -362,7 +442,7 @@ document.addEventListener('DOMContentLoaded', function () {
       map.on('layeradd', function (event) {
         var addLayer = event.layer;
 
-        if (addLayer.options.id === "Request Pending") {
+        if (addLayer.options.category === "Request Pending") {
 
           markersLayers["Lines"].eachLayer(line => {
 
@@ -371,15 +451,27 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
           });
+        } else if (addLayer.options.category === "Request Accepted") {
+
+          markersLayers["Lines"].eachLayer(line => {
+
+            if (addLayer.options.request_id.find(id => id === line.options.request_id)) {
+              line.setStyle({ opacity: 1 });
+            }
+          });
+        } else if (addLayer.options.category === "Offer Accepted") {
+
+          markersLayers["Lines"].eachLayer(line => {
+            if (addLayer.options.offer_id.find(id => id === line.options.offer_id)) {
+              line.setStyle({ opacity: 1 });
+            }
+          });
         }
       });
 
-
       markersLayers["Lines"].addTo(map);
-
-      //console.log(markersLayers);
       L.control.layers(null, markersLayers).addTo(map);
-
+      
 
     })
     .catch(error => console.error('Error:', error));

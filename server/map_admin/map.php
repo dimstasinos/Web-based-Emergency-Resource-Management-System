@@ -22,6 +22,7 @@ if ($response->num_rows > 0) {
     $citizen_response = $citizen_info->get_result();
     $citizen_row = $citizen_response->fetch_assoc();
 
+    $citizen_data["citizen_id"] = $requests_row["req_citizen_id"];
     $citizen_data["first_name"] = $citizen_row["f_name"];
     $citizen_data["last_name"] = $citizen_row["l_name"];
     $citizen_data["phone_number"] = $citizen_row["phone_number"];
@@ -121,6 +122,7 @@ if ($response->num_rows > 0) {
     $citizen_rensponse = $citizen_info->get_result();
     $citizen_row = $citizen_rensponse->fetch_assoc();
 
+    $citizen_data["citizen_id"] = $offer_row["offer_citizen_id"];
     $citizen_data["first_name"] = $citizen_row["f_name"];
     $citizen_data["last_name"] = $citizen_row["l_name"];
     $citizen_data["phone_number"] = $citizen_row["phone_number"];
