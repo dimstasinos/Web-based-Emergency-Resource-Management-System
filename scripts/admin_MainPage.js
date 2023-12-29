@@ -274,13 +274,20 @@ document.addEventListener('DOMContentLoaded', function () {
           <strong>Status:</strong> ${feature.properties.category}<br>
           ----------------------------------`;
 
-          feature.properties.requests.forEach((cargo) => {
-            var info = `<br><strong>Request</strong><br>
+          console.log(feature.properties.cargo.lenght);
+          if (feature.properties.cargo.lenght===0) {
+            var info = `<br>The truck do not have any cargo`
+            info_truck = info_truck + info;
+          } else {
+            feature.properties.cargo.forEach(cargo => {
+              var info = `<br><strong>Cargo</strong><br>
             <strong>Item name:</strong> ${cargo.item_name}<br>
             <strong>Quantity:</strong> ${cargo.quantity}<br>`
-
+              info_truck = info_truck + info;
+            });
+          }
+          feature.properties.requests.forEach((cargo) => {
             data.features.forEach((detail) => {
-
               if (detail.properties.category === "Request Pending" || detail.properties.category === "Request Accepted") {
                 detail.properties.details.forEach((id) => {
                   if (id.request_id === cargo.request_id) {
@@ -299,18 +306,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
               }
             });
-
-            info_truck = info_truck + info + ` ----------------------------------`;
           });
 
           feature.properties.offers.forEach((cargo) => {
-            var info = `<br><strong>Offer</strong><br>`
-
-            cargo.items.forEach((item) => {
-              info = info + `<br><strong>Item:</strong> ${item.item_name}<br>
-              <strong>Quantity:</strong> ${item.quantity}<br>`
-            });
-
             data.features.forEach((detail) => {
               if (detail.properties.category === "Offer Pending" || detail.properties.category === "Offer Accepted") {
                 detail.properties.details.forEach((id) => {
@@ -326,16 +324,11 @@ document.addEventListener('DOMContentLoaded', function () {
                       truck_id: parseInt(feature.properties.vehicle_id),
                       offer_id: id.offer_id
                     }).addTo(markersLayers["Lines"]);
-
                   }
                 });
               }
-
             });
-
-            info_truck = info_truck + info + ` ----------------------------------`;
           });
-
           info_truck = info_truck + `</div>`;
           customMarkers.bindPopup(info_truck);
         }
@@ -385,27 +378,27 @@ document.addEventListener('DOMContentLoaded', function () {
           customMarkers.on('dragend', function (event) {
             const marker = event.target;
 
-            if(marker.options.category==="Truck Active"){
+            if (marker.options.category === "Truck Active") {
               const position = marker.getLatLng();
-              
+
               const data = {
                 id: marker.options.id,
                 lat: position.lat,
                 lng: position.lng,
               };
-              
+
               fetch("/server/map_admin/truck_upload.php", {
                 method: "POST",
-                headers:{
+                headers: {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify(data),
               })
-              .then((response) => response.json())
-              .then(data => {
-                
-              })  
-              .catch((error) => console.error("Error:", error));
+                .then((response) => response.json())
+                .then(data => {
+
+                })
+                .catch((error) => console.error("Error:", error));
             }
           });
 
@@ -471,7 +464,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       markersLayers["Lines"].addTo(map);
       L.control.layers(null, markersLayers).addTo(map);
-      
+
 
     })
     .catch(error => console.error('Error:', error));
