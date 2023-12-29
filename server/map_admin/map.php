@@ -268,9 +268,6 @@ if ($truck_response->num_rows > 0) {
       $storage_array["item_name"] = $item_name_row["item_name"];
 
 
-
-
-
       $cargo_array_req[] = $storage_array;
     }
 

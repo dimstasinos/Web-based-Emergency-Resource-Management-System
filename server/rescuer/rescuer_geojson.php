@@ -80,25 +80,26 @@ if ($response->num_rows > 0) {
         }
 
         $requests_details[] = $request_array;
-
-
-        if ($check == 1) {
-          $citizen_data["category"] = "Request Pending";
-        } else {
-          $citizen_data["category"] = "Request Accepted";
-        }
-
-
-        $citizen_data["details"] = $requests_details;
       }
     }
-    $feature = array(
-      "type" => "Feature",
-      "geometry" => $geometry,
-      "properties" => $citizen_data,
-    );
+    if ($check == 1) {
+      $citizen_data["category"] = "Request Pending";
+    } else {
+      $citizen_data["category"] = "Request Accepted";
+    }
 
-    $features[] = $feature;
+
+    $citizen_data["details"] = $requests_details;
+
+    if (sizeof($citizen_data["details"]) != 0) {
+      $feature = array(
+        "type" => "Feature",
+        "geometry" => $geometry,
+        "properties" => $citizen_data,
+      );
+
+      $features[] = $feature;
+    }
   }
 }
 
@@ -165,8 +166,6 @@ if ($response->num_rows > 0) {
             "quantity" =>  $item_row["quantity"]
           );
 
-
-
           $item_name = $db->prepare("SELECT item_name FROM items where item_id=?");
           $item_name->bind_param("i", $item_details["item_id"]);
           $item_name->execute();
@@ -205,15 +204,14 @@ if ($response->num_rows > 0) {
       }
 
       $citizen_data["details"] = $offer_details;
-
-
-      $feature = array(
-        "type" => "Feature",
-        "geometry" => $geometry,
-        "properties" => $citizen_data,
-      );
-      $features[] = $feature;
     }
+
+    $feature = array(
+      "type" => "Feature",
+      "geometry" => $geometry,
+      "properties" => $citizen_data,
+    );
+    $features[] = $feature;
   }
 }
 
@@ -316,16 +314,41 @@ if ($truck_response->num_rows > 0) {
   }
 
 
+  $cargo = array();
+  $cargo_vehicle = $db->prepare("SELECT str_item_id,str_quantity FROM vehicle_storage where str_vehicle_id=?");
+  $cargo_vehicle->bind_param("i", $truck_row["vehicle_id"]);
+  $cargo_vehicle->execute();
+  $cargo_response = $cargo_vehicle->get_result();
+  if ($cargo_response->num_rows > 0) {
+    while ($cargo_vehicle_row = $cargo_response->fetch_assoc()) {
+
+      $item_array = array(
+        "item_id" => $cargo_vehicle_row["str_item_id"],
+        "quantity" => $cargo_vehicle_row["str_quantity"],
+      );
+
+      $item_name = $db->prepare("SELECT item_name FROM items where item_id=?");
+      $item_name->bind_param("i",  $item_array["item_id"]);
+      $item_name->execute();
+      $item_rensponse_name = $item_name->get_result();
+      $item_name_row = $item_rensponse_name->fetch_assoc();
+      $item_array["item_name"] = $item_name_row["item_name"];
+
+      $cargo[] = $item_array;
+    }
+  }
+
+
   if ($truck_check == 1) {
     $truck_array["category"] = "Truck Active";
   } else {
     $truck_array["category"] = "Truck Inactive";
   }
 
+
+  $truck_array["cargo"] = $cargo;
   $truck_array["requests"] = $cargo_array_req;
   $truck_array["offers"] = $cargo_array_off;
-
-
 
 
   $feature = array(

@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
-  header("Location: /html/login_page.php");
+  header("Location: /html/login.php");
   exit();
 }
 ?>

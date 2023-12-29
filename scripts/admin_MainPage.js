@@ -274,18 +274,20 @@ document.addEventListener('DOMContentLoaded', function () {
           <strong>Status:</strong> ${feature.properties.category}<br>
           ----------------------------------`;
 
-          console.log(feature.properties.cargo.lenght);
-          if (feature.properties.cargo.lenght===0) {
+     
+          if (feature.properties.cargo.length === 0 ) {
             var info = `<br>The truck do not have any cargo`
             info_truck = info_truck + info;
           } else {
+            info_truck = info_truck +`<br><strong>Cargo</strong><br>`
+            
             feature.properties.cargo.forEach(cargo => {
-              var info = `<br><strong>Cargo</strong><br>
-            <strong>Item name:</strong> ${cargo.item_name}<br>
-            <strong>Quantity:</strong> ${cargo.quantity}<br>`
+              var info= `<strong>Item name:</strong> ${cargo.item_name}<br>
+              <strong>Quantity:</strong> ${cargo.quantity}<br><br>`
               info_truck = info_truck + info;
             });
           }
+
           feature.properties.requests.forEach((cargo) => {
             data.features.forEach((detail) => {
               if (detail.properties.category === "Request Pending" || detail.properties.category === "Request Accepted") {
