@@ -222,11 +222,11 @@ if ($response->num_rows > 0) {
 $truck_info = "SELECT * FROM vehicle";
 $truck_response = $db->query($truck_info);
 
-$truck_check=0;
+$truck_check = 0;
 
 if ($truck_response->num_rows > 0) {
   while ($truck_row = $truck_response->fetch_assoc()) {
-    $truck_check=0;
+    $truck_check = 0;
     $truck_array = array(
       "vehicle_id" => $truck_row["vehicle_id"],
       "vehicle_username" => $truck_row["vehicle_username"]
@@ -248,7 +248,7 @@ if ($truck_response->num_rows > 0) {
     $storage_response_req  = $storage_veh_req->get_result();
 
     if ($storage_response_req->num_rows > 0) {
-      $truck_check=1;
+      $truck_check = 1;
     }
 
     $cargo_array_req = array();
@@ -267,6 +267,17 @@ if ($truck_response->num_rows > 0) {
       $item_name_row = $item_rensponse_name->fetch_assoc();
       $storage_array["item_name"] = $item_name_row["item_name"];
 
+
+      $on_truck = $db->prepare("SELECT cargo_status FROM vehicle_tasks where str_citizen_req=?");
+      $on_truck->bind_param("i", $storage_req_row["request_id"]);
+      $on_truck->execute();
+      $on_truck_response = $on_truck->get_result();
+      $on_truck_row = $on_truck_response->fetch_assoc();
+      if ($on_truck_row["cargo_status"] == "on_truck") {
+        $storage_array["on_truck"] = $on_truck_row["cargo_status"];
+      } else {
+        $storage_array["on_truck"] = "off_truck";
+      }
       $cargo_array_req[] = $storage_array;
     }
 
@@ -277,7 +288,7 @@ if ($truck_response->num_rows > 0) {
     $storage_response_off  = $storage_veh_off->get_result();
 
     if ($storage_response_off->num_rows > 0) {
-      $truck_check=1;
+      $truck_check = 1;
     }
     $cargo_array_off = array();
 
@@ -315,16 +326,16 @@ if ($truck_response->num_rows > 0) {
       $cargo_array_off[] = $offer;
     }
 
-   
-    if($truck_check==1){
+
+    if ($truck_check == 1) {
       $truck_array["category"] = "Truck Active";
-    }else{
+    } else {
       $truck_array["category"] = "Truck Inactive";
     }
-    
+
     $truck_array["requests"] = $cargo_array_req;
     $truck_array["offers"] = $cargo_array_off;
-    
+
 
 
 

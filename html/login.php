@@ -3,7 +3,7 @@ session_start();
 
 if (isset($_SESSION['username'])) {
   if ($_SESSION['type'] == "rescuer") {
-    header("Location: /html/rescuer/rescuer_map.php");
+    header("Location: /html/rescuer/rescuer_MapPage");
     exit();
   }
 
@@ -24,7 +24,7 @@ if (isset($_SESSION['username'])) {
   <div id="loginbox">
     <img src="/images/loginuser.png" alt="Login image" id="loginuser">
     <h1>Login</h1>
-    <form id="loginForm" action="/server/loginpage/login_page.php" method="post">
+    <form id="loginForm">
       <label for="username">Username:</label>
       <input type="text" id="username" name="username" required>
 
@@ -44,5 +44,5 @@ if (isset($_SESSION['username'])) {
     </form>
   </div>
 
-  <script src="/scripts/login_Script.js"></script>
+  <script src="/scripts/login_script.js"></script>
 </body>

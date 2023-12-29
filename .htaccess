@@ -1,4 +1,4 @@
-DirectoryIndex html/login_page.html
+DirectoryIndex html/login.php
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
