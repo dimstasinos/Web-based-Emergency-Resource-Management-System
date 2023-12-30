@@ -365,7 +365,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 .then((data) => {
 
                                   mapRefresh(map, map_control);
-
+                                  taskRefresh();
                                 })
                                 .catch((error) => console.error("Error:", error));
                             } else {
@@ -560,11 +560,187 @@ document.addEventListener('DOMContentLoaded', function () {
     .catch(error => console.error('Error:', error));
 
 
+  fetch("/server/rescuer/rescuer_tasks.php")
+    .then(response => response.json())
+    .then(data => {
+
+      const panel = document.getElementById("tasks_info");
+
+      panel.innerHTML = "";
+
+      data.requests.forEach(request => {
+        const row_table = document.createElement("tr");
+        const name = document.createElement("td");
+        const phone_number = document.createElement("td");
+        const type = document.createElement("td");
+        const date = document.createElement("td");
+        const item = document.createElement("td");
+        const quantity = document.createElement("td");
+        const action = document.createElement("td");
+
+        name.textContent = request.citizen_name;
+        phone_number.textContent = request.phone_number;
+        type.textContent = "Request";
+        const date_sub = request.submission_date.split(' ');
+        date.innerHTML = date_sub[0] + "<br>" + date_sub[1];
+        item.textContent = request.item_name
+        quantity.textContent = request.quantity;
+        action.innerHTML = `
+        <button id="request_${request.request_id}_accept">Complete</button>
+        <button id="request_${request.request_id}_cancel">Cancel</button>`;
+
+        row_table.appendChild(name);
+        row_table.appendChild(phone_number);
+        row_table.appendChild(type);
+        row_table.appendChild(date);
+        row_table.appendChild(item);
+        row_table.appendChild(quantity);
+        row_table.appendChild(action);
+        panel.appendChild(row_table);
+
+        document.getElementById("request_${request.request_id}_cancel").addEventListener("click", function(){
+          
+        });
+
+      });
+
+      data.offers.forEach(offer => {
+        const row_table = document.createElement("tr");
+        const name = document.createElement("td");
+        const phone_number = document.createElement("td");
+        const type = document.createElement("td");
+        const date = document.createElement("td");
+        const item = document.createElement("td");
+        const quantity = document.createElement("td");
+        const action = document.createElement("td");
+
+        name.textContent = offer.citizen_name;
+        phone_number.textContent = offer.phone_number;
+        type.textContent = "Offer";
+        const date_sub = offer.submission_date.split(' ');
+
+        date.innerHTML = date_sub[0] + "<br>" + date_sub[1];
+        action.innerHTML = `
+        <button id="offer_${offer.offer_id}_accept">Complete</button>
+        <button id="offer_${offer.offer_id}_cancel">Cancel</button>`;
+
+        var items_name_array = [];
+        var items_quantity_array = [];
+        offer.items.forEach(items => {
+          items_name_array.push(items.item_name);
+          items_quantity_array.push(items.quantity);
+        })
+
+        item.innerHTML = items_name_array.join("<br>");
+        quantity.innerHTML = items_quantity_array.join("<br>");
+
+        row_table.appendChild(name);
+        row_table.appendChild(phone_number);
+        row_table.appendChild(type);
+        row_table.appendChild(date);
+        row_table.appendChild(item);
+        row_table.appendChild(quantity);
+        row_table.appendChild(action);
+
+        panel.appendChild(row_table);
+      });
+
+    })
+    .catch(error => console.error('Error:', error));
+
 
 
 });
 
 
+function taskRefresh() {
+
+  document.getElementById("tasks_info") = innerHTML = "";
+
+  fetch("/server/rescuer/rescuer_tasks.php")
+    .then(response => response.json())
+    .then(data => {
+
+      const panel = document.getElementById("tasks_info");
+
+      panel.innerHTML = "";
+
+      data.requests.forEach(request => {
+        const row_table = document.createElement("tr");
+        const name = document.createElement("td");
+        const phone_number = document.createElement("td");
+        const type = document.createElement("td");
+        const date = document.createElement("td");
+        const item = document.createElement("td");
+        const quantity = document.createElement("td");
+        const action = document.createElement("td");
+
+        name.textContent = request.citizen_name;
+        phone_number.textContent = request.phone_number;
+        type.textContent = "Request";
+        const date_sub = request.submission_date.split(' ');
+        date.innerHTML = date_sub[0] + "<br>" + date_sub[1];
+        item.textContent = request.item_name
+        quantity.textContent = request.quantity;
+        action.innerHTML = `
+        <button id="request_${request.request_id}_accept">Complete</button>
+        <button id="request_${request.request_id}_cancel">Cancel</button>`;
+
+        row_table.appendChild(name);
+        row_table.appendChild(phone_number);
+        row_table.appendChild(type);
+        row_table.appendChild(date);
+        row_table.appendChild(item);
+        row_table.appendChild(quantity);
+        row_table.appendChild(action);
+
+        panel.appendChild(row_table);
+      });
+
+      data.offers.forEach(offer => {
+        const row_table = document.createElement("tr");
+        const name = document.createElement("td");
+        const phone_number = document.createElement("td");
+        const type = document.createElement("td");
+        const date = document.createElement("td");
+        const item = document.createElement("td");
+        const quantity = document.createElement("td");
+        const action = document.createElement("td");
+
+        name.textContent = offer.citizen_name;
+        phone_number.textContent = offer.phone_number;
+        type.textContent = "Offer";
+        const date_sub = offer.submission_date.split(' ');
+
+        date.innerHTML = date_sub[0] + "<br>" + date_sub[1];
+        action.innerHTML = `
+        <button id="offer_${offer.offer_id}_accept">Complete</button>
+        <button id="offer_${offer.offer_id}_cancel">Cancel</button>`;
+
+        var items_name_array = [];
+        var items_quantity_array = [];
+        offer.items.forEach(items => {
+          items_name_array.push(items.item_name);
+          items_quantity_array.push(items.quantity);
+        })
+
+        item.innerHTML = items_name_array.join("<br>");
+        quantity.innerHTML = items_quantity_array.join("<br>");
+
+        row_table.appendChild(name);
+        row_table.appendChild(phone_number);
+        row_table.appendChild(type);
+        row_table.appendChild(date);
+        row_table.appendChild(item);
+        row_table.appendChild(quantity);
+        row_table.appendChild(action);
+
+        panel.appendChild(row_table);
+      });
+
+    })
+    .catch(error => console.error('Error:', error));
+}
 
 
 function mapRefresh(map, map_control) {

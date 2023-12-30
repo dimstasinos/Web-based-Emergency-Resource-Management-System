@@ -30,7 +30,21 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
   </div>
   <div class="main">
     <div id="map"></div>
-    <div id="tasks"></div>
+    <div id="tasks_panel">
+      <table id="tasks">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone Number</th>
+            <th>Type</th>
+            <th>Submission Date</th>
+            <th>Item</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody id=tasks_info></tbody>
+      </table>
+    </div>
   </div>
   <p id="text"></p>
   <script src="/leaflet/leaflet.js"></script>
