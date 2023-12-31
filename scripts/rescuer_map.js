@@ -1582,6 +1582,14 @@ function mapPanelRefresh(map, map_control, layerSelected) {
         });
 
 
+        documen.getElementById(`request_${request.request_id}_accept`).addEventListener("click", function(){
+
+          
+
+        });
+
+
+
       });
 
       data.offers.forEach(offer => {
