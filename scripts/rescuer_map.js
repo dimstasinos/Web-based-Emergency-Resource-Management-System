@@ -15,8 +15,19 @@ document.addEventListener('DOMContentLoaded', function () {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
-  var markersLayers = {};
+  var layerSelected = {
+    "Request Pending": true,
+    "Request Accepted": true,
+    "Offer Accepted": true,
+    "Offer Pending": true,
+    "Truck Active": true,
+    "Truck Inactive": true,
+    "Lines": true,
+    "Base": true,
+  };
 
+
+  var markersLayers = {};
   markersLayers["Lines"] = L.layerGroup();
   var map_control;
 
@@ -24,12 +35,14 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(response => response.json())
     .then(data => {
 
+
       data.features.forEach(feature => {
         const category = feature.properties.category;
 
         if (!markersLayers[category]) {
           markersLayers[category] = L.layerGroup();
         }
+
 
         const customMarkers = L.marker([feature.geometry.coordinates[0], feature.geometry.coordinates[1]], {
           icon: (function () {
@@ -364,7 +377,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 .then((response) => response.json())
                                 .then((data) => {
 
-                                  mapPanelRefresh(map, map_control);
+                                  mapPanelRefresh(map, map_control, layerSelected);
 
                                 })
                                 .catch((error) => console.error("Error:", error));
@@ -409,7 +422,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 .then((response) => response.json())
                                 .then((data) => {
 
-                                  mapPanelRefresh(map, map_control);
+                                  mapPanelRefresh(map, map_control, layerSelected);
 
                                 })
                                 .catch((error) => console.error("Error:", error));
@@ -499,6 +512,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       map.on('layerremove', function (event) {
         var removedLayer = event.layer;
+        layerSelected[removedLayer.options.category] = false;
 
         if (removedLayer.options.category === "Request Pending") {
           markersLayers["Lines"].eachLayer(line => {
@@ -507,18 +521,45 @@ document.addEventListener('DOMContentLoaded', function () {
             }
           });
         } else if (removedLayer.options.category === "Request Accepted") {
-
           markersLayers["Lines"].eachLayer(line => {
             if (removedLayer.options.request_id.find(id => id === line.options.request_id)) {
               line.setStyle({ opacity: 0 });
             }
           });
         } else if (removedLayer.options.category === "Offer Accepted") {
-
           markersLayers["Lines"].eachLayer(line => {
             if (removedLayer.options.offer_id.find(id => id === line.options.offer_id)) {
               line.setStyle({ opacity: 0 });
             }
+          });
+        } else if (removedLayer.options.category === "Offer Pending") {
+          markersLayers["Lines"].eachLayer(line => {
+            if (removedLayer.options.offer_id.find(id => id === line.options.offer_id)) {
+              line.setStyle({ opacity: 0 });
+            }
+          });
+        } else if (removedLayer.options.category === "Truck Active") {
+          markersLayers["Lines"].eachLayer(line => {
+            data.features.forEach(feature => {
+              if (feature.properties.category === "Truck Active") {
+                feature.properties.offers.forEach(offer => {
+                  if (offer.offer_id === line.options.offer_id) {
+                    line.setStyle({ opacity: 0 });
+                  }
+                })
+              }
+            })
+          });
+          markersLayers["Lines"].eachLayer(line => {
+            data.features.forEach(feature => {
+              if (feature.properties.category === "Truck Active") {
+                feature.properties.requests.forEach(offer => {
+                  if (offer.request_id === line.options.request_id) {
+                    line.setStyle({ opacity: 0 });
+                  }
+                })
+              }
+            })
           });
         }
       });
@@ -527,16 +568,14 @@ document.addEventListener('DOMContentLoaded', function () {
         var addLayer = event.layer;
 
         if (addLayer.options.category === "Request Pending") {
-
+          layerSelected[addLayer.options.category] = true;
           markersLayers["Lines"].eachLayer(line => {
-
             if (addLayer.options.request_id.find(id => id === line.options.request_id)) {
               line.setStyle({ opacity: 1 });
             }
-
           });
         } else if (addLayer.options.category === "Request Accepted") {
-
+          layerSelected[addLayer.options.category] = true;
           markersLayers["Lines"].eachLayer(line => {
 
             if (addLayer.options.request_id.find(id => id === line.options.request_id)) {
@@ -544,17 +583,53 @@ document.addEventListener('DOMContentLoaded', function () {
             }
           });
         } else if (addLayer.options.category === "Offer Accepted") {
-
+          layerSelected[addLayer.options.category] = true;
           markersLayers["Lines"].eachLayer(line => {
             if (addLayer.options.offer_id.find(id => id === line.options.offer_id)) {
               line.setStyle({ opacity: 1 });
             }
           });
+        } else if (addLayer.options.category === "Offer Pending") {
+          layerSelected[addLayer.options.category] = true;
+          markersLayers["Lines"].eachLayer(line => {
+            if (addLayer.options.offer_id.find(id => id === line.options.offer_id)) {
+              line.setStyle({ opacity: 1 });
+            }
+          });
+        } else if (addLayer.options.category === "Truck Active") {
+          layerSelected[addLayer.options.category] = true;
+          markersLayers["Lines"].eachLayer(line => {
+            data.features.forEach(feature => {
+              if (feature.properties.category === "Truck Active") {
+                feature.properties.offers.forEach(offer => {
+                  if (offer.offer_id === line.options.offer_id) {
+                    line.setStyle({ opacity: 1 });
+                  }
+                })
+              }
+            })
+          });
+          markersLayers["Lines"].eachLayer(line => {
+            data.features.forEach(feature => {
+              if (feature.properties.category === "Truck Active") {
+                feature.properties.requests.forEach(offer => {
+                  if (offer.request_id === line.options.request_id) {
+                    line.setStyle({ opacity: 1 });
+                  }
+                })
+              }
+            })
+          });
+        } else if (addLayer.options.category === "Truck Inactive") {
+          layerSelected[addLayer.options.category] = true;
+        } else if (addLayer.options.category === "Lines") {
+          layerSelected[addLayer.options.category] = true;
         }
       });
 
       markersLayers["Lines"].addTo(map);
       map_control = L.control.layers(null, markersLayers).addTo(map);
+
 
     })
     .catch(error => console.error('Error:', error));
@@ -615,7 +690,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then((response) => response.json())
             .then((data) => {
 
-              mapPanelRefresh(map, map_control);
+              mapPanelRefresh(map, map_control, layerSelected);
 
 
             })
@@ -682,17 +757,15 @@ document.addEventListener('DOMContentLoaded', function () {
             .then((response) => response.json())
             .then((data) => {
 
-              mapPanelRefresh(map, map_control);
-
+              mapPanelRefresh(map, map_control, layerSelected);
 
             })
             .catch((error) => console.error("Error:", error));
 
-
-
         });
 
       });
+
 
     })
     .catch(error => console.error('Error:', error));
@@ -702,7 +775,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-function mapPanelRefresh(map, map_control) {
+function mapPanelRefresh(map, map_control, layerSelected) {
 
   fetch('/server/rescuer/rescuer_geojson.php')
     .then(response => response.json())
@@ -710,12 +783,34 @@ function mapPanelRefresh(map, map_control) {
 
       map.removeControl(map_control);
 
+      var layerSelected_tmp = {
+        "Request Pending": false,
+        "Request Accepted": false,
+        "Offer Accepted": false,
+        "Offer Pending": false,
+        "Truck Active": false,
+        "Truck Inactive": false,
+        "Lines": false,
+        "Base": false,
+      };
+
+      for (var key in layerSelected) {
+        if (layerSelected.hasOwnProperty(key)) {
+          layerSelected_tmp[key] = layerSelected[key];
+        }
+      }
+
       map.eachLayer(function (layer) {
         if (layer instanceof L.Marker || layer instanceof L.Polyline) {
           map.removeLayer(layer);
         }
       });
 
+      for (var key in layerSelected_tmp) {
+        if (layerSelected_tmp.hasOwnProperty(key)) {
+          layerSelected[key] = layerSelected_tmp[key];
+        }
+      }
 
       var markersLayers = {};
 
@@ -1032,7 +1127,10 @@ function mapPanelRefresh(map, map_control) {
 
 
         markersLayers[category].addLayer(customMarkers);
-        markersLayers[category].addTo(map);
+
+        if (layerSelected[category] === true) {
+          markersLayers[category].addTo(map);
+        }
 
 
         if (category === "Request Pending") {
@@ -1063,7 +1161,7 @@ function mapPanelRefresh(map, map_control) {
                                 .then((response) => response.json())
                                 .then((data) => {
 
-                                  mapPanelRefresh(map, map_control);
+                                  mapPanelRefresh(map, map_control, layerSelected);
 
                                 })
                                 .catch((error) => console.error("Error:", error));
@@ -1106,7 +1204,7 @@ function mapPanelRefresh(map, map_control) {
                                 .then((response) => response.json())
                                 .then((data) => {
 
-                                  mapPanelRefresh(map, map_control);
+                                  mapPanelRefresh(map, map_control, layerSelected);
 
                                 })
                                 .catch((error) => console.error("Error:", error));
@@ -1194,6 +1292,7 @@ function mapPanelRefresh(map, map_control) {
 
       map.on('layerremove', function (event) {
         var removedLayer = event.layer;
+        layerSelected[removedLayer.options.category] = false;
 
         if (removedLayer.options.category === "Request Pending") {
           markersLayers["Lines"].eachLayer(line => {
@@ -1215,6 +1314,35 @@ function mapPanelRefresh(map, map_control) {
               line.setStyle({ opacity: 0 });
             }
           });
+        } else if (removedLayer.options.category === "Offer Pending") {
+          markersLayers["Lines"].eachLayer(line => {
+            if (removedLayer.options.offer_id.find(id => id === line.options.offer_id)) {
+              line.setStyle({ opacity: 0 });
+            }
+          });
+        } else if (removedLayer.options.category === "Truck Active") {
+          markersLayers["Lines"].eachLayer(line => {
+            data.features.forEach(feature => {
+              if (feature.properties.category === "Truck Active") {
+                feature.properties.offers.forEach(request => {
+                  if (request.offer_id === line.options.offer_id) {
+                    line.setStyle({ opacity: 0 });
+                  }
+                })
+              }
+            })
+          });
+          markersLayers["Lines"].eachLayer(line => {
+            data.features.forEach(feature => {
+              if (feature.properties.category === "Truck Active") {
+                feature.properties.requests.forEach(request => {
+                  if (request.request_id === line.options.request_id) {
+                    line.setStyle({ opacity: 0 });
+                  }
+                })
+              }
+            })
+          });
         }
       });
 
@@ -1223,6 +1351,7 @@ function mapPanelRefresh(map, map_control) {
 
         if (addLayer.options.category === "Request Pending") {
 
+          layerSelected[addLayer.options.category] = true;
           markersLayers["Lines"].eachLayer(line => {
 
             if (addLayer.options.request_id.find(id => id === line.options.request_id)) {
@@ -1230,8 +1359,9 @@ function mapPanelRefresh(map, map_control) {
             }
 
           });
-        } else if (addLayer.options.category === "Request Accepted") {
 
+        } else if (addLayer.options.category === "Request Accepted") {
+          layerSelected[addLayer.options.category] = true;
           markersLayers["Lines"].eachLayer(line => {
 
             if (addLayer.options.request_id.find(id => id === line.options.request_id)) {
@@ -1239,16 +1369,146 @@ function mapPanelRefresh(map, map_control) {
             }
           });
         } else if (addLayer.options.category === "Offer Accepted") {
-
+          layerSelected[addLayer.options.category] = true;
           markersLayers["Lines"].eachLayer(line => {
             if (addLayer.options.offer_id.find(id => id === line.options.offer_id)) {
               line.setStyle({ opacity: 1 });
             }
           });
+        } else if (addLayer.options.category === "Offer Pending") {
+          layerSelected[addLayer.options.category] = true;
+          markersLayers["Lines"].eachLayer(line => {
+            if (addLayer.options.offer_id.find(id => id === line.options.offer_id)) {
+              line.setStyle({ opacity: 1 });
+            }
+          });
+        } else if (addLayer.options.category === "Truck Active") {
+          layerSelected[addLayer.options.category] = true;
+          markersLayers["Lines"].eachLayer(line => {
+            data.features.forEach(feature => {
+              if (feature.properties.category === "Truck Active") {
+                feature.properties.offers.forEach(offer => {
+                  if (offer.offer_id === line.options.offer_id) {
+                    line.setStyle({ opacity: 1 });
+                  }
+                })
+              }
+            })
+          });
+          markersLayers["Lines"].eachLayer(line => {
+            data.features.forEach(feature => {
+              if (feature.properties.category === "Truck Active") {
+                feature.properties.requests.forEach(offer => {
+                  if (offer.request_id === line.options.request_id) {
+                    line.setStyle({ opacity: 1 });
+                  }
+                })
+              }
+            })
+          });
+        } else if (addLayer.options.category === "Truck Inactive") {
+          layerSelected[addLayer.options.category] = true;
+        } else if (addLayer.options.category === "Lines") {
+          layerSelected[addLayer.options.category] = true;
         }
       });
 
-      markersLayers["Lines"].addTo(map);
+      if (layerSelected["Lines"] === true) {
+        markersLayers["Lines"].addTo(map);
+
+        if (layerSelected["Offer Pending"] === false) {
+          markersLayers["Lines"].eachLayer(line => {
+            data.features.forEach(feature => {
+              if (feature.properties.category === "Truck Active") {
+                feature.properties.offers.forEach(offer => {
+                  if (offer.offer_id === line.options.offer_id) {
+                    data.features.forEach(cat => {
+                      if (cat.properties.category === "Offer Pending") {
+                        cat.properties.details.forEach(check_id => {
+                          if (check_id.offer_id === offer.offer_id) {
+                            line.setStyle({ opacity: 0 });
+                          }
+
+                        });
+                      }
+                    });
+                  }
+                })
+              }
+            })
+          });
+        }
+
+        if (layerSelected["Offer Accepted"] === false) {
+          markersLayers["Lines"].eachLayer(line => {
+            data.features.forEach(feature => {
+              if (feature.properties.category === "Truck Active") {
+                feature.properties.offers.forEach(offer => {
+                  if (offer.offer_id === line.options.offer_id) {
+                    data.features.forEach(cat => {
+                      if (cat.properties.category === "Offer Accepted") {
+                        cat.properties.details.forEach(check_id => {
+                          if (check_id.offer_id === offer.offer_id) {
+                            line.setStyle({ opacity: 0 });
+                          }
+
+                        });
+                      }
+                    });
+                  }
+                })
+              }
+            })
+          });
+        }
+
+
+        if (layerSelected["Request Pending"] === false) {
+          markersLayers["Lines"].eachLayer(line => {
+            data.features.forEach(feature => {
+              if (feature.properties.category === "Truck Active") {
+                feature.properties.requests.forEach(request => {
+                  if (request.request_id === line.options.request_id) {
+                    data.features.forEach(cat => {
+                      if (cat.properties.category === "Request Pending") {
+                        cat.properties.details.forEach(check_id => {
+                          if (check_id.request_id === request.request_id) {
+                            line.setStyle({ opacity: 0 });
+                          }
+                        });
+                      }
+                    });
+                  }
+                })
+              }
+            })
+          });
+        }
+
+        if (layerSelected["Request Accepted"] === false) {
+          markersLayers["Lines"].eachLayer(line => {
+            data.features.forEach(feature => {
+              if (feature.properties.category === "Truck Active") {
+                feature.properties.requests.forEach(request => {
+                  if (request.request_id === line.options.request_id) {
+                    data.features.forEach(cat => {
+                      if (cat.properties.category === "Request Accepted") {
+                        cat.properties.details.forEach(check_id => {
+                          if (check_id.request_id === request.request_id) {
+                            line.setStyle({ opacity: 0 });
+                          }
+                        });
+                      }
+                    });
+                  }
+                })
+              }
+            })
+          });
+        }
+      }
+
+
       map_control = L.control.layers(null, markersLayers).addTo(map);
 
 
@@ -1316,7 +1576,7 @@ function mapPanelRefresh(map, map_control) {
           })
             .then((response) => response.json())
             .then((data) => {
-              mapPanelRefresh(map, map_control);
+              mapPanelRefresh(map, map_control, layerSelected);
             })
             .catch((error) => console.error("Error:", error));
         });
@@ -1380,7 +1640,7 @@ function mapPanelRefresh(map, map_control) {
             .then((response) => response.json())
             .then((data) => {
 
-              mapPanelRefresh(map, map_control);
+              mapPanelRefresh(map, map_control, layerSelected);
 
             })
             .catch((error) => console.error("Error:", error));
