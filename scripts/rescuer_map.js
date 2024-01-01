@@ -781,11 +781,12 @@ document.addEventListener('DOMContentLoaded', function () {
 function mapPanelRefresh(map, map_control, layerSelected) {
 
   var markersLayers = {};
+  var geoJson;
 
   fetch('/server/rescuer/rescuer_geojson.php')
     .then(response => response.json())
     .then(data => {
-
+      geoJson = data;
       map.removeControl(map_control);
 
       var layerSelected_tmp = {
@@ -1664,11 +1665,33 @@ function mapPanelRefresh(map, map_control, layerSelected) {
 
             document.getElementById(`request_${request.request_id}_accept`).addEventListener("click", function () {
 
+              var item_check = 0;
+              var quantity_check = 0;
+              geoJson.features.forEach(features => {
+                if (features.properties.category === "Truck Active") {
+                  features.properties.cargo.forEach(cargo => {
+                    if (cargo.item_id === request.item_id) {
+                      item_check = 1;
+                      if (cargo.quantity >= request.quantity) {
+                        quantity_check = 1;
+
+                        const data = {
+                          
+                        };
+
+                      }
+                    }
+                  });
+                }
+              });
+
+              if (item_check === 0) {
+                alert("The truck do not have the item to complete request");
+              } else if (quantity_check === 0) {
+                alert("The truck do not have the quantity of the item to complete request");
+              }
 
             });
-
-
-
           });
 
           data.offers.forEach(offer => {
