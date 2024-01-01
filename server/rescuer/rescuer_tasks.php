@@ -72,6 +72,7 @@ if ($offer_task_response->num_rows > 0) {
       $item_response = $item->get_result();
       $item_row = $item_response->fetch_assoc();
       $item_array = array(
+        "item_id"=>  $item_offer_row["item_id_offer"],
         "item_name" => $item_row["item_name"],
         "quantity" => $item_offer_row["quantity"],
       );

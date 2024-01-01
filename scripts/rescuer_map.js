@@ -1676,8 +1676,27 @@ function mapPanelRefresh(map, map_control, layerSelected) {
                         quantity_check = 1;
 
                         const data = {
-                          
+                          id: request.request_id,
+                          quantity: request.quantity,
+                          item_id: request.item_id,
                         };
+
+                        fetch("/server/rescuer/complete_request.php", {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify(data),
+                        })
+                          .then((response) => response.json())
+                          .then((data) => {
+                            if (data.status === "error") {
+                              console.error("Server Error:", data.Error);
+                            } else {
+                              mapPanelRefresh(map, map_control, layerSelected);
+                            }
+                          })
+                          .catch((error) => console.error("Error:", error));
 
                       }
                     }
@@ -1844,7 +1863,43 @@ function mapPanelRefresh(map, map_control, layerSelected) {
 
             document.getElementById(`offer_${offer.offer_id}_accept`).addEventListener("click", function () {
 
+              geoJson.features.forEach(features => {
+                if (features.properties.category === "Truck Active") {
+                  features.properties.cargo.forEach(cargo => {
+                    offer.items.forEach(item => {
 
+                      const data = {
+                        id: offer.offer_id,
+                        quantity: item.quantity,
+                        item_id: item.item_id,
+                      };
+
+                      fetch("/server/rescuer/complete_offer.php", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(data),
+                      })
+                        .then((response) => response.json())
+                        .then((data) => {
+                          if (data.status === "error") {
+                            console.error("Server Error:", data.Error);
+                          } else {
+                            mapPanelRefresh(map, map_control, layerSelected);
+                          }
+                        })
+                        .catch((error) => console.error("Error:", error));
+                    });
+                  });
+                }
+              });
+
+              if (item_check === 0) {
+                alert("The truck do not have the item to complete offer");
+              } else if (quantity_check === 0) {
+                alert("The truck do not have the quantity of the item to complete offer");
+              }
             });
 
           });
