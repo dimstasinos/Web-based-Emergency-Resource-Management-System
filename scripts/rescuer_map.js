@@ -631,144 +631,147 @@ document.addEventListener('DOMContentLoaded', function () {
       map_control = L.control.layers(null, markersLayers).addTo(map);
 
 
-    })
-    .catch(error => console.error('Error:', error));
+      fetch("/server/rescuer/rescuer_tasks.php")
+        .then(response => response.json())
+        .then(data => {
+
+          const panel = document.getElementById("tasks_info");
+
+          panel.innerHTML = "";
+
+          data.requests.forEach(request => {
+            const row_table = document.createElement("tr");
+            const name = document.createElement("td");
+            const phone_number = document.createElement("td");
+            const type = document.createElement("td");
+            const date = document.createElement("td");
+            const item = document.createElement("td");
+            const quantity = document.createElement("td");
+            const action = document.createElement("td");
+
+            name.textContent = request.citizen_name;
+            phone_number.textContent = request.phone_number;
+            type.textContent = "Request";
+            const date_sub = request.submission_date.split(' ');
+            date.innerHTML = date_sub[0] + "<br>" + date_sub[1];
+            item.textContent = request.item_name
+            quantity.textContent = request.quantity;
+            action.innerHTML = `
+          <button id="request_${request.request_id}_accept">Complete</button>
+          <button id="request_${request.request_id}_cancel">Cancel</button>`;
+
+            row_table.appendChild(name);
+            row_table.appendChild(phone_number);
+            row_table.appendChild(type);
+            row_table.appendChild(date);
+            row_table.appendChild(item);
+            row_table.appendChild(quantity);
+            row_table.appendChild(action);
+            panel.appendChild(row_table);
+
+            document.getElementById(`request_${request.request_id}_cancel`).addEventListener("click", function () {
+
+              const data = {
+                id: request.request_id,
+              };
 
 
-  fetch("/server/rescuer/rescuer_tasks.php")
-    .then(response => response.json())
-    .then(data => {
+              fetch("/server/rescuer/cancel_request.php", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              })
+                .then((response) => response.json())
+                .then((data) => {
 
-      const panel = document.getElementById("tasks_info");
-
-      panel.innerHTML = "";
-
-      data.requests.forEach(request => {
-        const row_table = document.createElement("tr");
-        const name = document.createElement("td");
-        const phone_number = document.createElement("td");
-        const type = document.createElement("td");
-        const date = document.createElement("td");
-        const item = document.createElement("td");
-        const quantity = document.createElement("td");
-        const action = document.createElement("td");
-
-        name.textContent = request.citizen_name;
-        phone_number.textContent = request.phone_number;
-        type.textContent = "Request";
-        const date_sub = request.submission_date.split(' ');
-        date.innerHTML = date_sub[0] + "<br>" + date_sub[1];
-        item.textContent = request.item_name
-        quantity.textContent = request.quantity;
-        action.innerHTML = `
-        <button id="request_${request.request_id}_accept">Complete</button>
-        <button id="request_${request.request_id}_cancel">Cancel</button>`;
-
-        row_table.appendChild(name);
-        row_table.appendChild(phone_number);
-        row_table.appendChild(type);
-        row_table.appendChild(date);
-        row_table.appendChild(item);
-        row_table.appendChild(quantity);
-        row_table.appendChild(action);
-        panel.appendChild(row_table);
-
-        document.getElementById(`request_${request.request_id}_cancel`).addEventListener("click", function () {
-
-          const data = {
-            id: request.request_id,
-          };
+                  mapPanelRefresh(map, map_control, layerSelected);
 
 
-          fetch("/server/rescuer/cancel_request.php", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-
-              mapPanelRefresh(map, map_control, layerSelected);
+                })
+                .catch((error) => console.error("Error:", error));
+            });
 
 
+          });
+
+          data.offers.forEach(offer => {
+            const row_table = document.createElement("tr");
+            const name = document.createElement("td");
+            const phone_number = document.createElement("td");
+            const type = document.createElement("td");
+            const date = document.createElement("td");
+            const item = document.createElement("td");
+            const quantity = document.createElement("td");
+            const action = document.createElement("td");
+
+            name.textContent = offer.citizen_name;
+            phone_number.textContent = offer.phone_number;
+            type.textContent = "Offer";
+            const date_sub = offer.submission_date.split(' ');
+
+            date.innerHTML = date_sub[0] + "<br>" + date_sub[1];
+            action.innerHTML = `
+          <button id="offer_${offer.offer_id}_accept">Complete</button>
+          <button id="offer_${offer.offer_id}_cancel">Cancel</button>`;
+
+            var items_name_array = [];
+            var items_quantity_array = [];
+            offer.items.forEach(items => {
+              items_name_array.push(items.item_name);
+              items_quantity_array.push(items.quantity);
             })
-            .catch((error) => console.error("Error:", error));
-        });
+
+            item.innerHTML = items_name_array.join("<br>");
+            quantity.innerHTML = items_quantity_array.join("<br>");
+
+            row_table.appendChild(name);
+            row_table.appendChild(phone_number);
+            row_table.appendChild(type);
+            row_table.appendChild(date);
+            row_table.appendChild(item);
+            row_table.appendChild(quantity);
+            row_table.appendChild(action);
+
+            panel.appendChild(row_table);
 
 
-      });
+            document.getElementById(`offer_${offer.offer_id}_cancel`).addEventListener("click", function () {
 
-      data.offers.forEach(offer => {
-        const row_table = document.createElement("tr");
-        const name = document.createElement("td");
-        const phone_number = document.createElement("td");
-        const type = document.createElement("td");
-        const date = document.createElement("td");
-        const item = document.createElement("td");
-        const quantity = document.createElement("td");
-        const action = document.createElement("td");
+              const data = {
+                id: offer.offer_id,
+              };
 
-        name.textContent = offer.citizen_name;
-        phone_number.textContent = offer.phone_number;
-        type.textContent = "Offer";
-        const date_sub = offer.submission_date.split(' ');
+              fetch("/server/rescuer/cancel_offer.php", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              })
+                .then((response) => response.json())
+                .then((data) => {
 
-        date.innerHTML = date_sub[0] + "<br>" + date_sub[1];
-        action.innerHTML = `
-        <button id="offer_${offer.offer_id}_accept">Complete</button>
-        <button id="offer_${offer.offer_id}_cancel">Cancel</button>`;
+                  mapPanelRefresh(map, map_control, layerSelected);
 
-        var items_name_array = [];
-        var items_quantity_array = [];
-        offer.items.forEach(items => {
-          items_name_array.push(items.item_name);
-          items_quantity_array.push(items.quantity);
+                })
+                .catch((error) => console.error("Error:", error));
+
+            });
+
+          });
+
+
         })
-
-        item.innerHTML = items_name_array.join("<br>");
-        quantity.innerHTML = items_quantity_array.join("<br>");
-
-        row_table.appendChild(name);
-        row_table.appendChild(phone_number);
-        row_table.appendChild(type);
-        row_table.appendChild(date);
-        row_table.appendChild(item);
-        row_table.appendChild(quantity);
-        row_table.appendChild(action);
-
-        panel.appendChild(row_table);
-
-
-        document.getElementById(`offer_${offer.offer_id}_cancel`).addEventListener("click", function () {
-
-          const data = {
-            id: offer.offer_id,
-          };
-
-          fetch("/server/rescuer/cancel_offer.php", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-
-              mapPanelRefresh(map, map_control, layerSelected);
-
-            })
-            .catch((error) => console.error("Error:", error));
-
-        });
-
-      });
+        .catch(error => console.error('Error:', error));
 
 
     })
     .catch(error => console.error('Error:', error));
+
+
+
 
 
 
@@ -1513,171 +1516,319 @@ function mapPanelRefresh(map, map_control, layerSelected) {
       map_control = L.control.layers(null, markersLayers).addTo(map);
 
 
-      return map_control;
+      document.getElementById("tasks_info").innerHTML = "";
+
+      fetch("/server/rescuer/rescuer_tasks.php")
+        .then(response => response.json())
+        .then(data => {
+
+          const panel = document.getElementById("tasks_info");
+
+          panel.innerHTML = "";
+
+          data.requests.forEach(request => {
+            const row_table = document.createElement("tr");
+            const name = document.createElement("td");
+            const phone_number = document.createElement("td");
+            const type = document.createElement("td");
+            const date = document.createElement("td");
+            const item = document.createElement("td");
+            const quantity = document.createElement("td");
+            const action = document.createElement("td");
+
+            name.textContent = request.citizen_name;
+            phone_number.textContent = request.phone_number;
+            type.textContent = "Request";
+            const date_sub = request.submission_date.split(' ');
+            date.innerHTML = date_sub[0] + "<br>" + date_sub[1];
+            item.textContent = request.item_name
+            quantity.textContent = request.quantity;
+            action.innerHTML = `
+              <button id="request_${request.request_id}_accept">Complete</button>
+              <button id="request_${request.request_id}_cancel">Cancel</button>`;
+
+            row_table.appendChild(name);
+            row_table.appendChild(phone_number);
+            row_table.appendChild(type);
+            row_table.appendChild(date);
+            row_table.appendChild(item);
+            row_table.appendChild(quantity);
+            row_table.appendChild(action);
+            panel.appendChild(row_table);
+
+            document.getElementById(`request_${request.request_id}_cancel`).addEventListener("click", function () {
+
+              const data = {
+                id: request.request_id,
+              };
 
 
+              fetch("/server/rescuer/cancel_request.php", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              })
+                .then((response) => response.json())
+                .then((data) => {
+                  mapPanelRefresh(map, map_control, layerSelected);
+                })
+                .catch((error) => console.error("Error:", error));
+            });
 
+            var distanceMarker;
 
-    })
-    .catch(error => console.error('Error:', error));
+            if ("Request Pending" in markersLayers) {
+              markersLayers["Truck Active"].eachLayer(layer => {
 
-  document.getElementById("tasks_info").innerHTML = "";
+                markersLayers["Request Pending"].eachLayer(requestLayerPending => {
 
-  fetch("/server/rescuer/rescuer_tasks.php")
-    .then(response => response.json())
-    .then(data => {
+                  requestLayerPending.options.request_id.forEach(idCheck => {
 
-      const panel = document.getElementById("tasks_info");
-
-      panel.innerHTML = "";
-
-      data.requests.forEach(request => {
-        const row_table = document.createElement("tr");
-        const name = document.createElement("td");
-        const phone_number = document.createElement("td");
-        const type = document.createElement("td");
-        const date = document.createElement("td");
-        const item = document.createElement("td");
-        const quantity = document.createElement("td");
-        const action = document.createElement("td");
-
-        name.textContent = request.citizen_name;
-        phone_number.textContent = request.phone_number;
-        type.textContent = "Request";
-        const date_sub = request.submission_date.split(' ');
-        date.innerHTML = date_sub[0] + "<br>" + date_sub[1];
-        item.textContent = request.item_name
-        quantity.textContent = request.quantity;
-        action.innerHTML = `
-          <button id="request_${request.request_id}_accept">Complete</button>
-          <button id="request_${request.request_id}_cancel">Cancel</button>`;
-
-        row_table.appendChild(name);
-        row_table.appendChild(phone_number);
-        row_table.appendChild(type);
-        row_table.appendChild(date);
-        row_table.appendChild(item);
-        row_table.appendChild(quantity);
-        row_table.appendChild(action);
-        panel.appendChild(row_table);
-
-        document.getElementById(`request_${request.request_id}_cancel`).addEventListener("click", function () {
-
-          const data = {
-            id: request.request_id,
-          };
-
-
-          fetch("/server/rescuer/cancel_request.php", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              mapPanelRefresh(map, map_control, layerSelected);
-            })
-            .catch((error) => console.error("Error:", error));
-        });
-
-        var distanceMarker=0;
-
-        markersLayers["Truck Active"].eachLayer(layer => {
-
-          layer.on("drag", function () {
-
-
-            markersLayers["Request Pending"].eachLayer(requestLayerPending =>{
-
-              requestLayerPending.options.request_id.forEach(idCheck =>{
-                
-                if(idCheck===request.request_id){
-                  distanceMarker = layer.getLatLng().distanceTo(requestLayerPending.getLatLng());
-                }
-
+                    if (idCheck === request.request_id) {
+                      distanceMarker = layer.getLatLng().distanceTo(requestLayerPending.getLatLng());
+                    }
+                  });
+                })
               });
+            }
+
+            if ("Request Accepted" in markersLayers) {
+              markersLayers["Truck Active"].eachLayer(layer => {
+
+                markersLayers["Request Accepted"].eachLayer(requestLayerAccepted => {
+
+                  requestLayerAccepted.options.request_id.forEach(idCheck => {
+
+                    if (idCheck === request.request_id) {
+                      distanceMarker = layer.getLatLng().distanceTo(requestLayerAccepted.getLatLng());
+                    }
+                  });
+                })
+              });
+            }
+
+            if ("Request Pending" in markersLayers) {
+              markersLayers["Truck Active"].eachLayer(layer => {
+
+                layer.on("drag", function () {
+
+                  markersLayers["Request Pending"].eachLayer(requestLayerPending => {
+
+                    requestLayerPending.options.request_id.forEach(idCheck => {
+
+                      if (idCheck === request.request_id) {
+                        distanceMarker = layer.getLatLng().distanceTo(requestLayerPending.getLatLng());
+                      }
+                      if (distanceMarker > 50) {
+                        document.getElementById(`request_${request.request_id}_accept`).disabled = true;
+                      } else {
+                        document.getElementById(`request_${request.request_id}_accept`).disabled = false;
+                      }
+                    });
+                  })
+                });
+              });
+            }
+
+            if ("Request Accepted" in markersLayers) {
+              markersLayers["Truck Active"].eachLayer(layer => {
+
+                layer.on("drag", function () {
+
+                  markersLayers["Request Accepted"].eachLayer(requestLayerAccepted => {
+
+                    requestLayerAccepted.options.request_id.forEach(idCheck => {
+
+                      if (idCheck === request.request_id) {
+                        distanceMarker = layer.getLatLng().distanceTo(requestLayerAccepted.getLatLng());
+                      }
+                      if (distanceMarker > 50) {
+                        document.getElementById(`request_${request.request_id}_accept`).disabled = true;
+                      } else {
+                        document.getElementById(`request_${request.request_id}_accept`).disabled = false;
+                      }
+                    });
+                  })
+                });
+              });
+            }
+
+            if (distanceMarker > 50) {
+              document.getElementById(`request_${request.request_id}_accept`).disabled = true;
+            } else {
+              document.getElementById(`request_${request.request_id}_accept`).disabled = false;
+            }
 
 
-            })
+            document.getElementById(`request_${request.request_id}_accept`).addEventListener("click", function () {
+
+
+            });
+
+
+
           });
-        });
 
-        if(distanceMarker>50){
-          document.getElementById(`request_${request.request_id}_accept`).disabled=true;
-        }
+          data.offers.forEach(offer => {
+            const row_table = document.createElement("tr");
+            const name = document.createElement("td");
+            const phone_number = document.createElement("td");
+            const type = document.createElement("td");
+            const date = document.createElement("td");
+            const item = document.createElement("td");
+            const quantity = document.createElement("td");
+            const action = document.createElement("td");
 
-        
-        document.getElementById(`request_${request.request_id}_accept`).addEventListener("click", function () {
-        });
+            name.textContent = offer.citizen_name;
+            phone_number.textContent = offer.phone_number;
+            type.textContent = "Offer";
+            const date_sub = offer.submission_date.split(' ');
 
+            date.innerHTML = date_sub[0] + "<br>" + date_sub[1];
+            action.innerHTML = `
+              <button id="offer_${offer.offer_id}_accept">Complete</button>
+              <button id="offer_${offer.offer_id}_cancel">Cancel</button>`;
 
-
-      });
-
-      data.offers.forEach(offer => {
-        const row_table = document.createElement("tr");
-        const name = document.createElement("td");
-        const phone_number = document.createElement("td");
-        const type = document.createElement("td");
-        const date = document.createElement("td");
-        const item = document.createElement("td");
-        const quantity = document.createElement("td");
-        const action = document.createElement("td");
-
-        name.textContent = offer.citizen_name;
-        phone_number.textContent = offer.phone_number;
-        type.textContent = "Offer";
-        const date_sub = offer.submission_date.split(' ');
-
-        date.innerHTML = date_sub[0] + "<br>" + date_sub[1];
-        action.innerHTML = `
-          <button id="offer_${offer.offer_id}_accept">Complete</button>
-          <button id="offer_${offer.offer_id}_cancel">Cancel</button>`;
-
-        var items_name_array = [];
-        var items_quantity_array = [];
-        offer.items.forEach(items => {
-          items_name_array.push(items.item_name);
-          items_quantity_array.push(items.quantity);
-        })
-
-        item.innerHTML = items_name_array.join("<br>");
-        quantity.innerHTML = items_quantity_array.join("<br>");
-
-        row_table.appendChild(name);
-        row_table.appendChild(phone_number);
-        row_table.appendChild(type);
-        row_table.appendChild(date);
-        row_table.appendChild(item);
-        row_table.appendChild(quantity);
-        row_table.appendChild(action);
-
-        panel.appendChild(row_table);
-
-        document.getElementById(`offer_${offer.offer_id}_cancel`).addEventListener("click", function () {
-
-          const data = {
-            id: offer.offer_id,
-          };
-
-          fetch("/server/rescuer/cancel_offer.php", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-
-              mapPanelRefresh(map, map_control, layerSelected);
-
+            var items_name_array = [];
+            var items_quantity_array = [];
+            offer.items.forEach(items => {
+              items_name_array.push(items.item_name);
+              items_quantity_array.push(items.quantity);
             })
-            .catch((error) => console.error("Error:", error));
-        });
-      });
+
+            item.innerHTML = items_name_array.join("<br>");
+            quantity.innerHTML = items_quantity_array.join("<br>");
+
+            row_table.appendChild(name);
+            row_table.appendChild(phone_number);
+            row_table.appendChild(type);
+            row_table.appendChild(date);
+            row_table.appendChild(item);
+            row_table.appendChild(quantity);
+            row_table.appendChild(action);
+
+            panel.appendChild(row_table);
+
+            document.getElementById(`offer_${offer.offer_id}_cancel`).addEventListener("click", function () {
+
+              const data = {
+                id: offer.offer_id,
+              };
+
+              fetch("/server/rescuer/cancel_offer.php", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              })
+                .then((response) => response.json())
+                .then((data) => {
+
+                  mapPanelRefresh(map, map_control, layerSelected);
+
+                })
+                .catch((error) => console.error("Error:", error));
+            });
+
+
+            var distanceMarker;
+
+            if ("Offer Pending" in markersLayers) {
+              markersLayers["Truck Active"].eachLayer(layer => {
+
+                markersLayers["Offer Pending"].eachLayer(offerLayerPending => {
+
+                  offerLayerPending.options.offer_id.forEach(idCheck => {
+
+                    if (idCheck === offer.offer_id) {
+                      distanceMarker = layer.getLatLng().distanceTo(offerLayerPending.getLatLng());
+                    }
+                  });
+                })
+              });
+            }
+
+            if ("Offer Accepted" in markersLayers) {
+              markersLayers["Truck Active"].eachLayer(layer => {
+
+                markersLayers["Offer Accepted"].eachLayer(offerLayerAccepted => {
+
+                  offerLayerAccepted.options.offer_id.forEach(idCheck => {
+
+                    if (idCheck === offer.offer_id) {
+                      distanceMarker = layer.getLatLng().distanceTo(offerLayerAccepted.getLatLng());
+                    }
+                  });
+                })
+              });
+            }
+
+            if ("Offer Pending" in markersLayers) {
+              markersLayers["Truck Active"].eachLayer(layer => {
+
+                layer.on("drag", function () {
+
+                  markersLayers["Offer Pending"].eachLayer(offerLayerPending => {
+
+                    offerLayerPending.options.offer_id.forEach(idCheck => {
+
+                      if (idCheck === offer.offer_id) {
+                        distanceMarker = layer.getLatLng().distanceTo(offerLayerPending.getLatLng());
+                      }
+                      if (distanceMarker > 50) {
+                        document.getElementById(`offer_${offer.offer_id}_accept`).disabled = true;
+                      } else {
+                        document.getElementById(`offer_${offer.offer_id}_accept`).disabled = false;
+                      }
+                    });
+                  })
+                });
+              });
+            }
+
+            if ("Offer Accepted" in markersLayers) {
+              markersLayers["Truck Active"].eachLayer(layer => {
+
+                layer.on("drag", function () {
+
+                  markersLayers["Offer Accepted"].eachLayer(offerLayerAccepted => {
+
+                    offerLayerAccepted.options.offer_id.forEach(idCheck => {
+
+                      if (idCheck === offer.offer_id) {
+                        distanceMarker = layer.getLatLng().distanceTo(offerLayerAccepted.getLatLng());
+                      }
+                      if (distanceMarker > 50) {
+                        document.getElementById(`offer_${offer.offer_id}_accept`).disabled = true;
+                      } else {
+                        document.getElementById(`offer_${offer.offer_id}_accept`).disabled = false;
+                      }
+                    });
+                  })
+                });
+              });
+            }
+
+            if (distanceMarker > 50) {
+              document.getElementById(`offer_${offer.offer_id}_accept`).disabled = true;
+            } else {
+              document.getElementById(`offer_${offer.offer_id}_accept`).disabled = false;
+            }
+
+
+            document.getElementById(`offer_${offer.offer_id}_accept`).addEventListener("click", function () {
+
+
+            });
+
+          });
+
+        })
+        .catch(error => console.error('Error:', error));
+
 
     })
     .catch(error => console.error('Error:', error));

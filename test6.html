@@ -1,77 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Leaflet GeoJSON Example</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <style>
-    #map {
-      height: 400px;
-    }
-  </style>
-</head>
-<body>
+document.addEventListener('DOMContentLoaded', function () {
+  try {
+    const response = await fetch('your_api_endpoint');
+    const data = await response.json();
 
-<div id="map"></div>
+    // Your code for handling the fetched data
+    console.log(data);
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script>
-  var map = L.map('map').setView([0, 0], 2);
-
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
-  }).addTo(map);
-
-  var groups = {};
-
-  fetch('example.geojson')
-    .then(response => response.json())
-    .then(data => {
-      data.features.forEach(feature => {
-        var groupName = feature.properties.group || 'default';
-
-        if (!groups[groupName]) {
-          groups[groupName] = { markers: L.layerGroup().addTo(map), polyline: null };
-        }
-
-        var marker = L.marker(feature.geometry.coordinates)
-          .bindPopup('<b>Name:</b> ' + feature.properties.name);
-
-        marker.addTo(groups[groupName].markers);
-      });
-
-      // Δημιουργία γραμμών μεταξύ των markers σε κάθε ομάδα
-      Object.keys(groups).forEach(groupName => {
-        var coordinates = groups[groupName].markers.getLayers().map(marker => marker.getLatLng());
-        if (coordinates.length > 1) {
-          groups[groupName].polyline = L.polyline(coordinates, { color: getRandomColor() }).addTo(map);
-        }
-      });
-
-      L.control.layers(null, groups).addTo(map);
-
-      map.on('layerremove', function (event) {
-        if (event.layer instanceof L.Marker) {
-          // Αφαίρεση του marker συνοδευτικής γραμμής
-          Object.values(groups).forEach(group => {
-            if (group.markers.hasLayer(event.layer) && group.polyline) {
-              group.polyline.remove();
-            }
-          });
-        }
-      });
-    });
-
-  function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
+    // Other code to be executed after fetch
+    anotherFunction();
+  } catch (error) {
+    console.error('Error fetching data:', error);
   }
-</script>
+});
 
-</body>
-</html>
