@@ -777,6 +777,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function mapPanelRefresh(map, map_control, layerSelected) {
 
+  var markersLayers = {};
+
   fetch('/server/rescuer/rescuer_geojson.php')
     .then(response => response.json())
     .then(data => {
@@ -811,8 +813,6 @@ function mapPanelRefresh(map, map_control, layerSelected) {
           layerSelected[key] = layerSelected_tmp[key];
         }
       }
-
-      var markersLayers = {};
 
       markersLayers["Lines"] = L.layerGroup();
 
@@ -1257,6 +1257,7 @@ function mapPanelRefresh(map, map_control, layerSelected) {
 
             feature.geometry.coordinates[0] = position.lat;
             feature.geometry.coordinates[1] = position.lng;
+
           });
 
           customMarkers.on('dragend', function (event) {
@@ -1581,11 +1582,34 @@ function mapPanelRefresh(map, map_control, layerSelected) {
             .catch((error) => console.error("Error:", error));
         });
 
+        var distanceMarker=0;
 
-        documen.getElementById(`request_${request.request_id}_accept`).addEventListener("click", function(){
+        markersLayers["Truck Active"].eachLayer(layer => {
 
-          
+          layer.on("drag", function () {
 
+
+            markersLayers["Request Pending"].eachLayer(requestLayerPending =>{
+
+              requestLayerPending.options.request_id.forEach(idCheck =>{
+                
+                if(idCheck===request.request_id){
+                  distanceMarker = layer.getLatLng().distanceTo(requestLayerPending.getLatLng());
+                }
+
+              });
+
+
+            })
+          });
+        });
+
+        if(distanceMarker>50){
+          document.getElementById(`request_${request.request_id}_accept`).disabled=true;
+        }
+
+        
+        document.getElementById(`request_${request.request_id}_accept`).addEventListener("click", function () {
         });
 
 
