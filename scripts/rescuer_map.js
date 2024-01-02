@@ -1,3 +1,5 @@
+var onload_data;
+
 document.addEventListener('DOMContentLoaded', function () {
 
 
@@ -30,12 +32,12 @@ document.addEventListener('DOMContentLoaded', function () {
   var markersLayers = {};
   markersLayers["Lines"] = L.layerGroup();
   var map_control;
-
+  var geoJson;
   fetch('/server/rescuer/rescuer_geojson.php')
     .then(response => response.json())
     .then(data => {
 
-
+      geoJson = data;
       data.features.forEach(feature => {
         const category = feature.properties.category;
 
@@ -685,15 +687,148 @@ document.addEventListener('DOMContentLoaded', function () {
               })
                 .then((response) => response.json())
                 .then((data) => {
-
                   mapPanelRefresh(map, map_control, layerSelected);
-
-
                 })
                 .catch((error) => console.error("Error:", error));
             });
 
+            var distanceMarker;
 
+            if ("Request Pending" in markersLayers) {
+              markersLayers["Truck Active"].eachLayer(layer => {
+
+                markersLayers["Request Pending"].eachLayer(requestLayerPending => {
+
+                  requestLayerPending.options.request_id.forEach(idCheck => {
+
+                    if (idCheck === request.request_id) {
+                      distanceMarker = layer.getLatLng().distanceTo(requestLayerPending.getLatLng());
+                    }
+                  });
+                })
+              });
+            }
+
+            if ("Request Accepted" in markersLayers) {
+              markersLayers["Truck Active"].eachLayer(layer => {
+
+                markersLayers["Request Accepted"].eachLayer(requestLayerAccepted => {
+
+                  requestLayerAccepted.options.request_id.forEach(idCheck => {
+
+                    if (idCheck === request.request_id) {
+                      distanceMarker = layer.getLatLng().distanceTo(requestLayerAccepted.getLatLng());
+                    }
+                  });
+                })
+              });
+            }
+
+            if ("Request Pending" in markersLayers) {
+              markersLayers["Truck Active"].eachLayer(layer => {
+
+                layer.on("drag", function () {
+
+                  markersLayers["Request Pending"].eachLayer(requestLayerPending => {
+
+                    requestLayerPending.options.request_id.forEach(idCheck => {
+
+                      if (idCheck === request.request_id) {
+                        distanceMarker = layer.getLatLng().distanceTo(requestLayerPending.getLatLng());
+                      }
+                      if (distanceMarker > 50) {
+                        document.getElementById(`request_${request.request_id}_accept`).disabled = true;
+                      } else {
+                        document.getElementById(`request_${request.request_id}_accept`).disabled = false;
+                      }
+                    });
+                  })
+                });
+              });
+            }
+
+            if ("Request Accepted" in markersLayers) {
+              markersLayers["Truck Active"].eachLayer(layer => {
+
+                layer.on("drag", function () {
+
+                  markersLayers["Request Accepted"].eachLayer(requestLayerAccepted => {
+
+                    requestLayerAccepted.options.request_id.forEach(idCheck => {
+
+                      if (idCheck === request.request_id) {
+                        distanceMarker = layer.getLatLng().distanceTo(requestLayerAccepted.getLatLng());
+                      }
+                      if (distanceMarker > 50) {
+                        document.getElementById(`request_${request.request_id}_accept`).disabled = true;
+                      } else {
+                        document.getElementById(`request_${request.request_id}_accept`).disabled = false;
+                      }
+                    });
+                  })
+                });
+              });
+            }
+
+            if (distanceMarker > 50) {
+              document.getElementById(`request_${request.request_id}_accept`).disabled = true;
+            } else {
+              document.getElementById(`request_${request.request_id}_accept`).disabled = false;
+            }
+
+
+            document.getElementById(`request_${request.request_id}_accept`).addEventListener("click", function () {
+
+              var item_check = 0;
+              var quantity_check = 0;
+              var cargo_quantity;
+              geoJson.features.forEach(features => {
+                if (features.properties.category === "Truck Active") {
+                  features.properties.cargo.forEach(cargo => {
+                    if (cargo.item_id === request.item_id) {
+                      item_check = 1;
+                      cargo_quantity = cargo.quantity;
+                      if (cargo.quantity >= request.quantity) {
+
+                        quantity_check = 1;
+
+                        const data = {
+                          id: request.request_id,
+                          quantity: request.quantity,
+                          item_id: request.item_id,
+                        };
+
+                        fetch("/server/rescuer/complete_request.php", {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify(data),
+                        })
+                          .then((response) => response.json())
+                          .then((data) => {
+                            if (data.status === "error") {
+                              console.error("Server Error:", data.Error);
+                            } else {
+                              alert("Request Complete");
+                              mapPanelRefresh(map, map_control, layerSelected);
+                            }
+                          })
+                          .catch((error) => console.error("Error:", error));
+
+                      }
+                    }
+                  });
+                }
+              });
+
+              if (item_check === 0) {
+                alert(`The truck do not have the item ${request.item_name} to complete request`);
+              } else if (quantity_check === 0) {
+                alert(`The truck do not have the quantity of the item to complete request (Request: ${request.quantity}, Truck: ${cargo_quantity})`);
+              }
+
+            });
           });
 
           data.offers.forEach(offer => {
@@ -757,23 +892,154 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 })
                 .catch((error) => console.error("Error:", error));
+            });
 
+            var distanceMarker;
+
+            if ("Offer Pending" in markersLayers) {
+              markersLayers["Truck Active"].eachLayer(layer => {
+
+                markersLayers["Offer Pending"].eachLayer(offerLayerPending => {
+
+                  offerLayerPending.options.offer_id.forEach(idCheck => {
+
+                    if (idCheck === offer.offer_id) {
+                      distanceMarker = layer.getLatLng().distanceTo(offerLayerPending.getLatLng());
+                    }
+                  });
+                })
+              });
+            }
+
+            if ("Offer Accepted" in markersLayers) {
+              markersLayers["Truck Active"].eachLayer(layer => {
+
+                markersLayers["Offer Accepted"].eachLayer(offerLayerAccepted => {
+
+                  offerLayerAccepted.options.offer_id.forEach(idCheck => {
+
+                    if (idCheck === offer.offer_id) {
+                      distanceMarker = layer.getLatLng().distanceTo(offerLayerAccepted.getLatLng());
+                    }
+                  });
+                })
+              });
+            }
+
+            if ("Offer Pending" in markersLayers) {
+              markersLayers["Truck Active"].eachLayer(layer => {
+
+                layer.on("drag", function () {
+
+                  markersLayers["Offer Pending"].eachLayer(offerLayerPending => {
+
+                    offerLayerPending.options.offer_id.forEach(idCheck => {
+
+                      if (idCheck === offer.offer_id) {
+                        distanceMarker = layer.getLatLng().distanceTo(offerLayerPending.getLatLng());
+                      }
+                      if (distanceMarker > 50) {
+                        document.getElementById(`offer_${offer.offer_id}_accept`).disabled = true;
+                      } else {
+                        document.getElementById(`offer_${offer.offer_id}_accept`).disabled = false;
+                      }
+                    });
+                  })
+                });
+              });
+            }
+
+            if ("Offer Accepted" in markersLayers) {
+              markersLayers["Truck Active"].eachLayer(layer => {
+
+                layer.on("drag", function () {
+
+                  markersLayers["Offer Accepted"].eachLayer(offerLayerAccepted => {
+
+                    offerLayerAccepted.options.offer_id.forEach(idCheck => {
+
+                      if (idCheck === offer.offer_id) {
+                        distanceMarker = layer.getLatLng().distanceTo(offerLayerAccepted.getLatLng());
+                      }
+                      if (distanceMarker > 50) {
+                        document.getElementById(`offer_${offer.offer_id}_accept`).disabled = true;
+                      } else {
+                        document.getElementById(`offer_${offer.offer_id}_accept`).disabled = false;
+                      }
+                    });
+                  })
+                });
+              });
+            }
+
+            if (distanceMarker > 50) {
+              document.getElementById(`offer_${offer.offer_id}_accept`).disabled = true;
+            } else {
+              document.getElementById(`offer_${offer.offer_id}_accept`).disabled = false;
+            }
+
+
+            document.getElementById(`offer_${offer.offer_id}_accept`).addEventListener("click", function () {
+
+
+              offer.items.forEach(item => {
+
+                const data = {
+                  id: offer.offer_id,
+                  quantity: item.quantity,
+                  item_id: item.item_id,
+                };
+
+                console.log(data);
+                fetch("/server/rescuer/complete_offer.php", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(data),
+                })
+                  .then((response) => response.json())
+                  .then((data) => {
+                    if (data.status === "error") {
+                      console.error("Server Error:", data.Error);
+                    } else {
+
+                    }
+                  })
+                  .catch((error) => console.error("Error:", error));
+              });
+              alert("Offer Complete");
+              mapPanelRefresh(map, map_control, layerSelected);
             });
 
           });
-
-
         })
         .catch(error => console.error('Error:', error));
-
-
     })
     .catch(error => console.error('Error:', error));
 
 
-
-
-
+  fetch("/server/rescuer/database_extract.php")
+    .then((jsonResponse) => jsonResponse.json())
+    .then((data) => {
+      if (data.status === "error") {
+        console.error("Server Error:", data.Error);
+      } else {
+        if (data.categories.length !== 0 && data.items.length !== 0) {
+          onload_data = data;
+          categories_select(data);
+          var selected_cat = document.getElementById("categorySelect").value;
+          items_select(data, selected_cat);
+        } else {
+          const list = document.getElementById("categorySelect");
+          list.innerHTML = "";
+          let select_add = document.createElement("option");
+          select_add.textContent = "Η Βάση δεδομένων είναι κενή";
+          list.appendChild(select_add);
+        }
+      }
+    })
+    .catch((error) => console.error("Error:", error));
 
 });
 
@@ -1667,12 +1933,15 @@ function mapPanelRefresh(map, map_control, layerSelected) {
 
               var item_check = 0;
               var quantity_check = 0;
+              var cargo_quantity;
               geoJson.features.forEach(features => {
                 if (features.properties.category === "Truck Active") {
                   features.properties.cargo.forEach(cargo => {
                     if (cargo.item_id === request.item_id) {
                       item_check = 1;
+                      cargo_quantity = cargo.quantity;
                       if (cargo.quantity >= request.quantity) {
+
                         quantity_check = 1;
 
                         const data = {
@@ -1693,6 +1962,7 @@ function mapPanelRefresh(map, map_control, layerSelected) {
                             if (data.status === "error") {
                               console.error("Server Error:", data.Error);
                             } else {
+                              alert("Request Complete");
                               mapPanelRefresh(map, map_control, layerSelected);
                             }
                           })
@@ -1705,9 +1975,9 @@ function mapPanelRefresh(map, map_control, layerSelected) {
               });
 
               if (item_check === 0) {
-                alert("The truck do not have the item to complete request");
+                alert(`The truck do not have the item ${request.item_name} to complete request`);
               } else if (quantity_check === 0) {
-                alert("The truck do not have the quantity of the item to complete request");
+                alert(`The truck do not have the quantity of the item to complete request (Request: ${request.quantity}, Truck: ${cargo_quantity})`);
               }
 
             });
@@ -1863,52 +2133,154 @@ function mapPanelRefresh(map, map_control, layerSelected) {
 
             document.getElementById(`offer_${offer.offer_id}_accept`).addEventListener("click", function () {
 
-              geoJson.features.forEach(features => {
-                if (features.properties.category === "Truck Active") {
-                  features.properties.cargo.forEach(cargo => {
-                    offer.items.forEach(item => {
 
-                      const data = {
-                        id: offer.offer_id,
-                        quantity: item.quantity,
-                        item_id: item.item_id,
-                      };
+              offer.items.forEach(item => {
 
-                      fetch("/server/rescuer/complete_offer.php", {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(data),
-                      })
-                        .then((response) => response.json())
-                        .then((data) => {
-                          if (data.status === "error") {
-                            console.error("Server Error:", data.Error);
-                          } else {
-                            mapPanelRefresh(map, map_control, layerSelected);
-                          }
-                        })
-                        .catch((error) => console.error("Error:", error));
-                    });
-                  });
-                }
+                const data = {
+                  id: offer.offer_id,
+                  quantity: item.quantity,
+                  item_id: item.item_id,
+                };
+
+                console.log(data);
+                fetch("/server/rescuer/complete_offer.php", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(data),
+                })
+                  .then((response) => response.json())
+                  .then((data) => {
+                    if (data.status === "error") {
+                      console.error("Server Error:", data.Error);
+                    } else {
+
+                    }
+                  })
+                  .catch((error) => console.error("Error:", error));
               });
-
-              if (item_check === 0) {
-                alert("The truck do not have the item to complete offer");
-              } else if (quantity_check === 0) {
-                alert("The truck do not have the quantity of the item to complete offer");
-              }
+              alert("Offer Complete");
+              mapPanelRefresh(map, map_control, layerSelected);
             });
-
           });
-
         })
         .catch(error => console.error('Error:', error));
-
-
     })
     .catch(error => console.error('Error:', error));
 
 }
+
+function categories_select(data) {
+  const list = document.getElementById("categorySelect");
+
+  list.innerHTML = "";
+
+  data.categories.forEach((category) => {
+    if (category.category_name !== "" && category.category_name !== "-----") {
+      let select_add = document.createElement("option");
+      select_add.textContent = category.category_name;
+      select_add.value = category.id;
+      list.appendChild(select_add);
+    }
+  });
+}
+
+function items_select(data, selected_cat) {
+  const table = document.getElementById("items");
+
+  table.innerHTML = "";
+
+  data.items.forEach((item) => {
+    if (item.name != "" && item.category === selected_cat) {
+      const row_table = document.createElement("tr");
+      const id_table = document.createElement("td");
+      const name_table = document.createElement("td");
+      const category_table = document.createElement("td");
+      const detail_table = document.createElement("td");
+      const item_quantity = document.createElement("td");
+
+      id_table.textContent = item.id;
+      name_table.textContent = item.name;
+      item_quantity.textContent = item.quantity;
+      const category = data.categories.find((category) =>
+        category.id === item.category
+      );
+      category_table.textContent = category.category_name;
+
+      const detail_get = item.details.map((detail) => {
+        if (detail.detail_name && detail.detail_value) {
+          return `${detail.detail_name}: ${detail.detail_value}`;
+        } else if (detail.detail_name && detail.detail_value === "") {
+          return `${detail.detail_name}:`;
+        } else if (detail.detail_name === "" && detail.detail_value) {
+          return `---: ${detail.detail_value}`;
+        } else {
+          return " ";
+        }
+      });
+      detail_table.innerHTML = detail_get.join("<br>");
+
+      row_table.appendChild(id_table);
+      row_table.appendChild(name_table);
+      row_table.appendChild(category_table);
+      row_table.appendChild(detail_table);
+      row_table.appendChild(item_quantity);
+
+      table.appendChild(row_table);
+    }
+  });
+}
+
+document.getElementById("tableOfItems").addEventListener("click", function (event) {
+  if (event.target.tagName === "TD") {
+    const selected_row = event.target.closest("tr");
+    const row_items = Array.from(selected_row.cells).map(
+      (cell) => cell.textContent
+    );
+    const id = row_items[0];
+    const item = row_items[1];
+    const quantity = row_items[4];
+
+    const table = document.getElementById("itemSelected");
+    var flag = 0;
+    var item_check = [];
+
+
+    for (var i = 0; i < table.rows.length; i++) {
+      var cell = table.rows[i].cells[0];
+      item_check.push(cell.innerText);
+    }
+
+    console.log(item_check);
+    for (var i = 0; i < item_check.length; i++) {
+      if (item_check[i] === id) {
+        flag = 1;
+        break;
+      }
+    }
+
+    if (flag === 0) {
+      const row_table = document.createElement("tr");
+      const item_id = document.createElement("td");
+      const name_table = document.createElement("td");
+      const item_quantity = document.createElement("td");
+      const item_delete = document.createElement("td");
+
+      item_id.textContent = id;
+      name_table.textContent = item;
+      item_quantity.innerHTML = `<input type="range" id="${id}" 
+    min="0" max="${quantity}" value="0"></input><span id="quantity_${id}">0</span>`;
+
+      row_table.appendChild(item_id);
+      row_table.appendChild(name_table);
+      row_table.appendChild(item_quantity);
+
+      table.appendChild(row_table);
+
+      document.getElementById(`${id}`).addEventListener("input", function () {
+        document.getElementById(`quantity_${id}`).innerText = this.value;
+      });
+    }
+  }
+});

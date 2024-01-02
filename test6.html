@@ -1,15 +1,35 @@
-document.addEventListener('DOMContentLoaded', function () {
-  try {
-    const response = await fetch('your_api_endpoint');
-    const data = await response.json();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Slider Example</title>
+    <style>
+        /* Optional styling for better appearance */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input[type="range"] {
+            width: 300px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
 
-    // Your code for handling the fetched data
-    console.log(data);
+    <label for="slider">Select a value:</label>
+    <input type="range" id="slider" name="slider" min="0" max="100" value="50">
 
-    // Other code to be executed after fetch
-    anotherFunction();
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
-});
+    <p>Selected value: <span id="sliderValue">50</span></p>
 
+    <script>
+        // Update the displayed value when the slider changes
+        document.getElementById("slider").addEventListener("input", function() {
+            document.getElementById("sliderValue").innerText = this.value;
+        });
+    </script>
+
+</body>
+</html>

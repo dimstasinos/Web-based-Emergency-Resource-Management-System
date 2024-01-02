@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         if (data.categories.length !== 0 && data.items.length !== 0) {
           categories_select(data);
-          selected_cat = document.getElementById("cat_list").value;
+          var selected_cat = document.getElementById("cat_list").value;
           items_select(data, selected_cat);
           categories_select_product(data);
           category_select_det(data);

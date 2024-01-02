@@ -16,20 +16,24 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
   <title>Rescuer</title>
   <link rel="stylesheet" href="/css/rescuer_map.css">
   <link rel="stylesheet" href="/leaflet/leaflet.css">
-  <script src="/scripts/rescuer_map.js"></script>
 </head>
 
 <body>
+
   <div class="header">
     <h1>Rescuer</h1>
   </div>
+
   <div class="sidebar">
     <a href="#">Map</a>
     <a href="#">DataBase</a>
     <a href="/server/logout.php">Logout</a>
   </div>
+
   <div class="main">
+
     <div id="map"></div>
+
     <div id="tasks_panel">
       <table id="tasks">
         <thead>
@@ -45,9 +49,46 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
         <tbody id=tasks_info></tbody>
       </table>
     </div>
+
+    <div>
+      <label for="categorySelect">Categories of species</label>
+      <select id="categorySelect"></select>
+    </div>
+
+    <div id="tables">
+      <div>
+        <table id="tableOfItems">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Details</th>
+              <th>Quantity</th>
+            </tr>
+          </thead>
+          <tbody id="items"></tbody>
+        </table>
+      </div>
+      <div>
+        <table id="tableSelected">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Quantity</th>
+            </tr>
+          </thead>
+          <tbody id="itemSelected"></tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
   <p id="text"></p>
   <script src="/leaflet/leaflet.js"></script>
+  <script src="/scripts/rescuer_map.js"></script>
+
 </body>
 
 </html>

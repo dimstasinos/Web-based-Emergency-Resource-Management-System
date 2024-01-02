@@ -57,8 +57,6 @@ try {
     $delete_item->execute();
   }
 
-
-
   $db->close();
 
   header('Content-Type: application/json');
