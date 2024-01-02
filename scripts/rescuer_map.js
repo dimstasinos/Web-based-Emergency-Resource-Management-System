@@ -481,6 +481,8 @@ document.addEventListener('DOMContentLoaded', function () {
             feature.geometry.coordinates[1] = position.lng;
           });
 
+
+
           customMarkers.on('dragend', function (event) {
             const marker = event.target;
 
@@ -510,6 +512,46 @@ document.addEventListener('DOMContentLoaded', function () {
 
         }
       });
+
+      var distanceMarker;
+
+      markersLayers["Truck Active"].eachLayer(truck => {
+
+        markersLayers["Base"].eachLayer(Base => {
+
+          distanceMarker = truck.getLatLng().distanceTo(Base.getLatLng());
+
+        });
+      })
+
+
+      if (distanceMarker < 100) {
+        document.getElementById("load").disabled = false;
+        document.getElementById("unload").disabled = false;
+      } else {
+        document.getElementById("load").disabled = true;
+        document.getElementById("unload").disabled = true;
+      }
+
+      markersLayers["Truck Active"].eachLayer(truck => {
+
+        markersLayers["Base"].eachLayer(Base => {
+
+          truck.on("drag", function () {
+            distanceMarker = truck.getLatLng().distanceTo(Base.getLatLng());
+
+            if (distanceMarker < 100) {
+              document.getElementById("load").disabled = false;
+              document.getElementById("unload").disabled = false;
+            } else {
+              document.getElementById("load").disabled = true;
+              document.getElementById("unload").disabled = true;
+            }
+          });
+
+        });
+      })
+
 
 
       map.on('layerremove', function (event) {
@@ -1561,6 +1603,7 @@ function mapPanelRefresh(map, map_control, layerSelected) {
       });
 
 
+
       map.on('layerremove', function (event) {
         var removedLayer = event.layer;
         layerSelected[removedLayer.options.category] = false;
@@ -1782,6 +1825,44 @@ function mapPanelRefresh(map, map_control, layerSelected) {
 
       map_control = L.control.layers(null, markersLayers).addTo(map);
 
+      var distanceMarker;
+
+      markersLayers["Truck Active"].eachLayer(truck => {
+
+        markersLayers["Base"].eachLayer(Base => {
+
+          distanceMarker = truck.getLatLng().distanceTo(Base.getLatLng());
+
+        });
+      })
+
+
+      if (distanceMarker < 100) {
+        document.getElementById("load").disabled = false;
+        document.getElementById("unload").disabled = false;
+      } else {
+        document.getElementById("load").disabled = true;
+        document.getElementById("unload").disabled = true;
+      }
+
+      markersLayers["Truck Active"].eachLayer(truck => {
+
+        markersLayers["Base"].eachLayer(Base => {
+
+          truck.on("drag", function () {
+            distanceMarker = truck.getLatLng().distanceTo(Base.getLatLng());
+
+            if (distanceMarker < 100) {
+              document.getElementById("load").disabled = false;
+              document.getElementById("unload").disabled = false;
+            } else {
+              document.getElementById("load").disabled = true;
+              document.getElementById("unload").disabled = true;
+            }
+          });
+
+        });
+      })
 
       document.getElementById("tasks_info").innerHTML = "";
 
@@ -2193,41 +2274,43 @@ function items_select(data, selected_cat) {
 
   data.items.forEach((item) => {
     if (item.name != "" && item.category === selected_cat) {
-      const row_table = document.createElement("tr");
-      const id_table = document.createElement("td");
-      const name_table = document.createElement("td");
-      const category_table = document.createElement("td");
-      const detail_table = document.createElement("td");
-      const item_quantity = document.createElement("td");
+      if (item.quantity > 0) {
+        const row_table = document.createElement("tr");
+        const id_table = document.createElement("td");
+        const name_table = document.createElement("td");
+        const category_table = document.createElement("td");
+        const detail_table = document.createElement("td");
+        const item_quantity = document.createElement("td");
 
-      id_table.textContent = item.id;
-      name_table.textContent = item.name;
-      item_quantity.textContent = item.quantity;
-      const category = data.categories.find((category) =>
-        category.id === item.category
-      );
-      category_table.textContent = category.category_name;
+        id_table.textContent = item.id;
+        name_table.textContent = item.name;
+        item_quantity.textContent = item.quantity;
+        const category = data.categories.find((category) =>
+          category.id === item.category
+        );
+        category_table.textContent = category.category_name;
 
-      const detail_get = item.details.map((detail) => {
-        if (detail.detail_name && detail.detail_value) {
-          return `${detail.detail_name}: ${detail.detail_value}`;
-        } else if (detail.detail_name && detail.detail_value === "") {
-          return `${detail.detail_name}:`;
-        } else if (detail.detail_name === "" && detail.detail_value) {
-          return `---: ${detail.detail_value}`;
-        } else {
-          return " ";
-        }
-      });
-      detail_table.innerHTML = detail_get.join("<br>");
+        const detail_get = item.details.map((detail) => {
+          if (detail.detail_name && detail.detail_value) {
+            return `${detail.detail_name}: ${detail.detail_value}`;
+          } else if (detail.detail_name && detail.detail_value === "") {
+            return `${detail.detail_name}:`;
+          } else if (detail.detail_name === "" && detail.detail_value) {
+            return `---: ${detail.detail_value}`;
+          } else {
+            return " ";
+          }
+        });
+        detail_table.innerHTML = detail_get.join("<br>");
 
-      row_table.appendChild(id_table);
-      row_table.appendChild(name_table);
-      row_table.appendChild(category_table);
-      row_table.appendChild(detail_table);
-      row_table.appendChild(item_quantity);
+        row_table.appendChild(id_table);
+        row_table.appendChild(name_table);
+        row_table.appendChild(category_table);
+        row_table.appendChild(detail_table);
+        row_table.appendChild(item_quantity);
 
-      table.appendChild(row_table);
+        table.appendChild(row_table);
+      }
     }
   });
 }
@@ -2252,7 +2335,6 @@ document.getElementById("tableOfItems").addEventListener("click", function (even
       item_check.push(cell.innerText);
     }
 
-    console.log(item_check);
     for (var i = 0; i < item_check.length; i++) {
       if (item_check[i] === id) {
         flag = 1;
@@ -2270,17 +2352,86 @@ document.getElementById("tableOfItems").addEventListener("click", function (even
       item_id.textContent = id;
       name_table.textContent = item;
       item_quantity.innerHTML = `<input type="range" id="${id}" 
-    min="0" max="${quantity}" value="0"></input><span id="quantity_${id}">0</span>`;
+      min="0" max="${quantity}" value="0"></input><span id="quantity_${id}">0</span>`;
+      item_delete.innerHTML = `<button id=cancel_${id}>cancel</button>`;
 
       row_table.appendChild(item_id);
       row_table.appendChild(name_table);
       row_table.appendChild(item_quantity);
+      row_table.appendChild(item_delete);
 
       table.appendChild(row_table);
 
       document.getElementById(`${id}`).addEventListener("input", function () {
         document.getElementById(`quantity_${id}`).innerText = this.value;
       });
+
+      document.getElementById(`cancel_${id}`).addEventListener("click", function () {
+        var row = this.closest('tr');
+        row.parentNode.removeChild(row);
+      });
     }
   }
+});
+
+document.getElementById("load").addEventListener("click", function () {
+  var selectTable = document.getElementById('itemSelected');
+
+  if (selectTable.rows.length > 0) {
+    for (var i = 0; i < selectTable.rows.length; i++) {
+      if (document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText > 0) {
+
+
+        const data = {
+          id: selectTable.rows[i].cells[0].innerHTML,
+          quantity: document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText,
+        };
+
+
+        fetch("/server/rescuer/load_truck.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === "error") {
+              console.error("Server Error:", data.Error);
+            } else {
+              fetch("/server/rescuer/database_extract.php", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              })
+                .then((response) => response.json())
+                .then((data) => {
+                  if (data.status === "error") {
+                    console.error("Server Error:", data.Error);
+                  } else {
+                    onload_data = data;
+                    var selected_cat = document.getElementById("categorySelect").value;
+                    items_select(data, selected_cat);
+                    document.getElementById("itemSelected").innerHTML="";
+                  }
+                })
+                .catch((error) => console.error("Error:", error));
+
+            }
+          })
+          .catch((error) => console.error("Error:", error));
+
+      } else {
+        alert(`Select a quantity over 0 for item: ${selectTable.rows[i].cells[1].innerHTML}`)
+      }
+    }
+
+  } else {
+    alert("Select at least one item to load on truck");
+  }
+
+
 });

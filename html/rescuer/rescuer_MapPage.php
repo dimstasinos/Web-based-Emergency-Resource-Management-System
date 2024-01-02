@@ -81,6 +81,8 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
           </thead>
           <tbody id="itemSelected"></tbody>
         </table>
+        <button id="load">Load</button>
+        <button id="unload">Unload</button>
       </div>
     </div>
 

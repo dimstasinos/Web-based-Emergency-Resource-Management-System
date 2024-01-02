@@ -35,18 +35,17 @@ try {
   $item_check->execute();
   $item_check_response = $item_check->get_result();
   if ($item_check_response->num_rows > 0) {
-    while ($item_check_row = $item_check_response->fetch_assoc()) {
-      $new_quantity = (int)$item_check_row["str_quantity"] + (int)$data->quantity;
-      $update_quantity = $db->prepare("UPDATE vehicle_storage
+    $item_check_row = $item_check_response->fetch_assoc();
+    $new_quantity = (int)$item_check_row["str_quantity"] + (int)$data->quantity;
+    $update_quantity = $db->prepare("UPDATE vehicle_storage
       SET str_quantity=? where str_vehicle_id=? and str_item_id=?");
-      $update_quantity->bind_param(
-        "iii",
-        $new_quantity,
-        $_SESSION["truck_id"],
-        $data->item_id,
-      );
-      $update_quantity->execute();
-    }
+    $update_quantity->bind_param(
+      "iii",
+      $new_quantity,
+      $_SESSION["truck_id"],
+      $data->item_id,
+    );
+    $update_quantity->execute();
   } else {
     $update_quantity = $db->prepare("INSERT INTO vehicle_storage VALUES (?,?,?)");
     $update_quantity->bind_param(
