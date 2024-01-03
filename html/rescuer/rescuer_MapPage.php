@@ -57,6 +57,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
 
     <div id="tables">
       <div>
+        Warehouse
         <table id="tableOfItems">
           <thead>
             <tr>
@@ -71,6 +72,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
         </table>
       </div>
       <div>
+        Item Selected
         <table id="tableSelected">
           <thead>
             <tr>
@@ -82,6 +84,19 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
           <tbody id="itemSelected"></tbody>
         </table>
         <button id="load">Load</button>
+      </div>
+      <div>
+        Truck Cargo
+        <table id="Cargo">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Quantity</th>
+            </tr>
+          </thead>
+          <tbody id="itemCargo"></tbody>
+        </table>
         <button id="unload">Unload</button>
       </div>
     </div>

@@ -1,4 +1,6 @@
-var onload_data;
+var map;
+var map_control;
+var layerSelected;
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -11,13 +13,13 @@ document.addEventListener('DOMContentLoaded', function () {
     .catch((error) => console.error("Error:", error));
 
 
-  var map = L.map('map').setView([37.9838, 23.7275], 13);
+  map = L.map('map').setView([37.9838, 23.7275], 13);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
-  var layerSelected = {
+  layerSelected = {
     "Request Pending": true,
     "Request Accepted": true,
     "Offer Accepted": true,
@@ -31,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var markersLayers = {};
   markersLayers["Lines"] = L.layerGroup();
-  var map_control;
+
   var geoJson;
   fetch('/server/rescuer/rescuer_geojson.php')
     .then(response => response.json())
@@ -345,6 +347,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
           info_truck = info_truck + `</div>`;
           customMarkers.bindPopup(info_truck);
+        } else if (category === "Truck Inactive") {
+          var info_truck = `<div style="max-height: 150px; overflow-y: auto;">
+          <strong>Truck</strong><br>
+          <strong>Username:</strong> ${feature.properties.vehicle_username}<br>
+          <strong>Status:</strong> ${feature.properties.category}<br>
+          ----------------------------------`;
+
+
+          if (feature.properties.cargo.length === 0) {
+            var info = `<br>The truck do not have any cargo`
+            info_truck = info_truck + info;
+          } else {
+            info_truck = info_truck + `<br><strong>Cargo</strong><br>`
+
+            feature.properties.cargo.forEach(cargo => {
+              var info = `<strong>Item name:</strong> ${cargo.item_name}<br>
+              <strong>Quantity:</strong> ${cargo.quantity}<br><br>`
+              info_truck = info_truck + info;
+            });
+          }
+          info_truck = info_truck + `</div>`;
+          customMarkers.bindPopup(info_truck);
         }
 
 
@@ -379,7 +403,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 .then((response) => response.json())
                                 .then((data) => {
 
-                                  mapPanelRefresh(map, map_control, layerSelected);
+                                  mapPanelRefresh();
 
                                 })
                                 .catch((error) => console.error("Error:", error));
@@ -424,7 +448,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 .then((response) => response.json())
                                 .then((data) => {
 
-                                  mapPanelRefresh(map, map_control, layerSelected);
+                                  mapPanelRefresh();
 
                                 })
                                 .catch((error) => console.error("Error:", error));
@@ -511,19 +535,60 @@ document.addEventListener('DOMContentLoaded', function () {
           });
 
         }
+
+        if (category === "Truck Inactive") {
+          customMarkers.on('dragend', function (event) {
+            const marker = event.target;
+
+            if (marker.options.category === "Truck Inactive") {
+              const position = marker.getLatLng();
+
+              const data = {
+                id: marker.options.id,
+                lat: position.lat,
+                lng: position.lng,
+              };
+
+              fetch("/server/map_admin/truck_upload.php", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              })
+                .then((response) => response.json())
+                .then(data => {
+                  mapPanelRefresh();
+                })
+                .catch((error) => console.error("Error:", error));
+            }
+          });
+        }
       });
 
       var distanceMarker;
 
-      markersLayers["Truck Active"].eachLayer(truck => {
+      if ("Truck Active" in markersLayers) {
+        markersLayers["Truck Active"].eachLayer(truck => {
 
-        markersLayers["Base"].eachLayer(Base => {
+          markersLayers["Base"].eachLayer(Base => {
 
-          distanceMarker = truck.getLatLng().distanceTo(Base.getLatLng());
+            distanceMarker = truck.getLatLng().distanceTo(Base.getLatLng());
 
-        });
-      })
+          });
+        })
+      }
 
+      if ("Truck Inactive" in markersLayers) {
+        markersLayers["Truck Inactive"].eachLayer(truck => {
+
+          markersLayers["Base"].eachLayer(Base => {
+
+            distanceMarker = truck.getLatLng().distanceTo(Base.getLatLng());
+
+          });
+        })
+      }
 
       if (distanceMarker < 100) {
         document.getElementById("load").disabled = false;
@@ -533,25 +598,47 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById("unload").disabled = true;
       }
 
-      markersLayers["Truck Active"].eachLayer(truck => {
+      if ("Truck Active" in markersLayers) {
+        markersLayers["Truck Active"].eachLayer(truck => {
 
-        markersLayers["Base"].eachLayer(Base => {
+          markersLayers["Base"].eachLayer(Base => {
 
-          truck.on("drag", function () {
-            distanceMarker = truck.getLatLng().distanceTo(Base.getLatLng());
+            truck.on("drag", function () {
+              distanceMarker = truck.getLatLng().distanceTo(Base.getLatLng());
 
-            if (distanceMarker < 100) {
-              document.getElementById("load").disabled = false;
-              document.getElementById("unload").disabled = false;
-            } else {
-              document.getElementById("load").disabled = true;
-              document.getElementById("unload").disabled = true;
-            }
+              if (distanceMarker < 100) {
+                document.getElementById("load").disabled = false;
+                document.getElementById("unload").disabled = false;
+              } else {
+                document.getElementById("load").disabled = true;
+                document.getElementById("unload").disabled = true;
+              }
+            });
+
           });
+        })
+      }
 
-        });
-      })
+      if ("Truck Inactive" in markersLayers) {
+        markersLayers["Truck Inactive"].eachLayer(truck => {
 
+          markersLayers["Base"].eachLayer(Base => {
+
+            truck.on("drag", function () {
+              distanceMarker = truck.getLatLng().distanceTo(Base.getLatLng());
+
+              if (distanceMarker < 100) {
+                document.getElementById("load").disabled = false;
+                document.getElementById("unload").disabled = false;
+              } else {
+                document.getElementById("load").disabled = true;
+                document.getElementById("unload").disabled = true;
+              }
+            });
+
+          });
+        })
+      }
 
 
       map.on('layerremove', function (event) {
@@ -674,6 +761,7 @@ document.addEventListener('DOMContentLoaded', function () {
       markersLayers["Lines"].addTo(map);
       map_control = L.control.layers(null, markersLayers).addTo(map);
 
+      truck_cargo(data);
 
       fetch("/server/rescuer/rescuer_tasks.php")
         .then(response => response.json())
@@ -729,7 +817,7 @@ document.addEventListener('DOMContentLoaded', function () {
               })
                 .then((response) => response.json())
                 .then((data) => {
-                  mapPanelRefresh(map, map_control, layerSelected);
+                  mapPanelRefresh();
                 })
                 .catch((error) => console.error("Error:", error));
             });
@@ -853,7 +941,16 @@ document.addEventListener('DOMContentLoaded', function () {
                               console.error("Server Error:", data.Error);
                             } else {
                               alert("Request Complete");
-                              mapPanelRefresh(map, map_control, layerSelected);
+                              mapPanelRefresh();
+
+                              fetch("/server/rescuer/rescuer_geojson.php")
+                                .then((response) => response.json())
+                                .then((cargo) => {
+
+                                  truck_cargo(cargo);
+
+                                })
+                                .catch((error) => console.error("Error:", error))
                             }
                           })
                           .catch((error) => console.error("Error:", error));
@@ -930,7 +1027,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then((response) => response.json())
                 .then((data) => {
 
-                  mapPanelRefresh(map, map_control, layerSelected);
+                  mapPanelRefresh();
 
                 })
                 .catch((error) => console.error("Error:", error));
@@ -1032,7 +1129,6 @@ document.addEventListener('DOMContentLoaded', function () {
                   item_id: item.item_id,
                 };
 
-                console.log(data);
                 fetch("/server/rescuer/complete_offer.php", {
                   method: "POST",
                   headers: {
@@ -1051,7 +1147,16 @@ document.addEventListener('DOMContentLoaded', function () {
                   .catch((error) => console.error("Error:", error));
               });
               alert("Offer Complete");
-              mapPanelRefresh(map, map_control, layerSelected);
+              mapPanelRefresh();
+
+              fetch("/server/rescuer/rescuer_geojson.php")
+                .then((response) => response.json())
+                .then((cargo) => {
+
+                  truck_cargo(cargo);
+
+                })
+                .catch((error) => console.error("Error:", error))
             });
 
           });
@@ -1068,7 +1173,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error("Server Error:", data.Error);
       } else {
         if (data.categories.length !== 0 && data.items.length !== 0) {
-          onload_data = data;
+
           categories_select(data);
           var selected_cat = document.getElementById("categorySelect").value;
           items_select(data, selected_cat);
@@ -1083,10 +1188,12 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .catch((error) => console.error("Error:", error));
 
+
+
 });
 
 
-function mapPanelRefresh(map, map_control, layerSelected) {
+function mapPanelRefresh() {
 
   var markersLayers = {};
   var geoJson;
@@ -1096,6 +1203,8 @@ function mapPanelRefresh(map, map_control, layerSelected) {
     .then(data => {
       geoJson = data;
       map.removeControl(map_control);
+
+
 
       var layerSelected_tmp = {
         "Request Pending": false,
@@ -1435,6 +1544,28 @@ function mapPanelRefresh(map, map_control, layerSelected) {
 
           info_truck = info_truck + `</div>`;
           customMarkers.bindPopup(info_truck);
+        } else if (category === "Truck Inactive") {
+          var info_truck = `<div style="max-height: 150px; overflow-y: auto;">
+          <strong>Truck</strong><br>
+          <strong>Username:</strong> ${feature.properties.vehicle_username}<br>
+          <strong>Status:</strong> ${feature.properties.category}<br>
+          ----------------------------------`;
+
+
+          if (feature.properties.cargo.length === 0) {
+            var info = `<br>The truck do not have any cargo`
+            info_truck = info_truck + info;
+          } else {
+            info_truck = info_truck + `<br><strong>Cargo</strong><br>`
+
+            feature.properties.cargo.forEach(cargo => {
+              var info = `<strong>Item name:</strong> ${cargo.item_name}<br>
+              <strong>Quantity:</strong> ${cargo.quantity}<br><br>`
+              info_truck = info_truck + info;
+            });
+          }
+          info_truck = info_truck + `</div>`;
+          customMarkers.bindPopup(info_truck);
         }
 
 
@@ -1473,7 +1604,7 @@ function mapPanelRefresh(map, map_control, layerSelected) {
                                 .then((response) => response.json())
                                 .then((data) => {
 
-                                  mapPanelRefresh(map, map_control, layerSelected);
+                                  mapPanelRefresh();
 
                                 })
                                 .catch((error) => console.error("Error:", error));
@@ -1516,7 +1647,7 @@ function mapPanelRefresh(map, map_control, layerSelected) {
                                 .then((response) => response.json())
                                 .then((data) => {
 
-                                  mapPanelRefresh(map, map_control, layerSelected);
+                                  mapPanelRefresh();
 
                                 })
                                 .catch((error) => console.error("Error:", error));
@@ -1593,15 +1724,44 @@ function mapPanelRefresh(map, map_control, layerSelected) {
               })
                 .then((response) => response.json())
                 .then(data => {
-
+                  mapPanelRefresh();
                 })
                 .catch((error) => console.error("Error:", error));
             }
           });
 
         }
-      });
 
+        if (category === "Truck Inactive") {
+          customMarkers.on('dragend', function (event) {
+            const marker = event.target;
+
+            if (marker.options.category === "Truck Inactive") {
+              const position = marker.getLatLng();
+
+              const data = {
+                id: marker.options.id,
+                lat: position.lat,
+                lng: position.lng,
+              };
+
+              fetch("/server/map_admin/truck_upload.php", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              })
+                .then((response) => response.json())
+                .then(data => {
+                  mapPanelRefresh();
+                })
+                .catch((error) => console.error("Error:", error));
+            }
+          });
+        }
+
+      });
 
 
       map.on('layerremove', function (event) {
@@ -1825,17 +1985,30 @@ function mapPanelRefresh(map, map_control, layerSelected) {
 
       map_control = L.control.layers(null, markersLayers).addTo(map);
 
+      truck_cargo(data);
       var distanceMarker;
 
-      markersLayers["Truck Active"].eachLayer(truck => {
+      if ("Truck Active" in markersLayers) {
+        markersLayers["Truck Active"].eachLayer(truck => {
 
-        markersLayers["Base"].eachLayer(Base => {
+          markersLayers["Base"].eachLayer(Base => {
 
-          distanceMarker = truck.getLatLng().distanceTo(Base.getLatLng());
+            distanceMarker = truck.getLatLng().distanceTo(Base.getLatLng());
 
-        });
-      })
+          });
+        })
+      }
 
+      if ("Truck Inactive" in markersLayers) {
+        markersLayers["Truck Inactive"].eachLayer(truck => {
+
+          markersLayers["Base"].eachLayer(Base => {
+
+            distanceMarker = truck.getLatLng().distanceTo(Base.getLatLng());
+
+          });
+        })
+      }
 
       if (distanceMarker < 100) {
         document.getElementById("load").disabled = false;
@@ -1845,24 +2018,47 @@ function mapPanelRefresh(map, map_control, layerSelected) {
         document.getElementById("unload").disabled = true;
       }
 
-      markersLayers["Truck Active"].eachLayer(truck => {
+      if ("Truck Active" in markersLayers) {
+        markersLayers["Truck Active"].eachLayer(truck => {
 
-        markersLayers["Base"].eachLayer(Base => {
+          markersLayers["Base"].eachLayer(Base => {
 
-          truck.on("drag", function () {
-            distanceMarker = truck.getLatLng().distanceTo(Base.getLatLng());
+            truck.on("drag", function () {
+              distanceMarker = truck.getLatLng().distanceTo(Base.getLatLng());
 
-            if (distanceMarker < 100) {
-              document.getElementById("load").disabled = false;
-              document.getElementById("unload").disabled = false;
-            } else {
-              document.getElementById("load").disabled = true;
-              document.getElementById("unload").disabled = true;
-            }
+              if (distanceMarker < 100) {
+                document.getElementById("load").disabled = false;
+                document.getElementById("unload").disabled = false;
+              } else {
+                document.getElementById("load").disabled = true;
+                document.getElementById("unload").disabled = true;
+              }
+            });
+
           });
+        })
+      }
 
-        });
-      })
+      if ("Truck Inactive" in markersLayers) {
+        markersLayers["Truck Inactive"].eachLayer(truck => {
+
+          markersLayers["Base"].eachLayer(Base => {
+
+            truck.on("drag", function () {
+              distanceMarker = truck.getLatLng().distanceTo(Base.getLatLng());
+
+              if (distanceMarker < 100) {
+                document.getElementById("load").disabled = false;
+                document.getElementById("unload").disabled = false;
+              } else {
+                document.getElementById("load").disabled = true;
+                document.getElementById("unload").disabled = true;
+              }
+            });
+
+          });
+        })
+      }
 
       document.getElementById("tasks_info").innerHTML = "";
 
@@ -1920,7 +2116,7 @@ function mapPanelRefresh(map, map_control, layerSelected) {
               })
                 .then((response) => response.json())
                 .then((data) => {
-                  mapPanelRefresh(map, map_control, layerSelected);
+                  mapPanelRefresh();
                 })
                 .catch((error) => console.error("Error:", error));
             });
@@ -2044,7 +2240,16 @@ function mapPanelRefresh(map, map_control, layerSelected) {
                               console.error("Server Error:", data.Error);
                             } else {
                               alert("Request Complete");
-                              mapPanelRefresh(map, map_control, layerSelected);
+                              mapPanelRefresh();
+
+                              fetch("/server/rescuer/rescuer_geojson.php")
+                                .then((response) => response.json())
+                                .then((cargo) => {
+
+                                  truck_cargo(cargo);
+
+                                })
+                                .catch((error) => console.error("Error:", error))
                             }
                           })
                           .catch((error) => console.error("Error:", error));
@@ -2120,7 +2325,7 @@ function mapPanelRefresh(map, map_control, layerSelected) {
                 .then((response) => response.json())
                 .then((data) => {
 
-                  mapPanelRefresh(map, map_control, layerSelected);
+                  mapPanelRefresh();
 
                 })
                 .catch((error) => console.error("Error:", error));
@@ -2223,7 +2428,6 @@ function mapPanelRefresh(map, map_control, layerSelected) {
                   item_id: item.item_id,
                 };
 
-                console.log(data);
                 fetch("/server/rescuer/complete_offer.php", {
                   method: "POST",
                   headers: {
@@ -2242,7 +2446,16 @@ function mapPanelRefresh(map, map_control, layerSelected) {
                   .catch((error) => console.error("Error:", error));
               });
               alert("Offer Complete");
-              mapPanelRefresh(map, map_control, layerSelected);
+              mapPanelRefresh();
+
+              fetch("/server/rescuer/rescuer_geojson.php")
+                .then((response) => response.json())
+                .then((cargo) => {
+
+                  truck_cargo(cargo);
+
+                })
+                .catch((error) => console.error("Error:", error))
             });
           });
         })
@@ -2315,6 +2528,33 @@ function items_select(data, selected_cat) {
   });
 }
 
+function truck_cargo(data) {
+
+  const truck_table = document.getElementById("itemCargo");
+  truck_table.innerHTML = "";
+  data.features.forEach(feature => {
+    if (feature.properties.category === "Truck Active" || feature.properties.category === "Truck Inactive") {
+      feature.properties.cargo.forEach(item => {
+        const row_table = document.createElement("tr");
+        const id_table = document.createElement("td");
+        const name_table = document.createElement("td");
+        const item_quantity = document.createElement("td");
+
+        id_table.textContent = item.item_id;
+        name_table.textContent = item.item_name;
+        item_quantity.textContent = item.quantity;
+
+        row_table.appendChild(id_table);
+        row_table.appendChild(name_table);
+        row_table.appendChild(item_quantity);
+
+        truck_table.appendChild(row_table);
+      });
+    }
+  });
+
+}
+
 document.getElementById("tableOfItems").addEventListener("click", function (event) {
   if (event.target.tagName === "TD") {
     const selected_row = event.target.closest("tr");
@@ -2375,6 +2615,7 @@ document.getElementById("tableOfItems").addEventListener("click", function (even
 });
 
 document.getElementById("load").addEventListener("click", function () {
+
   var selectTable = document.getElementById('itemSelected');
 
   if (selectTable.rows.length > 0) {
@@ -2386,7 +2627,6 @@ document.getElementById("load").addEventListener("click", function () {
           id: selectTable.rows[i].cells[0].innerHTML,
           quantity: document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText,
         };
-
 
         fetch("/server/rescuer/load_truck.php", {
           method: "POST",
@@ -2412,14 +2652,22 @@ document.getElementById("load").addEventListener("click", function () {
                   if (data.status === "error") {
                     console.error("Server Error:", data.Error);
                   } else {
-                    onload_data = data;
+
                     var selected_cat = document.getElementById("categorySelect").value;
                     items_select(data, selected_cat);
-                    document.getElementById("itemSelected").innerHTML="";
+                    document.getElementById("itemSelected").innerHTML = "";
                   }
                 })
                 .catch((error) => console.error("Error:", error));
 
+              fetch("/server/rescuer/rescuer_geojson.php")
+                .then((response) => response.json())
+                .then((cargo) => {
+
+                  truck_cargo(cargo);
+
+                })
+                .catch((error) => console.error("Error:", error))
             }
           })
           .catch((error) => console.error("Error:", error));
@@ -2431,6 +2679,52 @@ document.getElementById("load").addEventListener("click", function () {
 
   } else {
     alert("Select at least one item to load on truck");
+  }
+
+  mapPanelRefresh();
+});
+
+document.getElementById("unload").addEventListener("click", function () {
+
+  var itemTable = document.getElementById('itemCargo');
+
+  if (itemTable.rows.length > 0) {
+
+    fetch("/server/rescuer/unload_truck.php")
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "error") {
+          console.error("Server Error:", data.Error);
+        } else {
+          fetch("/server/rescuer/database_extract.php")
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.status === "error") {
+                console.error("Server Error:", data.Error);
+              } else {
+
+                var selected_cat = document.getElementById("categorySelect").value;
+                items_select(data, selected_cat);
+                document.getElementById("itemCargo").innerHTML = "";
+              }
+            })
+            .catch((error) => console.error("Error:", error));
+
+          fetch("/server/rescuer/rescuer_geojson.php")
+            .then((response) => response.json())
+            .then((cargo) => {
+              truck_cargo(cargo);
+
+            })
+            .catch((error) => console.error("Error:", error))
+        }
+      })
+      .catch((error) => console.error("Error:", error));
+
+    mapPanelRefresh();
+
+  } else {
+    alert("The truck is empty");
   }
 
 

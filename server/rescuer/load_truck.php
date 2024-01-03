@@ -18,8 +18,10 @@ try {
   );
   $load_truck_check->execute();
   $load_truck_check_response = $load_truck_check->get_result();
+
   if ($load_truck_check_response->num_rows > 0) {
     $load_truck_check_row = $load_truck_check_response->fetch_assoc();
+
     $new_quantity = (int)$load_truck_check_row["str_quantity"] + (int)$data->quantity;
     $load_truck = $db->prepare("UPDATE vehicle_storage SET
     str_quantity=? where str_vehicle_id=? and str_item_id=?");
@@ -30,14 +32,16 @@ try {
       $data->id,
     );
     $load_truck->execute();
+
   } else {
-    $load_truck = $db->prepare("UPDATE vehicle_storage SET
-    str_quantity=? where str_vehicle_id=? and str_item_id=?");
+
+    $load_truck = $db->prepare("INSERT INTO vehicle_storage VALUES
+    (?,?,?)");
     $load_truck->bind_param(
       "iii",
-      $data->quantity,
       $_SESSION["truck_id"],
       $data->id,
+      $data->quantity,
     );
     $load_truck->execute();
   }
