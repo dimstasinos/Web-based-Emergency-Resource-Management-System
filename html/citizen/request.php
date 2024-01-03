@@ -120,6 +120,9 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
             <th>Item</th>
             <th>Date</th>
             <th>Persons</th>
+            <th>Submission Date</th>
+            <th>Pickup Date</th>
+            <th>Complete Date</th>
           </tr>
         </thead>
         <tbody id="requests"></tbody>

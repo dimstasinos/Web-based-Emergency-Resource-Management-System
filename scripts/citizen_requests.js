@@ -27,6 +27,28 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .catch(error => console.error('Error:', error));
 
+    fetch('/server/citizen/requests.php')
+    .then(jsonResponse => {
+
+      const isEmpty = jsonResponse.headers.get('Content-Length');
+      if (isEmpty === '0') {
+        return null;
+      }
+
+      return jsonResponse.json();
+    })
+    .then(data => {
+      if (data !== null) {
+       
+      }
+      else {
+        const table = document.getElementById("table_request");
+        table.innerHTML = '';
+        table.textContent="There are now requests";
+        
+      }
+    })
+    .catch(error => console.error('Error:', error));
 
     
 
@@ -94,6 +116,10 @@ function items_select(data, selected_cat) {
 
     }
   });
+}
+
+function request_table(data){
+  
 }
 
 document.getElementById("categories").addEventListener("change", function () {
@@ -309,8 +335,7 @@ document.getElementById("submitRequest").addEventListener("click", function () {
                   if (data.status === "error") {
                     console.error("Server Error:", data.Error);
                   } else {
-
-                    var selected_cat = document.getElementById("categorySelect").value;
+                    var selected_cat = document.getElementById("categories").value;
                     items_select(data, selected_cat);
                     document.getElementById("itemSelected").innerHTML = "";
                   }
