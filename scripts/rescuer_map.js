@@ -2729,3 +2729,17 @@ document.getElementById("unload").addEventListener("click", function () {
 
 
 });
+
+document.getElementById("categorySelect").addEventListener("change", function () {
+  fetch("/server/rescuer/database_extract.php")
+    .then((jsonResponse) => jsonResponse.json())
+    .then((data) => {
+      if (data.status === "error") {
+        console.error("Server Error:", data.Error);
+      } else {
+        const selected_cat = document.getElementById("categorySelect").value;
+        items_select(data, selected_cat);
+      }
+    })
+    .catch((error) => console.error("Error:", error));
+});

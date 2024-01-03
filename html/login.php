@@ -5,11 +5,15 @@ if (isset($_SESSION['username'])) {
   if ($_SESSION['type'] == "rescuer") {
     header("Location: /html/rescuer/rescuer_MapPage");
     exit();
+  } else if ($_SESSION['type'] == "citizen") {
+    header("Location: /html/citizen/request");
+    exit();
   }
 
   exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 
