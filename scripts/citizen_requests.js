@@ -1,4 +1,25 @@
-var onload_data;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*var onload_data;
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -75,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 document.getElementById('upload-button').addEventListener('click', function () {
-  var form = document.getElementById("request-announcement-form");
+  
 
   weneed = document.getElementById('weneed').value;
   if (document.getElementById('persons').value > 0) {
@@ -274,3 +295,4 @@ function searchfunction() {
 }
 
 
+*/
