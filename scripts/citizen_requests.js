@@ -28,6 +28,8 @@ document.addEventListener('DOMContentLoaded', function () {
     .catch(error => console.error('Error:', error));
 
 
+    
+
 });
 
 
@@ -278,9 +280,47 @@ document.getElementById("submitRequest").addEventListener("click", function () {
     for (var i = 0; i < selectTable.rows.length; i++) {
       if (document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText > 0) {
 
+        const data = {
+          id: selectTable.rows[i].cells[0].innerHTML,
+          quantity: document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText,
+        };
 
-        
-      }else{
+        fetch("/server/citizen/request_upload.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === "error") {
+              console.error("Server Error:", data.Error);
+            } else {
+              fetch("/server/citizen/database_extract.php", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              })
+                .then((response) => response.json())
+                .then((data) => {
+                  if (data.status === "error") {
+                    console.error("Server Error:", data.Error);
+                  } else {
+
+                    var selected_cat = document.getElementById("categorySelect").value;
+                    items_select(data, selected_cat);
+                    document.getElementById("itemSelected").innerHTML = "";
+                  }
+                })
+                .catch((error) => console.error("Error:", error));
+            }
+          })
+          .catch((error) => console.error("Error:", error));
+
+      } else {
         alert(`Select a quantity over 0 for item: ${selectTable.rows[i].cells[1].innerHTML}`)
 
       }

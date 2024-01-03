@@ -65,7 +65,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
 
 <body>
   <h1>Requests</h1>
-  
+
   <div class="sidebar">
     <a href="#">Map</a>
     <a href="#">DataBase</a>
@@ -77,14 +77,13 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
     <label for="categories">Κατηγορίες ειδών</label>
     <select id="categories"></select>
   </div>
-
+  <div id="autocomlete">
+    <input type="text" id="search" placeholder="Items search..." autocomplete="off">
+    <ul id="results"></ul>
+  </div>
   <div id="tables">
     <div>
-      <div id="autocomlete">
-        <input type="text" id="search" placeholder="Items search..." autocomplete="off">
-        <ul id="results"></ul>
-      </div>
-
+      Warehouse
       <table id="table_admin_request">
         <thead>
           <tr>
@@ -112,24 +111,21 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
       </table>
       <button id="submitRequest">Submit</button>
     </div>
+    <div>
+      Requests
+      <table id="table_request">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Item</th>
+            <th>Date</th>
+            <th>Persons</th>
+          </tr>
+        </thead>
+        <tbody id="requests"></tbody>
+      </table>
+    </div>
   </div>
-
-
-  <div>
-    <table id="table">
-      <thead>
-        <tr>
-          <th>Number</th>
-          <th>We Need</th>
-          <th>Date</th>
-          <th>Persons</th>
-        </tr>
-      </thead>
-      <tbody id="table_request"></tbody>
-    </table>
-  </div>
-
-
 
   <script src="/scripts/citizen_requests.js"></script>
 </body>

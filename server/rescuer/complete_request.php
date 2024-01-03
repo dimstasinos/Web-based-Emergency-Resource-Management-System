@@ -9,7 +9,7 @@ try {
   $db = db_connect();
 
   $request_complete = $db->prepare("INSERT INTO citizen_requests_complete
-    SELECT * FROM citizen_requests where request_id=?");
+    SELECT *,now() FROM citizen_requests where request_id=?");
   $request_complete->bind_param(
     "i",
     $data->id,

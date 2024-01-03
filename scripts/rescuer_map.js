@@ -558,7 +558,7 @@ document.addEventListener('DOMContentLoaded', function () {
               })
                 .then((response) => response.json())
                 .then(data => {
-                  mapPanelRefresh();
+                  
                 })
                 .catch((error) => console.error("Error:", error));
             }
@@ -1724,7 +1724,7 @@ function mapPanelRefresh() {
               })
                 .then((response) => response.json())
                 .then(data => {
-                  mapPanelRefresh();
+                  
                 })
                 .catch((error) => console.error("Error:", error));
             }
@@ -1754,7 +1754,7 @@ function mapPanelRefresh() {
               })
                 .then((response) => response.json())
                 .then(data => {
-                  mapPanelRefresh();
+                  
                 })
                 .catch((error) => console.error("Error:", error));
             }
