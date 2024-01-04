@@ -1,6 +1,6 @@
 <?php
 
-include("../Mysql_connection.php");
+include("../../Mysql_connection.php");
 
 try {
   $db = db_connect();
