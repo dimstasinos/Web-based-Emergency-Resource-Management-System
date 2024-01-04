@@ -67,8 +67,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
   <h1>Requests</h1>
 
   <div class="sidebar">
-    <a href="#">Map</a>
-    <a href="#">DataBase</a>
+    <a href="/html/citizen/citizen_offers.php">Offers</a>
     <a href="/server/logout.php">Logout</a>
   </div>
 
@@ -116,9 +115,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
       <table id="table_request">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Item</th>
-            <th>Date</th>
             <th>Persons</th>
             <th>Submission Date</th>
             <th>Pickup Date</th>

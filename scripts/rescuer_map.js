@@ -558,7 +558,7 @@ document.addEventListener('DOMContentLoaded', function () {
               })
                 .then((response) => response.json())
                 .then(data => {
-                  
+
                 })
                 .catch((error) => console.error("Error:", error));
             }
@@ -1724,7 +1724,7 @@ function mapPanelRefresh() {
               })
                 .then((response) => response.json())
                 .then(data => {
-                  
+
                 })
                 .catch((error) => console.error("Error:", error));
             }
@@ -1754,7 +1754,7 @@ function mapPanelRefresh() {
               })
                 .then((response) => response.json())
                 .then(data => {
-                  
+
                 })
                 .catch((error) => console.error("Error:", error));
             }
@@ -2227,6 +2227,8 @@ function mapPanelRefresh() {
                           item_id: request.item_id,
                         };
 
+                        console.log(data);
+
                         fetch("/server/rescuer/complete_request.php", {
                           method: "POST",
                           headers: {
@@ -2617,8 +2619,24 @@ document.getElementById("tableOfItems").addEventListener("click", function (even
 document.getElementById("load").addEventListener("click", function () {
 
   var selectTable = document.getElementById('itemSelected');
+  var flag = 0;
+
 
   if (selectTable.rows.length > 0) {
+    for (var i = 0; i < selectTable.rows.length; i++) {
+      if (parseInt(document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText) === 0) {
+        flag = 1;
+
+        alert(`Select a quantity over 0 for item: ${selectTable.rows[i].cells[1].innerHTML}`)
+      }
+    }
+  } else {
+    flag = 1;
+    alert("Select at least one item to load on truck");
+  }
+
+
+  if (flag === 0) {
     for (var i = 0; i < selectTable.rows.length; i++) {
       if (document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText > 0) {
 
@@ -2672,16 +2690,10 @@ document.getElementById("load").addEventListener("click", function () {
           })
           .catch((error) => console.error("Error:", error));
 
-      } else {
-        alert(`Select a quantity over 0 for item: ${selectTable.rows[i].cells[1].innerHTML}`)
       }
     }
-
-  } else {
-    alert("Select at least one item to load on truck");
+    mapPanelRefresh();
   }
-
-  mapPanelRefresh();
 });
 
 document.getElementById("unload").addEventListener("click", function () {

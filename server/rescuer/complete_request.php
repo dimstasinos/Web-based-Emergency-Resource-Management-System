@@ -51,7 +51,8 @@ try {
     $delete_item = $db->prepare("DELETE FROM vehicle_storage where
     str_vehicle_id=? and str_item_id=?");
     $delete_item->bind_param(
-      "i",
+      "ii",
+      $_SESSION["truck_id"],
       $data->item_id,
     );
     $delete_item->execute();

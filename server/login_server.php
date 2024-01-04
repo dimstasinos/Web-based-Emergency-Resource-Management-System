@@ -57,7 +57,7 @@ try {
       } else if ($type_row["user_type"] == "citizen") {
 
         $_SESSION["type"] = $type_row["user_type"];
-        $response = ["status" => "success", "Location" => "/html/citizen/request"];
+        $response = ["status" => "success", "Location" => "/html/citizen/citizen_requests"];
         header("Content-Type: application/json");
         echo json_encode($response);
       }
