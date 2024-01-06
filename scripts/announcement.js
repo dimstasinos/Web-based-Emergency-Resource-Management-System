@@ -74,9 +74,36 @@ function announcementTable(data) {
 
     announcement_table.appendChild(row_table);
 
-    items_id.forEach(id =>{
-      console.log(id);
-      document.getElementById(`cancel_${id}`);
+    items_id.forEach(id => {
+      document.getElementById(`cancel_${id}${announcement.announcement_id}`).addEventListener("click", function () {
+
+        const data = {
+          id: announcement.announcement_id,
+          item_id: id
+        };
+
+
+        fetch("/server/admin/announcement/announcement_delete.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            fetch("/server/admin/announcement/announcement.php")
+              .then(jsonResponse => jsonResponse.json())
+              .then(data => {
+                announcementTable(data);
+              })
+              .catch((error) => console.error("Error:", error));
+
+          })
+          .catch((error) => console.error("Error:", error));
+
+      });
+
     });
 
   });

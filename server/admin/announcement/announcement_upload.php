@@ -4,9 +4,9 @@ include("../../Mysql_connection.php");
 $receive = file_get_contents('php://input');
 $data = json_decode($receive);
 
-$db = db_connect();
 try {
 
+  $db = db_connect();
   $announcement_items = $db->prepare("INSERT INTO announcement_items 
   values (?,?,?)");
   $announcement_items->bind_param(
