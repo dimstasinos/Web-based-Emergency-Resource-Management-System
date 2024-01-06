@@ -104,6 +104,7 @@ function items_select(data, selected_cat) {
           return " ";
         }
       });
+
       detail_table.innerHTML = detail_get.join("<br>");
 
       row_table.appendChild(id_table);
@@ -346,7 +347,7 @@ document.getElementById("search").addEventListener("input", function () {
               item_id.textContent = item.id;
               name_table.textContent = item.name;
               item_quantity.innerHTML = `<input type="range" id="${item.id}" 
-              min="0" max="20" value="0"></input><span id="quantity_${item.id}">0</span>`;
+              min="0" max="30" value="0"></input><span id="quantity_${item.id}">0</span>`;
               item_delete.innerHTML = `<button id=cancel_${item.id}>cancel</button>`;
 
               row_table.appendChild(item_id);
@@ -388,7 +389,7 @@ document.getElementById("search").addEventListener("input", function () {
 
 });
 
-document.getElementById("submitRequest").addEventListener("click", function () {
+document.getElementById("submitAnnouncement").addEventListener("click", function () {
 
   var selectTable = document.getElementById('itemSelected');
   var flag = 0;

@@ -6,22 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Announcements</title>
   <style>
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-
-    th,
-    td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
-
-    th {
-      background-color: #f2f2f2;
-    }
-
     #tables {
       display: flex;
       border-collapse: collapse;
@@ -101,7 +85,7 @@
   <div id="tables">
     <div>
       Warehouse
-      <table id="table_admin_request">
+      <table id="table_warehouse">
         <thead>
           <tr>
             <th>ID</th>
@@ -121,12 +105,12 @@
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Persons</th>
+            <th>Quantity</th>
           </tr>
         </thead>
         <tbody id="itemSelected"></tbody>
       </table>
-      <button id="submitRequest">Submit</button>
+      <button id="submitAnnouncement">Submit</button>
     </div>
   </div>
 
