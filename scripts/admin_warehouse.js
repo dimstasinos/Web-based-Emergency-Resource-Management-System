@@ -2,7 +2,7 @@ let onload_data;
 let item_selected = 0;
 
 document.addEventListener("DOMContentLoaded", function () {
-  fetch("/server/warehouse_admin/database_extract.php")
+  fetch("/server/admin/warehouse_admin/database_extract.php")
     .then((jsonResponse) => jsonResponse.json())
     .then((data) => {
       if (data.status === "error") {
