@@ -501,7 +501,7 @@ document.getElementById("add_new_cat").addEventListener("click", function () {
 });
 
 document.getElementById("cat_list").addEventListener("change", function () {
-  fetch("/server/warehouse_admin/database_extract.php")
+  fetch("/server/admin/warehouse_admin/database_extract.php")
     .then((jsonResponse) => jsonResponse.json())
     .then((data) => {
       if (data.status === "error") {
@@ -521,13 +521,13 @@ document.getElementById("cat_list").addEventListener("change", function () {
 
 document.getElementById("online_data").addEventListener("click", function () {
   document.getElementById("online_data").disabled = true;
-  fetch("/server/warehouse_admin/online_database.php")
+  fetch("/server/admin/warehouse_admin/online_database.php")
     .then((response) => response.json())
     .then((data) => {
       if (data.status === "error") {
         console.error("Server Error:", data.Error);
       } else {
-        fetch("/server/warehouse_admin/database_extract.php")
+        fetch("/server/admin/warehouse_admin/database_extract.php")
           .then((jsonResponse) => jsonResponse.json())
           .then((data) => {
             if (data.status === "error") {
