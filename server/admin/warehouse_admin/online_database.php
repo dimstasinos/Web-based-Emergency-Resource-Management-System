@@ -1,6 +1,6 @@
 <?php
 
-include("../Mysql_connection.php");
+include("../../Mysql_connection.php");
 try {
   $json_data = file_get_contents("http://usidas.ceid.upatras.gr/web/2023/export.php");
   $json_data = json_decode($json_data);
