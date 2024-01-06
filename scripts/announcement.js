@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
   fetch("/server/admin/announcement/announcement.php")
     .then(jsonResponse => jsonResponse.json())
     .then(data => {
-      requestsTable(data);
+      announcementTable(data);
     })
     .catch((error) => console.error("Error:", error));
 
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-function requestsTable(data) {
+function announcementTable(data) {
 
   const announcement_table = document.getElementById("announcements");
   announcement_table.innerHTML = "";
@@ -47,25 +47,37 @@ function requestsTable(data) {
     const item_name = document.createElement("td");
     const item_quantity = document.createElement("td");
     const announcement_id = document.createElement("td");
+    const action = document.createElement("td");
 
     announcement_id.textContent = announcement.announcement_id;
 
     var items_name_array = [];
     var items_quantity_array = [];
-
+    var items_action_array = [];
+    var items_id = [];
     announcement.items.forEach(item => {
+      items_id.push(item.item_id);
       items_name_array.push(item.item_name);
       items_quantity_array.push(item.quantity);
+      items_action_array.push(`<button id="cancel_${item.item_id}${announcement.announcement_id}">cancel</button>`);
     });
 
     item_name.innerHTML = items_name_array.join("<br>");
     item_quantity.innerHTML = items_quantity_array.join("<br>");
+    action.innerHTML = items_action_array.join("<br>");
+
 
     row_table.appendChild(announcement_id);
     row_table.appendChild(item_name);
     row_table.appendChild(item_quantity);
+    row_table.appendChild(action);
 
     announcement_table.appendChild(row_table);
+
+    items_id.forEach(id =>{
+      console.log(id);
+      document.getElementById(`cancel_${id}`);
+    });
 
   });
 
@@ -311,7 +323,7 @@ document.getElementById("itemsTable").addEventListener("click", function (event)
 });
 
 
-document.getElementById("submitRequest").addEventListener("click", function () {
+document.getElementById("submitAnnouncement").addEventListener("click", function () {
 
   var selectTable = document.getElementById('itemSelected');
   var flag = 0;
@@ -320,7 +332,7 @@ document.getElementById("submitRequest").addEventListener("click", function () {
     for (var i = 0; i < selectTable.rows.length; i++) {
       if (parseInt(document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText) === 0) {
         flag = 1;
-        
+
         alert(`Select a quantity over 0 for item: ${selectTable.rows[i].cells[1].innerHTML}`);
       }
     }
@@ -330,73 +342,81 @@ document.getElementById("submitRequest").addEventListener("click", function () {
   }
 
   if (flag === 0) {
-    console.log("test");
-    for (var i = 0; i < selectTable.rows.length; i++) {
-      if (document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText > 0) {
 
-        const data = {
-          id: selectTable.rows[i].cells[0].innerHTML,
-          quantity: document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText,
-        };
+    fetch("/server/admin/announcement/announcement_insert.php")
+      .then(jsonResponse => jsonResponse.json())
+      .then(announcement_id => {
 
-        fetch("/server/citizen/request_upload.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.status === "error") {
-              console.error("Server Error:", data.Error);
-            } else {
-              fetch("/server/citizen/database_extract.php", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
+        for (var i = 0; i < selectTable.rows.length; i++) {
+          if (document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText > 0) {
+
+            const data = {
+              id: announcement_id.id,
+              item_id: selectTable.rows[i].cells[0].innerHTML,
+              quantity: document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText,
+            };
+
+            fetch("/server/admin/announcement/announcement_upload.php", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.status === "error") {
+                  console.error("Server Error:", data.Error);
+                } else {
+                  fetch("/server/admin/warehouse_admin/database_extract.php", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                  })
+                    .then((response) => response.json())
+                    .then((data) => {
+                      if (data.status === "error") {
+                        console.error("Server Error:", data.Error);
+                      } else {
+                        var selected_cat = document.getElementById("categories").value;
+                        items_select(data, selected_cat);
+                        document.getElementById("itemSelected").innerHTML = "";
+                      }
+                    })
+                    .catch((error) => console.error("Error:", error));
+
+                  fetch('/server/admin/announcement/announcement.php')
+                    .then(jsonResponse => {
+
+                      const isEmpty = jsonResponse.headers.get('Content-Length');
+                      if (isEmpty === '0') {
+                        return null;
+                      }
+
+                      return jsonResponse.json();
+                    })
+                    .then(data => {
+                      if (data !== null) {
+                        announcementTable(data);
+                      }
+                      else {
+                        const table = document.getElementById("announcements");
+                        table.innerHTML = '';
+                        table.textContent = "There are now requests";
+
+                      }
+                    })
+                    .catch(error => console.error('Error:', error));
+                }
               })
-                .then((response) => response.json())
-                .then((data) => {
-                  if (data.status === "error") {
-                    console.error("Server Error:", data.Error);
-                  } else {
-                    var selected_cat = document.getElementById("categories").value;
-                    items_select(data, selected_cat);
-                    document.getElementById("itemSelected").innerHTML = "";
-                  }
-                })
-                .catch((error) => console.error("Error:", error));
+              .catch((error) => console.error("Error:", error));
+          }
+        }
+      })
+      .catch((error) => console.error("Error:", error));
 
-              fetch('/server/citizen/requests.php')
-                .then(jsonResponse => {
-
-                  const isEmpty = jsonResponse.headers.get('Content-Length');
-                  if (isEmpty === '0') {
-                    return null;
-                  }
-
-                  return jsonResponse.json();
-                })
-                .then(data => {
-                  if (data !== null) {
-                    requestTable(data);
-                  }
-                  else {
-                    const table = document.getElementById("table_request");
-                    table.innerHTML = '';
-                    table.textContent = "There are now requests";
-
-                  }
-                })
-                .catch(error => console.error('Error:', error));
-            }
-          })
-          .catch((error) => console.error("Error:", error));
-      }
-    }
   }
 
 });
