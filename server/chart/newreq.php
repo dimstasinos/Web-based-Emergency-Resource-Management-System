@@ -1,45 +1,93 @@
 <?php
 
 include("../Mysql_connection.php");
+$receive = file_get_contents('php://input');
+$data = json_decode($receive);
 
-$db = db_connect();
+try {
+  $db = db_connect();
 
-try{
-$mysql = "SELECT COUNT(*) FROM request WHERE req_veh_id = NULL ";
-$response = $db->query($mysql);
-
-$request = array();
-
-if ($response->num_rows > 0) {
-
-    while ($row = $response->fetch_assoc()) {
-      $request_array = array(
-        "id" => $row["id"],
-        "weneed" => $row["weneed"],
-        "date" => $row["date"],
-        "persons" => $row["persons"]
-      );
-  
-      $request[] = $request_array;
-    }
-  }
-  
-  $data = array(
-    "request" => $request,
+  $new_request_count = $db->prepare("SELECT COUNT(*) AS plithos FROM citizen_requests WHERE req_veh_id IS NULL AND submission_date BETWEEN ? AND ?");
+  $new_request_count -> bind_param(
+  "ss",
+  $data->startdate,
+  $data->enddate,
   );
+  $new_request_count->execute();
+  $new_request_response = $new_request_count->get_result();
+
+  $new_request;
   
+  if ($new_request_response->num_rows > 0) {
+      $new_request_row = $new_request_response->fetch_assoc();
+      $request_array["plithos"] = $new_request_row["plithos"];
+      $new_request = $request_array;
+    }
+
+
+  $selected_request_count = $db->prepare("SELECT COUNT(*) AS plithos FROM citizen_requests WHERE req_veh_id IS NOT NULL AND pickup_date BETWEEN ? AND ?");
+  $selected_request_count -> bind_param(
+    "ss",
+    $data->startdate,
+    $data->enddate,
+
+  );
+  $selected_request_count->execute();
+  $selected_request_response = $selected_request_count->get_result();
+
+  $selected_request;
+
+  if ($selected_request_response->num_rows > 0) {
+
+      $selected_request_row = $selected_request_response->fetch_assoc();
+      $request_array["plithos"] = $selected_request_row["plithos"];
+      $selected_request = $request_array;
+    }
   
+
+  $complete_request_count = $db->prepare("SELECT COUNT(*) AS plithos FROM citizen_requests_complete WHERE complete_date BETWEEN ? AND ?");
+  $complete_request_count -> bind_param(
+    "ss",
+    $data->startdate,
+    $data->enddate,
+
+  );
+  $complete_request_count->execute();
+  $complete_request_response = $complete_request_count->get_result();
+
+  $complete_request;
+
+  if ($complete_request_response->num_rows > 0) {
+
+      $complete_request_row = $complete_request_response->fetch_assoc();
+      $request_array["plithos"] = $complete_request_row["plithos"];
+      $complete_request = $request_array;
+    
+  }
+
+
+
+
+
+
+
+  $data_chart = array(
+    "new_request" => $new_request,
+    "selected_request" => $selected_request,
+    "complete_request" => $complete_request,
+  );
+
+
   $db->close();
-  
-  $json_data = json_encode($data);
-  
+
+  $json_data = json_encode($data_chart);
+
   header('Content-Type: application/json');
-  
+
   echo $json_data;
-}
-catch (Exception $error) {
+} catch (Exception $error) {
   header('Content-Type: application/json');
   echo json_encode(['status' => 'error', "Error" => $error->getMessage()]);
 }
-  
-  ?>
+
+?>

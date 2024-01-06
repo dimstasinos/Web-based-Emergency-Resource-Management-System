@@ -501,7 +501,7 @@ document.getElementById("add_new_cat").addEventListener("click", function () {
 });
 
 document.getElementById("cat_list").addEventListener("change", function () {
-  fetch("/server/warehouse_admin/database_extract.php")
+  fetch("/server/admin/warehouse_admin/database_extract.php")
     .then((jsonResponse) => jsonResponse.json())
     .then((data) => {
       if (data.status === "error") {

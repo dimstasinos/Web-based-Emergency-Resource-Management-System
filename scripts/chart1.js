@@ -1,41 +1,36 @@
-const chartData = {
-    labels: ["New Requests", "New Offers", "Processed Requests", "Processed Offers"],
-    data: [1,2,3,4]
+document.getElementById("submitdate").addEventListener("click", function () {
 
-};
+    const start_date = document.getElementById('startdate').value + " 00:00:00";
+    const end_date = document.getElementById('enddate').value + " 23:59:59";
 
 
-const Servchart = document.querySelector(".servchart");
-const ul = document.querySelector (".service-stats .details ul");
-new Chart(Servchart, {
-    type: "doughnut",
-    data:{
-        labels: chartData.labels,
-        datasets: [
-        {
-            label: "Number:",
-            data: chartData.data,
+    if (start_date > end_date) {
+        alert('Start date must be earlier than the end date');
+    } else {
+        const data = {
+            startdate: start_date,
+            enddate: end_date
+        }
 
-        },
-      ],
-    },
-    options: {
-        borderWidth: 10,
-        borderRadius: 2,
-        hoverBorderWidth: 0,
-        plugins: {
-            legend: {
-                display:false,
+
+        fetch("/server/chart/newreq.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
             },
-        },
-    },
-});
+            body: JSON.stringify(data),
 
-//////NEW REQUESTS////////
-document.addEventListener("DOMContentLoaded", function () {
-    fetch("/server/chart/newreq.php")
-      .then((jsonResponse) => jsonResponse.json())
-      .then((data) => {
-      })
-      .catch((error) => console.error("Error:", error));
-  });
+        })
+            .then((response) => response.json())
+            .then((data) => {
+            console.log(data);
+
+            })
+            .catch(error => console.error("Error:", error));
+
+        
+    }
+
+
+
+});
