@@ -5,7 +5,7 @@ include("../Mysql_connection.php");
 $db = db_connect();
 
 try{
-$mysql = "SELECT COUNT(*) FROM request";
+$mysql = "SELECT COUNT(*) FROM request WHERE req_veh_id = NULL ";
 $response = $db->query($mysql);
 
 $request = array();
