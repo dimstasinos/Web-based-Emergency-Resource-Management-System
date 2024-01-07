@@ -32,12 +32,12 @@ document.getElementById("submitdate").addEventListener("click", function () {
     }
 
 
-    const ctx = document.getElementById('servercharthart');
+    const ctx = document.getElementById('serverchart');
 
     const config = {
         type: 'doughnut',
         data: {
-            labels: data.map(row => row.),
+            labels: data.map(row),
             datasets: [
               {
                 label: 'Dataset 1',
