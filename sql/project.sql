@@ -137,7 +137,8 @@ CREATE TABLE citizen_offers (
 CREATE TABLE citizen_offers_complete (
   offer_id INT,
   submission_date DATETIME not null,
-  pickup_date DATE,
+  pickup_date datetime,
+  complete_date datetime,
   offer_veh_id int,
   offer_citizen_id INT not null,
   PRIMARY KEY (offer_id),
