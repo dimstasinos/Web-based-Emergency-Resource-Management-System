@@ -1,68 +1,56 @@
 document.getElementById("submitdate").addEventListener("click", function () {
 
-    const start_date = document.getElementById('startdate').value + " 00:00:00";
-    const end_date = document.getElementById('enddate').value + " 23:59:59";
+  const start_date = document.getElementById('startdate').value + " 00:00:00";
+  const end_date = document.getElementById('enddate').value + " 23:59:59";
 
 
-    if (start_date > end_date) {
-        alert('Start date must be earlier than the end date');
-    } else {
-        const data = {
-            startdate: start_date,
-            enddate: end_date
-        }
-
-
-        fetch("/server/chart/newreq.php", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-
-        })
-            .then((response) => response.json())
-            .then((data) => {
-            console.log(data);
-
-            })
-            .catch(error => console.error("Error:", error));
-
-        
+  if (start_date > end_date) {
+    alert('Start date must be earlier than the end date');
+  } else {
+    const data = {
+      startdate: start_date,
+      enddate: end_date
     }
 
 
-    const ctx = document.getElementById('serverchart');
+    fetch("/server/chart/newreq.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
 
-    const config = {
-        type: 'doughnut',
-        data: {
-            labels: data.map(row),
-            datasets: [
-              {
-                label: 'Dataset 1',
-                data: Utils.numbers(NUMBER_CFG),
-                backgroundColor: Object.values(Utils.CHART_COLORS),
-              }
-            ]
+    })
+      .then((response) => response.json())
+      .then(data => {
+        console.log(data);
+        // Extract values from the JSON
+        const values = Object.values(data).map(item => item.plithos);
+       
+        // Get the canvas element and create the doughnut chart
+        const ctx = document.getElementById('myDoughnutChart');
 
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: {
-              position: 'top',
+        if (ctx) {
+          // Create the doughnut chart
+          const myDoughnutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: Object.keys(data),
+              datasets: [{
+                data: values,
+                backgroundColor: ['#FF6384', '#FFCE56', '#36A2EB', '#FF8F00', '#4CAF50', '#6200EA'],
+              }],
             },
-            title: {
-              display: true,
-              text: 'Chart.js Doughnut Chart'
-            }
-          }
-        },
-      };
+          });
+        } else {
+          console.error("Faile to acquire context for the chart canvas element.");
+        }
 
-     
+      })
+      .catch(error => console.error("Error:", error));
 
+
+  }
 
 
 });
