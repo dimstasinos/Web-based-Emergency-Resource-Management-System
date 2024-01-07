@@ -1,12 +1,9 @@
 <?php
 include("../../Mysql_connection.php");
 
-$receive = file_get_contents('php://input');
-$data = json_decode($receive);
-
-$db = db_connect();
 try {
-
+  
+  $db = db_connect();
   $announcement = "INSERT INTO announcements 
   values (NULL)";
   $db->query($announcement);
