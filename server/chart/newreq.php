@@ -66,7 +66,43 @@ try {
   }
 
 
+  $new_offer_count = $db->prepare("SELECT COUNT(*) AS plithos FROM citizen_offers WHERE offer_veh_id IS NULL AND submission_date BETWEEN ? AND ?");
+  $new_offer_count -> bind_param(
+  "ss",
+  $data->startdate,
+  $data->enddate,
+  );
+  $new_offer_count->execute();
+  $new_offer_response = $new_offer_count->get_result();
 
+  $new_offer;
+  
+  if ($new_offer_response->num_rows > 0) {
+      $new_offer_row = $new_offer_response->fetch_assoc();
+      $request_array["plithos"] = $new_offer_row["plithos"];
+      $new_offer = $request_array;
+    }
+
+
+    $complete_offer_count = $db->prepare("SELECT COUNT(*) AS plithos FROM citizen_offers_complete WHERE pickup_date BETWEEN ? AND ?");
+    $complete_offer_count -> bind_param(
+      "ss",
+      $data->startdate,
+      $data->enddate,
+  
+    );
+    $complete_offer_count->execute();
+    $complete_offer_response = $complete_offer_count->get_result();
+  
+    $complete_offer;
+  
+    if ($complete_offer_response->num_rows > 0) {
+  
+        $complete_offer_row = $complete_offer_response->fetch_assoc();
+        $request_array["plithos"] = $complete_offer_row["plithos"];
+        $complete_offer = $request_array;
+      
+    }
 
 
 
@@ -75,6 +111,8 @@ try {
     "new_request" => $new_request,
     "selected_request" => $selected_request,
     "complete_request" => $complete_request,
+    "new_offer" => $new_offer,
+    "complete_offer" => $complete_offer,
   );
 
 
