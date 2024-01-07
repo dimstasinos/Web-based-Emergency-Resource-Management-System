@@ -389,7 +389,7 @@ document.getElementById("search").addEventListener("input", function () {
 
 });
 
-document.getElementById("submitAnnouncement").addEventListener("click", function () {
+document.getElementById("submitRequest").addEventListener("click", function () {
 
   var selectTable = document.getElementById('itemSelected');
   var flag = 0;

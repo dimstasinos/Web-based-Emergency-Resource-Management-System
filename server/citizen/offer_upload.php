@@ -1,5 +1,5 @@
 <?php
-include("../../Mysql_connection.php");
+include("../Mysql_connection.php");
 
 $receive = file_get_contents('php://input');
 $data = json_decode($receive);
@@ -9,9 +9,10 @@ try {
   $db = db_connect();
   $offer_items = $db->prepare("INSERT INTO offer_items 
   values (?,?,?)");
+  
   $offer_items->bind_param(
     "iii",
-    $data->id,
+    $data->offer_id,
     $data->item_id,
     $data->quantity
   );

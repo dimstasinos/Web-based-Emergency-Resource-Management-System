@@ -26,7 +26,7 @@ document.getElementById("submitdate").addEventListener("click", function () {
         console.log(data);
         // Extract values from the JSON
         const values = Object.values(data).map(item => item.plithos);
-       
+
         // Get the canvas element and create the doughnut chart
         const ctx = document.getElementById('myDoughnutChart');
 

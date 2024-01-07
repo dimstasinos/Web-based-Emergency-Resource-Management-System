@@ -9,6 +9,12 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .catch((error) => console.error("Error:", error));
 
+    fetch("/server/citizen/offers.php")
+    .then(jsonResponse => jsonResponse.json())
+    .then(data => {
+      console.log(data);
+    })
+    .catch((error) => console.error("Error:", error));
 
 });
 
@@ -95,20 +101,26 @@ function announcementTable(data) {
 
       document.getElementById("submitAnnouncement").addEventListener("click", function () {
 
-        fetch("/server/admin/announcement/announcement_insert.php")
+        fetch("/server/citizen/offer_upload.php")
           .then(jsonResponse => jsonResponse.json())
           .then(offer_id => {
+            /*
             item_checked.forEach(item => {
               var quantity;
               announcement.items.forEach(id => {
                 if (item.item_id === id) {
-                  
+                  quantity=id.quantity;
                 }
               });
+              const data = {
+                offer_id: offer_id,
+                item_id: item,
+                quantity: quantity
+              }
+             */
 
 
-
-            });
+            //});
           })
           .catch((error) => console.error("Error:", error));
 
