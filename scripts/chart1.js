@@ -32,5 +32,38 @@ document.getElementById("submitdate").addEventListener("click", function () {
     }
 
 
+    const ctx = document.getElementById('servercharthart');
+
+    const config = {
+        type: 'doughnut',
+        data: {
+            labels: data.map(row => row.),
+            datasets: [
+              {
+                label: 'Dataset 1',
+                data: Utils.numbers(NUMBER_CFG),
+                backgroundColor: Object.values(Utils.CHART_COLORS),
+              }
+            ]
+
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: 'Chart.js Doughnut Chart'
+            }
+          }
+        },
+      };
+
+     
+
+
 
 });
+
