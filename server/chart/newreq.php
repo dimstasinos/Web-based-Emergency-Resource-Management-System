@@ -126,12 +126,12 @@ try {
 
 
   $data_chart = array(
-    "new_request" => $new_request,
-    "selected_request" => $selected_request,
-    "complete_request" => $complete_request,
-    "new_offer" => $new_offer,
-    "selected_offer" => $selected_offer,
-    "complete_offer" => $complete_offer,
+    "New Requests" => $new_request,
+    "Selected Requests" => $selected_request,
+    "Completed Requests" => $complete_request,
+    "New Offers" => $new_offer,
+    "Selected Offers" => $selected_offer,
+    "Completed Offers" => $complete_offer,
   );
 
 
