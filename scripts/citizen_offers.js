@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .catch((error) => console.error("Error:", error));
 
-    fetch("/server/citizen/offers.php")
+  fetch("/server/citizen/offers.php")
     .then(jsonResponse => jsonResponse.json())
     .then(data => {
       console.log(data);
@@ -101,26 +101,26 @@ function announcementTable(data) {
 
       document.getElementById("submitAnnouncement").addEventListener("click", function () {
 
-        fetch("/server/citizen/offer_upload.php")
+        fetch("/server/citizen/offer_insert.php")
           .then(jsonResponse => jsonResponse.json())
           .then(offer_id => {
-            /*
+
             item_checked.forEach(item => {
               var quantity;
               announcement.items.forEach(id => {
                 if (item.item_id === id) {
-                  quantity=id.quantity;
+                  quantity = id.quantity;
                 }
               });
+              
               const data = {
-                offer_id: offer_id,
-                item_id: item,
+                offer_id: parseInt(offer_id.id),
+                item_id: parseInt(item),
                 quantity: quantity
               }
-             */
 
-
-            //});
+              console.log(data);
+            });
           })
           .catch((error) => console.error("Error:", error));
 

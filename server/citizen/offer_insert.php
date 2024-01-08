@@ -1,14 +1,14 @@
 <?php
 session_start();
 
-include("../../Mysql_connection.php");
+include("../Mysql_connection.php");
 
 try {
 
   $db = db_connect();
   $offer = $db->prepare("INSERT INTO citizen_offers values 
   (NULL,now(),NULL,NULL,?)");
-  $announcement->bind_param(
+  $offer->bind_param(
     "i",
     $_SESSION["user_id"]
   );
