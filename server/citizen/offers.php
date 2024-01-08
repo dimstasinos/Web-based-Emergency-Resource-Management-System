@@ -47,7 +47,7 @@ try {
 
       while ($items_row = $items_response->fetch_assoc()) {
         $item = $db->prepare("SELECT item_name FROM items where item_id=?");
-        $item->bind_param("i", $items_response["item_id_offer"]);
+        $item->bind_param("i", $items_row["item_id_offer"]);
         $item->execute();
         $item_response = $item->get_result();
         $item_row = $item_response->fetch_assoc();

@@ -9,7 +9,7 @@ try {
   $db = db_connect();
   $offer_items = $db->prepare("INSERT INTO offer_items 
   values (?,?,?)");
-  
+
   $offer_items->bind_param(
     "iii",
     $data->offer_id,
@@ -36,8 +36,7 @@ try {
       $data->announcement_id
     );
     $announcement_delete->execute();
-  
-  }else if($announcement_response->num_rows == 0){
+  } else if ($announcement_response->num_rows == 1) {
     $announcement_delete = $db->prepare("DELETE FROM announcements
     where announcement_id=?");
     $announcement_delete->bind_param(
@@ -49,7 +48,7 @@ try {
 
   $db->close();
   header('Content-Type: application/json');
-  echo json_encode(['status' => 'success']);
+  echo json_encode(['status' => 'success',"rows" => "$announcement_response->num_rows"]);
 } catch (Exception $error) {
   header('Content-Type: application/json');
   echo json_encode(['status' => 'error', "Error" => $error->getMessage()]);
