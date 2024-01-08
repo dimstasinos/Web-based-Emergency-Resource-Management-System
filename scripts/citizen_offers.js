@@ -5,21 +5,21 @@ document.addEventListener('DOMContentLoaded', function () {
   fetch("/server/citizen/announcement.php")
     .then(jsonResponse => jsonResponse.json())
     .then(data => {
-      announcementTable(data);
+      announcementTable(data,null);
     })
     .catch((error) => console.error("Error:", error));
 
-  fetch("/server/citizen/offers.php")
+ /* fetch("/server/citizen/offers.php")
     .then(jsonResponse => jsonResponse.json())
     .then(data => {
-      console.log(data);
+
     })
-    .catch((error) => console.error("Error:", error));
+    .catch((error) => console.error("Error:", error));*/
 
 });
 
 
-function announcementTable(data) {
+function announcementTable(data,selectedAnnouncement) {
 
   const announcement_table = document.getElementById("announcements");
   announcement_table.innerHTML = "";
@@ -80,6 +80,11 @@ function announcementTable(data) {
         table.appendChild(rowOftable);
 
 
+        if(selectedAnnouncement!==NULL){
+          
+        }
+
+
         document.getElementById(`${announcement.announcement_id}${item.item_id}`).addEventListener("change", function (event) {
           const checked = event.target.checked;
 
@@ -107,19 +112,49 @@ function announcementTable(data) {
 
             item_checked.forEach(item => {
               var quantity;
+
               announcement.items.forEach(id => {
-                if (item.item_id === id) {
+                if (item === id.item_id) {
                   quantity = id.quantity;
                 }
               });
-              
+
               const data = {
                 offer_id: parseInt(offer_id.id),
                 item_id: parseInt(item),
-                quantity: quantity
+                quantity: quantity,
+                announcement_id: announcement.announcement_id
               }
-
               console.log(data);
+              fetch("/server/citizen/offer_upload", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              })
+                .then(response => response.json())
+                .then(data => {
+                  if (data.status === "error") {
+                    console.error("Server Error:", data.Error);
+                  } else {
+
+                    fetch("/server/citizen/announcement.php")
+                      .then(jsonResponse => jsonResponse.json())
+                      .then(data => {
+                        announcementTable(data);
+                      })
+                      .catch((error) => console.error("Error:", error));
+
+                    /*fetch("/server/citizen/offers.php")
+                      .then(jsonResponse => jsonResponse.json())
+                      .then(data => {
+
+                      })
+                      .catch((error) => console.error("Error:", error));*/
+                  }
+                })
+
             });
           })
           .catch((error) => console.error("Error:", error));
