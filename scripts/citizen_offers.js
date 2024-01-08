@@ -5,21 +5,21 @@ document.addEventListener('DOMContentLoaded', function () {
   fetch("/server/citizen/announcement.php")
     .then(jsonResponse => jsonResponse.json())
     .then(data => {
-      announcementTable(data,null);
+      announcementTable(data, null);
     })
     .catch((error) => console.error("Error:", error));
 
- /* fetch("/server/citizen/offers.php")
-    .then(jsonResponse => jsonResponse.json())
-    .then(data => {
-
-    })
-    .catch((error) => console.error("Error:", error));*/
+  /* fetch("/server/citizen/offers.php")
+     .then(jsonResponse => jsonResponse.json())
+     .then(data => {
+ 
+     })
+     .catch((error) => console.error("Error:", error));*/
 
 });
 
 
-function announcementTable(data,selectedAnnouncement) {
+function announcementTable(data, selectedAnnouncement) {
 
   const announcement_table = document.getElementById("announcements");
   announcement_table.innerHTML = "";
@@ -80,9 +80,7 @@ function announcementTable(data,selectedAnnouncement) {
         table.appendChild(rowOftable);
 
 
-        if(selectedAnnouncement!==NULL){
-          
-        }
+        
 
 
         document.getElementById(`${announcement.announcement_id}${item.item_id}`).addEventListener("change", function (event) {
@@ -142,6 +140,9 @@ function announcementTable(data,selectedAnnouncement) {
                     fetch("/server/citizen/announcement.php")
                       .then(jsonResponse => jsonResponse.json())
                       .then(data => {
+
+                        const check = document.getElementsByName("announcement");
+                        check[selectedAnnouncement].checked = true;
                         announcementTable(data);
                       })
                       .catch((error) => console.error("Error:", error));
