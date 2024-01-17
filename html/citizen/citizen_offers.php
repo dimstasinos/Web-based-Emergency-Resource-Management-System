@@ -63,6 +63,21 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
       <button id="clear">Clear</button>
       <button id="submitAnnouncement">Submit</button>
     </div>
+    <div>
+      Offers Accepted
+      <table id="table_offers">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Submission Date</th>
+            <th>Pickup Date</th>
+            <th>Complete Date</th>
+          </tr>
+        </thead>
+        <tbody id="requests"></tbody>
+      </table>
+    </div>
   </div>
 
   <script src="/scripts/citizen_offers.js"></script>

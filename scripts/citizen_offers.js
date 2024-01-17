@@ -125,6 +125,7 @@ function announcementTable(data, selectedAnnouncement) {
         if (flag === 0) {
           document.getElementById("OfferSelected").innerHTML = "";
         }
+
         /* fetch("/server/citizen/offer_insert.php")
            .then(jsonResponse => jsonResponse.json())
            .then(offer_id => {
@@ -209,7 +210,7 @@ async function citizenOffer(item_checked, announcement) {
       if (responseData.status === "error") {
         console.error("Server Error:", responseData.Error);
       } else {
-        // Handle success if needed
+        
       }
     }
   } catch (error) {
@@ -218,6 +219,9 @@ async function citizenOffer(item_checked, announcement) {
 }
 
 
+
+
+function offersTable(data)
 
 
 document.getElementById("clear").addEventListener("click", function () {
