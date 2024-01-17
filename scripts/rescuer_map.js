@@ -40,13 +40,24 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(data => {
 
       geoJson = data;
-      data.features.forEach(feature => {
+      data.features.forEach((feature, index) => {
         const category = feature.properties.category;
 
         if (!markersLayers[category]) {
           markersLayers[category] = L.layerGroup();
         }
 
+        var check = 0;
+
+        data.features.forEach((features_check, index_check) => {
+          if (features_check.geometry.coordinates[0] === feature.geometry.coordinates[0] &&
+            features_check.geometry.coordinates[1] === feature.geometry.coordinates[1] &&
+            (category !== "Base" || category !== "Truck Active" || category !== "Truck Inactive") &&
+            index !== index_check) {
+            check = 1;
+          }
+
+        });
 
         const customMarkers = L.marker([feature.geometry.coordinates[0], feature.geometry.coordinates[1]], {
           icon: (function () {
@@ -54,51 +65,85 @@ document.addEventListener('DOMContentLoaded', function () {
               return L.icon({
                 iconUrl: '/leaflet/images/offices.png',
                 iconSize: [50, 50],
-                iconAnchor: [20, 20],
-                popupAnchor: [0, 0],
-                shadowAnchor: [10, 10]
+                iconAnchor: [25, 50],
+                popupAnchor: [0, -52],
               });
             } else if (category === "Request Pending") {
-
-              return L.icon({
-                iconUrl: '/leaflet/images/request-red.png',
-                iconSize: [30, 30],
-                iconAnchor: [15, 15],
-                popupAnchor: [0, -15]
-              });
+              if (check === 0) {
+                return L.icon({
+                  iconUrl: `/leaflet/images/request-red.png`,
+                  iconSize: [40, 40],
+                  iconAnchor: [19, 34],
+                  popupAnchor: [2.5, -20]
+                });
+              } else {
+                return L.icon({
+                  iconUrl: `/leaflet/images/request-red-rotate.png`,
+                  iconSize: [40, 40],
+                  iconAnchor: [8, 34],
+                  popupAnchor: [13, -35]
+                });
+              }
             } else if (category === "Request Accepted") {
-              return L.icon({
-                iconUrl: '/leaflet/images/request-green.png',
-                iconSize: [30, 30],
-                iconAnchor: [15, 15],
-                popupAnchor: [0, -15]
-              });
+              if (check === 0) {
+                return L.icon({
+                  iconUrl: '/leaflet/images/request-green.png',
+                  iconSize: [40, 40],
+                  iconAnchor: [19, 34],
+                  popupAnchor: [0, -15]
+                });
+              } else {
+                return L.icon({
+                  iconUrl: '/leaflet/images/request-green-rotate.png',
+                  iconSize: [40, 40],
+                  iconAnchor: [8, 34],
+                  popupAnchor: [15, -35]
+                });
+              }
             } else if (category === "Offer Accepted") {
-              return L.icon({
-                iconUrl: '/leaflet/images/offer-green.png',
-                iconSize: [30, 30],
-                iconAnchor: [15, 15],
-                popupAnchor: [0, -15]
-              });
+              if (check === 0) {
+                return L.icon({
+                  iconUrl: '/leaflet/images/offer-green.png',
+                  iconSize: [40, 40],
+                  iconAnchor: [20.5, 38],
+                  popupAnchor: [0, -15]
+                });
+              } else {
+                return L.icon({
+                  iconUrl: '/leaflet/images/offer-green-rotate.png',
+                  iconSize: [40, 40],
+                  iconAnchor: [34, 35],
+                  popupAnchor: [-20, -35]
+                });
+              }
             } else if (category === "Offer Pending") {
-              return L.icon({
-                iconUrl: '/leaflet/images/offer-red.png',
-                iconSize: [30, 30],
-                iconAnchor: [15, 15],
-                popupAnchor: [0, -15]
-              });
+              if (check === 0) {
+                return L.icon({
+                  iconUrl: `/leaflet/images/offer-red.png`,
+                  iconSize: [40, 40],
+                  iconAnchor: [19, 34],
+                  popupAnchor: [0, -15]
+                });
+              } else {
+                return L.icon({
+                  iconUrl: `/leaflet/images/offer-red-rotate.png`,
+                  iconSize: [40, 40],
+                  iconAnchor: [34, 35],
+                  popupAnchor: [-17, -35]
+                });
+              }
             } else if (category === "Truck Active") {
               return L.icon({
                 iconUrl: '/leaflet/images/marker-truck-green.png',
                 iconSize: [50, 50],
-                iconAnchor: [15, 15],
+                iconAnchor: [25, 43],
                 popupAnchor: [0, -15]
               });
             } else if (category === "Truck Inactive") {
               return L.icon({
                 iconUrl: '/leaflet/images/marker-truck-red.png',
                 iconSize: [50, 50],
-                iconAnchor: [15, 15],
+                iconAnchor: [25, 43],
                 popupAnchor: [0, -15]
               });
             }
@@ -1238,12 +1283,24 @@ function mapPanelRefresh() {
       markersLayers["Lines"] = L.layerGroup();
 
 
-      data.features.forEach(feature => {
+      data.features.forEach((feature, index) => {
         const category = feature.properties.category;
 
         if (!markersLayers[category]) {
           markersLayers[category] = L.layerGroup();
         }
+
+        var check = 0;
+
+        data.features.forEach((features_check, index_check) => {
+          if (features_check.geometry.coordinates[0] === feature.geometry.coordinates[0] &&
+            features_check.geometry.coordinates[1] === feature.geometry.coordinates[1] &&
+            (category !== "Base" || category !== "Truck Active" || category !== "Truck Inactive") &&
+            index !== index_check) {
+            check = 1;
+          }
+
+        });
 
         const customMarkers = L.marker([feature.geometry.coordinates[0], feature.geometry.coordinates[1]], {
           icon: (function () {
@@ -1251,51 +1308,85 @@ function mapPanelRefresh() {
               return L.icon({
                 iconUrl: '/leaflet/images/offices.png',
                 iconSize: [50, 50],
-                iconAnchor: [20, 20],
-                popupAnchor: [0, 0],
-                shadowAnchor: [10, 10]
+                iconAnchor: [25, 50],
+                popupAnchor: [0, -52],
               });
             } else if (category === "Request Pending") {
-
-              return L.icon({
-                iconUrl: '/leaflet/images/request-red.png',
-                iconSize: [30, 30],
-                iconAnchor: [15, 15],
-                popupAnchor: [0, -15]
-              });
+              if (check === 0) {
+                return L.icon({
+                  iconUrl: `/leaflet/images/request-red.png`,
+                  iconSize: [40, 40],
+                  iconAnchor: [19, 34],
+                  popupAnchor: [2.5, -20]
+                });
+              } else {
+                return L.icon({
+                  iconUrl: `/leaflet/images/request-red-rotate.png`,
+                  iconSize: [40, 40],
+                  iconAnchor: [8, 34],
+                  popupAnchor: [13, -35]
+                });
+              }
             } else if (category === "Request Accepted") {
-              return L.icon({
-                iconUrl: '/leaflet/images/request-green.png',
-                iconSize: [30, 30],
-                iconAnchor: [15, 15],
-                popupAnchor: [0, -15]
-              });
+              if (check === 0) {
+                return L.icon({
+                  iconUrl: '/leaflet/images/request-green.png',
+                  iconSize: [40, 40],
+                  iconAnchor: [19, 34],
+                  popupAnchor: [0, -15]
+                });
+              } else {
+                return L.icon({
+                  iconUrl: '/leaflet/images/request-green-rotate.png',
+                  iconSize: [40, 40],
+                  iconAnchor: [8, 34],
+                  popupAnchor: [15, -35]
+                });
+              }
             } else if (category === "Offer Accepted") {
-              return L.icon({
-                iconUrl: '/leaflet/images/offer-green.png',
-                iconSize: [30, 30],
-                iconAnchor: [15, 15],
-                popupAnchor: [0, -15]
-              });
+              if (check === 0) {
+                return L.icon({
+                  iconUrl: '/leaflet/images/offer-green.png',
+                  iconSize: [40, 40],
+                  iconAnchor: [20.5, 38],
+                  popupAnchor: [0, -15]
+                });
+              } else {
+                return L.icon({
+                  iconUrl: '/leaflet/images/offer-green-rotate.png',
+                  iconSize: [40, 40],
+                  iconAnchor: [34, 35],
+                  popupAnchor: [-20, -35]
+                });
+              }
             } else if (category === "Offer Pending") {
-              return L.icon({
-                iconUrl: '/leaflet/images/offer-red.png',
-                iconSize: [30, 30],
-                iconAnchor: [15, 15],
-                popupAnchor: [0, -15]
-              });
+              if (check === 0) {
+                return L.icon({
+                  iconUrl: `/leaflet/images/offer-red.png`,
+                  iconSize: [40, 40],
+                  iconAnchor: [19, 34],
+                  popupAnchor: [0, -15]
+                });
+              } else {
+                return L.icon({
+                  iconUrl: `/leaflet/images/offer-red-rotate.png`,
+                  iconSize: [40, 40],
+                  iconAnchor: [34, 35],
+                  popupAnchor: [-17, -35]
+                });
+              }
             } else if (category === "Truck Active") {
               return L.icon({
                 iconUrl: '/leaflet/images/marker-truck-green.png',
                 iconSize: [50, 50],
-                iconAnchor: [15, 15],
+                iconAnchor: [25, 43],
                 popupAnchor: [0, -15]
               });
             } else if (category === "Truck Inactive") {
               return L.icon({
                 iconUrl: '/leaflet/images/marker-truck-red.png',
                 iconSize: [50, 50],
-                iconAnchor: [15, 15],
+                iconAnchor: [25, 43],
                 popupAnchor: [0, -15]
               });
             }

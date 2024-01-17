@@ -844,7 +844,7 @@ document.getElementById("quantity_button").addEventListener("click", function ()
         quantity: quantity,
       };
 
-      fetch("/server/warehouse_admin/update_quantity.php", {
+      fetch("/server/admin/warehouse_admin/update_quantity.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -856,7 +856,7 @@ document.getElementById("quantity_button").addEventListener("click", function ()
           if (data.status === "error") {
             console.error("Server Error:", data.Error);
           } else {
-            fetch("/server/warehouse_admin/database_extract.php")
+            fetch("/server/admin/warehouse_admin/database_extract.php")
               .then((jsonResponse) => jsonResponse.json())
               .then((data) => {
                 if (data.status === "error") {

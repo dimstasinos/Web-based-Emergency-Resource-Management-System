@@ -25,6 +25,7 @@ try {
         "pickup_date" => $offer_row["pickup_date"],
         "citizen_id" => $offer_row["offer_citizen_id"],
         "offer_veh_id" => $offer_row["offer_veh_id"],
+        "announcement_id" => $offer_row["announcement_id"],
       );
 
       if ($offer_row["offer_veh_id"] != NULL) {

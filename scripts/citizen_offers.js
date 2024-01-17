@@ -1,3 +1,6 @@
+var itemSelected;
+var announcementSelected;
+
 document.addEventListener('DOMContentLoaded', function () {
 
   document.getElementById("submitAnnouncement").disabled = true;
@@ -5,24 +8,28 @@ document.addEventListener('DOMContentLoaded', function () {
   fetch("/server/citizen/announcement.php")
     .then(jsonResponse => jsonResponse.json())
     .then(data => {
-      announcementTable(data, -1);
+      announcementTable(data);
     })
     .catch((error) => console.error("Error:", error));
 
   fetch("/server/citizen/offers.php")
     .then(jsonResponse => jsonResponse.json())
     .then(data => {
-
+      offersTable(data);
     })
     .catch((error) => console.error("Error:", error));
 
 });
 
 
-function announcementTable(data, selectedAnnouncement) {
+function announcementTable(data) {
 
   const announcement_table = document.getElementById("announcements");
   announcement_table.innerHTML = "";
+  document.getElementById("OfferSelected").innerHTML = "";
+  document.getElementById("submitAnnouncement").disabled = true;
+
+
 
   data.forEach(announcement => {
 
@@ -55,14 +62,15 @@ function announcementTable(data, selectedAnnouncement) {
     row_table.appendChild(item_quantity);
     announcement_table.appendChild(row_table);
 
-
-
     document.getElementById(`${announcement.announcement_id}`).addEventListener("change", function () {
-
+      itemSelected = [];
+      announcementSelected = announcement;
       const table = document.getElementById("OfferSelected");
       table.innerHTML = "";
 
-      var item_checked = [];
+      selectedAnnouncement = announcement.announcement_id;
+
+
       announcement.items.forEach(item => {
         const rowOftable = document.createElement("tr");
         const item_id = document.createElement("td");
@@ -83,145 +91,214 @@ function announcementTable(data, selectedAnnouncement) {
         table.appendChild(rowOftable);
 
 
-
-
-
         document.getElementById(`${announcement.announcement_id}${item.item_id}`).addEventListener("change", function (event) {
           const checked = event.target.checked;
 
           if (checked) {
-            item_checked.push(item.item_id);
+            itemSelected.push(item.item_id);
             document.getElementById("submitAnnouncement").disabled = false;
           } else {
             var pos = item_checked.indexOf(item.item_id);
-            item_checked.splice(pos, 1)
+            itemSelected.splice(pos, 1)
             if (item_checked.length === 0) {
               document.getElementById("submitAnnouncement").disabled = true;
             }
           }
-
         });
-
       });
-
-
-      document.getElementById("submitAnnouncement").addEventListener("click", function () {
-        citizenOffer(item_checked, announcement);
-
-        const check = document.getElementsByName("announcement");
-        var flag = 0;
-
-        if (selectedAnnouncement !== -1) {
-          for (var i = 0; i < check.length; i++) {
-            if (parseInt(check[i].value) === parseInt(selectedAnnouncement)) {
-              check[i].checked = true;
-              check[i].dispatchEvent(new Event('change'));
-              document.getElementById("submitAnnouncement").disabled = true;
-              flag = 1;
-            }
-          }
-        }
-
-        if (flag === 0) {
-          document.getElementById("OfferSelected").innerHTML = "";
-        }
-
-        /* fetch("/server/citizen/offer_insert.php")
-           .then(jsonResponse => jsonResponse.json())
-           .then(offer_id => {
- 
-             item_checked.forEach(item => {
-               var quantity;
- 
-               announcement.items.forEach(id => {
-                 if (item === id.item_id) {
-                   quantity = id.quantity;
-                 }
-               });
- 
-               const data = {
-                 offer_id: parseInt(offer_id.id),
-                 item_id: parseInt(item),
-                 quantity: quantity,
-                 announcement_id: announcement.announcement_id
-               }
- 
-               fetch("/server/citizen/offer_upload", {
-                 method: "POST",
-                 headers: {
-                   "Content-Type": "application/json",
-                 },
-                 body: JSON.stringify(data),
-               })
-                 .then(response => response.json())
-                 .then(data => {
-                   if (data.status === "error") {
-                     console.error("Server Error:", data.Error);
-                   } else {
- 
- 
-                   }
-                 })
- 
-             });
-           })
-           .catch((error) => console.error("Error:", error));*/
-      })
     });
   });
-
-
-
 }
 
+document.getElementById("submitAnnouncement").addEventListener("click", function () {
 
-async function citizenOffer(item_checked, announcement) {
+  const announcement_id = {
+    announcement_id: selectedAnnouncement,
+  }
 
-  try {
-    const jsonResponse = await fetch("/server/citizen/offer_insert.php");
-    const offer_id = await jsonResponse.json();
+  fetch("/server/citizen/offer_insert.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(announcement_id),
+  })
+    .then(response => response.json())
+    .then(offer_id => {
 
-    for (const item of item_checked) {
-      let quantity;
-
-      announcement.items.forEach((id) => {
-        if (item === id.item_id) {
-          quantity = id.quantity;
-        }
-      });
-
-      const data = {
+      var offer = {
         offer_id: parseInt(offer_id.id),
-        item_id: parseInt(item),
-        quantity: quantity,
-        announcement_id: announcement.announcement_id,
+        announcement_id: selectedAnnouncement,
+        items: []
       };
 
-      const response = await fetch("/server/citizen/offer_upload", {
+      itemSelected.forEach(item => {
+        var newItem;
+        announcementSelected.items.forEach(id => {
+          if (item === id.item_id) {
+            newItem = {
+              item_id: id.item_id,
+              quantity: id.quantity
+            };
+            offer.items.push(newItem);
+          }
+        });
+      })
+
+
+      fetch("/server/citizen/offer_upload", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
-      });
+        body: JSON.stringify(offer),
+      })
+        .then(response => response.json())
+        .then(data => {
 
-      const responseData = await response.json();
+          document.getElementById("OfferSelected").innerHTML = "";
 
-      if (responseData.status === "error") {
-        console.error("Server Error:", responseData.Error);
-      } else {
-        
-      }
+
+          fetch("/server/citizen/announcement.php")
+            .then(jsonResponse => jsonResponse.json())
+            .then(data => {
+
+              announcementTable(data,);
+            })
+            .catch((error) => console.error("Error:", error));
+
+          fetch("/server/citizen/offers.php")
+            .then(jsonResponse => jsonResponse.json())
+            .then(data => {
+              offersTable(data);
+            })
+            .catch((error) => console.error("Error:", error));
+        })
+        .catch((error) => console.error("Error:", error));
+
+
+    })
+    .catch((error) => console.error("Error:", error));
+
+})
+
+
+
+function offersTable(data) {
+
+  const offer_table = document.getElementById("offers");
+
+  offer_table.innerHTML = "";
+
+  data.forEach(offer => {
+
+    const row_table = document.createElement("tr");
+    const item_name = document.createElement("td");
+    const item_quantity = document.createElement("td");
+    const sub_date = document.createElement("td");
+    const pick_date = document.createElement("td");
+    const complete_date = document.createElement("td");
+    const action = document.createElement("td");
+
+
+
+    var items_name_array = [];
+    var items_quantity_array = [];
+
+    offer.items.forEach(item => {
+      items_name_array.push(item.item_name);
+      items_quantity_array.push(item.quantity);
+    });
+
+
+
+    item_name.innerHTML = items_name_array.join("<br>");
+    item_quantity.innerHTML = items_quantity_array.join("<br>");
+
+    sub_date.textContent = offer.submission_date;
+    if (offer.pickup_date === null) {
+      pick_date.textContent = "-";
+
+      action.innerHTML = `<button id="${offer.offer_id}">Cancel</button>`;
+
+    } else {
+      pick_date.textContent = offer.pickup_date;
+      action.innerHTML = "";
     }
-  } catch (error) {
-    console.error("Error:", error);
-  }
+    if (offer.hasOwnProperty('complete_date')) {
+      complete_date.textContent = offer.complete_date;
+    } else {
+      complete_date.textContent = "-";
+    }
+
+    row_table.appendChild(item_name);
+    row_table.appendChild(item_quantity);
+    row_table.appendChild(sub_date);
+    row_table.appendChild(pick_date);
+    row_table.appendChild(complete_date);
+    row_table.appendChild(action);
+
+    offer_table.appendChild(row_table);
+
+
+    if (action.innerHTML !== "") {
+      document.getElementById(`${offer.offer_id}`).addEventListener("click", function () {
+
+        const data = {
+          offer_id: offer.offer_id,
+          announcement_id: offer.announcement_id,
+          items: offer.items,
+        };
+
+
+        fetch("/server/citizen/offer_delete.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            fetch('/server/citizen/offers.php')
+              .then(jsonResponse => {
+
+                const isEmpty = jsonResponse.headers.get('Content-Length');
+                if (isEmpty === '0') {
+                  return null;
+                }
+
+                return jsonResponse.json();
+              })
+              .then(data => {
+                if (data !== null) {
+                  offersTable(data);
+                }
+                else {
+                  const table = document.getElementById("table_request");
+                  table.innerHTML = '';
+                  table.textContent = "There are now requests";
+
+                }
+              })
+              .catch(error => console.error('Error:', error));
+
+            fetch("/server/citizen/announcement.php")
+              .then(jsonResponse => jsonResponse.json())
+              .then(data => {
+                announcementTable(data);
+              })
+              .catch((error) => console.error("Error:", error));
+          })
+          .catch((error) => console.error("Error:", error))
+
+      });
+    }
+  });
+
 }
 
 
-
-
-function offersTable(data)
 
 
 document.getElementById("clear").addEventListener("click", function () {
