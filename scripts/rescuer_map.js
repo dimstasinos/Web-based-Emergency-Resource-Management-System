@@ -205,9 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <strong>Submission date:</strong> ${request.submission_date}<br>
             <strong>Item:</strong> ${request.item_name}<br>
             <strong>Quantity:</strong> ${request.quantity}<br>
-            <button id="${request.request_id}">Accept</button><br>
             ----------------------------------`;
-
             } else {
               var info = `<br><strong>Request</strong><br>
               <strong>Submission date:</strong> ${request.submission_date}<br>
@@ -227,9 +225,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
           customMarkers.bindPopup(info_citizen);
           customMarkers.options.request_id = requests;
-
-
-
+          
         } else if (category === "Request Accepted") {
           var requests = [];
           var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
