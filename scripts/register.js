@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     { draggable: 'true' }).addTo(map);
 
 
-   citizenCoordination = {
+  citizenCoordination = {
     latitude: citizenMarker.lat,
     longitude: citizenMarker.lng
 
@@ -29,61 +29,59 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.getElementById("registerButton").addEventListener("click", function () {
 
-  var f_name = document.getElementById("fname");
-  var l_name = document.getElementById("lname");
-  var phone_number = document.getElementById("phone");
-  var username = document.getElementById("user");
-  var password = document.getElementById("pass");
-  var conf_password = document.getElementById("confpass");
-
   var check = 0;
 
-  check = nameCheck(f_name.value);
-  check = lastNameCheck(l_name.value);
-  check = phoneNumberCheck(phone_number.value);
+  var f_name = document.getElementById("fname").value;
+  var l_name = document.getElementById("lname").value;
+  var phone_number = document.getElementById("phone").value;
+  var username = document.getElementById("user").value;
+  var password = document.getElementById("pass").value;
+  var conf_password = document.getElementById("confpass").value;
 
-  if (username.value === "") {
+  check = nameCheck(f_name);
+  check = lastNameCheck(l_name);
+  check = phoneNumberCheck(phone_number);
+
+  if (username === "") {
     alert("Δώσε ένα username");
     check = 1;
   }
 
-  if (password.value === "") {
+  if (password === "") {
     alert("Δώσε ένα κωδικό");
     check = 1;
   }
 
-  if (conf_password.value !== password.value) {
+  if (conf_password !== password) {
     alert("Οι δύο κωδικοί δεν είναι ίδιοι");
     check = 1;
   }
 
   if (check === 0) {
 
-    const data = {
-      f_name: f_name.value,
-      l_name: l_name.value,
-      phone_nummber: phone_number.value,
-      username: username.value,
-      password: password.value,
-      location: citizenCoordination
-    };
 
-    console.log(data);
+    var formData = new FormData();
+    formData.append("f_name", f_name);
+    formData.append("l_name", l_name);
+    formData.append("phone_number", phone_number);
+    formData.append("username", username);
+    formData.append("password", password);
+    formData.append("location", citizenCoordination);
 
-/*
-    fetch('/server/registerpage/register_page.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
+
+    fetch('/server/register.php', {
+      method: "POST",
+      body: formData
     })
       .then(response => response.json())
       .then((data) => {
-        if (data.status === "error") {
-          console.error("Server Error:", data.Error);
+        if (data.status === "fail") {
+          alert(data.message);
+        } else if (data.status === "success") {
+          window.location.replace(data.Location);
         }
-      })*/
+      })
+      .catch((error) => console.error("Error:", error));
   }
 
 });
