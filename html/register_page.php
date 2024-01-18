@@ -34,11 +34,11 @@ if (isset($_SESSION['username'])) {
     <form id="registerForm">
       <div class="fnameBox">
         <label for="fname">First Name</label>
-        <input type="username" id="fname" placeholder="Enter First Name" maxlength="12" required>
+        <input type="text" id="fname" placeholder="Enter First Name" maxlength="12" required>
       </div>
       <div class="lnameBox">
         <label for="lname">Last Name</label>
-        <input type="username" id="lname" placeholder="Enter Last Name" maxlength="12" required>
+        <input type="text" id="lname" placeholder="Enter Last Name" maxlength="12" required>
       </div>
       <div class="phoneBox">
         <label for="user">Phone Number</label>
@@ -46,7 +46,7 @@ if (isset($_SESSION['username'])) {
       </div>
       <div class="userBox">
         <label for="user">Username</label>
-        <input type="username" id="user" placeholder="Enter Username" maxlength="12" required>
+        <input type="text" id="user" placeholder="Enter Username" maxlength="12" required>
       </div>
       <div class="passBox">
         <label for="pass">Password</label>

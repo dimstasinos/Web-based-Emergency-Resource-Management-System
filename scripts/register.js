@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function () {
     citizenCoordination.longitude = coords.lng;
   });
 
-
 });
 
 document.getElementById("registerButton").addEventListener("click", function () {
