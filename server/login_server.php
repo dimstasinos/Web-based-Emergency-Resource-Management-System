@@ -4,8 +4,11 @@ session_start();
 
 include("Mysql_connection.php");
 
-$db = db_connect();
+
 try {
+  
+  $db = db_connect();
+
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
