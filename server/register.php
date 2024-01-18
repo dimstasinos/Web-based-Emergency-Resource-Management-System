@@ -15,7 +15,8 @@ try {
     $phone_number = $_POST["phone_number"];
     $username = $_POST["username"];
     $password = $_POST["password"];
-    $location = $_POST["location"];
+    $latitude = $_POST["latitude"];
+    $longitude = $_POST["longitude"];
 
     $phoneCheck = false;
     $usernameCheck = false;
@@ -55,8 +56,8 @@ try {
     } else if ($usernameCheck == false && $phoneCheck == false) {
 
       $insert_user = $db->prepare("INSERT INTO users VALUES
-      (NULL,?,?,?)");
-      $insert_user->bind_param("sss", $username, $password,"citizen");
+      (NULL,?,?,'citizen')");
+      $insert_user->bind_param("ss", $username, $password);
       $insert_user->execute();
 
       $user_id = "SELECT LAST_INSERT_ID() as user_id";
@@ -66,13 +67,13 @@ try {
       $insert_citizen = $db->prepare("INSERT INTO citizen VALUES
       (?,?,?,?,?,?)");
       $insert_citizen->bind_param(
-        "isssss",
+        "isssdd",
         $user_id_row["user_id"],
         $first_name,
         $last_name,
         $phone_number,
-        $location->latitude,
-        $location->longitude,
+        $latitude,
+        $longitude,
       );
       $insert_citizen->execute();
 
@@ -91,5 +92,5 @@ try {
   }
 } catch (Exception $error) {
   header('Content-Type: application/json');
-  echo json_encode(['status' => 'fail', "message" => $error->getMessage()]);
+  echo (['status' => 'fail', "message" => $error->getMessage()]);
 }

@@ -40,7 +40,7 @@ if (isset($_SESSION['username'])) {
 
       <div id="register">
         <p>Don't have an account?
-          <a href="/html/register_page.html"><br><strong>Register</strong></a>
+          <a href="/html/register_page"><br><strong>Register</strong></a>
         </p>
       </div>
 

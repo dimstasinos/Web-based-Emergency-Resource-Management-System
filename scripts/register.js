@@ -66,7 +66,8 @@ document.getElementById("registerButton").addEventListener("click", function () 
     formData.append("phone_number", phone_number);
     formData.append("username", username);
     formData.append("password", password);
-    formData.append("location", citizenCoordination);
+    formData.append("latitude", citizenCoordination.latitude);
+    formData.append("longitude", citizenCoordination.longitude);
 
 
     fetch('/server/register.php', {
