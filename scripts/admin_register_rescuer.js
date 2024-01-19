@@ -1,8 +1,16 @@
+const { response } = require("express");
+
 document.addEventListener('DOMContentLoaded', function () {
 
-  
+  fetch("/server/vehicle_username.php")
+  .then(response => response.json())
+  .then(data =>{
 
-}
+  })
+  .catch(error => console.error)
+
+
+});
 
 document.getElementById("newVehicle").addEventListener("change", function() {
 
