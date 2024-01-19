@@ -2314,8 +2314,6 @@ function mapPanelRefresh() {
                           item_id: request.item_id,
                         };
 
-                        console.log(data);
-
                         fetch("/server/rescuer/complete_request.php", {
                           method: "POST",
                           headers: {

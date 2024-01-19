@@ -9,7 +9,9 @@ try {
   $db = db_connect();
 
   $offer_complete = $db->prepare("INSERT INTO citizen_offers_complete
-  SELECT * FROM citizen_offers where offer_id=?");
+  (offer_id,submission_date,pickup_date,offer_veh_id,offer_citizen_id,complete_date)
+  SELECT offer_id,submission_date,pickup_date,offer_veh_id,offer_citizen_id,now()
+   FROM citizen_offers where offer_id=?");
   $offer_complete->bind_param(
     "i",
     $data->id,

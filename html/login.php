@@ -1,12 +1,16 @@
 <?php
+
 session_start();
 
-if (isset($_SESSION['username'])) {
+if (isset($_SESSION['type'])) {
   if ($_SESSION['type'] == "rescuer") {
     header("Location: /html/rescuer/rescuer_MapPage");
     exit();
   } else if ($_SESSION['type'] == "citizen") {
     header("Location: /html/citizen/request");
+    exit();
+  } else if ($_SESSION['type'] == "admin") {
+    header("Location: /html/citizen/admin_mainPage");
     exit();
   }
 

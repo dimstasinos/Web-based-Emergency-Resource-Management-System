@@ -121,7 +121,7 @@ function phoneNumberCheck(input) {
     alert("Δώσε έναν αριθμό τηλεφώνου");
     return 1;
   } else if (phoneCheck(input)) {
-    alert("Το όνομα δεν γίνεται να περιέχει γράμματα");
+    alert("Ο αριθμός τηλεφώνου δεν γίνεται να περιέχει γράμματα");
     return 1;
   } else {
     var numberCount = 0;
