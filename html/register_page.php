@@ -1,12 +1,15 @@
 <?php
 session_start();
 
-if (isset($_SESSION['username'])) {
+if (isset($_SESSION['type'])) {
   if ($_SESSION['type'] == "rescuer") {
     header("Location: /html/rescuer/rescuer_MapPage");
     exit();
   } else if ($_SESSION['type'] == "citizen") {
     header("Location: /html/citizen/request");
+    exit();
+  } else if ($_SESSION['type'] == "admin") {
+    header("Location: /html/citizen/admin_mainPage");
     exit();
   }
 
@@ -23,53 +26,56 @@ if (isset($_SESSION['username'])) {
   <meta name="viewport" content="width=device-width initial-scale=1">
   <link rel="stylesheet" href="/leaflet/leaflet.css">
   <link rel="stylesheet" href="/css/register_page.css">
-
-  <title>Register</title>
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <title>Εγγραφή</title>
 </head>
 
 <body>
-  <div class="registerbox" id="registerbox">
-    <img src="/images/loginuser.png" class="registeruser">
-    <h1>Register</h1>
+
+
+  <div id="registerbox">
+  <img src="/images/loginuser.png" id="userImage">
+    <h1>Εγγραφή</h1>
     <form id="registerForm">
-      <div class="fnameBox">
-        <label for="fname">First Name</label>
-        <input type="text" id="fname" placeholder="Enter First Name" maxlength="12" required>
-      </div>
-      <div class="lnameBox">
-        <label for="lname">Last Name</label>
-        <input type="text" id="lname" placeholder="Enter Last Name" maxlength="12" required>
-      </div>
-      <div class="phoneBox">
-        <label for="user">Phone Number</label>
-        <input type="tel" id="phone" placeholder="Enter Phone Number" maxlength="12" required>
-      </div>
-      <div class="userBox">
+
+      <div id="userInputs">
+        <label for="fname">Όνομα</label>
+        <input type="text" id="fname" class="input" placeholder="Enter First Name" maxlength="12" required>
+
+        <label for="lname">Επώνυμο</label>
+        <input type="text" id="lname" class="input" placeholder="Enter Last Name" maxlength="20" required>
+
+        <label for="phone">Αριθμός τηλεφώνου</label>
+        <input type="tel" id="phone" class="input" placeholder="Enter Phone Number" maxlength="12" required>
+
         <label for="user">Username</label>
-        <input type="text" id="user" placeholder="Enter Username" maxlength="12" required>
-      </div>
-      <div class="passBox">
-        <label for="pass">Password</label>
-        <input type="password" id="pass" placeholder="Enter password" required>
-      </div>
-      <div class="passBox">
-        <label for="confpass">Confirm Password</label>
-        <input type="password" id="confpass" placeholder="Re-Enter password" required>
+        <input type="text" id="user" class="input" placeholder="Enter Username" maxlength="12" required>
+
+        <label for="pass">Κωδικός</label>
+        <input type="password" id="pass" class="input" placeholder="Enter password" required>
+
+        <label for="confpass">Επιβεβαίωση κωδικού</label>
+        <input type="password" id="confpass" class="input" placeholder="Re-Enter password" required>
+
       </div>
 
-      <div id="map"></div>
+      <div id="mapBox">
+        <div id="map"></div>
+      </div>
 
-      <div class="login">
-        <p>Already have an account?
+      <div id="login">
+        <p>Έχεις ήδη λογαριασμό;
           <a href="/html/login.php"><br><strong>Login</strong></a>
         </p>
       </div>
       <div>
-        <button type="button" id="registerButton"><strong>REGISTER</strong></button>
+        <button type="button" id="registerButton"><strong>ΕΓΓΡΑΦΗ</strong></button>
       </div>
-    </form>
 
-    <script src="/leaflet/leaflet.js"></script>
+    </form>
+  </div>
+
+  <script src="/leaflet/leaflet.js"></script>
 </body>
 
 <script src="/scripts/register.js"></script>

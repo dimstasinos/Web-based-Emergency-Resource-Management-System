@@ -13,13 +13,19 @@ document.getElementById("loginButton").addEventListener("click", function () {
       .then((data) => {
         if (data.status === "fail") {
           alert(data.message);
-        }else if(data.status === "success"){
+        } else if (data.status === "success") {
           window.location.replace(data.Location);
         }
       })
       .catch((error) => console.error("Error:", error));
-  }else{
-    alert("Input");
+  } else {
+    if (document.getElementById("username").value === "" && document.getElementById("password").value !== "") {
+      alert("Δώσε ένα username");
+    } else if (document.getElementById("password").value === "" && document.getElementById("username").value !== "") {
+      alert("Δώσε ένα κωδικό");
+    }else{
+      alert("Δώσε ένα username και κωδικό");
+    }
   }
 
 });

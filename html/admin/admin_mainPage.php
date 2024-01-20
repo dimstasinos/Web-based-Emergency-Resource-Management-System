@@ -16,7 +16,6 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
   <title>Administrator</title>
   <link rel="stylesheet" href="/css/admin_mainPageStyle.css">
   <link rel="stylesheet" href="/leaflet/leaflet.css">
-  <script src="/scripts/admin_MainPage.js"></script>
   <style>
     #map {
       height: 500px;
@@ -37,8 +36,17 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
     <div id="map"></div>
   </div>
 
+  <h2 class="chart-heading">Progress of Offers and Requests</h2>
+  <label for="startdate">Start Date:</label>
+  <input type="date" id="startdate" name="selectedDate" required>
+  <label for="enddate">End Date:</label>
+  <input type="date" id="enddate" name="selectedDate" required>
+  <button id="submitdate">Submit</button>
 
+  <canvas id="serverchart" width="500" height="50"></canvas>
 
+  <script src="/scripts/admin_MainPage.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="/leaflet/leaflet.js"></script>
 </body>
 

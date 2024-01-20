@@ -1,27 +1,26 @@
 @font-face {
-  font-family: Roboto;
-  src: url(/fonts/Roboto/Roboto-Black.ttf);
-}
-
-
-#map { 
-  height: 500px;
-  width: 50%;
+  font-family: 'Roboto Black';
+  src: url(/fonts/Roboto/Roboto-Black.ttf) format('truetype');
+  font-weight: 900;
+  font-style: normal;
 }
 
 
 body {
+  font-family: 'Roboto Black', sans-serif;
   background-image: url(../images/backround.JPEG);
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
 }
 
-
-#registerbox{
-  width: 320px;
-  height: 430px;
+#registerbox {
+  width: 400px;
+  max-height: 90%;
+  overflow-y: auto; /* Enable vertical scroll if content overflows */
   border-radius: 15px;
   background: rgba(0, 0, 0, 0.95);
   color: #ffffff;
@@ -31,4 +30,113 @@ body {
   transform: translate(-50%, -50%);
   box-sizing: border-box;
   padding: 70px 30px;
+}
+
+#userImage{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  position: absolute;
+  top: -50px;
+  left: calc(50%, 50px);
+}
+
+
+h1 {
+  margin: 0;
+  padding: 0 0 10px;
+  text-align: center;
+  font-size: 45px;
+}
+
+#registerButton {
+  width: 50%;
+  height: 40px;
+  margin-left: 25%;
+  transition-duration: 0.5s;
+  background-color: rgba(75, 75, 75, 1);
+  border-radius: 15px;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 40px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+#registerButton:hover {
+  background-color: rgba(90, 90, 90, 1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#map {
+  height: 250px;
+
+}
+
+.input {
+  padding: 10px;
+  width: 95%;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 15px;
+  border: 1px solid #ced4da;
+  /* Subtle border color */
+  margin-bottom: 10px;
+  /* Space between fields */
+  font-size: 16px;
+  /* Slightly larger font size for better readability */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* Soft box shadow for depth */
+  transition: border-color 0.3s, box-shadow 0.3s;
+  /* Transition for interactive effects */
+}
+
+#login {
+  margin: 0;
+  color: rgb(255, 38, 0);
+  padding: 10px 0;
+  text-align: center;
+  font-size: 15px;
+}
+
+#login p {
+  margin: 0;
+  padding-bottom: 5px;
+}
+
+#login a {
+  color: rgb(0, 123, 255);
+  /* Eye-catching color for the link */
+  text-decoration: none;
+  /* Remove underline */
+  font-weight: bold;
+  /* Emphasize the link */
+}
+
+
+#userInputs label {
+  display: block;
+  /* Make label a block element */
+  margin-bottom: 5px;
+  /* Space between label and input field */
+  font-weight: bold;
+  /* Make label text bold */
+}
+
+
+@media (max-width: 600px) {
+  #registerbox {
+    width: 80%;
+    display: block;
+
+  }
+
+  #userInputs {
+    padding: 10px;
+    width: 90%;
+  }
+
 }

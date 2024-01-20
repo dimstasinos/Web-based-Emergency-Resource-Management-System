@@ -16,6 +16,7 @@ if (isset($_SESSION['type'])) {
 
   exit();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -31,21 +32,25 @@ if (isset($_SESSION['type'])) {
 
 <body>
   <div id="loginbox">
-    <img src="/images/loginuser.png" alt="Login image" id="loginuser">
+    <img src="/images/loginuser.png" alt="Login image" id="userImage">
     <h1>Login</h1>
     <form id="loginForm">
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" required>
+      <div id="userInputs">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
 
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required>
-
-      <input type="checkbox" id="check">
-      <label for="check">Show password</label>
+        <label for="password">Κωδικός</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <div class="checkbox-container">
+        <input type="checkbox" id="check">
+        <label for="check">Show password</label>
+      </div>
 
       <div id="register">
-        <p>Don't have an account?
-          <a href="/html/register_page"><br><strong>Register</strong></a>
+        <p>Δεν έχεις λογαριασμό?
+          <br>
+          <a href="/html/register_page"><strong>Register</strong></a>
         </p>
       </div>
 

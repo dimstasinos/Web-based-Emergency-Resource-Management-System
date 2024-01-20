@@ -63,12 +63,6 @@ try {
       } else if ($type_row["user_type"] == "admin") {
         $id = $type_row["user_id"];
         $_SESSION["type"] = $type_row["user_type"];
-        /*$citizenSql = $db->prepare("SELECT f_name,l_name FROM citizen WHERE citizen_id=?");
-        $citizenSql->bind_param("i", $id);
-        $citizenSql->execute();
-        $response_citizen_info = $citizenSql->get_result();
-        $name_row = $response_citizen_info->fetch_assoc();
-        $_SESSION["Name"] = $name_row["f_name"] . " " . $name_row["l_name"];*/
         $response = ["status" => "success", "Location" => "/html/admin/admin_mainPage"];
         header("Content-Type: application/json");
         echo json_encode($response);
@@ -80,11 +74,11 @@ try {
         echo json_encode($response);
       }
     } else if ($user_check == false && $pass_check == false) {
-      $response = ["status" => "fail", "message" => "User do not exist"];
+      $response = ["status" => "fail", "message" => "Ο χρήστης δεν υπάρχει"];
       header("Content-Type: application/json");
       echo json_encode($response);
     } else if ($pass_check == false && $user_check == true) {
-      $response = ["status" => "fail", "message" => "Password is wrong"];
+      $response = ["status" => "fail", "message" => "Ο κωδικός είναι λάθος"];
       header("Content-Type: application/json");
       echo json_encode($response);
     }
