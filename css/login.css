@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'Roboto Black';
   src: url(/fonts/Roboto/Roboto-Black.ttf) format('truetype');
-  font-weight: 900; 
+  font-weight: 900;
   font-style: normal;
 }
 
@@ -14,9 +14,12 @@ body {
   background-repeat: no-repeat;
   margin: 0;
   padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-#register{
+#register {
   margin: 0;
   color: rgb(255, 38, 0);
   padding: 10px 0;
@@ -26,20 +29,20 @@ body {
 
 #register p {
   margin: 0;
-  padding-bottom: 5px; 
+  padding-bottom: 5px;
 }
 
 #register a {
-  color: rgb(0, 123, 255); /* Eye-catching color for the link */
-  text-decoration: none; /* Remove underline */
-  font-weight: bold; /* Emphasize the link */
+  color: rgb(0, 123, 255);
+  text-decoration: none;
+  font-weight: bold;
 }
 
 #register a:hover {
-  text-decoration: underline; /* Underline on hover for interactivity */
+  text-decoration: underline;
 }
 
-#loginbox{
+.loginbox {
   width: 320px;
   height: 430px;
   border-radius: 15px;
@@ -53,7 +56,7 @@ body {
   padding: 70px 30px;
 }
 
-#userImage{
+#userImage {
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -62,7 +65,7 @@ body {
   left: calc(50%, 50px);
 }
 
-h1{
+h1 {
   margin: 0;
   padding: 0 0 10px;
   text-align: center;
@@ -77,19 +80,19 @@ h1{
 
 
 #check {
-  margin-right: 10px; 
-  cursor: pointer; 
+  margin-right: 10px;
+  cursor: pointer;
 }
 
 .checkbox-container label {
-  font-size: 14px; 
-  cursor: pointer; 
+  font-size: 14px;
+  cursor: pointer;
 }
 
 
 #loginButton {
   width: 50%;
-  height: 40px; 
+  height: 40px;
   margin-left: 65px;
   transition-duration: 0.5s;
   background-color: rgba(75, 75, 75, 1);
@@ -97,36 +100,45 @@ h1{
   text-align: center;
   border: none;
   cursor: pointer;
-  color: white; 
-  font-size: 16px; 
-  font-weight: bold; 
-  line-height: 40px; 
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
-  outline: none; 
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 40px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  outline: none;
 }
 
 #loginButton:hover {
-  background-color: rgba(90, 90, 90, 1); 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+  background-color: rgba(90, 90, 90, 1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-#username, #password {
+#username,
+#password {
   padding: 10px;
   width: 95%;
   background-color: rgba(255, 255, 255, 1);
   border-radius: 15px;
-  border: 1px solid #ced4da; /* Subtle border color */
-  margin-bottom: 10px; /* Space between fields */
-  font-size: 16px; /* Slightly larger font size for better readability */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft box shadow for depth */
-  transition: border-color 0.3s, box-shadow 0.3s; /* Transition for interactive effects */
+  border: 1px solid #ced4da;
+  /* Subtle border color */
+  margin-bottom: 10px;
+  /* Space between fields */
+  font-size: 16px;
+  /* Slightly larger font size for better readability */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* Soft box shadow for depth */
+  transition: border-color 0.3s, box-shadow 0.3s;
+  /* Transition for interactive effects */
 }
 
 
 #userInputs label {
-  display: block; /* Make label a block element */
-  margin-bottom: 5px; /* Space between label and input field */
-  font-weight: bold; /* Make label text bold */
+  display: block;
+  /* Make label a block element */
+  margin-bottom: 5px;
+  /* Space between label and input field */
+  font-weight: bold;
+  /* Make label text bold */
 }
 
 
@@ -136,9 +148,10 @@ h1{
     padding: 40px 20px;
   }
 
-  #username, #password {
+  #username,
+  #password {
     padding: 10px;
     width: 90%;
   }
-  
+
 }

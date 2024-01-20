@@ -30,7 +30,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
   <div class="sidebar">
     <a href="#">Map</a>
     <a href="#">DataBase</a>
-    <a href="#">Logout</a>
+    <a href="/server/logout.php">Logout</a>
   </div>
   <div class="main">
     <div id="map"></div>

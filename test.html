@@ -3,106 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaflet GeoJSON Layer Control</title>
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <style>
-        #map {
-            height: 400px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+    <title>Login</title>
 </head>
 <body>
-
-<div id="map"></div>
-<div id="category-filters"></div>
-
-<!-- Leaflet JavaScript -->
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-<script>
-  var map = L.map('map').setView([37.9838, 23.7275], 13);
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap contributors'
-}).addTo(map);
-
-
-  // Create custom marker icons for different categories
-  var customIcons = {
-      "category1": L.icon({
-          iconUrl: '/leaflet/images/offer-red.png',
-          iconSize: [32, 32],
-          iconAnchor: [16, 32],
-          popupAnchor: [0, -16]
-      }),
-      "category2": L.icon({
-          iconUrl: '/leaflet/images/marker-icon.png',
-          iconSize: [32, 32],
-          iconAnchor: [16, 32],
-          popupAnchor: [0, -16]
-      }),
-      // Add more categories as needed
-  };
-
-  // Sample GeoJSON data with a FeatureCollection
-  var geojsonData = {
-      "type": "FeatureCollection",
-      "features": [
-          {
-              "type": "Feature",
-              "geometry": {
-                  "type": "Point",
-                  "coordinates": [37.9838, 23.7275]
-              },
-              "properties": {
-                  "name": "Marker 1",
-                  "category": "category1"
-              }
-          },
-          {
-              "type": "Feature",
-              "geometry": {
-                  "type": "Point",
-                  "coordinates": [38.0, 23.9275]
-              },
-              "properties": {
-                  "name": "Marker 2",
-                  "category": "category2"
-              }
-          }
-          // Add more features as needed
-      ]
-  };
-
-  // Create a GeoJSON layer with dynamic custom icons
-  var geojsonLayer = L.geoJSON(geojsonData, {
-      pointToLayer: function (feature) {
-          var category = feature.properties.category;
-          return L.marker(feature.geometry.coordinates, { icon: customIcons[category] });
-      }
-  });
-
-
-  // Create an overlay layer group for each category
-  var overlayLayers = {};
-  Object.keys(customIcons).forEach(function (category) {
-      overlayLayers[category] = L.layerGroup();
-  });
-
-  // Add GeoJSON features to the appropriate overlay layer
-  geojsonLayer.eachLayer(function (layer) {
-      var category = layer.feature.properties.category;
-      overlayLayers[category].addLayer(layer);
-  });
-
-  // Add the GeoJSON layer to one of the overlay layers (category1 in this case)
-  overlayLayers['category1'].addLayer(geojsonLayer);
-
-  // Add the layers control to the map
-  L.control.layers(null, overlayLayers).addTo(map);
-</script>
-
-
+    <div class="container">
+        <form class="login-form">
+            <h1>Login</h1>
+            <input type="text" placeholder="Username" id="username" required>
+            <input type="password" placeholder="Password" id="password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
 </body>
 </html>
+

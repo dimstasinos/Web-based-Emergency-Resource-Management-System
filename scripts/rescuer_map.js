@@ -1,10 +1,12 @@
+//Global μεταβλητές
 var map;
 var map_control;
 var layerSelected;
 
+//Event listener που εκτελείτε όταν φορτωθεί η HTML
 document.addEventListener('DOMContentLoaded', function () {
 
-
+  //Ανάκτηση πληροφοριών του Session
   fetch("/server/get_Session_info.php")
     .then((jsonResponse) => jsonResponse.json())
     .then(data => {
@@ -12,13 +14,16 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .catch((error) => console.error("Error:", error));
 
-
+  //Αρχικοιποίηση χάρτη
   map = L.map('map').setView([37.9838, 23.7275], 13);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
+
+  //Αρχικοποίηση Object για την  
+  //λειτουργία των φίλτρων του χάρτη
   layerSelected = {
     "Request Pending": true,
     "Request Accepted": true,
@@ -30,25 +35,38 @@ document.addEventListener('DOMContentLoaded', function () {
     "Base": true,
   };
 
-
+  //Μεταβλητή που περιέχει τις κατηγορίες των markers
+  //που θα υπάρχουν στον χάρτη
   var markersLayers = {};
+
+  //Αποθήκευση του layer των γραμμών
   markersLayers["Lines"] = L.layerGroup();
 
   var geoJson;
+
+  //Χρήση Fetch API για την παραλαβή των 
+  //δεδομένων του χάρτη από τον server
   fetch('/server/rescuer/rescuer_geojson.php')
     .then(response => response.json())
     .then(data => {
 
       geoJson = data;
+
+      //Προσπέλαση του JSON
       data.features.forEach((feature, index) => {
+
+        //Κατηγορία του feuture
         const category = feature.properties.category;
 
+        //Έλεγχος εάν υπάρχει ήδη αυτή η κατηγορία
+        //ως layergroup
         if (!markersLayers[category]) {
           markersLayers[category] = L.layerGroup();
         }
 
         var check = 0;
 
+        //Έλεγχος εάν ο χρήστης έχει προσφορές και αιτήματα ταυτόχρονα
         data.features.forEach((features_check, index_check) => {
           if (features_check.geometry.coordinates[0] === feature.geometry.coordinates[0] &&
             features_check.geometry.coordinates[1] === feature.geometry.coordinates[1] &&
@@ -59,6 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         });
 
+        //Επιλογή σωστού marker για κάθε κατηγορία feature του GeoJson και αρχικοποίησή του
         const customMarkers = L.marker([feature.geometry.coordinates[0], feature.geometry.coordinates[1]], {
           icon: (function () {
             if (category === "Base") {
@@ -74,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   iconUrl: `/leaflet/images/request-red.png`,
                   iconSize: [40, 40],
                   iconAnchor: [19, 34],
-                  popupAnchor: [2.5, -20]
+                  popupAnchor: [0, -35]
                 });
               } else {
                 return L.icon({
@@ -90,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   iconUrl: '/leaflet/images/request-green.png',
                   iconSize: [40, 40],
                   iconAnchor: [19, 34],
-                  popupAnchor: [0, -15]
+                  popupAnchor: [0, -35]
                 });
               } else {
                 return L.icon({
@@ -106,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   iconUrl: '/leaflet/images/offer-green.png',
                   iconSize: [40, 40],
                   iconAnchor: [20.5, 38],
-                  popupAnchor: [0, -15]
+                  popupAnchor: [0, -35]
                 });
               } else {
                 return L.icon({
@@ -122,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   iconUrl: `/leaflet/images/offer-red.png`,
                   iconSize: [40, 40],
                   iconAnchor: [19, 34],
-                  popupAnchor: [0, -15]
+                  popupAnchor: [0, -35]
                 });
               } else {
                 return L.icon({
@@ -137,14 +156,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 iconUrl: '/leaflet/images/marker-truck-green.png',
                 iconSize: [50, 50],
                 iconAnchor: [25, 43],
-                popupAnchor: [0, -15]
+                popupAnchor: [0, -40]
               });
             } else if (category === "Truck Inactive") {
               return L.icon({
                 iconUrl: '/leaflet/images/marker-truck-red.png',
                 iconSize: [50, 50],
                 iconAnchor: [25, 43],
-                popupAnchor: [0, -15]
+                popupAnchor: [0, -40]
               });
             }
           })(),
@@ -189,9 +208,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (category === "Base") {
 
+          //Τοποθέτηση pop-up
           customMarkers.bindPopup('<strong>Base</strong>');
 
         } else if (category === "Request Pending") {
+
+          //Αρχικοποίηση και τοποθέτηση pop-up
           var requests = [];
           var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
           <strong>Citizen</strong><br>
@@ -225,8 +247,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
           customMarkers.bindPopup(info_citizen);
           customMarkers.options.request_id = requests;
-          
+
         } else if (category === "Request Accepted") {
+
+          //Αρχικοποίηση και τοποθέτηση pop-up
           var requests = [];
           var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
           <strong>Citizen</strong><br>
@@ -250,6 +274,8 @@ document.addEventListener('DOMContentLoaded', function () {
           customMarkers.bindPopup(info_citizen);
           customMarkers.options.request_id = requests;
         } else if (category === "Offer Accepted") {
+
+          //Αρχικοποίηση και τοποθέτηση pop-up
           var offers = [];
           var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
           <strong>Citizen</strong><br>
@@ -277,6 +303,8 @@ document.addEventListener('DOMContentLoaded', function () {
           customMarkers.options.offer_id = offers;
 
         } else if (category === "Offer Pending") {
+
+          //Αρχικοποίηση και τοποθέτηση pop-up
           var offers = [];
           var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
           <strong>Citizen</strong><br>
@@ -296,10 +324,12 @@ document.addEventListener('DOMContentLoaded', function () {
                <strong>Quantity:</strong> ${item.quantity}<br>`
               });
 
-              info_citizen = info_citizen + info + ` <button id="${offer.offer_id}">Accept</button><br>`
+              info_citizen = info_citizen + info + ` <button id="${offer.offer_id}">Αποδοχή</button><br>`
                 + ` ----------------------------------`;
               offers.push(offer.offer_id);
             } else {
+
+              //Αρχικοποίηση και τοποθέτηση pop-up
               var info = `<br><strong>Offer</strong><br>
               <strong>Submission date:</strong> ${offer.submission_date}<br>
               <strong>Pickup date:</strong> ${offer.pickup_date}<br>
@@ -318,6 +348,8 @@ document.addEventListener('DOMContentLoaded', function () {
           customMarkers.bindPopup(info_citizen);
           customMarkers.options.offer_id = offers;
         } else if (category === "Truck Active") {
+
+          //Αρχικοποίηση και τοποθέτηση pop-up
           var info_truck = `<div style="max-height: 150px; overflow-y: auto;">
           <strong>Truck</strong><br>
           <strong>Username:</strong> ${feature.properties.vehicle_username}<br>
@@ -338,6 +370,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
           }
 
+          //Τοποθέτηση γραμμών στον χάρτη προς τα αιτήματα
           feature.properties.requests.forEach((cargo) => {
             data.features.forEach((detail) => {
 
@@ -361,8 +394,8 @@ document.addEventListener('DOMContentLoaded', function () {
             });
           });
 
+          //Τοποθέτηση γραμμών στον χάρτη προς τις προσφορές
           feature.properties.offers.forEach((cargo) => {
-
             data.features.forEach((detail) => {
               if (detail.properties.category === "Offer Pending" || detail.properties.category === "Offer Accepted") {
                 detail.properties.details.forEach((id) => {
@@ -389,6 +422,8 @@ document.addEventListener('DOMContentLoaded', function () {
           info_truck = info_truck + `</div>`;
           customMarkers.bindPopup(info_truck);
         } else if (category === "Truck Inactive") {
+
+          //Αρχικοποίηση και τοποθέτηση pop-up
           var info_truck = `<div style="max-height: 150px; overflow-y: auto;">
           <strong>Truck</strong><br>
           <strong>Username:</strong> ${feature.properties.vehicle_username}<br>
@@ -412,13 +447,15 @@ document.addEventListener('DOMContentLoaded', function () {
           customMarkers.bindPopup(info_truck);
         }
 
-
+        //Τοποθέτηση marker στον χάρτη
         markersLayers[category].addLayer(customMarkers);
         markersLayers[category].addTo(map);
 
 
         if (category === "Request Pending") {
 
+          //Event Listener που ελέγχει εάν ένα όχημα μπορεί να αναλάβει
+          //το αίτημα
           customMarkers.on('popupopen', function () {
             customMarkers.options.request_id.forEach(id => {
               data.features.forEach(feature => {
@@ -434,6 +471,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 request: detail.request_id,
                               };
 
+                              //Αποστολή στον server για αποδοχή του task
                               fetch("/server/rescuer/accept_request.php", {
                                 method: "POST",
                                 headers: {
@@ -449,7 +487,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 })
                                 .catch((error) => console.error("Error:", error));
                             } else {
-                              alert("Τhe vehicle has the maximum tasks it can receive")
+                              alert("Το όχημα δεν μπορεί να αναλάβει άλλο task");
                             }
                           }
                         })
@@ -462,15 +500,15 @@ document.addEventListener('DOMContentLoaded', function () {
           });
         } else if (category === "Offer Pending") {
 
+          //Event Listener που ελέγχει εάν ένα όχημα μπορεί να αναλάβει
+          //την προσφορά
           customMarkers.on('popupopen', function () {
             customMarkers.options.offer_id.forEach(id => {
               data.features.forEach(feature => {
                 if (feature.properties.category === "Offer Pending") {
                   feature.properties.details.forEach(detail => {
-
                     if (detail.offer_id === id && detail.vehicle_id === null) {
                       document.getElementById(id).addEventListener('click', function () {
-
                         data.features.forEach(feature => {
                           if (feature.properties.category === "Truck Active" || feature.properties.category === "Truck Inactive") {
                             if ((feature.properties.requests.length + feature.properties.offers.length) < 4) {
@@ -479,6 +517,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 offer: detail.offer_id,
                               };
 
+                              //Αποστολή στον server για την αποδοχή του task
                               fetch("/server/rescuer/accept_offer.php", {
                                 method: "POST",
                                 headers: {
@@ -489,12 +528,13 @@ document.addEventListener('DOMContentLoaded', function () {
                                 .then((response) => response.json())
                                 .then((data) => {
 
+                                  //Συνάρτηση που ανανεώνει τον χάρτη
                                   mapPanelRefresh();
 
                                 })
                                 .catch((error) => console.error("Error:", error));
                             } else {
-                              alert("Τhe vehicle has the maximum tasks it can receive")
+                              alert("Το όχημα δεν μπορεί να αναλάβει άλλο task")
                             }
                           }
                         })
@@ -510,6 +550,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (category === "Truck Active") {
+
+          //Event listener που ενημερώνει τις γραμμές ανάλογα με την θέση του
+          //marker του οχήαμτος
           customMarkers.on('drag', function (event) {
             const marker = event.target;
             const position = marker.getLatLng();
@@ -548,18 +591,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+          //Event Listener που αποστέλει την θέση του οχήματος στον server
           customMarkers.on('dragend', function (event) {
             const marker = event.target;
 
             if (marker.options.category === "Truck Active") {
               const position = marker.getLatLng();
 
+              //Συλογή δεδομένων για αποστολή
               const data = {
                 id: marker.options.id,
                 lat: position.lat,
                 lng: position.lng,
               };
 
+              //Αποστολή των δεδομένων στον server
               fetch("/server/map_admin/truck_upload.php", {
                 method: "POST",
                 headers: {
@@ -578,18 +624,22 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (category === "Truck Inactive") {
+
+          //Event Listener που αποστέλει την θέση του οχήματος στον server
           customMarkers.on('dragend', function (event) {
             const marker = event.target;
 
             if (marker.options.category === "Truck Inactive") {
               const position = marker.getLatLng();
 
+              //Συλογή δεδομένων για αποστολή
               const data = {
                 id: marker.options.id,
                 lat: position.lat,
                 lng: position.lng,
               };
 
+              //Αποστολή των δεδομένων στον server
               fetch("/server/map_admin/truck_upload.php", {
                 method: "POST",
                 headers: {
@@ -607,8 +657,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
 
+      //Μεταβλητή που αποθηκεύει την απόσταση
       var distanceMarker;
 
+      //Υπολογισμός της απόστασης από την βάση
       if ("Truck Active" in markersLayers) {
         markersLayers["Truck Active"].eachLayer(truck => {
 
@@ -620,6 +672,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
       }
 
+      //Υπολογισμός της απόστασης από την βάση
       if ("Truck Inactive" in markersLayers) {
         markersLayers["Truck Inactive"].eachLayer(truck => {
 
@@ -631,6 +684,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
       }
 
+      //Ενεργοποίηση/Απενεργοποίηση των κουμπιών φόρτωση και εκφόρτωση
       if (distanceMarker < 100) {
         document.getElementById("load").disabled = false;
         document.getElementById("unload").disabled = false;
@@ -639,14 +693,17 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById("unload").disabled = true;
       }
 
+
       if ("Truck Active" in markersLayers) {
         markersLayers["Truck Active"].eachLayer(truck => {
 
           markersLayers["Base"].eachLayer(Base => {
 
+            //Υπολογισμός απόστασης του οχήματος από την βάση
             truck.on("drag", function () {
               distanceMarker = truck.getLatLng().distanceTo(Base.getLatLng());
 
+              //Ενεργοποίηση/Απενεργοποίηση των κουμπιών φόρτωση και εκφόρτωση
               if (distanceMarker < 100) {
                 document.getElementById("load").disabled = false;
                 document.getElementById("unload").disabled = false;
@@ -665,9 +722,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
           markersLayers["Base"].eachLayer(Base => {
 
+            //Υπολογισμός απόστασης του οχήματος από την βάση
             truck.on("drag", function () {
               distanceMarker = truck.getLatLng().distanceTo(Base.getLatLng());
 
+              //Ενεργοποίηση/Απενεργοποίηση των κουμπιών φόρτωση και εκφόρτωση
               if (distanceMarker < 100) {
                 document.getElementById("load").disabled = false;
                 document.getElementById("unload").disabled = false;
@@ -681,7 +740,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
       }
 
-
+      //Event listener που διαγράφει συγκεκριμένες γραμμές στον χάρτη
       map.on('layerremove', function (event) {
         var removedLayer = event.layer;
         layerSelected[removedLayer.options.category] = false;
@@ -736,6 +795,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
 
+      //Event listener που εμφανίζει συγκεκριμένες γραμμές στον χάρτη
       map.on('layeradd', function (event) {
         var addLayer = event.layer;
 
@@ -793,17 +853,24 @@ document.addEventListener('DOMContentLoaded', function () {
             })
           });
         } else if (addLayer.options.category === "Truck Inactive") {
+          //Αλλαγή μεταβλητής στο Oject σε true
           layerSelected[addLayer.options.category] = true;
         } else if (addLayer.options.category === "Lines") {
           layerSelected[addLayer.options.category] = true;
         }
       });
 
+      //Τοποθέτηση γραμμών στον χάρτη
       markersLayers["Lines"].addTo(map);
+
+      //Τοποθέτηση Φίλτρων στον χάρτη
       map_control = L.control.layers(null, markersLayers).addTo(map);
 
+      //Εμφάνιση φορτίου του οχήματος
       truck_cargo(data);
 
+      //Επικοινωνία με τον server για εμφάνιση των tasks που
+      //έχει αναλάβει το όχημα
       fetch("/server/rescuer/rescuer_tasks.php")
         .then(response => response.json())
         .then(data => {
@@ -812,6 +879,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
           panel.innerHTML = "";
 
+          //Δημιουργία του πίνακα
           data.requests.forEach(request => {
             const row_table = document.createElement("tr");
             const name = document.createElement("td");
@@ -830,8 +898,8 @@ document.addEventListener('DOMContentLoaded', function () {
             item.textContent = request.item_name
             quantity.textContent = request.quantity;
             action.innerHTML = `
-          <button id="request_${request.request_id}_accept">Complete</button>
-          <button id="request_${request.request_id}_cancel">Cancel</button>`;
+          <button id="request_${request.request_id}_accept">Ολοκλήρωση</button>
+          <button id="request_${request.request_id}_cancel">Ακύρωση</button>`;
 
             row_table.appendChild(name);
             row_table.appendChild(phone_number);
@@ -842,13 +910,16 @@ document.addEventListener('DOMContentLoaded', function () {
             row_table.appendChild(action);
             panel.appendChild(row_table);
 
+
+            //Event Listener για την ακύρωση κάποιου αιτήματος
             document.getElementById(`request_${request.request_id}_cancel`).addEventListener("click", function () {
 
               const data = {
                 id: request.request_id,
               };
 
-
+              //Επικοινωνία με τον server για την ακύρωση του
+              //αιτήματος
               fetch("/server/rescuer/cancel_request.php", {
                 method: "POST",
                 headers: {
@@ -863,8 +934,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 .catch((error) => console.error("Error:", error));
             });
 
+            //Αποθήκευση απόστασης
             var distanceMarker;
 
+            //Υπολογισμός απόστασης από το αίτημα
             if ("Request Pending" in markersLayers) {
               markersLayers["Truck Active"].eachLayer(layer => {
 
@@ -880,11 +953,10 @@ document.addEventListener('DOMContentLoaded', function () {
               });
             }
 
+            //Υπολογισμός απόστασης από το αίτημα
             if ("Request Accepted" in markersLayers) {
               markersLayers["Truck Active"].eachLayer(layer => {
-
                 markersLayers["Request Accepted"].eachLayer(requestLayerAccepted => {
-
                   requestLayerAccepted.options.request_id.forEach(idCheck => {
 
                     if (idCheck === request.request_id) {
@@ -895,18 +967,21 @@ document.addEventListener('DOMContentLoaded', function () {
               });
             }
 
+            //Υπολογισμός της απόστασης από το αίτημα όταν
+            //μετακινηθεί το όχημα
             if ("Request Pending" in markersLayers) {
               markersLayers["Truck Active"].eachLayer(layer => {
 
+                //Event Listener που ενεργοποιείται όταν μετακίνηται το όχημα
                 layer.on("drag", function () {
-
                   markersLayers["Request Pending"].eachLayer(requestLayerPending => {
-
                     requestLayerPending.options.request_id.forEach(idCheck => {
 
                       if (idCheck === request.request_id) {
                         distanceMarker = layer.getLatLng().distanceTo(requestLayerPending.getLatLng());
                       }
+
+                      //Ενεργοποίηση/Απενεργοποίηση του κουμπιού αποδοχή
                       if (distanceMarker > 50) {
                         document.getElementById(`request_${request.request_id}_accept`).disabled = true;
                       } else {
@@ -918,18 +993,21 @@ document.addEventListener('DOMContentLoaded', function () {
               });
             }
 
+            //Υπολογισμός της απόστασης από το αίτημα όταν
+            //μετακινηθεί το όχημα
             if ("Request Accepted" in markersLayers) {
               markersLayers["Truck Active"].eachLayer(layer => {
 
+                //Event Listener που ενεργοποιείται όταν μετακίνηται το όχημα
                 layer.on("drag", function () {
-
                   markersLayers["Request Accepted"].eachLayer(requestLayerAccepted => {
-
                     requestLayerAccepted.options.request_id.forEach(idCheck => {
 
                       if (idCheck === request.request_id) {
                         distanceMarker = layer.getLatLng().distanceTo(requestLayerAccepted.getLatLng());
                       }
+
+                      //Ενεργοποίηση/Απενεργοποίηση του κουμπιού αποδοχή
                       if (distanceMarker > 50) {
                         document.getElementById(`request_${request.request_id}_accept`).disabled = true;
                       } else {
@@ -941,6 +1019,7 @@ document.addEventListener('DOMContentLoaded', function () {
               });
             }
 
+            //Ενεργοποίηση/Απενεργοποίηση του κουμπιού αποδοχή
             if (distanceMarker > 50) {
               document.getElementById(`request_${request.request_id}_accept`).disabled = true;
             } else {
@@ -948,27 +1027,39 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
 
+            //Event Listener για την ολοκήρωση κάποιου αιτήματος
             document.getElementById(`request_${request.request_id}_accept`).addEventListener("click", function () {
 
               var item_check = 0;
               var quantity_check = 0;
               var cargo_quantity;
+
+              //Έλεγχος εάν το όχημα έχει το είδος και στην ποσότητα
+              //που απαιτείται
               geoJson.features.forEach(features => {
                 if (features.properties.category === "Truck Active") {
                   features.properties.cargo.forEach(cargo => {
+
+                    //Έλεγχος για το είδος
                     if (cargo.item_id === request.item_id) {
                       item_check = 1;
                       cargo_quantity = cargo.quantity;
+
+                      //Έλεγχος ποσότητας
                       if (cargo.quantity >= request.quantity) {
 
                         quantity_check = 1;
 
+                        //Δεδομένα για αποστολή στον 
+                        //server
                         const data = {
                           id: request.request_id,
                           quantity: request.quantity,
                           item_id: request.item_id,
                         };
 
+                        //Επικοινωνία με τον server για ολοκλήρωση του
+                        //αιτήματος
                         fetch("/server/rescuer/complete_request.php", {
                           method: "POST",
                           headers: {
@@ -981,36 +1072,42 @@ document.addEventListener('DOMContentLoaded', function () {
                             if (data.status === "error") {
                               console.error("Server Error:", data.Error);
                             } else {
-                              alert("Request Complete");
+
+                              alert("Το αίτημα ολοκληρώθηκε");
+
+                              //Ανανέωση χάρτη
                               mapPanelRefresh();
 
+                              //Επικοινωνία με τον server για ανανέωση
+                              //του φορτίου του οχήματος
                               fetch("/server/rescuer/rescuer_geojson.php")
                                 .then((response) => response.json())
                                 .then((cargo) => {
 
+                                  //Ανανέωση φορτίου
                                   truck_cargo(cargo);
-
                                 })
                                 .catch((error) => console.error("Error:", error))
                             }
                           })
                           .catch((error) => console.error("Error:", error));
-
                       }
                     }
                   });
                 }
               });
 
+              //Εμφάνισει ειδοποιήσεων προς τον χρήστη για αποτυχία ολοκλήρωσης του αιτήματος
               if (item_check === 0) {
-                alert(`The truck do not have the item ${request.item_name} to complete request`);
+                alert(`Το όχημα δεν έχει το προιόν "${request.item_name}" για να ολοκληρώσει το αίτημα`);
               } else if (quantity_check === 0) {
-                alert(`The truck do not have the quantity of the item to complete request (Request: ${request.quantity}, Truck: ${cargo_quantity})`);
+                alert(`Το όχημα δεν έχει την ποσότητα που απαιτείται για να ολοκληρωσει το αίτημα (Αίτημα: ${request.quantity}, Όχημα: ${cargo_quantity})`);
               }
 
             });
           });
 
+          //Δημιουργία πίνακα για την εμφάνιση των προσφορών
           data.offers.forEach(offer => {
             const row_table = document.createElement("tr");
             const name = document.createElement("td");
@@ -1052,12 +1149,15 @@ document.addEventListener('DOMContentLoaded', function () {
             panel.appendChild(row_table);
 
 
+            //Event Listener το οποίο ακυρώνει κάποια προσφορά που έχει αναλάβει το όχημα
             document.getElementById(`offer_${offer.offer_id}_cancel`).addEventListener("click", function () {
 
+              //Συλλογή δεδομένων
               const data = {
                 id: offer.offer_id,
               };
 
+              //Επικοινωνία με τον server για την ακύρωση ανάληψης της προσφοράς
               fetch("/server/rescuer/cancel_offer.php", {
                 method: "POST",
                 headers: {
@@ -1068,14 +1168,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then((response) => response.json())
                 .then((data) => {
 
+                  //Ανανέωση του χάρτη
                   mapPanelRefresh();
 
                 })
                 .catch((error) => console.error("Error:", error));
             });
 
+
             var distanceMarker;
 
+            //Εύρεση απόστασης του οχήματος από την προσφορά
             if ("Offer Pending" in markersLayers) {
               markersLayers["Truck Active"].eachLayer(layer => {
 
@@ -1091,6 +1194,7 @@ document.addEventListener('DOMContentLoaded', function () {
               });
             }
 
+            //Εύρεση απόστασης του οχήματος από την προσφορά
             if ("Offer Accepted" in markersLayers) {
               markersLayers["Truck Active"].eachLayer(layer => {
 
@@ -1106,18 +1210,22 @@ document.addEventListener('DOMContentLoaded', function () {
               });
             }
 
+
+            //Εύρεση απόστασης του οχήματος από την προσφορά
             if ("Offer Pending" in markersLayers) {
               markersLayers["Truck Active"].eachLayer(layer => {
 
+                //Event listener που υπολογίζει την απόσταση από τη προσφορά όταν
+                //το όχημα μετακινηθεί
                 layer.on("drag", function () {
-
                   markersLayers["Offer Pending"].eachLayer(offerLayerPending => {
-
                     offerLayerPending.options.offer_id.forEach(idCheck => {
 
                       if (idCheck === offer.offer_id) {
                         distanceMarker = layer.getLatLng().distanceTo(offerLayerPending.getLatLng());
                       }
+
+                      //Ενεργοποίηση/Απενεργοποίηση του κουμπιου ολοκλήρωσης της προσφοράς
                       if (distanceMarker > 50) {
                         document.getElementById(`offer_${offer.offer_id}_accept`).disabled = true;
                       } else {
@@ -1129,11 +1237,13 @@ document.addEventListener('DOMContentLoaded', function () {
               });
             }
 
+            //Εύρεση απόστασης του οχήματος από την προσφορά
             if ("Offer Accepted" in markersLayers) {
               markersLayers["Truck Active"].eachLayer(layer => {
 
+                //Event listener που υπολογίζει την απόσταση από τη προσφορά όταν
+                //το όχημα μετακινηθεί
                 layer.on("drag", function () {
-
                   markersLayers["Offer Accepted"].eachLayer(offerLayerAccepted => {
 
                     offerLayerAccepted.options.offer_id.forEach(idCheck => {
@@ -1141,6 +1251,8 @@ document.addEventListener('DOMContentLoaded', function () {
                       if (idCheck === offer.offer_id) {
                         distanceMarker = layer.getLatLng().distanceTo(offerLayerAccepted.getLatLng());
                       }
+
+                      //Ενεργοποίηση/Απενεργοποίηση του κουμπιου ολοκλήρωσης της προσφοράς
                       if (distanceMarker > 50) {
                         document.getElementById(`offer_${offer.offer_id}_accept`).disabled = true;
                       } else {
@@ -1152,16 +1264,17 @@ document.addEventListener('DOMContentLoaded', function () {
               });
             }
 
+            //Ενεργοποίηση/Απενεργοποίηση του κουμπιου ολοκλήρωσης της προσφοράς
             if (distanceMarker > 50) {
               document.getElementById(`offer_${offer.offer_id}_accept`).disabled = true;
             } else {
               document.getElementById(`offer_${offer.offer_id}_accept`).disabled = false;
             }
 
-
+            //Event Listener για την ολοκλήρωση κάποιας προσφοράς
             document.getElementById(`offer_${offer.offer_id}_accept`).addEventListener("click", function () {
 
-
+              //Συλλογή δεδομένων και αποστολή στον server
               offer.items.forEach(item => {
 
                 const data = {
@@ -1170,6 +1283,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   item_id: item.item_id,
                 };
 
+                //Επικοινωνία με τον server για ολκλήρωση της προσφοράς
                 fetch("/server/rescuer/complete_offer.php", {
                   method: "POST",
                   headers: {
@@ -1187,19 +1301,22 @@ document.addEventListener('DOMContentLoaded', function () {
                   })
                   .catch((error) => console.error("Error:", error));
               });
-              alert("Offer Complete");
+
+              alert("Η προσφορά ολοκληρώθηκε");
+              
+              //Ανανέωση του χάρτη
               mapPanelRefresh();
 
               fetch("/server/rescuer/rescuer_geojson.php")
                 .then((response) => response.json())
                 .then((cargo) => {
 
+                  //Ανανέωση φορτίου του οχήματος
                   truck_cargo(cargo);
 
                 })
                 .catch((error) => console.error("Error:", error))
             });
-
           });
         })
         .catch(error => console.error('Error:', error));
@@ -1207,6 +1324,8 @@ document.addEventListener('DOMContentLoaded', function () {
     .catch(error => console.error('Error:', error));
 
 
+  //Επικοινωνία με τον server για την εμφάνισης των ειδών
+  //της αποθήκης
   fetch("/server/rescuer/database_extract.php")
     .then((jsonResponse) => jsonResponse.json())
     .then((data) => {
@@ -1215,8 +1334,12 @@ document.addEventListener('DOMContentLoaded', function () {
       } else {
         if (data.categories.length !== 0 && data.items.length !== 0) {
 
+          //Συνάρτηση που τοποθετεί τις κατηγορίες των ειδών σε λίστα
           categories_select(data);
+
           var selected_cat = document.getElementById("categorySelect").value;
+
+          //Εμφάνιση των ειδών της επιλεγμένης κατηγορίας
           items_select(data, selected_cat);
         } else {
           const list = document.getElementById("categorySelect");
@@ -1233,20 +1356,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-
+//Συνάρτηση η οποία ανανεώνει τον πίνακα
 function mapPanelRefresh() {
 
+  //Μεταβλητή που περιέχει τις κατηγορίες των markers
+  //που θα υπάρχουν στον χάρτη
   var markersLayers = {};
+
   var geoJson;
 
+  //Χρήση Fetch API για την παραλαβή των 
+  //δεδομένων του χάρτη από τον server
   fetch('/server/rescuer/rescuer_geojson.php')
     .then(response => response.json())
     .then(data => {
       geoJson = data;
+
+      //Διαγραφή των προηγούμεων φίλτρων από τον χάρτη
       map.removeControl(map_control);
 
-
-
+      //Αρχικοποίηση Object για την  
+      //λειτουργία των φίλτρων του χάρτη
       var layerSelected_tmp = {
         "Request Pending": false,
         "Request Accepted": false,
@@ -1258,36 +1388,46 @@ function mapPanelRefresh() {
         "Base": false,
       };
 
+      //Πέρασμα των τιμών των μεταβλητών
+      //σε προσωρινό Object
       for (var key in layerSelected) {
         if (layerSelected.hasOwnProperty(key)) {
           layerSelected_tmp[key] = layerSelected[key];
         }
       }
 
+      //Αφαίρεση των υπάρχων Layer από τον χάρτη
       map.eachLayer(function (layer) {
         if (layer instanceof L.Marker || layer instanceof L.Polyline) {
           map.removeLayer(layer);
         }
       });
 
+      //Μεταφορά των τιμών των μεταβλητών στο αρχικό Object
       for (var key in layerSelected_tmp) {
         if (layerSelected_tmp.hasOwnProperty(key)) {
           layerSelected[key] = layerSelected_tmp[key];
         }
       }
 
+      //Αποθήκευση του layer των γραμμών
       markersLayers["Lines"] = L.layerGroup();
 
-
+      //Προσπέλαση του JSON
       data.features.forEach((feature, index) => {
+
+        //Κατηγορία του feuture
         const category = feature.properties.category;
 
+        //Έλεγχος εάν υπάρχει ήδη αυτή η κατηγορία
+        //ως layergroup
         if (!markersLayers[category]) {
           markersLayers[category] = L.layerGroup();
         }
 
         var check = 0;
 
+        //Έλεγχος εάν ο χρήστης έχει προσφορές και αιτήματα ταυτόχρονα
         data.features.forEach((features_check, index_check) => {
           if (features_check.geometry.coordinates[0] === feature.geometry.coordinates[0] &&
             features_check.geometry.coordinates[1] === feature.geometry.coordinates[1] &&
@@ -1298,6 +1438,7 @@ function mapPanelRefresh() {
 
         });
 
+        //Επιλογή σωστού marker για κάθε κατηγορία feature του GeoJson και αρχικοποίησή του
         const customMarkers = L.marker([feature.geometry.coordinates[0], feature.geometry.coordinates[1]], {
           icon: (function () {
             if (category === "Base") {
@@ -1428,9 +1569,12 @@ function mapPanelRefresh() {
 
         if (category === "Base") {
 
+          //Τοποθέτηση pop-up
           customMarkers.bindPopup('<strong>Base</strong>');
 
         } else if (category === "Request Pending") {
+
+          //Αρχικοποίηση και τοποθέτηση pop-up
           var requests = [];
           var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
             <strong>Citizen</strong><br>
@@ -1444,7 +1588,7 @@ function mapPanelRefresh() {
               <strong>Submission date:</strong> ${request.submission_date}<br>
               <strong>Item:</strong> ${request.item_name}<br>
               <strong>Quantity:</strong> ${request.quantity}<br>
-              <button id="${request.request_id}">Accept</button><br>
+              <button id="${request.request_id}">Αποδοχή</button><br>
               ----------------------------------`;
 
             } else {
@@ -1468,8 +1612,9 @@ function mapPanelRefresh() {
           customMarkers.options.request_id = requests;
 
 
-
         } else if (category === "Request Accepted") {
+
+          //Αρχικοποίηση και τοποθέτηση pop-up
           var requests = [];
           var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
             <strong>Citizen</strong><br>
@@ -1493,6 +1638,8 @@ function mapPanelRefresh() {
           customMarkers.bindPopup(info_citizen);
           customMarkers.options.request_id = requests;
         } else if (category === "Offer Accepted") {
+
+          //Αρχικοποίηση και τοποθέτηση pop-up
           var offers = [];
           var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
             <strong>Citizen</strong><br>
@@ -1520,6 +1667,8 @@ function mapPanelRefresh() {
           customMarkers.options.offer_id = offers;
 
         } else if (category === "Offer Pending") {
+
+          //Αρχικοποίηση και τοποθέτηση pop-up
           var offers = [];
           var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
               <strong>Citizen</strong><br>
@@ -1561,6 +1710,8 @@ function mapPanelRefresh() {
           customMarkers.bindPopup(info_citizen);
           customMarkers.options.offer_id = offers;
         } else if (category === "Truck Active") {
+
+          //Αρχικοποίηση και τοποθέτηση pop-up
           var info_truck = `<div style="max-height: 150px; overflow-y: auto;">
             <strong>Truck</strong><br>
             <strong>Username:</strong> ${feature.properties.vehicle_username}<br>
@@ -1581,6 +1732,7 @@ function mapPanelRefresh() {
             });
           }
 
+          //Τοποθέτηση γραμμών στον χάρτη προς τα αιτήματα
           feature.properties.requests.forEach((cargo) => {
             data.features.forEach((detail) => {
 
@@ -1604,8 +1756,8 @@ function mapPanelRefresh() {
             });
           });
 
+          //Τοποθέτηση γραμμών στον χάρτη προς τις προσφορές
           feature.properties.offers.forEach((cargo) => {
-
             data.features.forEach((detail) => {
               if (detail.properties.category === "Offer Pending" || detail.properties.category === "Offer Accepted") {
                 detail.properties.details.forEach((id) => {
@@ -1632,12 +1784,13 @@ function mapPanelRefresh() {
           info_truck = info_truck + `</div>`;
           customMarkers.bindPopup(info_truck);
         } else if (category === "Truck Inactive") {
+
+          //Αρχικοποίηση και τοποθέτηση pop-up
           var info_truck = `<div style="max-height: 150px; overflow-y: auto;">
           <strong>Truck</strong><br>
           <strong>Username:</strong> ${feature.properties.vehicle_username}<br>
           <strong>Status:</strong> ${feature.properties.category}<br>
           ----------------------------------`;
-
 
           if (feature.properties.cargo.length === 0) {
             var info = `<br>The truck do not have any cargo`
@@ -1656,6 +1809,7 @@ function mapPanelRefresh() {
         }
 
 
+        //Τοποθέτηση marker στον χάρτη
         markersLayers[category].addLayer(customMarkers);
 
         if (layerSelected[category] === true) {
@@ -1663,10 +1817,14 @@ function mapPanelRefresh() {
         }
 
 
+
         if (category === "Request Pending") {
 
           customMarkers.on('popupopen', function () {
 
+
+            //Event Listener που ελέγχει εάν ένα όχημα μπορεί να αναλάβει
+            //το αίτημα
             customMarkers.options.request_id.forEach(id => {
               data.features.forEach(feature => {
                 if (feature.properties.category === "Request Pending") {
@@ -1681,6 +1839,7 @@ function mapPanelRefresh() {
                                 request: detail.request_id,
                               };
 
+                              //Αποστολή στον server για αποδοχή του task
                               fetch("/server/rescuer/accept_request.php", {
                                 method: "POST",
                                 headers: {
@@ -1696,7 +1855,7 @@ function mapPanelRefresh() {
                                 })
                                 .catch((error) => console.error("Error:", error));
                             } else {
-                              alert("Τhe vehicle has the maximum tasks it can receive")
+                              alert("Το όχημα δεν μπορεί να αναλάβει άλλο task");
                             }
                           }
                         })
@@ -1709,6 +1868,8 @@ function mapPanelRefresh() {
           });
         } else if (category === "Offer Pending") {
 
+          //Event Listener που ελέγχει εάν ένα όχημα μπορεί να αναλάβει
+          //την προσφορά
           customMarkers.on('popupopen', function () {
             customMarkers.options.offer_id.forEach(id => {
               data.features.forEach(feature => {
@@ -1724,6 +1885,7 @@ function mapPanelRefresh() {
                                 offer: detail.offer_id,
                               };
 
+                              //Αποστολή στον server για την αποδοχή του task
                               fetch("/server/rescuer/accept_offer.php", {
                                 method: "POST",
                                 headers: {
@@ -1734,12 +1896,13 @@ function mapPanelRefresh() {
                                 .then((response) => response.json())
                                 .then((data) => {
 
+                                  //Συνάρτηση που ανανεώνει τον χάρτη
                                   mapPanelRefresh();
 
                                 })
                                 .catch((error) => console.error("Error:", error));
                             } else {
-                              alert("Τhe vehicle has the maximum tasks it can receive")
+                              alert("Το όχημα δεν μπορεί να αναλάβει άλλο task");
                             }
                           }
                         })
@@ -1752,7 +1915,12 @@ function mapPanelRefresh() {
           });
         }
 
+
+
         if (category === "Truck Active") {
+
+          //Event listener που ενημερώνει τις γραμμές ανάλογα με την θέση του
+          //marker του οχήαμτος
           customMarkers.on('drag', function (event) {
             const marker = event.target;
             const position = marker.getLatLng();
@@ -1790,18 +1958,22 @@ function mapPanelRefresh() {
 
           });
 
+          //Event Listener που αποστέλει την θέση του οχήματος στον server
           customMarkers.on('dragend', function (event) {
             const marker = event.target;
 
             if (marker.options.category === "Truck Active") {
+
               const position = marker.getLatLng();
 
+              //Συλογή δεδομένων για αποστολή
               const data = {
                 id: marker.options.id,
                 lat: position.lat,
                 lng: position.lng,
               };
 
+              //Αποστολή των δεδομένων στον server
               fetch("/server/map_admin/truck_upload.php", {
                 method: "POST",
                 headers: {
@@ -1820,18 +1992,23 @@ function mapPanelRefresh() {
         }
 
         if (category === "Truck Inactive") {
+
+          //Event Listener που αποστέλει την θέση του οχήματος στον server
           customMarkers.on('dragend', function (event) {
             const marker = event.target;
 
             if (marker.options.category === "Truck Inactive") {
+
               const position = marker.getLatLng();
 
+              //Συλογή δεδομένων για αποστολή
               const data = {
                 id: marker.options.id,
                 lat: position.lat,
                 lng: position.lng,
               };
 
+              //Αποστολή των δεδομένων στον server
               fetch("/server/map_admin/truck_upload.php", {
                 method: "POST",
                 headers: {
@@ -1851,6 +2028,7 @@ function mapPanelRefresh() {
       });
 
 
+      //Event listener που διαγράφει συγκεκριμένες γραμμές στον χάρτη
       map.on('layerremove', function (event) {
         var removedLayer = event.layer;
         layerSelected[removedLayer.options.category] = false;
@@ -1907,6 +2085,7 @@ function mapPanelRefresh() {
         }
       });
 
+      //Event listener που εμφανίζει συγκεκριμένες γραμμές στον χάρτη
       map.on('layeradd', function (event) {
         var addLayer = event.layer;
 
@@ -2069,12 +2248,16 @@ function mapPanelRefresh() {
         }
       }
 
-
+      //Τοποθέτηση Φίλτρων στον χάρτη
       map_control = L.control.layers(null, markersLayers).addTo(map);
 
+      //Ανανέωση εμφάνισης του φορτίου του οχήματος
       truck_cargo(data);
+
+      //Μεταβλητή που αποθηκεύει την απόσταση
       var distanceMarker;
 
+      //Υπολογισμός της απόστασης από την βάση
       if ("Truck Active" in markersLayers) {
         markersLayers["Truck Active"].eachLayer(truck => {
 
@@ -2086,6 +2269,7 @@ function mapPanelRefresh() {
         })
       }
 
+      //Υπολογισμός της απόστασης από την βάση
       if ("Truck Inactive" in markersLayers) {
         markersLayers["Truck Inactive"].eachLayer(truck => {
 
@@ -2097,6 +2281,7 @@ function mapPanelRefresh() {
         })
       }
 
+      //Ενεργοποίηση/Απενεργοποίηση των κουμπιών φόρτωση και εκφόρτωση
       if (distanceMarker < 100) {
         document.getElementById("load").disabled = false;
         document.getElementById("unload").disabled = false;
@@ -2110,9 +2295,11 @@ function mapPanelRefresh() {
 
           markersLayers["Base"].eachLayer(Base => {
 
+            //Υπολογισμός απόστασης του οχήματος από την βάση
             truck.on("drag", function () {
               distanceMarker = truck.getLatLng().distanceTo(Base.getLatLng());
 
+              //Ενεργοποίηση/Απενεργοποίηση των κουμπιών φόρτωση και εκφόρτωση
               if (distanceMarker < 100) {
                 document.getElementById("load").disabled = false;
                 document.getElementById("unload").disabled = false;
@@ -2131,9 +2318,11 @@ function mapPanelRefresh() {
 
           markersLayers["Base"].eachLayer(Base => {
 
+            //Υπολογισμός απόστασης του οχήματος από την βάση
             truck.on("drag", function () {
               distanceMarker = truck.getLatLng().distanceTo(Base.getLatLng());
 
+              //Ενεργοποίηση/Απενεργοποίηση των κουμπιών φόρτωση και εκφόρτωση
               if (distanceMarker < 100) {
                 document.getElementById("load").disabled = false;
                 document.getElementById("unload").disabled = false;
@@ -2147,8 +2336,11 @@ function mapPanelRefresh() {
         })
       }
 
+      //Καθαρισμός του πίνακα
       document.getElementById("tasks_info").innerHTML = "";
 
+      //Επικοινωνία με τον server για εμφάνιση των tasks που
+      //έχει αναλάβει το όχημα
       fetch("/server/rescuer/rescuer_tasks.php")
         .then(response => response.json())
         .then(data => {
@@ -2157,6 +2349,7 @@ function mapPanelRefresh() {
 
           panel.innerHTML = "";
 
+          //Δημιουργία του πίνακα
           data.requests.forEach(request => {
             const row_table = document.createElement("tr");
             const name = document.createElement("td");
@@ -2175,8 +2368,8 @@ function mapPanelRefresh() {
             item.textContent = request.item_name
             quantity.textContent = request.quantity;
             action.innerHTML = `
-              <button id="request_${request.request_id}_accept">Complete</button>
-              <button id="request_${request.request_id}_cancel">Cancel</button>`;
+              <button id="request_${request.request_id}_accept">Ολοκλήρωση</button>
+              <button id="request_${request.request_id}_cancel">Ακύρωση</button>`;
 
             row_table.appendChild(name);
             row_table.appendChild(phone_number);
@@ -2187,13 +2380,15 @@ function mapPanelRefresh() {
             row_table.appendChild(action);
             panel.appendChild(row_table);
 
+            //Event Listener για την ακύρωση κάποιου αιτήματος
             document.getElementById(`request_${request.request_id}_cancel`).addEventListener("click", function () {
 
               const data = {
                 id: request.request_id,
               };
 
-
+              //Επικοινωνία με τον server για την ακύρωση του
+              //αιτήματος
               fetch("/server/rescuer/cancel_request.php", {
                 method: "POST",
                 headers: {
@@ -2208,8 +2403,10 @@ function mapPanelRefresh() {
                 .catch((error) => console.error("Error:", error));
             });
 
+            //Αποθήκευση απόστασης
             var distanceMarker;
 
+            //Υπολογισμός απόστασης από το αίτημα
             if ("Request Pending" in markersLayers) {
               markersLayers["Truck Active"].eachLayer(layer => {
 
@@ -2225,6 +2422,7 @@ function mapPanelRefresh() {
               });
             }
 
+            //Υπολογισμός απόστασης από το αίτημα
             if ("Request Accepted" in markersLayers) {
               markersLayers["Truck Active"].eachLayer(layer => {
 
@@ -2240,18 +2438,21 @@ function mapPanelRefresh() {
               });
             }
 
+            //Υπολογισμός της απόστασης από το αίτημα όταν
+            //μετακινηθεί το όχημα
             if ("Request Pending" in markersLayers) {
               markersLayers["Truck Active"].eachLayer(layer => {
 
+                //Event Listener που ενεργοποιείται όταν μετακίνηται το όχημα
                 layer.on("drag", function () {
-
                   markersLayers["Request Pending"].eachLayer(requestLayerPending => {
-
                     requestLayerPending.options.request_id.forEach(idCheck => {
 
                       if (idCheck === request.request_id) {
                         distanceMarker = layer.getLatLng().distanceTo(requestLayerPending.getLatLng());
                       }
+
+                      //Ενεργοποίηση/Απενεργοποίηση του κουμπιού αποδοχή
                       if (distanceMarker > 50) {
                         document.getElementById(`request_${request.request_id}_accept`).disabled = true;
                       } else {
@@ -2263,18 +2464,21 @@ function mapPanelRefresh() {
               });
             }
 
+            //Υπολογισμός της απόστασης από το αίτημα όταν
+            //μετακινηθεί το όχημα
             if ("Request Accepted" in markersLayers) {
               markersLayers["Truck Active"].eachLayer(layer => {
 
+                //Event Listener που ενεργοποιείται όταν μετακίνηται το όχημα
                 layer.on("drag", function () {
-
                   markersLayers["Request Accepted"].eachLayer(requestLayerAccepted => {
-
                     requestLayerAccepted.options.request_id.forEach(idCheck => {
 
                       if (idCheck === request.request_id) {
                         distanceMarker = layer.getLatLng().distanceTo(requestLayerAccepted.getLatLng());
                       }
+
+                      //Ενεργοποίηση/Απενεργοποίηση του κουμπιού αποδοχή
                       if (distanceMarker > 50) {
                         document.getElementById(`request_${request.request_id}_accept`).disabled = true;
                       } else {
@@ -2286,34 +2490,46 @@ function mapPanelRefresh() {
               });
             }
 
+            //Ενεργοποίηση/Απενεργοποίηση του κουμπιού αποδοχή
             if (distanceMarker > 50) {
               document.getElementById(`request_${request.request_id}_accept`).disabled = true;
             } else {
               document.getElementById(`request_${request.request_id}_accept`).disabled = false;
             }
 
-
+            //Event Listener για την ολοκήρωση κάποιου αιτήματος
             document.getElementById(`request_${request.request_id}_accept`).addEventListener("click", function () {
 
               var item_check = 0;
               var quantity_check = 0;
               var cargo_quantity;
+
+              //Έλεγχος εάν το όχημα έχει το είδος και στην ποσότητα
+              //που απαιτείται
               geoJson.features.forEach(features => {
                 if (features.properties.category === "Truck Active") {
                   features.properties.cargo.forEach(cargo => {
+
+                    //Έλεγχος για το είδος
                     if (cargo.item_id === request.item_id) {
                       item_check = 1;
                       cargo_quantity = cargo.quantity;
+
+                      //Έλεγχος ποσότητας
                       if (cargo.quantity >= request.quantity) {
 
                         quantity_check = 1;
 
+                        //Δεδομένα για αποστολή στον 
+                        //server
                         const data = {
                           id: request.request_id,
                           quantity: request.quantity,
                           item_id: request.item_id,
                         };
 
+                        //Επικοινωνία με τον server για ολοκλήρωση του
+                        //αιτήματος
                         fetch("/server/rescuer/complete_request.php", {
                           method: "POST",
                           headers: {
@@ -2326,13 +2542,19 @@ function mapPanelRefresh() {
                             if (data.status === "error") {
                               console.error("Server Error:", data.Error);
                             } else {
+
                               alert("Request Complete");
+
+                              //Ανανέωση χάρτη
                               mapPanelRefresh();
 
+                              //Επικοινωνία με τον server για ανανέωση
+                              //του φορτίου του οχήματος
                               fetch("/server/rescuer/rescuer_geojson.php")
                                 .then((response) => response.json())
                                 .then((cargo) => {
 
+                                  //Ανανέωση φορτίου
                                   truck_cargo(cargo);
 
                                 })
@@ -2347,15 +2569,17 @@ function mapPanelRefresh() {
                 }
               });
 
+              //Εμφάνισει ειδοποιήσεων προς τον χρήστη για αποτυχία ολοκλήρωσης του αιτήματος
               if (item_check === 0) {
-                alert(`The truck do not have the item ${request.item_name} to complete request`);
+                alert(`Το όχημα δεν έχει το προιόν "${request.item_name}  για να ολοκληρώσει το αίτημα`);
               } else if (quantity_check === 0) {
-                alert(`The truck do not have the quantity of the item to complete request (Request: ${request.quantity}, Truck: ${cargo_quantity})`);
+                alert(`Το όχημα δεν έχει την ποσότητα που απαιτείται για να ολοκληρωσει το αίτημα (Αίτημα: ${request.quantity}, Όχημα: ${cargo_quantity})`);
               }
 
             });
           });
 
+          //Δημιουργία πίνακα για την εμφάνιση των προσφορών
           data.offers.forEach(offer => {
             const row_table = document.createElement("tr");
             const name = document.createElement("td");
@@ -2396,12 +2620,15 @@ function mapPanelRefresh() {
 
             panel.appendChild(row_table);
 
+            //Event Listener το οποίο ακυρώνει κάποια προσφορά που έχει αναλάβει το όχημα
             document.getElementById(`offer_${offer.offer_id}_cancel`).addEventListener("click", function () {
 
+              //Συλλογή δεδομένων
               const data = {
                 id: offer.offer_id,
               };
 
+              //Επικοινωνία με τον server για την ακύρωση ανάληψης της προσφοράς
               fetch("/server/rescuer/cancel_offer.php", {
                 method: "POST",
                 headers: {
@@ -2412,15 +2639,16 @@ function mapPanelRefresh() {
                 .then((response) => response.json())
                 .then((data) => {
 
+                  //Ανανέωση του χάρτη
                   mapPanelRefresh();
 
                 })
                 .catch((error) => console.error("Error:", error));
             });
 
-
             var distanceMarker;
 
+            //Εύρεση απόστασης του οχήματος από την προσφορά
             if ("Offer Pending" in markersLayers) {
               markersLayers["Truck Active"].eachLayer(layer => {
 
@@ -2436,6 +2664,7 @@ function mapPanelRefresh() {
               });
             }
 
+            //Εύρεση απόστασης του οχήματος από την προσφορά
             if ("Offer Accepted" in markersLayers) {
               markersLayers["Truck Active"].eachLayer(layer => {
 
@@ -2451,18 +2680,21 @@ function mapPanelRefresh() {
               });
             }
 
+            //Εύρεση απόστασης του οχήματος από την προσφορά
             if ("Offer Pending" in markersLayers) {
               markersLayers["Truck Active"].eachLayer(layer => {
 
+                //Event listener που υπολογίζει την απόσταση από τη προσφορά όταν
+                //το όχημα μετακινηθεί
                 layer.on("drag", function () {
-
                   markersLayers["Offer Pending"].eachLayer(offerLayerPending => {
-
                     offerLayerPending.options.offer_id.forEach(idCheck => {
 
                       if (idCheck === offer.offer_id) {
                         distanceMarker = layer.getLatLng().distanceTo(offerLayerPending.getLatLng());
                       }
+
+                      //Ενεργοποίηση/Απενεργοποίηση του κουμπιου ολοκλήρωσης της προσφοράς
                       if (distanceMarker > 50) {
                         document.getElementById(`offer_${offer.offer_id}_accept`).disabled = true;
                       } else {
@@ -2474,11 +2706,13 @@ function mapPanelRefresh() {
               });
             }
 
+            //Εύρεση απόστασης του οχήματος από την προσφορά
             if ("Offer Accepted" in markersLayers) {
               markersLayers["Truck Active"].eachLayer(layer => {
 
+                //Event listener που υπολογίζει την απόσταση από τη προσφορά όταν
+                //το όχημα μετακινηθεί
                 layer.on("drag", function () {
-
                   markersLayers["Offer Accepted"].eachLayer(offerLayerAccepted => {
 
                     offerLayerAccepted.options.offer_id.forEach(idCheck => {
@@ -2486,6 +2720,8 @@ function mapPanelRefresh() {
                       if (idCheck === offer.offer_id) {
                         distanceMarker = layer.getLatLng().distanceTo(offerLayerAccepted.getLatLng());
                       }
+
+                      //Ενεργοποίηση/Απενεργοποίηση του κουμπιου ολοκλήρωσης της προσφοράς
                       if (distanceMarker > 50) {
                         document.getElementById(`offer_${offer.offer_id}_accept`).disabled = true;
                       } else {
@@ -2497,16 +2733,18 @@ function mapPanelRefresh() {
               });
             }
 
+            //Ενεργοποίηση/Απενεργοποίηση του κουμπιου ολοκλήρωσης της προσφοράς
             if (distanceMarker > 50) {
               document.getElementById(`offer_${offer.offer_id}_accept`).disabled = true;
             } else {
               document.getElementById(`offer_${offer.offer_id}_accept`).disabled = false;
             }
 
-
+            //Event Listener για την ολοκλήρωση κάποιας προσφοράς
             document.getElementById(`offer_${offer.offer_id}_accept`).addEventListener("click", function () {
 
 
+              //Συλλογή δεδομένων και αποστολή στον server
               offer.items.forEach(item => {
 
                 const data = {
@@ -2515,6 +2753,7 @@ function mapPanelRefresh() {
                   item_id: item.item_id,
                 };
 
+                //Επικοινωνία με τον server για ολκλήρωση της προσφοράς
                 fetch("/server/rescuer/complete_offer.php", {
                   method: "POST",
                   headers: {
@@ -2532,13 +2771,19 @@ function mapPanelRefresh() {
                   })
                   .catch((error) => console.error("Error:", error));
               });
-              alert("Offer Complete");
+
+              alert("Η προσφορά ολοκληρώθηκε");
+
+               //Ανανέωση του χάρτη
               mapPanelRefresh();
 
+
+              //Επικοινωνία με τον server για ανανέωση του φορτίου του χάρτη
               fetch("/server/rescuer/rescuer_geojson.php")
                 .then((response) => response.json())
                 .then((cargo) => {
 
+                  //Ανανέωση φορτίου του οχήματος
                   truck_cargo(cargo);
 
                 })
@@ -2552,11 +2797,14 @@ function mapPanelRefresh() {
 
 }
 
+
+//Συνάρτηση που είσάγει τις κατηγορίες των ειδών σε λίστα
 function categories_select(data) {
   const list = document.getElementById("categorySelect");
 
   list.innerHTML = "";
 
+  //Προσπέραση των δεδοένων και εύρεση των κατηγοριών
   data.categories.forEach((category) => {
     if (category.category_name !== "" && category.category_name !== "-----") {
       let select_add = document.createElement("option");
@@ -2567,13 +2815,19 @@ function categories_select(data) {
   });
 }
 
+//Εμφάνιση των ειδών της βάσης δεδομένων της επιλεγμένης
+//κατηγορίας σε πίνακα
 function items_select(data, selected_cat) {
   const table = document.getElementById("items");
 
   table.innerHTML = "";
 
+
+  //Προσπέλαση των δεδομένων και δημιουργεία πίνακα
   data.items.forEach((item) => {
     if (item.name != "" && item.category === selected_cat) {
+
+      //Εμφάνιση ειδών που υπάρχουν διαθέσιμα στην βάση
       if (item.quantity > 0) {
         const row_table = document.createElement("tr");
         const id_table = document.createElement("td");
@@ -2615,6 +2869,8 @@ function items_select(data, selected_cat) {
   });
 }
 
+
+//Συνάρτηση 
 function truck_cargo(data) {
 
   const truck_table = document.getElementById("itemCargo");

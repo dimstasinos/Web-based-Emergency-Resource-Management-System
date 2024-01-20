@@ -1,9 +1,12 @@
+//Global μεταβλητές
 var map;
 var map_control;
 var layerSelected;
 
+//Event listener που εκτελείτε όταν φορτωθεί η HTML
 document.addEventListener('DOMContentLoaded', function () {
 
+  //Αρχικοποίηση χάρτη
   var map = L.map('map').setView([37.9838, 23.7275], 13);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -11,8 +14,12 @@ document.addEventListener('DOMContentLoaded', function () {
   }).addTo(map);
 
 
+  //Εμφάνιση γραφήματος για 
+  //default ημερομηνία
   initializeChart();
 
+  //Αρχικοποίηση Object για την  
+  //λειτουργία των φίλτρων του χάρτη
   layerSelected = {
     "Request Pending": true,
     "Request Accepted": true,
@@ -24,23 +31,34 @@ document.addEventListener('DOMContentLoaded', function () {
     "Base": true,
   };
 
-
+  //Μεταβλητή που περιέχει τις κατηγορίες των markers
+  //που θα υπάρχουν στον χάρτη
   var markersLayers = {};
-  markersLayers["Lines"] = L.layerGroup();
-  var geoJson;
 
+  //Αποθήκευση του layer των γραμμών
+  markersLayers["Lines"] = L.layerGroup();
+
+  //Χρήση Fetch API για την παραλαβή των 
+  //δεδομένων του χάρτη από τον server
   fetch('/server/map_admin/map.php')
     .then(response => response.json())
     .then(data => {
 
+      //Προσπέλαση του πίνακα
       data.features.forEach((feature, index) => {
+
+        //Κατηγορία του feuture
         const category = feature.properties.category;
 
+        //Έλεγχος εάν υπάρχει ήδη αυτή η κατηγορία
+        //ως layergroup
         if (!markersLayers[category]) {
           markersLayers[category] = L.layerGroup();
         }
+
         var check = 0;
 
+        //Έλεγχος εάν ο χρήστης έχει προσφορές και αιτήματα
         data.features.forEach((features_check, index_check) => {
           if (features_check.geometry.coordinates[0] === feature.geometry.coordinates[0] &&
             features_check.geometry.coordinates[1] === feature.geometry.coordinates[1] &&
@@ -51,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         });
 
+        //Επιλογή σωστού marker για κάθε κατηγορία feature του GeoJson και αρχικοποίησή του
         const customMarkers = L.marker([feature.geometry.coordinates[0], feature.geometry.coordinates[1]], {
           icon: (function () {
             if (category === "Base") {
@@ -66,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   iconUrl: `/leaflet/images/request-red.png`,
                   iconSize: [40, 40],
                   iconAnchor: [19, 34],
-                  popupAnchor: [2.5, -20]
+                  popupAnchor: [0, -35]
                 });
               } else {
                 return L.icon({
@@ -82,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   iconUrl: '/leaflet/images/request-green.png',
                   iconSize: [40, 40],
                   iconAnchor: [19, 34],
-                  popupAnchor: [0, -15]
+                  popupAnchor: [0, -35]
                 });
               } else {
                 return L.icon({
@@ -98,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   iconUrl: '/leaflet/images/offer-green.png',
                   iconSize: [40, 40],
                   iconAnchor: [20.5, 38],
-                  popupAnchor: [0, -15]
+                  popupAnchor: [0, -35]
                 });
               } else {
                 return L.icon({
@@ -114,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   iconUrl: `/leaflet/images/offer-red.png`,
                   iconSize: [40, 40],
                   iconAnchor: [19, 34],
-                  popupAnchor: [0, -15]
+                  popupAnchor: [0, -35]
                 });
               } else {
                 return L.icon({
@@ -129,14 +148,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 iconUrl: '/leaflet/images/marker-truck-green.png',
                 iconSize: [50, 50],
                 iconAnchor: [25, 43],
-                popupAnchor: [0, -15]
+                popupAnchor: [0, -40]
               });
             } else if (category === "Truck Inactive") {
               return L.icon({
                 iconUrl: '/leaflet/images/marker-truck-red.png',
                 iconSize: [50, 50],
                 iconAnchor: [25, 43],
-                popupAnchor: [0, -15]
+                popupAnchor: [0, -40]
               });
             }
           })(),
@@ -183,8 +202,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (category === "Base") {
 
+          //Τοποθέτηση pop-up
           customMarkers.bindPopup('<strong>Base</strong>');
 
+          //Event listener για την αλλαγή της θέσης
+          //της βάσης
           customMarkers.on('dragend', function (event) {
             let marker = event.target;
             let position = marker.getLatLng();
@@ -193,6 +215,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (newPositionConfirmed) {
 
+              //Τοποθεσία βάσης
               const new_position = {
                 lati: position.lat,
                 long: position.lng,
@@ -213,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     feature.geometry.coordinates[0] = position.lat;
                     feature.geometry.coordinates[1] = position.lng;
-                    alert('Base Location confirmed: ' + position.lat + ', ' + position.lng);
+                    alert('Η τοποθεσία της βάσης επιβεβαιώθηκε: ' + position.lat + ', ' + position.lng);
                   }
                 })
                 .catch((error) => console.error("Error:", error));
@@ -225,6 +248,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
           });
         } else if (category === "Request Pending") {
+
+          //Αρχικοποίηση και τοποθέτηση pop-up
           var requests = [];
           var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
           <strong>Citizen</strong><br>
@@ -261,6 +286,8 @@ document.addEventListener('DOMContentLoaded', function () {
           customMarkers.options.request_id = requests;
 
         } else if (category === "Request Accepted") {
+
+          //Αρχικοποίηση και τοποθέτηση pop-up
           var requests = [];
           var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
           <strong>Citizen</strong><br>
@@ -284,6 +311,8 @@ document.addEventListener('DOMContentLoaded', function () {
           customMarkers.bindPopup(info_citizen);
           customMarkers.options.request_id = requests;
         } else if (category === "Offer Accepted") {
+
+          //Αρχικοποιηση και τοποθέτηση pop-up
           var offers = [];
           var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
           <strong>Citizen</strong><br>
@@ -311,6 +340,8 @@ document.addEventListener('DOMContentLoaded', function () {
           customMarkers.options.offer_id = offers;
 
         } else if (category === "Offer Pending") {
+
+          //Αρχικοποιηση και τοποθέτηση pop-up
           var offers = [];
           var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
           <strong>Citizen</strong><br>
@@ -352,6 +383,8 @@ document.addEventListener('DOMContentLoaded', function () {
           customMarkers.bindPopup(info_citizen);
           customMarkers.options.offer_id = offers;
         } else if (category === "Truck Active") {
+
+          //Αρχικοποιηση και τοποθέτηση pop-up
           var info_truck = `<div style="max-height: 150px; overflow-y: auto;">
           <strong>Truck</strong><br>
           <strong>Username:</strong> ${feature.properties.vehicle_username}<br>
@@ -372,6 +405,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
           }
 
+          //Τοποθέτηση γραμμών στον χάρτη προς τα αιτήματα
           feature.properties.requests.forEach((cargo) => {
             data.features.forEach((detail) => {
 
@@ -395,6 +429,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
           });
 
+          //Τοποθέτηση γραμμών προς τα αιτήματα
           feature.properties.offers.forEach((cargo) => {
 
             data.features.forEach((detail) => {
@@ -423,6 +458,8 @@ document.addEventListener('DOMContentLoaded', function () {
           info_truck = info_truck + `</div>`;
           customMarkers.bindPopup(info_truck);
         } else if (category === "Truck Inactive") {
+
+          //Αρχικοποίηση και τοποθέτηση pop-up
           var info_truck = `<div style="max-height: 150px; overflow-y: auto;">
           <strong>Truck</strong><br>
           <strong>Username:</strong> ${feature.properties.vehicle_username}<br>
@@ -446,13 +483,13 @@ document.addEventListener('DOMContentLoaded', function () {
           customMarkers.bindPopup(info_truck);
         }
 
-
+        //Τοποθέτηση στον χάρτη
         markersLayers[category].addLayer(customMarkers);
         markersLayers[category].addTo(map);
 
       });
 
-
+      //Event listener που διαγράφει συγκεκριμένες γραμμές στον χάρτη
       map.on('layerremove', function (event) {
         var removedLayer = event.layer;
         layerSelected[removedLayer.options.category] = false;
@@ -507,6 +544,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
 
+      //Event listener που προσθέτει συγκεκριμένες γραμμές στον χάρτη
       map.on('layeradd', function (event) {
         var addLayer = event.layer;
 
@@ -570,7 +608,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
 
+      //Τοποθέτηση γραμμών στον χάρτη
       markersLayers["Lines"].addTo(map);
+
+      //Τοποθέτηση Φίλτρων στον χάρτη
       L.control.layers(null, markersLayers).addTo(map);
 
 
@@ -579,22 +620,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-
+//Event listener που εμφανίζει τα γραφήματα
 document.getElementById("submitdate").addEventListener("click", function () {
 
+  //Ανάκτηση στοιχείων ημερομηνίας που έδωσε ο χάρτης
   const start_date = document.getElementById('startdate').value + " 00:00:00";
   const end_date = document.getElementById('enddate').value + " 23:59:59";
 
-
+  //Έλεγχος στοιχείων
   if (start_date > end_date) {
-    alert('Start date must be earlier than the end date');
+    alert('Η ημερομηνία έναρξης θα πρέπει να προηγείται της ημερομηνίας λήξης');
   } else {
+
+    //Δημιουργία Object για την 
+    //αποστολή των σωστών δεδομένων
+    //από τον server
     const data = {
       startdate: start_date,
       enddate: end_date
     }
 
-
+    //Αποστολή δεδομένων και επικοινωνία με τον server
     fetch("/server/chart/newreq.php", {
       method: "POST",
       headers: {
@@ -606,14 +652,15 @@ document.getElementById("submitdate").addEventListener("click", function () {
       .then((response) => response.json())
       .then(data => {
 
+        //Δημιουργία γραφήματος
         const values = Object.values(data).map(item => item.plithos);
-        const ctx = document.getElementById('serverchart');
-        const existingChart = Chart.getChart(ctx);
+        const graph = document.getElementById('serverchart');
+        const existingChart = Chart.getChart(graph);
         if (existingChart) {
           existingChart.destroy();
         }
 
-        const serverchart = new Chart(ctx, {
+        const serverchart = new Chart(graph, {
           type: 'doughnut',
           data: {
             labels: Object.keys(data),
@@ -634,56 +681,55 @@ document.getElementById("submitdate").addEventListener("click", function () {
 
 });
 
+//Συνάρτηση που δημιουργεί το γράφημα
+//στην φόρτωση της σελίδας
 function initializeChart() {
 
-  document.getElementById('startdate').value="2024-01-04";
-  document.getElementById('enddate').value="2024-01-20";
+  document.getElementById('startdate').value = "2024-01-04";
+  document.getElementById('enddate').value = "2024-01-20";
   const start_date = "2024-01-04  00:00:00";
   const end_date = "2024-01-20 23:59:59";
 
+  //Δημιουργία Object
+  const data = {
+    startdate: start_date,
+    enddate: end_date
+  }
 
-  if (start_date > end_date) {
-    alert('Start date must be earlier than the end date');
-  } else {
-    const data = {
-      startdate: start_date,
-      enddate: end_date
-    }
+  //Αποστολή δεδομένων και επικοινωνία με τον server
+  fetch("/server/chart/newreq.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
 
+  })
+    .then((response) => response.json())
+    .then(data => {
 
-    fetch("/server/chart/newreq.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
+      const values = Object.values(data).map(item => item.plithos);
+      const ctx = document.getElementById('serverchart');
+      const existingChart = Chart.getChart(ctx);
+      if (existingChart) {
+        existingChart.destroy();
+      }
+
+      const serverchart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: Object.keys(data),
+          datasets: [{
+            data: values,
+            backgroundColor: ['#FF6384', '#FFCE56', '#36A2EB', '#FF8F00', '#4CAF50', '#6200EA'],
+          }],
+        },
+      });
+
 
     })
-      .then((response) => response.json())
-      .then(data => {
-
-        const values = Object.values(data).map(item => item.plithos);
-        const ctx = document.getElementById('serverchart');
-        const existingChart = Chart.getChart(ctx);
-        if (existingChart) {
-          existingChart.destroy();
-        }
-
-        const serverchart = new Chart(ctx, {
-          type: 'doughnut',
-          data: {
-            labels: Object.keys(data),
-            datasets: [{
-              data: values,
-              backgroundColor: ['#FF6384', '#FFCE56', '#36A2EB', '#FF8F00', '#4CAF50', '#6200EA'],
-            }],
-          },
-        });
+    .catch(error => console.error("Error:", error));
 
 
-      })
-      .catch(error => console.error("Error:", error));
 
-
-  }
 }

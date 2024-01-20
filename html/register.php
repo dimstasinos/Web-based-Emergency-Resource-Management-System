@@ -25,16 +25,15 @@ if (isset($_SESSION['type'])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width initial-scale=1">
   <link rel="stylesheet" href="/leaflet/leaflet.css">
-  <link rel="stylesheet" href="/css/register_page.css">
+  <link rel="stylesheet" href="/css/register.css">
   <link rel="icon" href="/images/favicon.png" type="image/x-icon">
   <title>Εγγραφή</title>
 </head>
 
 <body>
 
-
   <div id="registerbox">
-  <img src="/images/loginuser.png" id="userImage">
+    <img src="/images/loginuser.png" id="userImage">
     <h1>Εγγραφή</h1>
     <form id="registerForm">
 
@@ -60,12 +59,13 @@ if (isset($_SESSION['type'])) {
       </div>
 
       <div id="mapBox">
+        <p>Επέλεξε τοποθεσία</p>
         <div id="map"></div>
       </div>
 
       <div id="login">
         <p>Έχεις ήδη λογαριασμό;
-          <a href="/html/login.php"><br><strong>Login</strong></a>
+          <a href="/html/login.php"><br><strong>Σύνδεση</strong></a>
         </p>
       </div>
       <div>

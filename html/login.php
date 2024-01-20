@@ -25,15 +25,15 @@ if (isset($_SESSION['type'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width initial-scale=1">
-  <link rel="stylesheet" href="/css/login_style.css">
+  <link rel="stylesheet" href="/css/login.css">
   <link rel="icon" href="/images/favicon.png" type="image/x-icon">
-  <title>Login</title>
+  <title>Σύνδεση</title>
 </head>
 
 <body>
-  <div id="loginbox">
+  <div class="loginbox">
     <img src="/images/loginuser.png" alt="Login image" id="userImage">
-    <h1>Login</h1>
+    <h1>Σύνδεση</h1>
     <form id="loginForm">
       <div id="userInputs">
         <label for="username">Username</label>
@@ -44,17 +44,17 @@ if (isset($_SESSION['type'])) {
       </div>
       <div class="checkbox-container">
         <input type="checkbox" id="check">
-        <label for="check">Show password</label>
+        <label for="check">Εμφάνιση κωδικού</label>
       </div>
 
       <div id="register">
         <p>Δεν έχεις λογαριασμό?
           <br>
-          <a href="/html/register_page"><strong>Register</strong></a>
+          <a href="/html/register"><strong>Εγγραφή</strong></a>
         </p>
       </div>
 
-      <button type="button" id="loginButton">Login</button>
+      <button type="button" id="loginButton">Σύνδεση</button>
     </form>
   </div>
 
