@@ -6,14 +6,12 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
   exit();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Administrator</title>
   <link rel="stylesheet" href="/css/admin_mainPageStyle.css">
   <link rel="stylesheet" href="/leaflet/leaflet.css">
   <style>
@@ -25,26 +23,36 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
 
 <body>
   <div class="header">
-    <h1>Administrator</h1>
-  </div>
-  <div class="sidebar">
-    <a href="/html/admin/adminAnnouncement.php">Announcements</a>
-    <a href="/html/admin/adminRegisterRescuer.php">Register Rescuer</a>
-    <a href="/html/admin/base_warehouse.php">DataBase</a>
-    <a href="/server/logout.php">Logout</a>
-  </div>
-  <div class="main">
-    <div id="map"></div>
+  <img src="/images/favicon.png" alt="Icon" class="title-icon"> 
+  <h1 class="page-title">||Διαχειριστής||</h1>
   </div>
 
-  <h2 class="chart-heading">Progress of Offers and Requests</h2>
-  <label for="startdate">Start Date:</label>
-  <input type="date" id="startdate" name="selectedDate" required>
-  <label for="enddate">End Date:</label>
-  <input type="date" id="enddate" name="selectedDate" required>
-  <button id="submitdate">Submit</button>
+  <div class="container">
+    <div class="sidebar">
+      <a href="/html/admin/adminAnnouncement.php">Ανακοινώσεις</a>
+      <a href="/html/admin/adminRegisterRescuer.php">Εγγραφή Διασώστη</a>
+      <a href="/html/admin/base_warehouse.php">Βάση Δεδομένων</a>
+      <a href="/server/logout.php">Αποσύνδεση</a>
+    </div>
+    <div class="main">
+      <div id="map"></div>
+      <hr class="separator-line">
+      <hr class="separator-line">
+      <h2 class="chart-heading">Κατάσταση προσφορών και αιτημάτων</h2>
+      <hr class="separator-line">
+      <hr class="separator-line">     
+      <label for="startdate">Ημερομηνία έναρξης:</label>
+      <input type="date" id="startdate" name="selectedDate" required>
+      <div>
+        <br>
+      <label for="enddate">Ημερομηνία τερματισμού:</label>
+      <input type="date" id="enddate" name="selectedDate" required>
+      </div>
+      <button id="submitdate">Καταχώρηση</button>
 
-  <canvas id="serverchart" width="500" height="50"></canvas>
+      <canvas id="serverchart" width="500" height="50"></canvas>
+    </div>
+  </div>
 
   <script src="/scripts/admin_MainPage.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

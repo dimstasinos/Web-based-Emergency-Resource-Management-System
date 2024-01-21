@@ -1,69 +1,98 @@
-
-  /* Reset default styles */
+/* Reset default styles */
 body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
-  background-color: #f2f2f2; /* Background color for the whole page */
+  background-color: #f2f2f200;
 }
 
 /* Header styles */
 .header {
-  background-color: #333;
-  color: white;
-  text-align: center;
+  background-image: url('../images/backround.JPEG'); 
+  background-size: cover; /* Ensures the image covers the entire sidebar */
+  background-position: center; /* Centers the image in the sidebar */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  color: rgba(255, 255, 255, 0.425);
+  text-align: left;
   padding: 20px 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(100px);
+  
+  /* Text shadow */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .header h1 {
   margin: 0;
-  font-size: 36px;
+  font-size: 24px;
+    display: flex;
+    align-items: center; /* Aligns the icon and the title vertically */
+  }
+
+
+/* Styling for h2 elements with the 'chart-heading' class */
+h2.chart-heading {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  font-size: 20px;
 }
 
-/* Navigation bar styles */
+
+/* Container for sidebar and main content */
+.container {
+  display: flex;
+}
+
+/* Sidebar styles (vertical) */
 .sidebar {
-  background-color: #333;
-  color: white;
-  padding: 10px 0;
-  text-align: center;
+  background-image: url('../images/backround.JPEG'); 
+  background-size: cover; /* Ensures the image covers the entire sidebar */
+  background-position: center; /* Centers the image in the sidebar */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  color: rgba(255, 255, 255, 0.425);
+  padding: 10px;
+  width: 200px;
+  flex-shrink: 0;
+  backdrop-filter: blur(10px);
 }
 
 .sidebar a {
   display: block;
-  color: white;
+  color: rgba(255, 255, 255, 0.425);
   text-decoration: none;
-  padding: 10px 0;
-  transition: background-color 0.3s; /* Smooth background color transition */
+  padding: 10px;
+  transition: background-color 0.3s;
 }
 
 .sidebar a:hover {
-  background-color: #555; /* Highlight on hover */
+  background-color: #555;
 }
 
 /* Main content container */
 .main {
-  margin-top: 20px; /* Add space for the header and navigation bar */
+  flex-grow: 1;
+  margin-top: 0;
   padding: 20px;
-  background-color: #fff; /* White background for the content */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  color: rgba(255, 255, 255, 0.425);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Styling for date input and button */
 label {
   font-weight: bold;
+  color: #455da0;
 }
 
 input[type="date"] {
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #455da0;
   border-radius: 5px;
   margin-right: 10px;
 }
 
 #submitdate {
-  background-color: #4CAF50;
-  color: white;
+  background-color: #455da0;
+  color: rgba(255, 255, 255, 0.425);
   padding: 10px 20px;
   border: none;
   cursor: pointer;
@@ -72,13 +101,33 @@ input[type="date"] {
 }
 
 #submitdate:hover {
-  background-color: #45a049;
+  background-color: #555;
 }
 
 /* Chart canvas styles */
 #serverchart {
   width: 100%;
-  max-width: 800px; /* Set a maximum width for the chart */
-  margin: 20px auto; /* Center the chart horizontally */
+  max-width: 800px;
+  margin: 20px auto;
   display: block;
 }
+
+/* Styles for the separator lines */
+.separator-line {
+  border: none;
+  border-top: 1px solid #455da0; 
+  margin: 10px 0; /* Space above and below the line */
+}
+
+.title-container {
+  display: flex;
+  align-items: center;
+}
+
+.title-icon {
+  width: 100px; /* Set the width of the icon */
+  height: auto; /* Maintain aspect ratio */
+  margin-right: 10px; /* Space between the icon and the title */
+}
+
+
