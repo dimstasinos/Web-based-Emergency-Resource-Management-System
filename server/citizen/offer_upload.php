@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("../Mysql_connection.php");
 
 $receive = file_get_contents('php://input');

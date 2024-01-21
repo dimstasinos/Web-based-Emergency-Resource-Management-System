@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include("../../Mysql_connection.php");
 try {
   $json_data = file_get_contents("http://usidas.ceid.upatras.gr/web/2023/export.php");
