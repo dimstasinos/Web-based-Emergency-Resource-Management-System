@@ -19,16 +19,15 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
 </head>
 
 <body>
-
-
   <div class="sidebar">
-    <a href="/html/citizen/citizen_offers.php">Offers</a>
-    <a href="/server/logout.php">Logout</a>
+    <a href="/html/citizen/citizen_offers.php">Προσφορές</a>
+    <a href="/server/logout.php">Αποσύνδεση</a>
   </div>
   <h1>ΑΙΤΗΜΑΤΑ</h1>
 
   <div>
-    <label for="categories">Κατηγορίες ειδών</label>
+    <h5>Kατηγορίες</h5>
+    <label for="categories"></label>
     <select id="categories"></select>
   </div>
   <div id="autocomlete">
@@ -67,7 +66,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
         </thead>
         <tbody id="itemSelected"></tbody>
       </table>
-      <button id="submitRequest">Submit</button>
+      <button id="submitRequest">Καταχώρηση</button>
     </div>
   </div>
   <div>

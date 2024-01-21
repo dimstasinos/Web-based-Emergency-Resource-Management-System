@@ -1,11 +1,19 @@
 <?php
+
+//PHP script που στέλνει στον client
+//τις ανακοινώσεις που περιέχει 
+//η βάση δεδομένων
+
 session_start();
+
 include("../../Mysql_connection.php");
 
 try {
+
+  //Σύνδεση με την βάση δεδομένων
   $db = db_connect();
 
-
+  //Queries για την ανάκτηση τως ανακοινώσεων
   $announcement = $db->prepare("SELECT * from announcements");
   $announcement->execute();
   $announcement_response = $announcement->get_result();
@@ -47,12 +55,16 @@ try {
 
   $data=$announcements;
 
+  //Κλέισιμο σύνδεσης με την βάση δεδομένων
   $db->close();
 
+  //Αποστολή των ανακοινώσεων στον client
   $json_data = json_encode($data);
   header('Content-Type: application/json');
   echo $json_data;
 } catch (Exception $error) {
+
+  //Αποστολή μηνύματος ανεπιτυχούς εκτέλεσης στον client
   header('Content-Type: application/json');
   echo json_encode(['status' => 'error', "Error" => $error->getMessage()]);
 }
