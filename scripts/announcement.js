@@ -1,12 +1,17 @@
+//Event listener που εκτελείτε όταν φορτωθεί η HTML
 document.addEventListener('DOMContentLoaded', function () {
 
+  //Επικοινωνία με τον server για εμφάνιση των ανακοινωσεων
   fetch("/server/admin/announcement/announcement.php")
     .then(jsonResponse => jsonResponse.json())
     .then(data => {
+      //Εμφάνιση ανακοινώσεων σε πίνακα
       announcementTable(data);
     })
     .catch((error) => console.error("Error:", error));
 
+  //Επικοινωνια με τον server για εμφάνιση των ειδών που περιέχει
+  //η βάση δεδομένων
   fetch('/server/admin/warehouse_admin/database_extract.php')
     .then(jsonResponse => {
 
@@ -20,6 +25,8 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(data => {
 
       if (data != null) {
+
+        //Εμφάνιση ειδών
         categories_select(data);
         var selected_cat = document.getElementById("categories").value;
         items_select(data, selected_cat);
@@ -36,13 +43,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
+//Συνάρτηση που εμφανίζει τον πίνακα με τις ανακοινώσεις
 function announcementTable(data) {
 
   const announcement_table = document.getElementById("announcements");
   announcement_table.innerHTML = "";
 
+  //Προσπέραση δεδομέων
   data.forEach(announcement => {
 
+    //Δημιουργία στοιχείων πίνακα
     const row_table = document.createElement("tr");
     const item_name = document.createElement("td");
     const item_quantity = document.createElement("td");
@@ -59,7 +69,7 @@ function announcementTable(data) {
       items_id.push(item.item_id);
       items_name_array.push(item.item_name);
       items_quantity_array.push(item.quantity);
-      items_action_array.push(`<button id="cancel_${item.item_id}${announcement.announcement_id}">cancel</button>`);
+      items_action_array.push(`<button id="cancel_${item.item_id}${announcement.announcement_id}">Διαγραφή</button>`);
     });
 
     item_name.innerHTML = items_name_array.join("<br>");
@@ -75,6 +85,8 @@ function announcementTable(data) {
     announcement_table.appendChild(row_table);
 
     items_id.forEach(id => {
+
+      //Event listener που διαγράφη μια ανακοίνωση
       document.getElementById(`cancel_${id}${announcement.announcement_id}`).addEventListener("click", function () {
 
         const data = {
@@ -82,7 +94,7 @@ function announcementTable(data) {
           item_id: id
         };
 
-
+        //Επικοινωνία με το server για την διαγραφή της ανακοίνωσης
         fetch("/server/admin/announcement/announcement_delete.php", {
           method: "POST",
           headers: {
@@ -92,6 +104,8 @@ function announcementTable(data) {
         })
           .then((response) => response.json())
           .then((data) => {
+
+            //Ανανέωση πίνακα ανακοινώσεων
             fetch("/server/admin/announcement/announcement.php")
               .then(jsonResponse => jsonResponse.json())
               .then(data => {
@@ -101,20 +115,18 @@ function announcementTable(data) {
 
           })
           .catch((error) => console.error("Error:", error));
-
       });
-
     });
-
   });
-
 }
 
+//Συνάρτηση που τοποθετεί τις κατηγορίες ειδών σε λίστα
 function categories_select(data) {
   const list = document.getElementById("categories");
 
   list.innerHTML = "";
 
+  //Προσπέλαση δεδομένων
   data.categories.forEach((category) => {
     if (category.category_name !== "" && category.category_name !== "-----") {
       let select_add = document.createElement("option");
@@ -125,11 +137,13 @@ function categories_select(data) {
   });
 }
 
+//Συνάρτηση που εμφανίζει τα είδη της επιλεγμένης κατηγορίας
 function items_select(data, selected_cat) {
   const table = document.getElementById("itemsTable");
 
   table.innerHTML = "";
 
+  //Εμφάνιση ειδών
   data.items.forEach((item) => {
     if (item.name != "" && item.category === selected_cat) {
 
@@ -172,6 +186,7 @@ function items_select(data, selected_cat) {
     }
   });
 }
+
 
 document.getElementById("search").addEventListener("input", function () {
 
