@@ -9,15 +9,13 @@ try {
   $response = $db->query($mysql);
 
   if ($response->num_rows > 0) {
-
-    while ($row = $response->fetch_assoc()) {
-      $base_array = array(
-        "lat" => $row["lat"],
-        "lng" => $row["longi"],
-
-      );
-    }
+    $row = $response->fetch_assoc();
+    $base_array = array(
+      "lat" => $row["lat"],
+      "lng" => $row["longi"],
+    );
   }
+
 
   $base = $base_array;
 
@@ -30,7 +28,6 @@ try {
   $json_data = json_encode($data);
   header('Content-Type: application/json');
   echo $json_data;
-  
 } catch (Exception $error) {
   header('Content-Type: application/json');
   echo json_encode(['status' => 'error', "Error" => $error->getMessage()]);

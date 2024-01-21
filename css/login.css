@@ -1,0 +1,157 @@
+@font-face {
+  font-family: 'Roboto Black';
+  src: url(/fonts/Roboto/Roboto-Black.ttf) format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Roboto Black', sans-serif;
+  background-image: url(../images/backround.JPEG);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#register {
+  margin: 0;
+  color: rgb(255, 38, 0);
+  padding: 10px 0;
+  text-align: center;
+  font-size: 15px;
+}
+
+#register p {
+  margin: 0;
+  padding-bottom: 5px;
+}
+
+#register a {
+  color: rgb(0, 123, 255);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#register a:hover {
+  text-decoration: underline;
+}
+
+.loginbox {
+  width: 320px;
+  height: 430px;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.95);
+  color: #ffffff;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  padding: 70px 30px;
+}
+
+#userImage {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  position: absolute;
+  top: -50px;
+  left: calc(50%, 50px);
+}
+
+h1 {
+  margin: 0;
+  padding: 0 0 10px;
+  text-align: center;
+  font-size: 45px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
+}
+
+
+#check {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.checkbox-container label {
+  font-size: 14px;
+  cursor: pointer;
+}
+
+
+#loginButton {
+  width: 50%;
+  height: 40px;
+  margin-left: 65px;
+  transition-duration: 0.5s;
+  background-color: rgba(75, 75, 75, 1);
+  border-radius: 15px;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 40px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+#loginButton:hover {
+  background-color: rgba(90, 90, 90, 1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#username,
+#password {
+  padding: 10px;
+  width: 95%;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 15px;
+  border: 1px solid #ced4da;
+ 
+  margin-bottom: 10px;
+  
+  font-size: 16px;
+ 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  transition: border-color 0.3s, box-shadow 0.3s; 
+}
+
+
+#userInputs label {
+  display: block;
+
+  margin-bottom: 5px;
+  
+  font-weight: bold;
+ 
+}
+
+
+
+@media (max-width: 600px) {
+  #loginbox {
+    width: 80%;
+    padding: 40px 20px;
+  }
+
+  #username,
+  #password {
+    padding: 10px;
+    width: 90%;
+  }
+
+}

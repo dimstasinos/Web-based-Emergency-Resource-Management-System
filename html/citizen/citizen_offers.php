@@ -75,7 +75,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
             <th>Complete Date</th>
           </tr>
         </thead>
-        <tbody id="requests"></tbody>
+        <tbody id="offers"></tbody>
       </table>
     </div>
   </div>

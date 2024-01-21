@@ -6,9 +6,10 @@ include("../Mysql_connection.php");
 $receive = file_get_contents('php://input');
 $data = json_decode($receive);
 
-$db = db_connect();
-try {
 
+try {
+  $db = db_connect();
+  
   $request_delete = $db->prepare("DELETE FROM citizen_requests where
   request_id=?");
   $request_delete->bind_param(

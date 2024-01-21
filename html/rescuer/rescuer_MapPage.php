@@ -5,6 +5,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
   header("Location: /html/login.php");
   exit();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -19,14 +20,12 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
 </head>
 
 <body>
-
+<p id="text"></p>
   <div class="header">
     <h1>Rescuer</h1>
   </div>
 
   <div class="sidebar">
-    <a href="#">Map</a>
-    <a href="#">DataBase</a>
     <a href="/server/logout.php">Logout</a>
   </div>
 
@@ -102,7 +101,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
     </div>
 
   </div>
-  <p id="text"></p>
+  
   <script src="/leaflet/leaflet.js"></script>
   <script src="/scripts/rescuer_map.js"></script>
 
