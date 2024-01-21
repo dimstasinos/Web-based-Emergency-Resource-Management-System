@@ -18,7 +18,9 @@ body {
   margin: 0;
   font-size: 36px;
 }
-
+ h2,h3,h4{
+  font-size: 24px;
+ }
 
 .sidebar {
   background-color: #333;
@@ -71,7 +73,7 @@ th, td {
 
 
 button {
-  background-color: #4CAF50;
+  background-color: #455da0;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -81,7 +83,7 @@ button {
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #555;
 }
 
 
@@ -89,5 +91,15 @@ button:hover {
   height: 400px;
   margin-top: 20px;
 }
+#text{
+  border: 2px solid #000000; 
+  border-radius: 4px;
+  display:inline-block;
+}
 
 
+@media only screen and(max-width:600px){
+  #tasks th,td{
+    padding:0px;
+  }
+}

@@ -98,7 +98,7 @@
   }
 
   #fname,#lname,#username,#password,#confpassword,#vehicleusername{
-  width: 350px;
+  width: 200px;
   border-radius: 15px;
   background: rgba(0, 0, 0, 0.95);
   color: #ffffff;

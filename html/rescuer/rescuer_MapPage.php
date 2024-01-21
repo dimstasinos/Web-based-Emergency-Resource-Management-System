@@ -20,13 +20,14 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
 </head>
 
 <body>
-<p id="text"></p>
+
   <div class="header">
-    <h1>Rescuer</h1>
+  <p id="text"></p>
+    <h1>ΔΙΑΣΩΣΤΕΣ</h1>
   </div>
 
   <div class="sidebar">
-    <a href="/server/logout.php">Logout</a>
+    <a href="/server/logout.php">Αποσύνδεση</a>
   </div>
 
   <div class="main">
@@ -37,12 +38,12 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
       <table id="tasks">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Phone Number</th>
-            <th>Type</th>
-            <th>Submission Date</th>
-            <th>Item</th>
-            <th>Quantity</th>
+            <th>Όνομα</th>
+            <th>Κινητό Τηλεφωνο</th>
+            <th>Τύπος</th>
+            <th>Ημερομηνία Καταχώρησης</th>
+            <th>Προϊόv</th>
+            <th>Ποσότητα</th>
           </tr>
         </thead>
         <tbody id=tasks_info></tbody>
@@ -50,53 +51,53 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
     </div>
 
     <div>
-      <label for="categorySelect">Categories of species</label>
+      <label for="categorySelect">Κατηγορίες Ειδών</label>
       <select id="categorySelect"></select>
     </div>
 
     <div id="tables">
       <div>
-        Warehouse
+        <h2>Αποθήκη</h2>
         <table id="tableOfItems">
           <thead>
             <tr>
               <th>ID</th>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Details</th>
-              <th>Quantity</th>
+              <th>Όνομα</th>
+              <th>Κατηγορία</th>
+              <th>Λεπτομέρειες</th>
+              <th>Ποσότητα</th>
             </tr>
           </thead>
           <tbody id="items"></tbody>
         </table>
       </div>
       <div>
-        Item Selected
+        <h3>Επιλεγμένο Προϊόν</h3>
         <table id="tableSelected">
           <thead>
             <tr>
               <th>ID</th>
-              <th>Name</th>
-              <th>Quantity</th>
+              <th>Όνομα</th>
+              <th>Ποσότητα</th>
             </tr>
           </thead>
           <tbody id="itemSelected"></tbody>
         </table>
-        <button id="load">Load</button>
+        <button id="load">Φόρτωση</button>
       </div>
       <div>
-        Truck Cargo
+        <h4>Φορτίο Οχήματος</h4>
         <table id="Cargo">
           <thead>
             <tr>
               <th>ID</th>
-              <th>Name</th>
-              <th>Quantity</th>
+              <th>Όνομα</th>
+              <th>Ποσότητα</th>
             </tr>
           </thead>
           <tbody id="itemCargo"></tbody>
         </table>
-        <button id="unload">Unload</button>
+        <button id="unload">Ξεφόρτωση</button>
       </div>
     </div>
 

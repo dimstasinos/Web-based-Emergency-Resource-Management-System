@@ -19,18 +19,21 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
 </head>
 
 <body>
-
-  <h1>Announcements</h1>
+<div class="sidebar">
+      <a href="/html/admin/admin_mainPage.php">Aρχική</a>
+      <a href="/server/logout.php">Αποσύνδεση</a>
+    </div>
+  <h1>ΑΝΑΚΟΙΝΩΣΕΙΣ</h1>
 
 
   <div>
-    Announcements
+    <h2>Ανακοινώσεις</h2>
     <table id="tableAnnouncements">
       <thead>
         <tr>
           <th>ID</th>
-          <th>Item Name</th>
-          <th>Quantity</th>
+          <th>Όνομα Προϊόντος</th>
+          <th>Ποσότητα</th>
         </tr>
       </thead>
       <tbody id="announcements"></tbody>
@@ -39,42 +42,43 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
 
 
   <div id="autocomlete">
-    <input type="text" id="search" placeholder="Items search..." autocomplete="off">
+    <input type="text" id="search" placeholder="Αναζήτηση προϊόντων..." autocomplete="off">
     <ul id="results"></ul>
   </div>
   <div>
-    <label for="categories">Κατηγορίες ειδών</label>
+    <h5>Κατηγορίες Προϊόντων</h5>
+    <label for="categories"></label>
     <select id="categories"></select>
   </div>
   <div id="tables">
     <div>
-      Warehouse
+      <h3>Aποθήκη</h3>
       <table id="table_warehouse">
         <thead>
           <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Details</th>
-            <th>Quantity</th>
+            <th>Όνομα</th>
+            <th>Κατηγορια</th>
+            <th>Λεπτομέρειες</th>
+            <th>Ποσότητα</th>
           </tr>
         </thead>
         <tbody id="itemsTable"></tbody>
       </table>
     </div>
     <div>
-      Item Selected
+     <h4>Επιλεγμένα Προΐοντα</h4>
       <table id="tableSelected">
         <thead>
           <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Quantity</th>
+            <th>Όνομα</th>
+            <th>Ποσότητα</th>
           </tr>
         </thead>
         <tbody id="itemSelected"></tbody>
       </table>
-      <button id="submitAnnouncement">Submit</button>
+      <button id="submitAnnouncement">Καταχώρηση</button>
     </div>
   </div>
 
