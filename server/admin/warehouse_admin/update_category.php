@@ -1,4 +1,7 @@
 <?php
+
+//PHP script που αλλάζει το όνομα μια κατηγορίας
+
 session_start();
 include("../../Mysql_connection.php");
 
