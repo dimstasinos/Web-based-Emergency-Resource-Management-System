@@ -1,5 +1,8 @@
+//Event listener που εκτελείτε όταν φορτωθεί η HTML
 document.addEventListener('DOMContentLoaded', function () {
 
+  //Επικοινωνία με τον Server για την ανάκτηση των username των
+  //οχημάτων
   fetch("/server/admin/register/vehicle_username.php")
     .then(response => response.json())
     .then(data => {
@@ -7,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var vehicle = document.getElementById("vehicleSelect");
       vehicle.innerHTML = "";
 
+      //Εμφάνιση username οχημάτων
       if (data !== "") {
         data.trucks.forEach(info => {
           var vehicle_add = document.createElement("option");
@@ -23,9 +27,10 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .catch(error => console.error)
 
-
 });
 
+
+//Event Listener που ενεργοποιεί/απενεργοποιεί input text
 document.getElementById("newVehicle").addEventListener("change", function () {
 
   if (document.getElementById("vehicleUsername").disabled === true) {
@@ -38,10 +43,13 @@ document.getElementById("newVehicle").addEventListener("change", function () {
 
 });
 
+
+//Event listener που εκτελεί την εγγκραφή του διασώστη
 document.getElementById("registerButton").addEventListener("click", function () {
 
   var check = 0;
 
+  //Ανάκτηση δεδομένων από τα inputs
   var f_name = document.getElementById("fname").value;
   var l_name = document.getElementById("lname").value;
   var username = document.getElementById("username").value;
@@ -52,6 +60,7 @@ document.getElementById("registerButton").addEventListener("click", function () 
   check = nameCheck(f_name);
   check = lastNameCheck(l_name);
 
+  //Έλεγχος στοιχείων
   if (username === "") {
     alert("Δώσε ένα username");
     check = 1;
@@ -69,6 +78,7 @@ document.getElementById("registerButton").addEventListener("click", function () 
 
   if (check === 0) {
 
+    //Αποστολή δεδομένων στον server για εγγραφή του χρήστη
     if (document.getElementById("vehicleUsername").disabled === true) {
 
       var formData = new FormData();
@@ -100,6 +110,7 @@ document.getElementById("registerButton").addEventListener("click", function () 
 
     } else if (document.getElementById("vehicleUsername").disabled === false) {
 
+      //Αποστολή δεδομένων στον server για εγγραφή του χρήστη σε νέο όχημα
       if (document.getElementById("vehicleUsername").value !== "") {
         var formData = new FormData();
         formData.append("f_name", f_name);
@@ -128,29 +139,28 @@ document.getElementById("registerButton").addEventListener("click", function () 
           })
           .catch((error) => console.error("Error:", error));
 
-
       } else {
         alert("Δώσε username για το νέο όχημα");
       }
-
-
     }
-
   }
-
-
 });
 
 
-
+//Συνάρτηση για τον έλεγχο
+//συμβολοσειράς
 function stringCheck(input) {
   return /\d/.test(input);
 }
 
+//Συνάρτηση για τον έλεγχο
+//ενός τηλεφώνου
 function phoneCheck(input) {
   return /^[A-Za-z]+$/.test(input);
 }
 
+//Συνάρτηση που ελέγχει το
+//όνομα που εισάγει ο χρήστης
 function nameCheck(input) {
   if (input === "") {
     alert("Δώστε ένα όνομα");
@@ -162,6 +172,8 @@ function nameCheck(input) {
   return 0;
 }
 
+//Συνάρτηση που ελέγχει το
+//επωνυμο που εισάγει ο χρήστης
 function lastNameCheck(input) {
   if (input === "") {
     alert("Δώσε ένα Επώνυμο");

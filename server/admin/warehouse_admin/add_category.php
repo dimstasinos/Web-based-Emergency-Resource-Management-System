@@ -1,6 +1,6 @@
 <?php
 
-include("../Mysql_connection.php");
+include("../../Mysql_connection.php");
 
 $receive = file_get_contents('php://input');
 $data = json_decode($receive);
