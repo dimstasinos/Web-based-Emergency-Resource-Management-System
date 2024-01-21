@@ -1,33 +1,29 @@
-
-  /* Reset default styles */
-body {
+ body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
-  background-color: #f2f2f2; /* Background color for the whole page */
+  background-color: #f2f2f2;
 }
 
 
 .header {
   background-image: url('../images/backround.JPEG'); 
-  background-size: cover; /* Ensures the image covers the entire sidebar */
-  background-position: center; /* Centers the image in the sidebar */
-  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; 
   color: rgba(255, 255, 255, 0.425);
   text-align: left;
   padding: 20px 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
 .header h1 {
   margin: 0;
   font-size: 24px;
     display: flex;
-    align-items: center; /* Aligns the icon and the title vertically */
-  }
+    align-items: center; 
+}
 
-
-/* Styling for h2 elements with the 'chart-heading' class */
 h2.chart-heading {
   font-family: 'Roboto', sans-serif;
   color: #333;
@@ -35,12 +31,12 @@ h2.chart-heading {
 }
 
 
-/* Navigation bar styles */
+
 .sidebar {
   background-image: url('../images/backround.JPEG'); 
-  background-size: cover; /* Ensures the image covers the entire sidebar */
-  background-position: center; /* Centers the image in the sidebar */
-  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; 
   color: rgba(255, 255, 255, 0.425);
   padding: 10px;
   width: 200px;
@@ -53,19 +49,19 @@ h2.chart-heading {
   color: rgba(255, 255, 255, 0.425);
   text-decoration: none;
   padding: 10px 0;
-  transition: background-color 0.3s; /* Smooth background color transition */
+  transition: background-color 0.3s; 
 }
 
 .sidebar a:hover {
-  background-color: #555; /* Highlight on hover */
+  background-color: #555; 
 }
 
 
 .main {
-  margin-top: 20px; /* Add space for the header and navigation bar */
+  margin-top: 20px; 
   padding: 20px;
-  background-color: #fff; /* White background for the content */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  background-color: #fff; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
 label {
@@ -96,16 +92,15 @@ input[type="date"] {
 
 #serverchart {
   width: 100%;
-  max-width: 800px; /* Set a maximum width for the chart */
-  margin: 20px auto; /* Center the chart horizontally */
+  max-width: 800px; 
+  margin: 20px auto; 
   display: block;
 }
 
-/* Styles for the separator lines */
 .separator-line {
   border: none;
   border-top: 1px solid #455da0; 
-  margin: 10px 0; /* Space above and below the line */
+  margin: 10px 0; 
 }
 
 .title-container {
@@ -114,9 +109,9 @@ input[type="date"] {
 }
 
 .title-icon {
-  width: 100px; /* Set the width of the icon */
-  height: auto; /* Maintain aspect ratio */
-  margin-right: 10px; /* Space between the icon and the title */
+  width: 100px; 
+  height: auto;
+  margin-right: 10px; 
 }
 
 
