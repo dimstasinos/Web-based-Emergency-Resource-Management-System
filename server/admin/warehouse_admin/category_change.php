@@ -31,7 +31,6 @@ try {
 
   $db->close();
 
-
   //Αποστολή μηνύματος επιτυχής εκτέλεσης στον client
   header('Content-Type: application/json');
   echo json_encode(['status' => 'success']);
