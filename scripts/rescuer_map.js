@@ -2870,11 +2870,14 @@ function items_select(data, selected_cat) {
 }
 
 
-//Συνάρτηση 
+//Συνάρτηση που ανανεώνει τον πίνακα με το φορτίο
+//του οχήματος
 function truck_cargo(data) {
 
   const truck_table = document.getElementById("itemCargo");
   truck_table.innerHTML = "";
+
+  //Δημιουργία του πίνακα
   data.features.forEach(feature => {
     if (feature.properties.category === "Truck Active" || feature.properties.category === "Truck Inactive") {
       feature.properties.cargo.forEach(item => {
@@ -2898,12 +2901,17 @@ function truck_cargo(data) {
 
 }
 
+//Event listener που ενεργοποιείται όταν γίνεται κλικ στον πίνακα
 document.getElementById("tableOfItems").addEventListener("click", function (event) {
+ 
+  //Επιλογή σειράς που πατήθηκε
   if (event.target.tagName === "TD") {
     const selected_row = event.target.closest("tr");
     const row_items = Array.from(selected_row.cells).map(
       (cell) => cell.textContent
     );
+
+    //Επιλογή των δεδομένων από τον πίνακα
     const id = row_items[0];
     const item = row_items[1];
     const quantity = row_items[4];
@@ -2918,6 +2926,7 @@ document.getElementById("tableOfItems").addEventListener("click", function (even
       item_check.push(cell.innerText);
     }
 
+    //Έλεγχος εάν υπάρχει ήδη το είδος στον πίνακα επιλεγμένων
     for (var i = 0; i < item_check.length; i++) {
       if (item_check[i] === id) {
         flag = 1;
@@ -2925,6 +2934,7 @@ document.getElementById("tableOfItems").addEventListener("click", function (even
       }
     }
 
+    //Μεταφορά στον επόμενο πίνακα
     if (flag === 0) {
       const row_table = document.createElement("tr");
       const item_id = document.createElement("td");
@@ -2936,7 +2946,7 @@ document.getElementById("tableOfItems").addEventListener("click", function (even
       name_table.textContent = item;
       item_quantity.innerHTML = `<input type="range" id="${id}" 
       min="0" max="${quantity}" value="0"></input><span id="quantity_${id}">0</span>`;
-      item_delete.innerHTML = `<button id=cancel_${id}>cancel</button>`;
+      item_delete.innerHTML = `<button id=cancel_${id}>Ακύρωση</button>`;
 
       row_table.appendChild(item_id);
       row_table.appendChild(name_table);
@@ -2945,10 +2955,12 @@ document.getElementById("tableOfItems").addEventListener("click", function (even
 
       table.appendChild(row_table);
 
+      //Event listener για την ποσότητα που θα πάρει το όχημα
       document.getElementById(`${id}`).addEventListener("input", function () {
         document.getElementById(`quantity_${id}`).innerText = this.value;
       });
 
+      //Event
       document.getElementById(`cancel_${id}`).addEventListener("click", function () {
         var row = this.closest('tr');
         row.parentNode.removeChild(row);
