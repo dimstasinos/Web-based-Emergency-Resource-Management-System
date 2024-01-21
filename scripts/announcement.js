@@ -187,9 +187,10 @@ function items_select(data, selected_cat) {
   });
 }
 
-
+//Event listener που εμφανίζει τα είδη ανάλογα με την καταχώρηση του χρήστη
 document.getElementById("search").addEventListener("input", function () {
 
+  //Ανάκτηση δεδομένων απο τον server
   fetch('/server/admin/warehouse_admin/database_extract.php')
     .then(jsonResponse => {
 
@@ -201,6 +202,7 @@ document.getElementById("search").addEventListener("input", function () {
     })
     .then(data => {
 
+      //Εύρεση ειδών που ξεκινούν με την καταχώρηση του χρήστη
       if (data != null) {
         var input = document.getElementById("search").value.toLowerCase();
         var results = data.items.filter(item => {
@@ -209,6 +211,7 @@ document.getElementById("search").addEventListener("input", function () {
 
         document.getElementById("results").innerHTML = '';
 
+        //Εμφάνιση των ειδών
         results.forEach(item => {
           var resultPrint = document.createElement('li');
           resultPrint.classList.add('results_item');
@@ -238,7 +241,7 @@ document.getElementById("search").addEventListener("input", function () {
               }
             }
 
-
+            //Τοποθέτηση στον πίνακα επιλεγμένων
             if (flag === 0) {
               const row_table = document.createElement("tr");
               const item_id = document.createElement("td");
@@ -274,7 +277,7 @@ document.getElementById("search").addEventListener("input", function () {
           });
 
 
-
+          //Αφαίρεση της λίστας
           document.addEventListener('click', function (event) {
             if (!event.target.closest('autocomlete')) {
               document.getElementById("results").innerHTML = '';
@@ -291,6 +294,7 @@ document.getElementById("search").addEventListener("input", function () {
 
 });
 
+//Event listener που εμφανίζει τα είδη ανάλογα με την επιλεγμένη κατηγορία
 document.getElementById("categories").addEventListener("change", function () {
   fetch("/server/admin/warehouse_admin/database_extract.php")
     .then((jsonResponse) => jsonResponse.json())
@@ -298,6 +302,8 @@ document.getElementById("categories").addEventListener("change", function () {
       if (data.status === "error") {
         console.error("Server Error:", data.Error);
       } else {
+
+        //Εμφάνιση ειδών
         const selected_cat = document.getElementById("categories").value;
         items_select(data, selected_cat);
       }
@@ -305,6 +311,8 @@ document.getElementById("categories").addEventListener("change", function () {
     .catch((error) => console.error("Error:", error));
 });
 
+//Event listner ο οποίος μεταφέρει το είδος που
+//επιλέχθηκε στον πίνακα επιλεγμένων
 document.getElementById("itemsTable").addEventListener("click", function (event) {
   if (event.target.tagName === "TD") {
     const selected_row = event.target.closest("tr");
@@ -319,7 +327,6 @@ document.getElementById("itemsTable").addEventListener("click", function (event)
     var flag = 0;
     var item_check = [];
 
-
     for (var i = 0; i < table.rows.length; i++) {
       var cell = table.rows[i].cells[0];
       item_check.push(cell.innerText);
@@ -332,6 +339,7 @@ document.getElementById("itemsTable").addEventListener("click", function (event)
       }
     }
 
+    //Εμφάνιση στον πίνακα επιλεγμένων
     if (flag === 0) {
       const row_table = document.createElement("tr");
       const item_id = document.createElement("td");
@@ -343,7 +351,7 @@ document.getElementById("itemsTable").addEventListener("click", function (event)
       name_table.textContent = item;
       item_quantity.innerHTML = `<input type="range" id="${id}" 
       min="0" max="20" value="0"></input><span id="quantity_${id}">0</span>`;
-      item_delete.innerHTML = `<button id=cancel_${id}>cancel</button>`;
+      item_delete.innerHTML = `<button id=cancel_${id}>Διαγραφή</button>`;
 
       row_table.appendChild(item_id);
       row_table.appendChild(name_table);
@@ -352,10 +360,12 @@ document.getElementById("itemsTable").addEventListener("click", function (event)
 
       table.appendChild(row_table);
 
+      //Event listener που ανανεώνει την ποσότητα του είδους που επιλέχθηκε
       document.getElementById(`${id}`).addEventListener("input", function () {
         document.getElementById(`quantity_${id}`).innerText = this.value;
       });
 
+      //Αφαίρεση του είδους από τον πίνακα επιλεγμένων
       document.getElementById(`cancel_${id}`).addEventListener("click", function () {
         var row = this.closest('tr');
         row.parentNode.removeChild(row);
@@ -364,7 +374,7 @@ document.getElementById("itemsTable").addEventListener("click", function (event)
   }
 });
 
-
+//Event listener που ανεβάζει μια ανκοίνωση
 document.getElementById("submitAnnouncement").addEventListener("click", function () {
 
   var selectTable = document.getElementById('itemSelected');
@@ -375,20 +385,22 @@ document.getElementById("submitAnnouncement").addEventListener("click", function
       if (parseInt(document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText) === 0) {
         flag = 1;
 
-        alert(`Select a quantity over 0 for item: ${selectTable.rows[i].cells[1].innerHTML}`);
+        alert(`Επέλεξε ποσότητα μεγαλύτερη από 0 για το προιόν: ${selectTable.rows[i].cells[1].innerHTML}`);
       }
     }
   } else {
     flag = 1;
-    alert("Select at least one item for the request");
+    alert("Επέλεξε τουλάχιστον ένα προιόν για την ανακοίνωση");
   }
 
   if (flag === 0) {
 
+    //Επικοινωνία με τον server για ανέβασμα την ανακοίνωσης
     fetch("/server/admin/announcement/announcement_insert.php")
       .then(jsonResponse => jsonResponse.json())
       .then(announcement_id => {
 
+        //Συλλογή δεδομένων
         for (var i = 0; i < selectTable.rows.length; i++) {
           if (document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText > 0) {
 
@@ -398,6 +410,7 @@ document.getElementById("submitAnnouncement").addEventListener("click", function
               quantity: document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText,
             };
 
+            //Ανέβασμα των προιόντων της ανακοίνωσης
             fetch("/server/admin/announcement/announcement_upload.php", {
               method: "POST",
               headers: {
@@ -410,25 +423,8 @@ document.getElementById("submitAnnouncement").addEventListener("click", function
                 if (data.status === "error") {
                   console.error("Server Error:", data.Error);
                 } else {
-                  fetch("/server/admin/warehouse_admin/database_extract.php", {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(data),
-                  })
-                    .then((response) => response.json())
-                    .then((data) => {
-                      if (data.status === "error") {
-                        console.error("Server Error:", data.Error);
-                      } else {
-                        var selected_cat = document.getElementById("categories").value;
-                        items_select(data, selected_cat);
-                        document.getElementById("itemSelected").innerHTML = "";
-                      }
-                    })
-                    .catch((error) => console.error("Error:", error));
 
+                  //Ανανέωση του πίνακα ανακοινώσεων
                   fetch('/server/admin/announcement/announcement.php')
                     .then(jsonResponse => {
 

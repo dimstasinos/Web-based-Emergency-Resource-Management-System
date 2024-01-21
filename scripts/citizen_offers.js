@@ -1,10 +1,13 @@
+//Global μεταβλητές
 var itemSelected;
 var announcementSelected;
 
+//Event listener που εκτελείτε όταν φορτωθεί η HTML
 document.addEventListener('DOMContentLoaded', function () {
 
   document.getElementById("submitAnnouncement").disabled = true;
 
+  //Εμφάνιση ανακοινώσεων
   fetch("/server/citizen/announcement.php")
     .then(jsonResponse => jsonResponse.json())
     .then(data => {
@@ -12,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .catch((error) => console.error("Error:", error));
 
+  //Εμφάνιση προσφορών
   fetch("/server/citizen/offers.php")
     .then(jsonResponse => jsonResponse.json())
     .then(data => {
@@ -21,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-
+//Συνάρτηση που εμφανίζει τον πίνακα με τις ανακοινώσεις
 function announcementTable(data) {
 
   const announcement_table = document.getElementById("announcements");
@@ -29,10 +33,10 @@ function announcementTable(data) {
   document.getElementById("OfferSelected").innerHTML = "";
   document.getElementById("submitAnnouncement").disabled = true;
 
-
-
+  //Προσπέραση δεδομέων
   data.forEach(announcement => {
 
+    //Δημιουργία στοιχείων πίνακα
     const row_table = document.createElement("tr");
     const item_name = document.createElement("td");
     const item_quantity = document.createElement("td");
@@ -62,6 +66,7 @@ function announcementTable(data) {
     row_table.appendChild(item_quantity);
     announcement_table.appendChild(row_table);
 
+    //Event listener που ενεργοποιείται όταν πατιέται κάποιο radiobutton
     document.getElementById(`${announcement.announcement_id}`).addEventListener("change", function () {
       itemSelected = [];
       announcementSelected = announcement;
@@ -70,7 +75,7 @@ function announcementTable(data) {
 
       selectedAnnouncement = announcement.announcement_id;
 
-
+      //Εμφάνιση ειδών ανακοίνωσης στον πίνακα
       announcement.items.forEach(item => {
         const rowOftable = document.createElement("tr");
         const item_id = document.createElement("td");
@@ -90,7 +95,7 @@ function announcementTable(data) {
         rowOftable.appendChild(selected);
         table.appendChild(rowOftable);
 
-
+        //Event listener ο οποίος ενεργοποιεί/απενεργοποιεί το κουμπί υποβολή
         document.getElementById(`${announcement.announcement_id}${item.item_id}`).addEventListener("change", function (event) {
           const checked = event.target.checked;
 
@@ -110,12 +115,15 @@ function announcementTable(data) {
   });
 }
 
+//Event listener για την υποβολή της προσφοράς
 document.getElementById("submitAnnouncement").addEventListener("click", function () {
 
+  //Συλλογή δεδομένων
   const announcement_id = {
     announcement_id: selectedAnnouncement,
   }
 
+  //Επικοινωνία με τον server για την υποβολή της προσφοράς
   fetch("/server/citizen/offer_insert.php", {
     method: "POST",
     headers: {
@@ -126,6 +134,7 @@ document.getElementById("submitAnnouncement").addEventListener("click", function
     .then(response => response.json())
     .then(offer_id => {
 
+      //Συλλογή δεδομένων
       var offer = {
         offer_id: parseInt(offer_id.id),
         announcement_id: selectedAnnouncement,
@@ -145,7 +154,7 @@ document.getElementById("submitAnnouncement").addEventListener("click", function
         });
       })
 
-
+      //Ανεβασμα προιόντων της προσφοράς
       fetch("/server/citizen/offer_upload", {
         method: "POST",
         headers: {
@@ -158,15 +167,15 @@ document.getElementById("submitAnnouncement").addEventListener("click", function
 
           document.getElementById("OfferSelected").innerHTML = "";
 
-
+          //Ανανέωση πίνακα ανακοινώσεων
           fetch("/server/citizen/announcement.php")
             .then(jsonResponse => jsonResponse.json())
             .then(data => {
-
               announcementTable(data,);
             })
             .catch((error) => console.error("Error:", error));
 
+          //Ανανέωση πίνακα προσφορών
           fetch("/server/citizen/offers.php")
             .then(jsonResponse => jsonResponse.json())
             .then(data => {
@@ -175,23 +184,21 @@ document.getElementById("submitAnnouncement").addEventListener("click", function
             .catch((error) => console.error("Error:", error));
         })
         .catch((error) => console.error("Error:", error));
-
-
     })
     .catch((error) => console.error("Error:", error));
-
 })
 
-
-
+//Συνάρτηση που δημιουργεί τον πίνακα ανακοινώσεων
 function offersTable(data) {
 
   const offer_table = document.getElementById("offers");
 
   offer_table.innerHTML = "";
 
+  //Προσπέλαση δεδομένων
   data.forEach(offer => {
 
+    //Δημιουργία του πίνακα
     const row_table = document.createElement("tr");
     const item_name = document.createElement("td");
     const item_quantity = document.createElement("td");
@@ -199,8 +206,6 @@ function offersTable(data) {
     const pick_date = document.createElement("td");
     const complete_date = document.createElement("td");
     const action = document.createElement("td");
-
-
 
     var items_name_array = [];
     var items_quantity_array = [];
@@ -210,8 +215,6 @@ function offersTable(data) {
       items_quantity_array.push(item.quantity);
     });
 
-
-
     item_name.innerHTML = items_name_array.join("<br>");
     item_quantity.innerHTML = items_quantity_array.join("<br>");
 
@@ -219,7 +222,7 @@ function offersTable(data) {
     if (offer.pickup_date === null) {
       pick_date.textContent = "-";
 
-      action.innerHTML = `<button id="${offer.offer_id}">Cancel</button>`;
+      action.innerHTML = `<button id="${offer.offer_id}">Ακύρωση</button>`;
 
     } else {
       pick_date.textContent = offer.pickup_date;
