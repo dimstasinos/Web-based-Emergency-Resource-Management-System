@@ -1,13 +1,19 @@
 <?php
 
+//PHP script που στέλνει στον client
+//όλα τα αιτήματα του πολίτη
+
 session_start();
 
 include("../Mysql_connection.php");
 
 try {
 
+  //Σύνδεση με την βάση δεδομένων
   $db = db_connect();
 
+  //Queries για την δημιουργία JSON με τα αιτήματα
+  //του πολίτη
   $request = $db->prepare("SELECT * FROM citizen_requests where
   req_citizen_id=?");
   $request->bind_param("i", $_SESSION["user_id"]);
@@ -89,10 +95,13 @@ try {
 
   $data = $requests;
 
+  //Αποστολή του JSON στον client
   $json_data = json_encode($data);
   header('Content-Type: application/json');
   echo $json_data;
 } catch (Exception $error) {
+  
+  //Αποστολή μηνύματος ανεπιτυχούς εκτέλεσης στον client
   header('Content-Type: application/json');
   echo json_encode(['status' => 'error', "Error" => $error->getMessage()]);
 }

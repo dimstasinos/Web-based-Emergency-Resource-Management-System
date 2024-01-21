@@ -1,15 +1,24 @@
 <?php
 
-session_start();
+//PHP script που εισάγει μια νέα 
+//προσφορά στην βάση δεδομένων
+
 session_start();
 
 include("../Mysql_connection.php");
+
+//Παραλαβή δεδομένων από js
 $receive = file_get_contents('php://input');
+
+//Αποκωδικοποίηση δεδομένων
 $data = json_decode($receive);
 
 try {
 
+  //Σύνδεση με την βάση δεδομένων
   $db = db_connect();
+
+  //Queries για την εισαγωγή της νέας προσφοράς
   $offer = $db->prepare("INSERT INTO citizen_offers values 
   (NULL,now(),NULL,NULL,?,?)");
   $offer->bind_param(
@@ -27,10 +36,13 @@ try {
 
   $db->close();
 
+  //Αποστολή στον client το id της προσφοράς
   $json_data = json_encode($send);
   header('Content-Type: application/json');
   echo $json_data;
 } catch (Exception $error) {
+
+  //Αποστολή μηνύματος ανεπιτυχούς εκτέλεσης στον client
   header('Content-Type: application/json');
   echo json_encode(['status' => 'error', "Error" => $error->getMessage()]);
 }

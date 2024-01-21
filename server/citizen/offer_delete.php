@@ -47,7 +47,7 @@ try {
     }
   } else if ($announcement_response->num_rows == 0) {
 
-    //Εάν δεν υπάρχεοι η ανακοίνωση
+    //Εάν δεν υπάρχει η ανακοίνωση θα προστίθεται
     $announcement_insert = $db->prepare("INSERT INTO announcements VALUES
       (NULL)");
     $announcement_insert->execute();

@@ -1,4 +1,7 @@
 <?php
+
+//PHP script που στέλνει 
+
 session_start();
 
 include("../Mysql_connection.php");

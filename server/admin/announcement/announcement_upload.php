@@ -1,6 +1,7 @@
 <?php
 
 //PHP script που εισάγει τα είδη της ανακοίνωσης
+//στην βάση δεδομένων
 
 session_start();
 
@@ -17,7 +18,7 @@ try {
   //Σύνδεση με την βάση δεδομένων
   $db = db_connect();
 
-  //Queries για την εισαγή των προιόντων της ανακοίνωσης
+  //Queries για την εισαγή των ειδών της ανακοίνωσης
   $announcement_items = $db->prepare("INSERT INTO announcement_items 
   values (?,?,?)");
   $announcement_items->bind_param(
