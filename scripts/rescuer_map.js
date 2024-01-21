@@ -1303,7 +1303,7 @@ document.addEventListener('DOMContentLoaded', function () {
               });
 
               alert("Η προσφορά ολοκληρώθηκε");
-              
+
               //Ανανέωση του χάρτη
               mapPanelRefresh();
 
@@ -2774,7 +2774,7 @@ function mapPanelRefresh() {
 
               alert("Η προσφορά ολοκληρώθηκε");
 
-               //Ανανέωση του χάρτη
+              //Ανανέωση του χάρτη
               mapPanelRefresh();
 
 
@@ -2903,7 +2903,7 @@ function truck_cargo(data) {
 
 //Event listener που ενεργοποιείται όταν γίνεται κλικ στον πίνακα
 document.getElementById("tableOfItems").addEventListener("click", function (event) {
- 
+
   //Επιλογή σειράς που πατήθηκε
   if (event.target.tagName === "TD") {
     const selected_row = event.target.closest("tr");
@@ -2960,7 +2960,7 @@ document.getElementById("tableOfItems").addEventListener("click", function (even
         document.getElementById(`quantity_${id}`).innerText = this.value;
       });
 
-      //Event
+      //Event listener ο οποίος αφαιρεί ένα είδος από τα επιλεγμένα
       document.getElementById(`cancel_${id}`).addEventListener("click", function () {
         var row = this.closest('tr');
         row.parentNode.removeChild(row);
@@ -2969,36 +2969,40 @@ document.getElementById("tableOfItems").addEventListener("click", function (even
   }
 });
 
+//Event listener που φορτώνει τα επιλεγμένα είδη
 document.getElementById("load").addEventListener("click", function () {
 
   var selectTable = document.getElementById('itemSelected');
   var flag = 0;
 
-
+  //Έλεγχος εάν έχει επιλεχθεί κάποιο είδος και της ποσότητάς του
   if (selectTable.rows.length > 0) {
     for (var i = 0; i < selectTable.rows.length; i++) {
       if (parseInt(document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText) === 0) {
         flag = 1;
 
-        alert(`Select a quantity over 0 for item: ${selectTable.rows[i].cells[1].innerHTML}`)
+        alert(`Επέλεξε ποσότητα μεγαλύτερη από 0 για το είδος: ${selectTable.rows[i].cells[1].innerHTML}`)
       }
     }
   } else {
     flag = 1;
-    alert("Select at least one item to load on truck");
+    alert("Επέλεξε τουλάχιστον ένα είδος για να φορτωθεί στο όχημα");
   }
 
-
   if (flag === 0) {
+
+
     for (var i = 0; i < selectTable.rows.length; i++) {
       if (document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText > 0) {
 
-
+        //Συλλογή δεδομένων
         const data = {
           id: selectTable.rows[i].cells[0].innerHTML,
           quantity: document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText,
         };
 
+        //Επικοινωνία με τον server για την φορτωση 
+        //των ειδών στο όχημα
         fetch("/server/rescuer/load_truck.php", {
           method: "POST",
           headers: {
@@ -3011,6 +3015,9 @@ document.getElementById("load").addEventListener("click", function () {
             if (data.status === "error") {
               console.error("Server Error:", data.Error);
             } else {
+
+              //Επικοινωνία με τον server για ανανέωση της βάσης δεδομένων
+              //των ειδών
               fetch("/server/rescuer/database_extract.php", {
                 method: "POST",
                 headers: {
@@ -3024,6 +3031,7 @@ document.getElementById("load").addEventListener("click", function () {
                     console.error("Server Error:", data.Error);
                   } else {
 
+                    //Εμφάνιση ειδών
                     var selected_cat = document.getElementById("categorySelect").value;
                     items_select(data, selected_cat);
                     document.getElementById("itemSelected").innerHTML = "";
@@ -3031,6 +3039,8 @@ document.getElementById("load").addEventListener("click", function () {
                 })
                 .catch((error) => console.error("Error:", error));
 
+              //Επικοινωνία με τον server για 
+              //ανανέωση του φορτίου του οχήματος
               fetch("/server/rescuer/rescuer_geojson.php")
                 .then((response) => response.json())
                 .then((cargo) => {
@@ -3045,22 +3055,28 @@ document.getElementById("load").addEventListener("click", function () {
 
       }
     }
+
+    //Ανανέωση του χάρτη
     mapPanelRefresh();
   }
 });
 
+//Event listener ο οποίος ξεφορτώνει το φορτίο του οχήματος στην βάση
 document.getElementById("unload").addEventListener("click", function () {
 
   var itemTable = document.getElementById('itemCargo');
 
   if (itemTable.rows.length > 0) {
 
+    //Επικοινωνία με τον server για ξεφόρτωση του φορτίου
     fetch("/server/rescuer/unload_truck.php")
       .then((response) => response.json())
       .then((data) => {
         if (data.status === "error") {
           console.error("Server Error:", data.Error);
         } else {
+
+          //Ανανέωση της βάσης δεδομένων
           fetch("/server/rescuer/database_extract.php")
             .then((response) => response.json())
             .then((data) => {
@@ -3068,6 +3084,7 @@ document.getElementById("unload").addEventListener("click", function () {
                 console.error("Server Error:", data.Error);
               } else {
 
+                //Ανανέωση πίνακα ειδών
                 var selected_cat = document.getElementById("categorySelect").value;
                 items_select(data, selected_cat);
                 document.getElementById("itemCargo").innerHTML = "";
@@ -3075,11 +3092,11 @@ document.getElementById("unload").addEventListener("click", function () {
             })
             .catch((error) => console.error("Error:", error));
 
+          //Ανανέωση φορτίου οχήματος
           fetch("/server/rescuer/rescuer_geojson.php")
             .then((response) => response.json())
             .then((cargo) => {
               truck_cargo(cargo);
-
             })
             .catch((error) => console.error("Error:", error))
         }
@@ -3089,12 +3106,12 @@ document.getElementById("unload").addEventListener("click", function () {
     mapPanelRefresh();
 
   } else {
-    alert("The truck is empty");
+    alert("Το όχημα είναι άδειο");
   }
-
 
 });
 
+//Event listener για την εμφάνιση των σωστών ειδών στον πίνακα
 document.getElementById("categorySelect").addEventListener("change", function () {
   fetch("/server/rescuer/database_extract.php")
     .then((jsonResponse) => jsonResponse.json())

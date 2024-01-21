@@ -1,43 +1,62 @@
-let onload_data;
-let item_selected = 0;
+//Global μεταβλητές
+var onload_data;
+var item_selected = 0;
 
+//Event listener που εκτελείτε όταν φορτωθεί η HTML
 document.addEventListener("DOMContentLoaded", function () {
+
+  //Επικοινωνια με τον server για εμφάνιση των ειδών που περιέχει
+  //η βάση δεδομένων
   fetch("/server/admin/warehouse_admin/database_extract.php")
     .then((jsonResponse) => jsonResponse.json())
     .then((data) => {
       if (data.status === "error") {
         console.error("Server Error:", data.Error);
       } else {
+
+        //Έλεγχος εάν υπάρχει κάποιο είδος
         if (data.categories.length !== 0 && data.items.length !== 0) {
+
+          //Συμπλήρωση της λίστα με τις κατηγορίες
           categories_select(data);
+
+          //Εμφάνιση των ειδών της επιλεγμένης κατηγορίας
           var selected_cat = document.getElementById("cat_list").value;
           items_select(data, selected_cat);
+
+          //Συμπλήρωση της λίστα με τις κατηγορίες
           categories_select_product(data);
+
+          //Συμπλήρωση της λίστα με τις κατηγορίες
           category_select_det(data);
+
+          //Συμπλήρωση της λίστα με τις κατηγορίες
           categories_select_new(data);
           onload_data = data;
         } else {
+
+          //Εμφάνιση ειδοποιήσεωβ ότι η βάση είναι κενή
           const list = document.getElementById("cat_list");
           list.innerHTML = "";
-          let select_add = document.createElement("option");
+          var select_add = document.createElement("option");
           select_add.textContent = "Η Βάση δεδομένων είναι κενή";
           list.appendChild(select_add);
 
           const list_2 = document.getElementById("cat_selected");
           list_2.innerHTML = "";
-          let select_add_2 = document.createElement("option");
+          var select_add_2 = document.createElement("option");
           select_add_2.textContent = "Η Βάση δεδομένων είναι κενή";
           list_2.appendChild(select_add_2);
 
           const list_3 = document.getElementById("cat_new");
           list_3.innerHTML = "";
-          let select_add_3 = document.createElement("option");
+          var select_add_3 = document.createElement("option");
           select_add_3.textContent = "Η Βάση δεδομένων είναι κενή";
           list_3.appendChild(select_add_3);
 
           const list_4 = document.getElementById("category");
           list_4.innerHTML = "";
-          let select_add_4 = document.createElement("option");
+          var select_add_4 = document.createElement("option");
           select_add_4.textContent = "Η Βάση δεδομένων είναι κενή";
           list_4.appendChild(select_add_4);
 
@@ -49,8 +68,13 @@ document.addEventListener("DOMContentLoaded", function () {
     .catch((error) => console.error("Error:", error));
 });
 
+//Event listner ο οποίος συμπληρώνει τα inputs με το είδος που
+//επιλέχθηκε από τον πίνακα
 document.getElementById("table_admin").addEventListener("click", function (event) {
+
   if (event.target.tagName === "TD") {
+
+    //Εύρεση είδους που επιλέχθηκε
     item_selected = 1;
     document.getElementById("detail_name_text").value = "";
     document.getElementById("detail_value_text").value = "";
@@ -67,9 +91,9 @@ document.getElementById("table_admin").addEventListener("click", function (event
       (cat_name) => cat_name.id === product.category
     );
 
-    let flag = 0;
+    var flag = 0;
 
-    for (let item of product.details) {
+    for (var item of product.details) {
       if (item.detail_name === "" && item.detail_value === "") {
         flag = 1;
       } else {
@@ -79,7 +103,9 @@ document.getElementById("table_admin").addEventListener("click", function (event
     }
 
     if (flag === 0) {
-      let i = 0;
+
+      //Συμπλήρωση των πληροφοριών με το είδος που επιλέχθηκε
+      var i = 0;
       product.details.forEach((item) => {
         const radio_button = document.createElement("input");
         radio_button.type = "radio";
@@ -99,12 +125,14 @@ document.getElementById("table_admin").addEventListener("click", function (event
           .appendChild(radio_button_label);
       });
 
+      //Συμπλήρωση των πληροφοριών με το είδος που επιλέχθηκε
       document.getElementById("id_selected").value = product.id;
       document.getElementById("name_selected").value = product.name;
       document.getElementById("quantity_selected").value = product.quantity;
 
+
       for (
-        let i = 0;
+        var i = 0;
         i < document.getElementById("cat_selected").options.length;
         i++
       ) {
@@ -117,9 +145,9 @@ document.getElementById("table_admin").addEventListener("click", function (event
         }
       }
 
-      let radio_button = document.getElementsByName("select");
+      var radio_button = document.getElementsByName("select");
 
-      for (let i = 0; i < radio_button.length; i++) {
+      for (var i = 0; i < radio_button.length; i++) {
         radio_button[i].addEventListener("change", function () {
           if (this.checked) {
             document.getElementById("detail_name_text").value =
@@ -129,13 +157,15 @@ document.getElementById("table_admin").addEventListener("click", function (event
           }
         });
       }
+
     } else {
+      //Συμπλήρωση των πληροφοριών με το είδος που επιλέχθηκε
       document.getElementById("id_selected").value = product.id;
       document.getElementById("name_selected").value = product.name;
       document.getElementById("quantity_selected").value = product.quantity;
 
       for (
-        let i = 0;
+        var i = 0;
         i < document.getElementById("cat_selected").options.length;
         i++
       ) {
@@ -151,35 +181,41 @@ document.getElementById("table_admin").addEventListener("click", function (event
   }
 });
 
+//Event listener που καθαρίζει τα inputs του χρήστη
 document.getElementById("clear").addEventListener("click", function () {
   document.getElementById("detail_name_text").value = "";
   document.getElementById("detail_value_text").value = "";
 
   if (document.getElementById("radiobutton_0")) {
-    for (let i = 0; i < document.getElementsByName("select").length; i++) {
+    for (var i = 0; i < document.getElementsByName("select").length; i++) {
       document.getElementsByName("select")[i].checked = false;
     }
   }
 });
 
+//Event listener που διαγράφει κάποια λεπτομέρια
 document.getElementById("delete").addEventListener("click", function () {
   if (document.getElementById("radiobutton_0")) {
     const name = document.getElementById("detail_name_text").value;
     const value = document.getElementById("detail_value_text").value;
 
-    //let selected;
-    let flag = 0;
-    for (let i = 0; i < document.getElementsByName("select").length; i++) {
+    var selected;
+    var flag = 0;
+
+    //Έλεγχος εάν έχει επιλεχθει κάποια λεπτομέρια
+    for (var i = 0; i < document.getElementsByName("select").length; i++) {
       if (document.getElementsByName("select")[i].checked === true) {
-        //selected = document.getElementsByName('select')[i].value;
+        selected = document.getElementsByName('select')[i].value;
         flag = 1;
         break;
       }
     }
 
-    if (flag === 1) {
-      const id_ = document.getElementById("id_selected").value;
 
+    if (flag === 1) {
+
+      //Συλλογή δεδομένων
+      const id_ = document.getElementById("id_selected").value;
       product = onload_data.items.find((item) => item.id === id_);
 
       const data = {
@@ -188,7 +224,8 @@ document.getElementById("delete").addEventListener("click", function () {
         detail_value: value,
       };
 
-      fetch("/server/warehouse_admin/delete_details.php", {
+      //Επικοινωνία με τον server για την διαγραφή της λεπτομέριας
+      fetch("/server/admin/warehouse_admin/delete_details.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -197,14 +234,18 @@ document.getElementById("delete").addEventListener("click", function () {
       })
         .then((response) => response.json())
         .then((data) => {
-          fetch("/server/warehouse_admin/database_extract.php")
+
+          //Συνάρτηση που ανανεώνει τα είδη του πίνακα
+          fetch("/server/admin/warehouse_admin/database_extract.php")
             .then((jsonResponse) => jsonResponse.json())
             .then((data) => {
               if (data.status === "error") {
                 console.error("Server Error:", data.Error);
               } else {
+
+                //Ανανέωση πίνακα ειδών και των λεπτομεριών
                 onload_data = data;
-                let selected_cat = document.getElementById("cat_list").value;
+                var selected_cat = document.getElementById("cat_list").value;
                 items_select(data, selected_cat);
                 radiobutton_refresh();
               }
@@ -222,14 +263,17 @@ document.getElementById("delete").addEventListener("click", function () {
   }
 });
 
+//Event listener που αλλάζει την λεπτομέρια ενός είδους
 document.getElementById("change").addEventListener("click", function () {
   if (document.getElementById("radiobutton_0")) {
+
     const name = document.getElementById("detail_name_text").value;
     const value = document.getElementById("detail_value_text").value;
 
-    let selected;
-    let flag = 0;
-    for (let i = 0; i < document.getElementsByName("select").length; i++) {
+    
+    var selected;
+    var flag = 0;
+    for (var i = 0; i < document.getElementsByName("select").length; i++) {
       if (document.getElementsByName("select")[i].checked === true) {
         selected = document.getElementsByName("select")[i].value;
         flag = 1;
@@ -241,8 +285,8 @@ document.getElementById("change").addEventListener("click", function () {
       const id_ = document.getElementById("id_selected").value;
       product = onload_data.items.find((item) => item.id === id_);
 
-      let check = false;
-      for (let i = 0; i < product.details.length; i++) {
+      var check = false;
+      for (var i = 0; i < product.details.length; i++) {
         if (
           product.details[i].detail_name === name &&
           product.details[i].detail_value === value
@@ -279,7 +323,7 @@ document.getElementById("change").addEventListener("click", function () {
                     console.error("Server Error:", data.Error);
                   } else {
                     onload_data = data;
-                    let selected_cat =
+                    var selected_cat =
                       document.getElementById("cat_list").value;
                     items_select(data, selected_cat);
                     radiobutton_refresh();
@@ -308,8 +352,8 @@ document.getElementById("add").addEventListener("click", function () {
   const id_ = document.getElementById("id_selected").value;
 
   if (item_selected === 1) {
-    let selected = false;
-    for (let i = 0; i < document.getElementsByName("select").length; i++) {
+    var selected = false;
+    for (var i = 0; i < document.getElementsByName("select").length; i++) {
       if (document.getElementsByName("select")[i].checked) {
         selected = true;
         break;
@@ -318,7 +362,7 @@ document.getElementById("add").addEventListener("click", function () {
 
     if (selected === false) {
       if (name !== "" || value !== "") {
-        let check = duplicate_check();
+        var check = duplicate_check();
 
         if (check === 0) {
 
@@ -346,7 +390,7 @@ document.getElementById("add").addEventListener("click", function () {
                       console.error("Server Error:", data.Error);
                     } else {
                       onload_data = data;
-                      let selected_cat =
+                      var selected_cat =
                         document.getElementById("cat_list").value;
                       items_select(data, selected_cat);
                       radiobutton_refresh();
@@ -440,9 +484,9 @@ document.getElementById("add_new_cat").addEventListener("click", function () {
     );
 
     if (check === undefined) {
-      let id_check = onload_data.categories[0].id;
+      var id_check = onload_data.categories[0].id;
 
-      for (let i = 0; i < onload_data.categories.length; i++) {
+      for (var i = 0; i < onload_data.categories.length; i++) {
         if (parseInt(onload_data.categories[i].id) > id_check) {
           id_check = onload_data.categories[i].id;
         }
@@ -560,18 +604,18 @@ document.getElementById("cat_name_change").addEventListener("click", function ()
       );
 
       if (check === undefined) {
-        let id = document.getElementById("id_cat").value;
-        let name = document.getElementById("cat_name").value;
+        var id = document.getElementById("id_cat").value;
+        var name = document.getElementById("cat_name").value;
 
         const data = {
           id: id,
           new_name: name,
         };
 
-        let current_cat = document.getElementById("category").value;
-        let current_cat_1 = document.getElementById("cat_list").value;
-        let current_cat_2 = document.getElementById("cat_new").value;
-        let current_cat_3 = document.getElementById("cat_selected").value;
+        var current_cat = document.getElementById("category").value;
+        var current_cat_1 = document.getElementById("cat_list").value;
+        var current_cat_2 = document.getElementById("cat_new").value;
+        var current_cat_3 = document.getElementById("cat_selected").value;
 
         fetch("/server/warehouse_admin/update_category.php", {
           method: "POST",
@@ -621,16 +665,16 @@ document.getElementById("cat_name_change").addEventListener("click", function ()
 document.getElementById("cat_name_delete").addEventListener("click", function () {
   if (document.getElementById("id_cat").value !== "") {
     if (document.getElementById("cat_name").value !== "") {
-      let id = document.getElementById("id_cat").value;
-      let cate_name = onload_data.categories.find(cat => cat.id = id);
+      var id = document.getElementById("id_cat").value;
+      var cate_name = onload_data.categories.find(cat => cat.id = id);
       const data = {
         id: id,
       };
 
-      let current_cat = document.getElementById("category").value;
-      let current_cat_1 = document.getElementById("cat_list").value;
-      let current_cat_2 = document.getElementById("cat_new").value;
-      let current_cat_3 = document.getElementById("cat_selected").value;
+      var current_cat = document.getElementById("category").value;
+      var current_cat_1 = document.getElementById("cat_list").value;
+      var current_cat_2 = document.getElementById("cat_new").value;
+      var current_cat_3 = document.getElementById("cat_selected").value;
 
 
       fetch("/server/warehouse_admin/delete_category.php", {
@@ -665,7 +709,7 @@ document.getElementById("cat_name_delete").addEventListener("click", function ()
                     items_select(data, current_cat_1);
                     document.getElementById("cat_list").value = current_cat_1;
                   } else {
-                    let selected_cat =
+                    var selected_cat =
                       document.getElementById("cat_list").value;
                     items_select(data, selected_cat);
                   }
@@ -695,7 +739,7 @@ document.getElementById("cat_name_delete").addEventListener("click", function ()
 document.getElementById("cat_name_delete").addEventListener("click", function () {
   if (document.getElementById("id_cat").value !== "") {
     if (document.getElementById("cat_name").value !== "") {
-      let id = document.getElementById("id_cat").value;
+      var id = document.getElementById("id_cat").value;
 
       const data = {
         id: id,
@@ -749,9 +793,9 @@ document.getElementById("add_product").addEventListener("click", function () {
     );
 
     if (check === undefined) {
-      let id_check = onload_data.items[0].id;
+      var id_check = onload_data.items[0].id;
 
-      for (let i = 0; i < onload_data.items.length; i++) {
+      for (var i = 0; i < onload_data.items.length; i++) {
         if (parseInt(onload_data.items[i].id) > id_check) {
           id_check = onload_data.items[i].id;
         }
@@ -800,7 +844,7 @@ document.getElementById("add_product").addEventListener("click", function () {
                   document.getElementById("name_selected").value = product.name;
 
                   for (
-                    let i = 0;
+                    var i = 0;
                     i < document.getElementById("cat_selected").options.length;
                     i++
                   ) {
@@ -863,7 +907,7 @@ document.getElementById("quantity_button").addEventListener("click", function ()
                   console.error("Server Error:", data.Error);
                 } else {
                   onload_data = data;
-                  let selected_cat =
+                  var selected_cat =
                     document.getElementById("cat_list").value;
                   items_select(data, selected_cat);
                 }
@@ -881,9 +925,9 @@ document.getElementById("quantity_button").addEventListener("click", function ()
 });
 
 function category_id(data) {
-  let list_select = document.getElementById("cat_list");
-  let category_select = list_select.options[list_select.selectedIndex].text;
-  let category = data.categories.find(
+  var list_select = document.getElementById("cat_list");
+  var category_select = list_select.options[list_select.selectedIndex].text;
+  var category = data.categories.find(
     (category) => category.category_name === category_select
   );
   return category.id;
@@ -896,7 +940,7 @@ function categories_select(data) {
 
   data.categories.forEach((category) => {
     if (category.category_name !== "" && category.category_name !== "-----") {
-      let select_add = document.createElement("option");
+      var select_add = document.createElement("option");
       select_add.textContent = category.category_name;
       select_add.value = category.id;
       list.appendChild(select_add);
@@ -910,7 +954,7 @@ function categories_select_product(data) {
 
   data.categories.forEach((category) => {
     if (category.category_name !== "" && category.category_name !== "-----") {
-      let select_add = document.createElement("option");
+      var select_add = document.createElement("option");
       select_add.textContent = category.category_name;
       select_add.value = category.id;
       list.appendChild(select_add);
@@ -924,7 +968,7 @@ function category_select_det(data) {
 
   data.categories.forEach((category) => {
     if (category.category_name !== "" && category.category_name !== "-----") {
-      let select_add = document.createElement("option");
+      var select_add = document.createElement("option");
       select_add.textContent = category.category_name;
       select_add.value = category.id;
       list.appendChild(select_add);
@@ -939,7 +983,7 @@ function categories_select_new(data) {
 
   data.categories.forEach((category) => {
     if (category.category_name !== "" && category.category_name !== "-----") {
-      let select_add = document.createElement("option");
+      var select_add = document.createElement("option");
       select_add.textContent = category.category_name;
       select_add.value = category.id;
       list.appendChild(select_add);
@@ -1003,9 +1047,9 @@ function radiobutton_refresh() {
     (cat_name) => cat_name.id === product.category
   );
 
-  let flag = 0;
+  var flag = 0;
 
-  for (let item of product.details) {
+  for (var item of product.details) {
     if (item.detail_name === "" && item.detail_value === "") {
       flag = 1;
     } else {
@@ -1015,7 +1059,7 @@ function radiobutton_refresh() {
   }
 
   if (flag === 0) {
-    let i = 0;
+    var i = 0;
     product.details.forEach((item) => {
       const radio_button = document.createElement("input");
       radio_button.type = "radio";
@@ -1037,7 +1081,7 @@ function radiobutton_refresh() {
     document.getElementById("name_selected").value = product.name;
 
     for (
-      let i = 0;
+      var i = 0;
       i < document.getElementById("cat_selected").options.length;
       i++
     ) {
@@ -1049,9 +1093,9 @@ function radiobutton_refresh() {
       }
     }
 
-    let radio_button = document.getElementsByName("select");
+    var radio_button = document.getElementsByName("select");
 
-    for (let i = 0; i < radio_button.length; i++) {
+    for (var i = 0; i < radio_button.length; i++) {
       radio_button[i].addEventListener("change", function () {
         if (this.checked) {
           document.getElementById("detail_name_text").value =
@@ -1068,7 +1112,7 @@ function radiobutton_refresh() {
     document.getElementById("name_selected").value = product.name;
 
     for (
-      let i = 0;
+      var i = 0;
       i < document.getElementById("cat_selected").options.length;
       i++
     ) {
@@ -1083,12 +1127,12 @@ function radiobutton_refresh() {
 }
 
 function duplicate_check() {
-  let check = 0;
+  var check = 0;
 
   if (document.getElementById("radiobutton_0")) {
-    let id = document.getElementById("id_selected").value;
-    let name = document.getElementById("detail_name_text").value;
-    let value = document.getElementById("detail_value_text").value;
+    var id = document.getElementById("id_selected").value;
+    var name = document.getElementById("detail_name_text").value;
+    var value = document.getElementById("detail_value_text").value;
 
     const product = onload_data.items.find((item) => item.id === id);
 

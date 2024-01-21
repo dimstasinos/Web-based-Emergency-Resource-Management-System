@@ -1,54 +1,56 @@
-/* styles.css */
 body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-  background-image: url('background.jpg'); /* Replace 'background.jpg' with your image file */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
 }
 
-.container {
-  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+.login-container {
+  background-color: white;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  box-sizing: border-box; /* new property to include padding in width */
+}
+
+h2 {
   text-align: center;
+  margin-bottom: 20px;
 }
 
-.login-form {
-  max-width: 300px;
-  margin: 0 auto;
+.input-group {
+  margin-bottom: 15px;
 }
 
-h1 {
-  font-size: 24px;
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
 }
 
-input[type="text"],
-input[type="password"] {
-  width: 100%;
+.input-group input {
+  width: calc(100% - 20px); /* calculate width, subtracting padding */
   padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box; /* ensure padding is included in the width */
 }
 
-button {
-  width: 100%;
+.btn {
+  width: calc(100% - 20px); /* calculate width, subtracting padding */
   padding: 10px;
-  background-color: #007bff; /* Blue color */
-  color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
+  background-color: #5cb85c;
+  color: white;
   cursor: pointer;
-  transition: background-color 0.3s;
+  box-sizing: border-box; /* ensure padding is included in the width */
 }
 
-button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+.btn:hover {
+  background-color: #4cae4c;
 }
