@@ -7,7 +7,7 @@ function db_connect()
   $user = "root";
   $password = "7458";
 
-  $database_name = "project";
+  $database_name = "web";
 
   $db = new mysqli($name, $user, $password, $database_name);
 

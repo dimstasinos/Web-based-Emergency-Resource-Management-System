@@ -67,6 +67,7 @@ try {
     }
   }
 
+  //Συλλογή των πληροφοριων
   $data = array(
     "items" => $items,
     "categories" => $categories,
