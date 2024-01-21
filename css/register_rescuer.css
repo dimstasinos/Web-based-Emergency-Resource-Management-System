@@ -5,7 +5,6 @@
     font-style: normal;
   }
   
-  
   body {
     font-family: 'Roboto Black', sans-serif;
     background-image: url(../images/backround.JPEG);
@@ -31,7 +30,6 @@
     padding: 70px 30px;
   }
   
-  
   h1 {
     margin: 0;
     padding: 0 0 10px;
@@ -40,9 +38,11 @@
   }
   
   #registerButton {
+    padding: 5px;
     width: 50%;
-    height: 40px;
+    height: 50px;
     margin-left: 25%;
+    margin-top:20px;
     transition-duration: 0.5s;
     background-color: rgba(75, 75, 75, 1);
     border-radius: 15px;
@@ -60,10 +60,6 @@
   #registerButton:hover {
     background-color: rgba(90, 90, 90, 1);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  }
-  
-  #map {
-    height: 250px;
   }
   
   .input {
@@ -95,11 +91,19 @@
     font-weight: bold;
   }
   
-  
   #userInputs label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+  }
+
+  #fname,#lname,#username,#password,#confpassword,#vehicleusername{
+  width: 350px;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.95);
+  color: #ffffff;
+  box-sizing: border-box;
+  padding: 10px 0px;
   }
   
   #mapbox p {
@@ -108,19 +112,15 @@
     font-weight: bold;
   }
   
-  
   @media (max-width: 600px) {
     #registerbox {
       width: 80%;
       display: block;
-  
     }
-  
-    
   
     #userInputs {
       padding: 10px;
       width: 90%;
     }
-  
   }
+  

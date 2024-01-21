@@ -21,7 +21,6 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
 
   <body>
     <div class="registerbox" id="registerbox">
-      <img src="/images/loginuser.png" class="registeruser">
       <h1>Register Rescuer</h1>
       <form id="registerForm">
         <div class="fnameBox">
@@ -58,7 +57,9 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
           <input type="text" id="vehicleUsername" disabled>
         </div>
         <div>
+        <div>
           <button type="button" id="registerButton"><strong>REGISTER</strong></button>
+        </div>
         </div>
       </form>
 
