@@ -33,28 +33,28 @@ if (isset($_SESSION['type'])) {
 <body>
 
   <div id="registerbox">
-    <img src="/images/loginuser.png" id="userImage">
+    
     <h1>Εγγραφή</h1>
     <form id="registerForm">
 
       <div id="userInputs">
         <label for="fname">Όνομα</label>
-        <input type="text" id="fname" class="input" placeholder="Enter First Name" maxlength="12" required>
+        <input type="text" id="fname" class="input" placeholder="Εισαγωγή Ονόματος" maxlength="12" required>
 
         <label for="lname">Επώνυμο</label>
-        <input type="text" id="lname" class="input" placeholder="Enter Last Name" maxlength="20" required>
+        <input type="text" id="lname" class="input" placeholder="Εισαγωγή Επώνυμου" maxlength="20" required>
 
         <label for="phone">Αριθμός τηλεφώνου</label>
-        <input type="tel" id="phone" class="input" placeholder="Enter Phone Number" maxlength="12" required>
+        <input type="tel" id="phone" class="input" placeholder="Εισαγωγή Κινητού Τηλεφώνου" maxlength="12" required>
 
         <label for="user">Username</label>
-        <input type="text" id="user" class="input" placeholder="Enter Username" maxlength="12" required>
+        <input type="text" id="user" class="input" placeholder="Δημιουργία Username" maxlength="12" required>
 
         <label for="pass">Κωδικός</label>
-        <input type="password" id="pass" class="input" placeholder="Enter password" required>
+        <input type="password" id="pass" class="input" placeholder="Δημιουργία password" required>
 
         <label for="confpass">Επιβεβαίωση κωδικού</label>
-        <input type="password" id="confpass" class="input" placeholder="Re-Enter password" required>
+        <input type="password" id="confpass" class="input" placeholder="Επαναλάβετε το  password" required>
 
       </div>
 

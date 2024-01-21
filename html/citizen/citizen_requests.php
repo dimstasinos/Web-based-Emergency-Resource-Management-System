@@ -14,63 +14,18 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/citizen_requests.css">
   <title>Requests</title>
-  <style>
-    #tables {
-      display: flex;
-      border-collapse: collapse;
-      width: 100%;
-    }
-
-    #tables table {
-      margin-right: 20px;
-      /* Adjust the margin as needed */
-    }
-
-    #autocomlete {
-      position: relative;
-      display: inline-block;
-    }
-
-    #search {
-      padding: 8px;
-      width: 200px;
-    }
-
-    #results {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 100%;
-      max-height: 150px;
-      overflow-y: auto;
-      border: 1px solid #ccc;
-      border-top: none;
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      background-color: white;
-    }
-
-    .results_item {
-      padding: 8px;
-      cursor: pointer;
-    }
-
-    .results_item:hover {
-      background-color: #f0f0f0;
-    }
-  </style>
 </head>
 
 <body>
-  <h1>Requests</h1>
+
 
   <div class="sidebar">
     <a href="/html/citizen/citizen_offers.php">Offers</a>
     <a href="/server/logout.php">Logout</a>
   </div>
-
+  <h1>ΑΙΤΗΜΑΤΑ</h1>
 
   <div>
     <label for="categories">Κατηγορίες ειδών</label>
@@ -82,50 +37,55 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
   </div>
   <div id="tables">
     <div>
-      Warehouse
+      <h2>Αποθήκη</h2>
+      <div class="table-data">
       <table id="table_admin_request">
         <thead>
           <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Details</th>
-            <th>Quantity</th>
+            <th>'Ονομα Προϊόντος</th>
+            <th>Κατηγορία</th>
+            <th>Λεπτομέρειες</th>
+            <th>Ποσότητα</th>
+            
           </tr>
         </thead>
         <tbody id="itemsTable"></tbody>
       </table>
+      </div>
     </div>
     <div>
-      Item Selected
+      <h3>Επιλεγμένα Προϊόντα </h3>
       <table id="tableSelected">
         <thead>
           <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Persons</th>
+            <th>Όνομα Προϊόντος</th>
+            <th>Άτομα</th>
+            <th>Ακύρωση</th>
           </tr>
         </thead>
         <tbody id="itemSelected"></tbody>
       </table>
       <button id="submitRequest">Submit</button>
     </div>
-    <div>
-      Requests
+  </div>
+  <div>
+  <h4>Αιτήματα</h4>
       <table id="table_request">
         <thead>
           <tr>
-            <th>Item</th>
-            <th>Persons</th>
-            <th>Submission Date</th>
-            <th>Pickup Date</th>
-            <th>Complete Date</th>
+            <th>Αντικείμενα</th>
+            <th>Άτομα</th>
+            <th>Ημερομηνία Καταχώρησης</th>
+            <th>Ημερομηνία Παραλαβής</th>
+            <th>Ημερομηνία Ολοκλήρωσης</th>
+            <th>Ακύρωση</th>
           </tr>
         </thead>
         <tbody id="requests"></tbody>
       </table>
     </div>
-  </div>
 
   <script src="/scripts/citizen_requests.js"></script>
 </body>

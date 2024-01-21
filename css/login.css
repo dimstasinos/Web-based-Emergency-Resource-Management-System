@@ -120,26 +120,26 @@ h1 {
   background-color: rgba(255, 255, 255, 1);
   border-radius: 15px;
   border: 1px solid #ced4da;
-  /* Subtle border color */
+ 
   margin-bottom: 10px;
-  /* Space between fields */
+  
   font-size: 16px;
-  /* Slightly larger font size for better readability */
+ 
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  /* Soft box shadow for depth */
-  transition: border-color 0.3s, box-shadow 0.3s;
-  /* Transition for interactive effects */
+
+  transition: border-color 0.3s, box-shadow 0.3s; 
 }
 
 
 #userInputs label {
   display: block;
-  /* Make label a block element */
+
   margin-bottom: 5px;
-  /* Space between label and input field */
+  
   font-weight: bold;
-  /* Make label text bold */
+ 
 }
+
 
 
 @media (max-width: 600px) {
