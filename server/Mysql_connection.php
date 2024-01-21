@@ -5,7 +5,7 @@ function db_connect()
 
   $name = "localhost";
   $user = "root";
-  $password = "3003";
+  $password = "7458";
 
   $database_name = "project";
 
