@@ -14,6 +14,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width initial-scale=1">
   <title>Rescuer Register</title>
+  <link rel="stylesheet" href="/css/register_rescuer.css">
 </head>
 
 <body>
@@ -21,7 +22,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
   <body>
     <div class="registerbox" id="registerbox">
       <img src="/images/loginuser.png" class="registeruser">
-      <h1>Register</h1>
+      <h1>Register Rescuer</h1>
       <form id="registerForm">
         <div class="fnameBox">
           <label for="fname">First Name</label>

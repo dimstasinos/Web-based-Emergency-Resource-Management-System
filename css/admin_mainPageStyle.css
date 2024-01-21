@@ -1,5 +1,84 @@
 
-  #map { 
-    height: 500px;
-    width: 100%;
-  }
+  /* Reset default styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f2f2f2; /* Background color for the whole page */
+}
+
+/* Header styles */
+.header {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 36px;
+}
+
+/* Navigation bar styles */
+.sidebar {
+  background-color: #333;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.sidebar a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 10px 0;
+  transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.sidebar a:hover {
+  background-color: #555; /* Highlight on hover */
+}
+
+/* Main content container */
+.main {
+  margin-top: 20px; /* Add space for the header and navigation bar */
+  padding: 20px;
+  background-color: #fff; /* White background for the content */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+/* Styling for date input and button */
+label {
+  font-weight: bold;
+}
+
+input[type="date"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+#submitdate {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+#submitdate:hover {
+  background-color: #45a049;
+}
+
+/* Chart canvas styles */
+#serverchart {
+  width: 100%;
+  max-width: 800px; /* Set a maximum width for the chart */
+  margin: 20px auto; /* Center the chart horizontally */
+  display: block;
+}

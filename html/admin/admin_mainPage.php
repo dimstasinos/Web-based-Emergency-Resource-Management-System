@@ -28,8 +28,9 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
     <h1>Administrator</h1>
   </div>
   <div class="sidebar">
-    <a href="#">Map</a>
-    <a href="#">DataBase</a>
+    <a href="/html/admin/adminAnnouncement.php">Announcements</a>
+    <a href="/html/admin/adminRegisterRescuer.php">Register Rescuer</a>
+    <a href="/html/admin/base_warehouse.php">DataBase</a>
     <a href="/server/logout.php">Logout</a>
   </div>
   <div class="main">

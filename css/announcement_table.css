@@ -1,82 +1,97 @@
-@font-face {
-    font-family: Roboto;
-    src: url(/fonts/Roboto/Roboto-Black.ttf);
+/* Reset default styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f2f2f2; /* Background color for the whole page */
   }
   
+  /* Header styles */
+  h1 {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    margin: 0;
+    font-size: 36px;
+  }
+  
+  /* Table styles */
   table {
     border-collapse: collapse;
     width: 100%;
+    margin-bottom: 20px; /* Add spacing between tables */
   }
   
   th, td {
-    border: 10px solid #dddddd;
-    text-align: left;
+    border: 1px solid #ddd;
     padding: 8px;
+    text-align: left;
   }
   
-  th {
-    background-color: #f2f2f2;
+  /* Autocomplete styles */
+  #autocomlete {
+    position: relative;
+    display: inline-block;
   }
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
-
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-}
-
-main {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-    color: #333;
-}
-
-.announcement {
-    border-bottom: 1px solid #ccc;
-    padding: 10px 0;
-}
-
-.announcement h3 {
-    margin-bottom: 5px;
-}
-
-.announcement p {
-    color: #666;
-}
-
-form {
-    margin-top: 20px;
-}
-
-label {
-    display: block;
-    margin-bottom: 8px;
-}
-
-input, textarea {
-    width: 100%;
+  
+  #search {
     padding: 8px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  #results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-top: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: white;
+  }
+  
+  .results_item {
+    padding: 8px;
+    cursor: pointer;
+  }
+  
+  .results_item:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Select styles */
+  label {
+    font-weight: bold;
+  }
+  
+  select {
+    padding: 8px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     margin-bottom: 10px;
-    box-sizing: border-box;
-}
-
-button {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
+  }
+  
+  /* Button styles */
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
     border: none;
     cursor: pointer;
-}
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
