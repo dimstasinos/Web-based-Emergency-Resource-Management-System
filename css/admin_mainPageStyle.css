@@ -1,19 +1,17 @@
-
-  /* Reset default styles */
 body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
-  background-color: #f2f2f2; /* Background color for the whole page */
+  background-color: #f2f2f2; 
 }
 
-/* Header styles */
+
 .header {
   background-color: #333;
   color: white;
   text-align: center;
   padding: 20px 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
 .header h1 {
@@ -21,7 +19,7 @@ body {
   font-size: 36px;
 }
 
-/* Navigation bar styles */
+
 .sidebar {
   background-color: #333;
   color: white;
@@ -34,22 +32,21 @@ body {
   color: white;
   text-decoration: none;
   padding: 10px 0;
-  transition: background-color 0.3s; /* Smooth background color transition */
+  transition: background-color 0.3s; 
 }
 
 .sidebar a:hover {
-  background-color: #555; /* Highlight on hover */
+  background-color: #555; 
 }
 
-/* Main content container */
+
 .main {
-  margin-top: 20px; /* Add space for the header and navigation bar */
+  margin-top: 20px;
   padding: 20px;
-  background-color: #fff; /* White background for the content */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  background-color: #fff; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
-/* Styling for date input and button */
 label {
   font-weight: bold;
 }
@@ -75,10 +72,9 @@ input[type="date"] {
   background-color: #45a049;
 }
 
-/* Chart canvas styles */
 #serverchart {
   width: 100%;
-  max-width: 800px; /* Set a maximum width for the chart */
-  margin: 20px auto; /* Center the chart horizontally */
+  max-width: 800px; 
+  margin: 20px auto; 
   display: block;
 }

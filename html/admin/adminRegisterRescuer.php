@@ -60,7 +60,14 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
         <div>
           <button type="button" id="registerButton"><strong>REGISTER</strong></button>
         </div>
+
         </div>
+        <div id="goback">
+        <p>
+          <br>
+          <a href="/html/admin/admin_mainPage.php"><strong>Πήγαινε Πίσω</strong></a>
+        </p>
+      </div>
       </form>
 
   </body>

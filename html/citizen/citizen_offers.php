@@ -15,64 +15,57 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Requests</title>
-  <style>
-    #tables {
-      display: flex;
-      border-collapse: collapse;
-      width: 100%;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/citizen_offers.css">
 </head>
 
 <body>
-  <h1>Offers</h1>
-
   <div class="sidebar">
-    <a href="/html/citizen/citizen_requests.php">Requets</a>
-    <a href="/server/logout.php">Logout</a>
+    <a href="/html/citizen/citizen_requests.php">Αιτήματα</a>
+    <a href="/server/logout.php">Αποσύνδεση</a>
   </div>
+  <h1>ΠΡΟΣΦΟΡΕΣ</h1>
 
   <div id="tables">
     <div>
-      Announcements
+     <h2> Ανακοινώσεις </h2>
       <table id="tableAnnouncements">
         <thead>
           <tr>
             <th></th>
             <th>ID</th>
-            <th>Item Name</th>
-            <th>Quantity</th>
+            <th>'Ονομα Προϊόντος</th>
+            <th>Ποσότητα</th>
           </tr>
         </thead>
         <tbody id="announcements"></tbody>
       </table>
     </div>
     <div>
-      Offer Selected
+      <h3>Επίλογη Προσφοράς </h3>
       <table id="tableSelectedOffer">
         <thead>
           <tr>
             <th>ID</th>
-            <th>Item Name</th>
-            <th>Quantity</th>
+            <th>'Ονομα Προϊόντος</th>
+            <th>Ποσότητα</th>
             <th></th>
           </tr>
         </thead>
         <tbody id="OfferSelected"></tbody>
       </table>
-      <button id="clear">Clear</button>
-      <button id="submitAnnouncement">Submit</button>
+      <button id="clear">Αφαίρεση</button>
+      <button id="submitAnnouncement">Καταχώρηση</button>
     </div>
     <div>
-      Offers Accepted
+      <h4>Αποδοχή Προσφοράς</h4>
       <table id="table_offers">
         <thead>
           <tr>
-            <th>Item</th>
-            <th>Quantity</th>
-            <th>Submission Date</th>
-            <th>Pickup Date</th>
-            <th>Complete Date</th>
+            <th>Προϊόν</th>
+            <th>Ποσότητα</th>
+            <th>Ημερομηνία Καταχώρησης</th>
+            <th>Ημερομηνία Παραλαβής</th>
+            <th>Ημερομηνία Ολοκλήρωσης</th>
           </tr>
         </thead>
         <tbody id="offers"></tbody>
