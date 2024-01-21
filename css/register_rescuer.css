@@ -17,7 +17,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 150vh;
+    height: 100vh;
     overflow: auto;
   }
   
@@ -27,7 +27,7 @@
     background: rgba(0, 0, 0, 0.95);
     color: #ffffff;
     box-sizing: border-box;
-    padding: 70px 30px;
+    padding: 50px 30px;
   }
   
   h1 {
@@ -110,6 +110,24 @@
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+  }
+
+  #goback {
+    margin: 0;
+    color: rgb(255, 38, 0);
+    padding: 10px 0;
+    text-align: center;
+    font-size: 15px;
+  }
+  
+  #goback a {
+    color: rgb(0, 123, 255);
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  #goback a:hover {
+    text-decoration: underline;
   }
   
   @media (max-width: 600px) {

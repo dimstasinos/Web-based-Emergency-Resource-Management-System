@@ -1,12 +1,13 @@
-/* Reset default styles */
+
+  /* Reset default styles */
 body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
-  background-color: #f2f2f200;
+  background-color: #f2f2f2; /* Background color for the whole page */
 }
 
-/* Header styles */
+
 .header {
   background-image: url('../images/backround.JPEG'); 
   background-size: cover; /* Ensures the image covers the entire sidebar */
@@ -15,11 +16,7 @@ body {
   color: rgba(255, 255, 255, 0.425);
   text-align: left;
   padding: 20px 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(100px);
-  
-  /* Text shadow */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
 }
 
 .header h1 {
@@ -38,12 +35,7 @@ h2.chart-heading {
 }
 
 
-/* Container for sidebar and main content */
-.container {
-  display: flex;
-}
-
-/* Sidebar styles (vertical) */
+/* Navigation bar styles */
 .sidebar {
   background-image: url('../images/backround.JPEG'); 
   background-size: cover; /* Ensures the image covers the entire sidebar */
@@ -60,24 +52,22 @@ h2.chart-heading {
   display: block;
   color: rgba(255, 255, 255, 0.425);
   text-decoration: none;
-  padding: 10px;
-  transition: background-color 0.3s;
+  padding: 10px 0;
+  transition: background-color 0.3s; /* Smooth background color transition */
 }
 
 .sidebar a:hover {
-  background-color: #555;
+  background-color: #555; /* Highlight on hover */
 }
 
-/* Main content container */
+
 .main {
-  flex-grow: 1;
-  margin-top: 0;
+  margin-top: 20px; /* Add space for the header and navigation bar */
   padding: 20px;
-  color: rgba(255, 255, 255, 0.425);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff; /* White background for the content */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
 }
 
-/* Styling for date input and button */
 label {
   font-weight: bold;
   color: #455da0;
@@ -104,11 +94,10 @@ input[type="date"] {
   background-color: #555;
 }
 
-/* Chart canvas styles */
 #serverchart {
   width: 100%;
-  max-width: 800px;
-  margin: 20px auto;
+  max-width: 800px; /* Set a maximum width for the chart */
+  margin: 20px auto; /* Center the chart horizontally */
   display: block;
 }
 
