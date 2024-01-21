@@ -1,5 +1,7 @@
+//Event listener που εκτελείτε όταν φορτωθεί η HTML
 document.addEventListener('DOMContentLoaded', function () {
 
+  //Φόρτωση των ειδών της βάσης δεδομένων
   fetch('/server/citizen/database_extract.php')
     .then(jsonResponse => {
 
@@ -12,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .then(data => {
 
+      //Εμφάνιση ειδών
       if (data != null) {
         categories_select(data);
         var selected_cat = document.getElementById("categories").value;
@@ -27,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .catch(error => console.error('Error:', error));
 
+  //Εμφάνιση αιτημάτων
   fetch('/server/citizen/requests.php')
     .then(jsonResponse => {
 
@@ -44,17 +48,14 @@ document.addEventListener('DOMContentLoaded', function () {
       else {
         const table = document.getElementById("table_request");
         table.innerHTML = '';
-        table.textContent = "There are now requests";
-
+        table.textContent = "Δεν υπάρχουν αιτηματα";
       }
     })
     .catch(error => console.error('Error:', error));
-
-
-
 });
 
-
+//Συνάρτηση που τοποθετεί τις κατηγορίες ειδών
+//σε λίστα
 function categories_select(data) {
   const list = document.getElementById("categories");
 
@@ -70,6 +71,7 @@ function categories_select(data) {
   });
 }
 
+//Συνάρτηση που τοποθετεί τα είδη στον πίνακα
 function items_select(data, selected_cat) {
   const table = document.getElementById("itemsTable");
 
@@ -119,14 +121,17 @@ function items_select(data, selected_cat) {
   });
 }
 
+//Συνάρτηση που δημιουργεί τον πίνακα αιτημάτων
 function requestTable(data) {
 
   const request_table = document.getElementById("requests");
 
   request_table.innerHTML = "";
 
+  //Προσπέλαση δεδομένων
   data.forEach(request => {
 
+    //Δημιουργία του πίνακα
     const row_table = document.createElement("tr");
     const item_name = document.createElement("td");
     const item_quantity = document.createElement("td");
@@ -141,7 +146,7 @@ function requestTable(data) {
     if (request.pickup_date === null) {
       pick_date.textContent = "-";
 
-      action.innerHTML = `<button id="${request.request_id}">Cancel</button>`;
+      action.innerHTML = `<button id="${request.request_id}">Ακύρωση</button>`;
 
     } else {
       pick_date.textContent = request.pickup_date;
@@ -163,13 +168,15 @@ function requestTable(data) {
     request_table.appendChild(row_table);
 
     if (action.innerHTML !== "") {
+
+      //Event listener για την διαγραφή κάποιου αιτήματος
       document.getElementById(`${request.request_id}`).addEventListener("click", function () {
 
         const data = {
           id: request.request_id
         };
 
-
+        //Επικοινωνία με τον server για διαγραφή του αιτήματος
         fetch("/server/citizen/request_delete.php", {
           method: "POST",
           headers: {
@@ -179,6 +186,8 @@ function requestTable(data) {
         })
           .then((response) => response.json())
           .then((data) => {
+
+            //Ανανέωση πίνακα αιτημάτων
             fetch('/server/citizen/requests.php')
               .then(jsonResponse => {
 
@@ -196,23 +205,19 @@ function requestTable(data) {
                 else {
                   const table = document.getElementById("table_request");
                   table.innerHTML = '';
-                  table.textContent = "There are now requests";
+                  table.textContent = "Δεν υπάρχουν αιτήαμτα";
 
                 }
               })
               .catch(error => console.error('Error:', error));
           })
           .catch((error) => console.error("Error:", error))
-
       });
     }
-
-
-
   });
-
 }
 
+//Event listener που εμφανίζει τα είδη ανάλογα με την επιλεγμένη κατηγορία
 document.getElementById("categories").addEventListener("change", function () {
   fetch("/server/citizen/database_extract.php")
     .then((jsonResponse) => jsonResponse.json())
@@ -227,6 +232,8 @@ document.getElementById("categories").addEventListener("change", function () {
     .catch((error) => console.error("Error:", error));
 });
 
+//Event listner ο οποίος συμπληρώνει τα είδη που
+//επιλέχθηκε από τον πίνακα
 document.getElementById("itemsTable").addEventListener("click", function (event) {
   if (event.target.tagName === "TD") {
     const selected_row = event.target.closest("tr");
@@ -265,7 +272,7 @@ document.getElementById("itemsTable").addEventListener("click", function (event)
       name_table.textContent = item;
       item_quantity.innerHTML = `<input type="range" id="${id}" 
       min="0" max="20" value="0"></input><span id="quantity_${id}">0</span>`;
-      item_delete.innerHTML = `<button id=cancel_${id}>cancel</button>`;
+      item_delete.innerHTML = `<button id=cancel_${id}>Διαγραφή</button>`;
 
       row_table.appendChild(item_id);
       row_table.appendChild(name_table);
@@ -274,10 +281,12 @@ document.getElementById("itemsTable").addEventListener("click", function (event)
 
       table.appendChild(row_table);
 
+      //Event listener που ανανεώνει την ποσότητα του είδους
       document.getElementById(`${id}`).addEventListener("input", function () {
         document.getElementById(`quantity_${id}`).innerText = this.value;
       });
 
+      //Event listener που διαγράφει το είδος από τον πίνακα
       document.getElementById(`cancel_${id}`).addEventListener("click", function () {
         var row = this.closest('tr');
         row.parentNode.removeChild(row);
@@ -286,8 +295,10 @@ document.getElementById("itemsTable").addEventListener("click", function (event)
   }
 });
 
+//Event listener που εμφανίζει τα είδη ανάλογα με την καταχώρηση του χρήστη
 document.getElementById("search").addEventListener("input", function () {
 
+  //Ανάκτηση δεδομένων απο τον server
   fetch('/server/citizen/database_extract.php')
     .then(jsonResponse => {
 
@@ -299,6 +310,7 @@ document.getElementById("search").addEventListener("input", function () {
     })
     .then(data => {
 
+      //Εύρεση ειδών που ξεκινούν με την καταχώρηση του χρήστη
       if (data != null) {
         var input = document.getElementById("search").value.toLowerCase();
         var results = data.items.filter(item => {
@@ -336,7 +348,7 @@ document.getElementById("search").addEventListener("input", function () {
               }
             }
 
-
+            //Τοποθέτηση στον πίνακα επιλεγμένων
             if (flag === 0) {
               const row_table = document.createElement("tr");
               const item_id = document.createElement("td");
@@ -348,7 +360,7 @@ document.getElementById("search").addEventListener("input", function () {
               name_table.textContent = item.name;
               item_quantity.innerHTML = `<input type="range" id="${item.id}" 
               min="0" max="30" value="0"></input><span id="quantity_${item.id}">0</span>`;
-              item_delete.innerHTML = `<button id=cancel_${item.id}>cancel</button>`;
+              item_delete.innerHTML = `<button id=cancel_${item.id}>Διαγραφή</button>`;
 
               row_table.appendChild(item_id);
               row_table.appendChild(name_table);
@@ -357,38 +369,32 @@ document.getElementById("search").addEventListener("input", function () {
 
               table.appendChild(row_table);
 
+              //Event listener που ανανεώνει την ποσότητα του είδους
               document.getElementById(`${item.id}`).addEventListener("input", function () {
                 document.getElementById(`quantity_${item.id}`).innerText = this.value;
               });
 
+              //Event listener που ανανεώνει την ποσότητα του είδους
               document.getElementById(`cancel_${item.id}`).addEventListener("click", function () {
                 var row = this.closest('tr');
                 row.parentNode.removeChild(row);
               });
-
             }
-
-
           });
 
-
-
+          //Αφαίρεση λίστας αναζήτησης
           document.addEventListener('click', function (event) {
             if (!event.target.closest('autocomlete')) {
               document.getElementById("results").innerHTML = '';
             }
           });
         });
-
       }
-
     })
     .catch(error => console.error('Error:', error));
-
-
-
 });
 
+//Event listener για την υποβολή του αιτήματος
 document.getElementById("submitRequest").addEventListener("click", function () {
 
   var selectTable = document.getElementById('itemSelected');
@@ -398,17 +404,17 @@ document.getElementById("submitRequest").addEventListener("click", function () {
     for (var i = 0; i < selectTable.rows.length; i++) {
       if (parseInt(document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText) === 0) {
         flag = 1;
-        
-        alert(`Select a quantity over 0 for item: ${selectTable.rows[i].cells[1].innerHTML}`);
+
+        alert(`Επέλεξε ποσότητα μεγαλύτερη από 0 για το προιόν: ${selectTable.rows[i].cells[1].innerHTML}`);
       }
     }
   } else {
     flag = 1;
-    alert("Select at least one item for the request");
+    alert("Επέλεξε τουλάχιστον ένα προιόν για το αίτημα");
   }
 
   if (flag === 0) {
-    console.log("test");
+
     for (var i = 0; i < selectTable.rows.length; i++) {
       if (document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText > 0) {
 
@@ -417,6 +423,7 @@ document.getElementById("submitRequest").addEventListener("click", function () {
           quantity: document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText,
         };
 
+        //Επικοινωνία με τον server για ανέβασμα του αιτήματος
         fetch("/server/citizen/request_upload.php", {
           method: "POST",
           headers: {
@@ -429,25 +436,8 @@ document.getElementById("submitRequest").addEventListener("click", function () {
             if (data.status === "error") {
               console.error("Server Error:", data.Error);
             } else {
-              fetch("/server/citizen/database_extract.php", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-              })
-                .then((response) => response.json())
-                .then((data) => {
-                  if (data.status === "error") {
-                    console.error("Server Error:", data.Error);
-                  } else {
-                    var selected_cat = document.getElementById("categories").value;
-                    items_select(data, selected_cat);
-                    document.getElementById("itemSelected").innerHTML = "";
-                  }
-                })
-                .catch((error) => console.error("Error:", error));
 
+              //Ανανέωση του πίνακα με τα αιτήματα
               fetch('/server/citizen/requests.php')
                 .then(jsonResponse => {
 
@@ -465,7 +455,7 @@ document.getElementById("submitRequest").addEventListener("click", function () {
                   else {
                     const table = document.getElementById("table_request");
                     table.innerHTML = '';
-                    table.textContent = "There are now requests";
+                    table.textContent = "Δεν υπάρχουν αιτήματα";
 
                   }
                 })

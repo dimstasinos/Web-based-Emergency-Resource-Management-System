@@ -1,5 +1,9 @@
 <?php
 
+//PHP script το οποίο λαμβάνει τα δεδομένα για τα
+//είδη και τις κατηγορίες από το κοινό αποθετήριο 
+
+session_start();
 include("../../Mysql_connection.php");
 try {
   $json_data = file_get_contents("http://usidas.ceid.upatras.gr/web/2023/export.php");

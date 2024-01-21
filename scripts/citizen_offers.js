@@ -188,7 +188,7 @@ document.getElementById("submitAnnouncement").addEventListener("click", function
     .catch((error) => console.error("Error:", error));
 })
 
-//Συνάρτηση που δημιουργεί τον πίνακα ανακοινώσεων
+//Συνάρτηση που δημιουργεί τον πίνακα προσφορών
 function offersTable(data) {
 
   const offer_table = document.getElementById("offers");
@@ -219,6 +219,8 @@ function offersTable(data) {
     item_quantity.innerHTML = items_quantity_array.join("<br>");
 
     sub_date.textContent = offer.submission_date;
+
+    //Έλεγχος εάν έχει παραλειφθεί η προσφορά
     if (offer.pickup_date === null) {
       pick_date.textContent = "-";
 
@@ -245,6 +247,8 @@ function offersTable(data) {
 
 
     if (action.innerHTML !== "") {
+
+      //Event listener για την διαγραφή κάποιας προσφοράς
       document.getElementById(`${offer.offer_id}`).addEventListener("click", function () {
 
         const data = {
@@ -253,7 +257,7 @@ function offersTable(data) {
           items: offer.items,
         };
 
-
+        //Επικοινωνία με τον server για διαγραφή της προσφοράς
         fetch("/server/citizen/offer_delete.php", {
           method: "POST",
           headers: {
@@ -263,6 +267,8 @@ function offersTable(data) {
         })
           .then((response) => response.json())
           .then((data) => {
+
+            //Ανανέωση του πίνακα προσφορών
             fetch('/server/citizen/offers.php')
               .then(jsonResponse => {
 
@@ -286,6 +292,7 @@ function offersTable(data) {
               })
               .catch(error => console.error('Error:', error));
 
+            //Ανανέωση του πίνακα των ανακοινώσεων
             fetch("/server/citizen/announcement.php")
               .then(jsonResponse => jsonResponse.json())
               .then(data => {
@@ -294,23 +301,16 @@ function offersTable(data) {
               .catch((error) => console.error("Error:", error));
           })
           .catch((error) => console.error("Error:", error))
-
       });
     }
   });
-
 }
 
-
-
-
+//Event listener που καθαρίζει τον πίνακα επιλεγμένης ανακοίνωσης
 document.getElementById("clear").addEventListener("click", function () {
   document.getElementById("OfferSelected").innerHTML = "";
-
   document.getElementById("submitAnnouncement").disabled = true;
-
   const uncheck = document.getElementsByName("announcement");
-
   uncheck.forEach(radiobutton => {
     radiobutton.checked = false;
   });

@@ -253,7 +253,7 @@ document.getElementById("search").addEventListener("input", function () {
               name_table.textContent = item.name;
               item_quantity.innerHTML = `<input type="range" id="${item.id}" 
               min="0" max="20" value="0"></input><span id="quantity_${item.id}">0</span>`;
-              item_delete.innerHTML = `<button id=cancel_${item.id}>cancel</button>`;
+              item_delete.innerHTML = `<button id=cancel_${item.id}>Διαραφή</button>`;
 
               row_table.appendChild(item_id);
               row_table.appendChild(name_table);
@@ -270,12 +270,8 @@ document.getElementById("search").addEventListener("input", function () {
                 var row = this.closest('tr');
                 row.parentNode.removeChild(row);
               });
-
             }
-
-
           });
-
 
           //Αφαίρεση της λίστας
           document.addEventListener('click', function (event) {
@@ -284,14 +280,9 @@ document.getElementById("search").addEventListener("input", function () {
             }
           });
         });
-
       }
-
     })
     .catch(error => console.error('Error:', error));
-
-
-
 });
 
 //Event listener που εμφανίζει τα είδη ανάλογα με την επιλεγμένη κατηγορία
