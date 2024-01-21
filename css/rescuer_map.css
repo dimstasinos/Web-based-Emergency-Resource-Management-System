@@ -1,18 +1,17 @@
-/* Reset default styles */
 body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
-  background-color: #f2f2f2; /* Background color for the whole page */
+  background-color: #f2f2f2; 
 }
 
-/* Header styles */
+
 .header {
   background-color: #333;
   color: white;
   text-align: center;
   padding: 20px 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
 .header h1 {
@@ -20,7 +19,7 @@ body {
   font-size: 36px;
 }
 
-/* Navigation bar styles */
+
 .sidebar {
   background-color: #333;
   color: white;
@@ -33,22 +32,22 @@ body {
   color: white;
   text-decoration: none;
   padding: 10px 0;
-  transition: background-color 0.3s; /* Smooth background color transition */
+  transition: background-color 0.3s; 
 }
 
 .sidebar a:hover {
-  background-color: #555; /* Highlight on hover */
+  background-color: #555; 
 }
 
-/* Main content container */
+
 .main {
-  margin-top: 20px; /* Add space for the header and navigation bar */
+  margin-top: 20px; 
   padding: 20px;
-  background-color: #fff; /* White background for the content */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  background-color: #fff; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
-/* Table with scroll bar */
+
 table {
   border-collapse: collapse;
   width: 100%;
@@ -61,23 +60,23 @@ th, td {
   text-align: left;
 }
 
-/* Styling for the Select element */
+
 #categorySelect {
   font-family: 'Roboto', sans-serif;
   padding: 8px;
-  border: 1px solid #ccc; /* Add a border */
-  border-radius: 5px; /* Rounded corners */
-  width: 100%; /* Full width */
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+  width: 100%; 
 }
 
-/* Styling for buttons */
+
 button {
   background-color: #4CAF50;
   color: white;
   padding: 10px 20px;
   border: none;
   cursor: pointer;
-  border-radius: 5px; /* Rounded corners */
+  border-radius: 5px; 
   margin-top: 10px;
 }
 
@@ -85,10 +84,10 @@ button:hover {
   background-color: #45a049;
 }
 
-/* Map container */
+
 #map {
   height: 400px;
   margin-top: 20px;
 }
 
-/* Additional styling for specific elements can be added as needed */
+
