@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include("../Mysql_connection.php");
 
 $db = db_connect();
