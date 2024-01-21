@@ -1,5 +1,8 @@
 <?php
 
+//PHP script που διαχειρίζεται την σύνδεση
+//με την βάση δεδομένων
+
 function db_connect()
 {
 
@@ -9,6 +12,7 @@ function db_connect()
 
   $database_name = "web";
 
+  //Δημιουργία σύνδεσης
   $db = new mysqli($name, $user, $password, $database_name);
 
   if ($db->connect_error) {

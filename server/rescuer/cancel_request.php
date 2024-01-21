@@ -18,7 +18,7 @@ try {
   //Σύνδεση με την βάση δεδομένων
   $db = db_connect();
 
-  //Quary που αφαιρεί το αίτημα από τo όχημα
+  //Query που αφαιρεί το αίτημα από τo όχημα
   $cancel_request = $db->prepare("UPDATE citizen_requests SET req_veh_id=NULL, pickup_date=NULL
   where request_id=?");
   $cancel_request->bind_param(

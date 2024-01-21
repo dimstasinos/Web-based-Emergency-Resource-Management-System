@@ -1,5 +1,8 @@
 <?php
 
+//PHP script που διαχειρίζεται την σύνδεση
+//του χρήστη 
+
 session_start();
 
 include("Mysql_connection.php");
@@ -7,16 +10,20 @@ include("Mysql_connection.php");
 
 try {
 
+  //Σύνδεση με την βάση δεδομένων
   $db = db_connect();
 
+  //Έλεγχος τρόπου απόστολής στοιχείων χρήστη
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
+    //Queries για τον έλεγχο των στοιχείων και σύνδεση
     $user_check = false;
     $pass_check = false;
 
 
+    //Έλεγχοι στοιχείων
     $usernameCheck = $db->prepare("SELECT * FROM users WHERE username = ?");
     $usernameCheck->bind_param('s', $username);
     $usernameCheck->execute();
@@ -37,6 +44,8 @@ try {
       }
     }
 
+    //Σύνδεση χρήστη ανάλογα με την ιδιότητά του και τοποθέτηση
+    //πληροφοριών του session
     if ($user_check == true && $pass_check == true) {
 
       $userSearch = $db->prepare("SELECT user_id,user_type FROM users WHERE username=? AND password =?");
@@ -73,6 +82,8 @@ try {
         header("Content-Type: application/json");
         echo json_encode($response);
       }
+
+      //Αποστολή μηνυμάτων εάν αποτύχουν οι έλεγχει
     } else if ($user_check == false && $pass_check == false) {
       $response = ["status" => "fail", "message" => "Ο χρήστης δεν υπάρχει"];
       header("Content-Type: application/json");
@@ -83,10 +94,11 @@ try {
       echo json_encode($response);
     }
 
-
     $db->close();
   }
 } catch (Exception $error) {
+
+  //Αποστολή μηνύματος ανεπιτυχούς εκτέλεσης στον client
   header('Content-Type: application/json');
   echo json_encode(['status' => 'error', "Error" => $error->getMessage()]);
 }

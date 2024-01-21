@@ -1,16 +1,25 @@
 <?php
 
-//PHP script που στέλνει 
+//PHP script που ολοκληρώνει κάποια προσφορά
+//από το όχημα 
 
 session_start();
 
 include("../Mysql_connection.php");
+
+//Παραλαβή δεδομένων από js
 $receive = file_get_contents('php://input');
+
+//Αποκωδικοποίηση δεδομένων
 $data = json_decode($receive);
 
 try {
+
+  //Σύνδεση με την βάση δεδομένων
   $db = db_connect();
 
+  //Queries που μεταφέρουν την προσφορά στον πίνακα των ολοκληρωμένων
+  //και προσθήκη των προιοντων στο όχημα
   $offer_complete = $db->prepare("INSERT INTO citizen_offers_complete
   (offer_id,submission_date,pickup_date,offer_veh_id,offer_citizen_id,complete_date)
   SELECT offer_id,submission_date,pickup_date,offer_veh_id,offer_citizen_id,now()
@@ -62,12 +71,14 @@ try {
     $update_quantity->execute();
   }
 
-
   $db->close();
 
+  //Αποστολή μηνύματος επιτυχής εκτέλεσης στον client
   header('Content-Type: application/json');
   echo json_encode(['status' => 'success']);
 } catch (Exception $error) {
+
+  //Αποστολή μηνύματος ανεπιτυχούς εκτέλεσης στον client
   header('Content-Type: application/json');
   echo json_encode(['status' => 'error', "Error" => $error->getMessage(), $data]);
 }

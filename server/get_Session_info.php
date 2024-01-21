@@ -1,5 +1,8 @@
 <?php
 
+//PHP script που στέλνε στον client τις πληροφορίες
+//του SESSION
+
 session_start();
 
 if (
@@ -7,6 +10,7 @@ if (
   && isset($_SESSION["user_id"])
 ) {
 
+  //Συλλογή πληροφοριών
   if($_SESSION["type"]=="rescuer"){
   $response = [
     'status' => 'success',
@@ -17,6 +21,7 @@ if (
   ];
   }
 
+  //Αποστολή των πληροφοριών στον client
   header('Content-Type: application/json');
   echo json_encode($response);
 }

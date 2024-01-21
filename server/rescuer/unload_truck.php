@@ -1,15 +1,24 @@
 <?php
+
+//PHP script που ξεφορτώνει το φορτίο του 
+//στην βάση
+
 session_start();
 
-
 include("../Mysql_connection.php");
+
+//Παραλαβή δεδομένων από js
 $receive = file_get_contents('php://input');
+
+//Αποκωδικοποίηση δεδομένων
 $data = json_decode($receive);
 
 try {
 
+  //Σύνδεση με την βάση δεδομένων
   $db = db_connect();
 
+  //Queries που μεταφέρουν τα είδη από το όχημα στην βάση
   $unload_truck = $db->prepare("SELECT * from vehicle_storage
   where str_vehicle_id=?");
   $unload_truck->bind_param(
@@ -52,9 +61,12 @@ try {
 
   $db->close();
 
+  //Αποστολή μηνύματος επιτυχής εκτέλεσης στον client
   header('Content-Type: application/json');
   echo json_encode(['status' => 'success']);
 } catch (Exception $error) {
+
+  //Αποστολή μηνύματος ανεπιτυχούς εκτέλεσης στον client
   header('Content-Type: application/json');
   echo json_encode(['status' => 'error', "Error" => $error->getMessage(), $data]);
 }
