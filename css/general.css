@@ -1,0 +1,45 @@
+.sidebar {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap:10px;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.side_header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%
+
+}
+
+.headerall {
+  background-image: url(../images/backround-blur.JPEG);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: rgba(255, 255, 255, 0.425);
+  text-align: left;
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#pic {
+  width: fit-content;
+}
+
+.sidebar a {
+  color: rgba(255, 255, 255, 0.425);
+  text-decoration: none;
+}
+
+@media (max-width:600px) {
+  .headerall {
+    flex-direction: column;
+  }
+}

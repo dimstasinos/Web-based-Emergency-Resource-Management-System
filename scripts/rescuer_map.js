@@ -227,6 +227,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <strong>Submission date:</strong> ${request.submission_date}<br>
             <strong>Item:</strong> ${request.item_name}<br>
             <strong>Quantity:</strong> ${request.quantity}<br>
+            <button id="${request.request_id}">Αποδοχή</button><br>
             ----------------------------------`;
             } else {
               var info = `<br><strong>Request</strong><br>

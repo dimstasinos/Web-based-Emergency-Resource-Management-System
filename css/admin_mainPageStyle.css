@@ -6,24 +6,6 @@
 }
 
 
-.header {
-  background-image: url('../images/backround.JPEG'); 
-  background-size: cover; 
-  background-position: center; 
-  background-repeat: no-repeat; 
-  color: rgba(255, 255, 255, 0.425);
-  text-align: left;
-  padding: 20px 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-}
-
-.header h1 {
-  margin: 0;
-  font-size: 24px;
-    display: flex;
-    align-items: center; 
-}
-
 h2.chart-heading {
   font-family: 'Roboto', sans-serif;
   color: #333;
@@ -32,46 +14,37 @@ h2.chart-heading {
 
 .container {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: antiquewhite;
 }
 
 
-.sidebar {
-  background-image: url('../images/backround.JPEG'); 
-  background-size: cover; 
-  background-position: center; 
-  background-repeat: no-repeat; 
-  color: rgba(255, 255, 255, 0.425);
-  padding: 10px;
-  width: 200px;
-  flex-shrink: 0;
-  backdrop-filter: blur(10px);
+
+hr{
+  color:black;
+  width:100%;
 }
-
-.sidebar a {
-  display: block;
-  color: rgba(255, 255, 255, 0.425);
-  text-decoration: none;
-  padding: 10px 0;
-  transition: background-color 0.3s; 
-}
-
-.sidebar a:hover {
-  background-color: #555; 
-}
-
-
 .main {
-  flex-grow: 1;
-  margin-top: 0;
-  margin-top: 20px; 
-  padding: 20px;
-  background-color: #fff; 
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  align-self: center;
+  width: 90%;
+  margin: 20px;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.charts{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap:5px;
 }
 
 label {
   font-weight: bold;
   color: #455da0;
+  align-self: center;
 }
 
 input[type="date"] {
@@ -83,12 +56,12 @@ input[type="date"] {
 
 #submitdate {
   background-color: #455da0;
-  color: rgba(255, 255, 255, 0.425);
+  color: rgba(255, 255, 255);
   padding: 10px 20px;
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  margin-top: 10px;
+
 }
 
 #submitdate:hover {
@@ -108,11 +81,15 @@ input[type="date"] {
   margin: 10px 0; 
 }
 
-.title-container {
-  display: flex;
-  align-items: center;
-}
 
+
+
+#map{
+  min-height: 400px;
+  width: 90%;
+  margin: 20px;
+  max-width: 900px;
+}
 .title-icon {
   width: 100px; 
   height: auto;

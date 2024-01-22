@@ -14,7 +14,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rescuer</title>
+  <title>Διασώστης</title>
   <link rel="stylesheet" href="/css/rescuer_map.css">
   <link rel="stylesheet" href="/leaflet/leaflet.css">
 </head>
@@ -22,8 +22,8 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
 <body>
 
   <div class="header">
-  <p id="text"></p>
     <h1>ΔΙΑΣΩΣΤΕΣ</h1>
+    <p id="text"></p>
   </div>
 
   <div class="sidebar">
@@ -102,7 +102,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
     </div>
 
   </div>
-  
+
   <script src="/leaflet/leaflet.js"></script>
   <script src="/scripts/rescuer_map.js"></script>
 

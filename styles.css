@@ -1,57 +1,67 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+body, html {
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  font-family: Arial, sans-serif;
 }
 
-.login-container {
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  width: 300px;
-  box-sizing: border-box; /* new property to include padding in width */
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.input-group {
-  margin-bottom: 15px;
-}
-
-.input-group label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.input-group input {
-  width: calc(100% - 20px); /* calculate width, subtracting padding */
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box; /* ensure padding is included in the width */
-}
-
-.btn {
-  width: calc(100% - 20px); /* calculate width, subtracting padding */
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  background-color: #5cb85c;
+.navbar {
+  background-image: url(../images/backround.JPEG);
+  background-size: cover;
   color: white;
-  cursor: pointer;
-  box-sizing: border-box; /* ensure padding is included in the width */
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px 20px;
 }
 
-.btn:hover {
-  background-color: #4cae4c;
+.navbar-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
+.header-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.navbar-icon {
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.navbar-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  margin: 5px 0;
+  font-size: 18px;
+}
+
+.navbar-links a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive design for screens wider than 600px */
+@media (min-width: 600px) {
+  .navbar {
+      flex-direction: row;
+      justify-content: space-between;
+  }
+
+  .header-top, .navbar-links {
+      flex-direction: row;
+      align-items: center;
+  }
+
+  .navbar-icon {
+      margin-right: 10px;
+      margin-bottom: 0;
+  }
+}
