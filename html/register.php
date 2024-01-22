@@ -33,10 +33,10 @@ if (isset($_SESSION['type'])) {
 <body>
 
   <div id="registerbox">
-    
+  <img src="/images/loginuser.png" alt="Login image" id="userImage">
     <h1>Εγγραφή</h1>
     <form id="registerForm">
-
+    
       <div id="userInputs">
         <label for="fname">Όνομα</label>
         <input type="text" id="fname" class="input" placeholder="Εισαγωγή Ονόματος" maxlength="12" required>
