@@ -35,7 +35,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
     <ul id="results"></ul>
   </div>
   <div id="tables">
-    <div>
+    <div id=table_req>
       <h2>Αποθήκη</h2>
       <div class="table-data">
       <table id="table_admin_request">
