@@ -68,7 +68,11 @@ th, td {
   padding: 8px;
   text-align: left;
 }
-
+@media (max-width:800px){
+  table{
+    font-size:x-small;
+  }
+}
 
 #categorySelect {
   font-family: 'Roboto', sans-serif;
