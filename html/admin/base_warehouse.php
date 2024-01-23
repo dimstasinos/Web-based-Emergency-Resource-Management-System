@@ -14,16 +14,26 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width initial-scale=1">
   <link rel="stylesheet" href="/css/admin_database.css">
+  <link rel="stylesheet" href="/css/general.css">
   <title>Storage</title>
 </head>
 
 <body>
-<div class="sidebar">
-      <a href="/html/admin/admin_mainPage.php">Aρχική</a>
-      <a href="/server/logout.php">Αποσύνδεση</a>
+  <div class="headerall">
+    <div id="pic"><img src="/images/favicon.png" alt="Icon" class="title-icon">
     </div>
-  <h1>ΑΠΟΘΗΚΗ</h1>
- 
+    <div class="side_header">
+      <div class="header">
+        <h1 class="page-title">Αποθήκη</h1>
+      </div>
+      <div class="sidebar">
+        <a href="/html/admin/admin_mainPage.php">Aρχική</a>
+        <a href="/server/logout.php">Αποσύνδεση</a>
+      </div>
+    </div>
+  </div>
+
+
   <label for="online_data">Aνανέωση Βάσης απο την Αποθήκη</label>
   <button id="online_data">Ανανέση</button>
 
@@ -54,9 +64,11 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
   </div>
 
   <div>
-    <form id="products">
-      <fieldset>
-        <legend>Προϊον:</legend>
+    <hr class="separator-line">
+    <hr class="separator-line">
+    <div class="main">
+      
+        <h2>Προϊον:</h2>
         <div id="product_select">
           <p>Επιλεγμένο Προϊόν:</p>
           <label for="id_selected">ID</label>
@@ -74,40 +86,41 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
             <button type="button" id="quantity_button">Αλλαγή Κατηγορίας</button>
           </div>
         </div>
+   
+    
+    <div>
+      <p>Πρόσθεσε Προϊόν:</p>
+      <label for="name_new">Όνομα</label>
+      <input type="text" id="name_new">
+      <label for="cat_new">Κατηγορία</label>
+      <select id="cat_new"></select>
+      <button type="button" id="add_product">Προσθήκη</button>
+    </div>
 
-        <div>
-          <p>Πρόσθεσε Προϊόν:</p>
-          <label for="name_new">Όνομα</label>
-          <input type="text" id="name_new">
-          <label for="cat_new">Κατηγορία</label>
-          <select id="cat_new"></select>
-          <button type="button" id="add_product">Προσθήκη</button>
-        </div>
 
-
-        <div>Λεπτομέρειες Προϊόντος:</div>
-        <div id="detail_select"></div>
-        <div id="details">
-          <div>
-            <label for="detail_name_text">Όνομα</label>
-            <input type="text" id="detail_name_text">
-            <label for="detail_value_text">Τιμή</label>
-            <input type="text" id="detail_value_text">
-          </div>
-          <div>
-            <button type="button" id="clear">Καθαρισμός</button>
-            <button type="button" id="change">Αλλαγή</button>
-            <button type="button" id="add">Προσθήκη</button>
-            <button type="button" id="delete">Διαγραφή</button>
-          </div>
-        </div>
-      </fieldset>
-    </form>
+    <div>Λεπτομέρειες Προϊόντος:</div>
+    <div id="detail_select"></div>
+    <div id="details">
+      <div>
+        <label for="detail_name_text">Όνομα</label>
+        <input type="text" id="detail_name_text">
+        <label for="detail_value_text">Τιμή</label>
+        <input type="text" id="detail_value_text">
+      </div>
+      <div>
+        <button type="button" id="clear">Καθαρισμός</button>
+        <button type="button" id="change">Αλλαγή</button>
+        <button type="button" id="add">Προσθήκη</button>
+        <button type="button" id="delete">Διαγραφή</button>
+      </div>
+    </div>
+    </div>
   </div>
-
-  <div id="category_options">
-    <fieldset>
-      <legend>Κατηγορία</legend>
+  <hr class="separator-line">
+    <hr class="separator-line">
+    <div class="main">
+    
+      <h3>Κατηγορία:</h3>
       <div>
         <label for="category">Κατηγορία</label>
         <select id="category"></select>
@@ -130,8 +143,9 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
       <div>
         <button type="button" id="add_new_cat">Προσθήκη</button>
       </div>
-    </fieldset>
+   
   </div>
+</div>
 
 
   <script src="/scripts/admin_warehouse.js"></script>
