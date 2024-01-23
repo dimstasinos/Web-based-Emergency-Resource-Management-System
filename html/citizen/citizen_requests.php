@@ -15,15 +15,25 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/citizen_requests.css">
+  <link rel="stylesheet" href="/css/general.css">
   <title>Requests</title>
 </head>
 
 <body>
+<div class="headerall">
+    <div id="pic"><img src="/images/favicon.png" alt="Icon" class="title-icon">
+    </div>
+    <div class="side_header">
+      <div class="header">
+        <h1 class="page-title">Αιτήματα</h1>
+      </div>
   <div class="sidebar">
     <a href="/html/citizen/citizen_offers.php">Προσφορές</a>
     <a href="/server/logout.php">Αποσύνδεση</a>
   </div>
-  <h1>ΑΙΤΗΜΑΤΑ</h1>
+</div>
+</div>
+  
 
   <div>
     <h5>Kατηγορίες</h5>
