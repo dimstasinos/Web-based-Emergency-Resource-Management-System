@@ -1,144 +1,137 @@
 @font-face {
-    font-family: 'Roboto Black';
-    src: url(/fonts/Roboto/Roboto-Black.ttf) format('truetype');
-    font-weight: 900;
-    font-style: normal;
-  }
-  
-  body {
-    font-family: 'Roboto Black', sans-serif;
-    background-image: url(../images/backround.JPEG);
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    margin: 0px;
-    padding: 0px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: auto;
-  }
-  
-  #registerbox {
-    width: 400px;
-    border-radius: 15px;
-    background: rgba(0, 0, 0, 0.95);
-    color: #ffffff;
-    box-sizing: border-box;
-    padding: 50px 30px;
-  }
-  
-  h1 {
-    margin: 0;
-    padding: 0 0 10px;
-    text-align: center;
-    font-size: 45px;
-  }
-  
-  #registerButton {
-    padding: 5px;
-    width: 50%;
-    height: 50px;
-    margin-left: 25%;
-    margin-top:20px;
-    transition-duration: 0.5s;
-    background-color: rgba(75, 75, 75, 1);
-    border-radius: 15px;
-    text-align: center;
-    border: none;
-    cursor: pointer;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 40px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    outline: none;
-  }
-  
-  #registerButton:hover {
-    background-color: rgba(90, 90, 90, 1);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  }
-  
-  .input {
-    padding: 10px;
-    width: 95%;
-    background-color: rgba(255, 255, 255, 1);
-    border-radius: 15px;
-    border: 1px solid #ced4da;
-    margin-bottom: 10px;
-    font-size: 16px;
-  }
-  
-  #login {
-    margin: 0;
-    color: rgb(255, 38, 0);
-    padding: 10px 0;
-    text-align: center;
-    font-size: 15px;
-  }
-  
-  #login p {
-    margin: 0;
-    padding-bottom: 5px;
-  }
-  
-  #login a {
-    color: rgb(0, 123, 255);
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  #userInputs label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
+  font-family: 'Roboto Black';
+  src: url(/fonts/Roboto/Roboto-Black.ttf) format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
 
-  #fname,#lname,#username,#password,#confpassword,#vehicleusername{
-  width: 200px;
+body {
+  font-family: 'Roboto Black', sans-serif;
+  background-image: url(../images/backround.JPEG);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#registerbox {
+  width: 400px;
   border-radius: 15px;
   background: rgba(0, 0, 0, 0.95);
   color: #ffffff;
   box-sizing: border-box;
-  padding: 10px 0px;
-  }
-  
-  #mapbox p {
+  padding: 70px 30px 10px;
+  margin-top: 70px;
+}
+
+#userImage {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  position: absolute;
+  margin-top: -120px;
+}
+
+h1 {
+  margin: 0;
+  padding: 0 0 0px;
+  text-align: center;
+  font-size: 45px;
+}
+
+#registerButton {
+  width: 50%;
+  height: 40px;
+  margin-left: 25%;
+  transition-duration: 0.5s;
+  background-color: rgba(75, 75, 75, 1);
+  border-radius: 15px;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 40px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  outline: none;
+  margin-top: 20px;
+}
+
+#registerButton:hover {
+  background-color: rgba(90, 90, 90, 1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.input {
+  padding: 10px;
+  width: 95%;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 15px;
+  border: 1px solid #ced4da;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+#userInputs label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+#mapbox p {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+#goback {
+  margin: 0;
+  color: rgb(255, 38, 0);
+  padding: 10px 0;
+  text-align: center;
+  font-size: 15px;
+}
+
+#goback a {
+  color: rgb(0, 123, 255);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#goback a:hover {
+  text-decoration: underline;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
+}
+
+#newVehicle{
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.checkbox-container label {
+  font-size: 14px;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  #registerbox {
+    width: 80%;
     display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
   }
 
-  #goback {
-    margin: 0;
-    color: rgb(255, 38, 0);
-    padding: 10px 0;
-    text-align: center;
-    font-size: 15px;
+  #userInputs {
+    padding: 10px;
+    width: 90%;
   }
-  
-  #goback a {
-    color: rgb(0, 123, 255);
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  #goback a:hover {
-    text-decoration: underline;
-  }
-  
-  @media (max-width: 600px) {
-    #registerbox {
-      width: 80%;
-      display: block;
-    }
-  
-    #userInputs {
-      padding: 10px;
-      width: 90%;
-    }
-  }
-  
+}

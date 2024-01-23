@@ -20,56 +20,52 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
 <body>
 
   <body>
-    <div class="registerbox" id="registerbox">
+    <div id="registerbox">
+      <img src="/images/loginuser.png" alt="image" id="userImage">
       <h1>Register Rescuer</h1>
       <form id="registerForm">
-        <div class="fnameBox">
+
+        <div id="userInputs">
           <label for="fname">First Name</label>
-          <input type="text" id="fname" placeholder="Enter First Name" maxlength="12" required>
-        </div>
-        <div class="lnameBox">
+          <input type="text" id="fname" class="input" placeholder="Εισαγωγή Ονόματος" maxlength="12" required>
+
           <label for="lname">Last Name</label>
-          <input type="text" id="lname" placeholder="Enter Last Name" maxlength="12" required>
-        </div>
-        <div class="userBox">
+          <input type="text" id="lname" class="input" placeholder="Εισαγωγή Επώνυμου" maxlength="12" required>
+
+
           <label for="username">Username</label>
-          <input type="text" id="username" placeholder="Enter Username" maxlength="12" required>
-        </div>
-        <div class="passBox">
+          <input type="text" id="username" class="input" placeholder="Δημιουργία Username" maxlength="12" required>
+
+
           <label for="password">Password</label>
-          <input type="password" id="password" placeholder="Enter password" required>
-        </div>
-        <div class="passBox">
+          <input type="password" id="password" class="input" placeholder="Δημιουργία password" required>
+
+
           <label for="confpassword">Confirm Password</label>
-          <input type="password" id="confpassword" placeholder="Re-Enter password" required>
-        </div>
-        <div>
+          <input type="password" id="confpassword" class="input" placeholder="Επαναλάβετε το password" required>
+
           <label for="vehicleSelect">Επέλεξε ένα όχημα</label>
-          <select id="vehicleSelect">
-          </select>
-        </div>
-        <div>
-          <label for="newVehicle">Πρόσθεσαι τον σε νέο όχημα:</label>
-          <input type="checkbox" id="newVehicle">
-        </div>
-        <div>
+          <select id="vehicleSelect"></select>
+
+          <div class="checkbox-container">
+            <label for="newVehicle">Πρόσθεσαι τον σε νέο όχημα:</label>
+            <input type="checkbox" id="newVehicle">
+          </div>
+
           <label for="vehicleUsername">Username</label>
-          <input type="text" id="vehicleUsername" disabled>
+          <input type="text" id="vehicleUsername" class="input" placeholder="Δημιουργία username οχήματος" disabled>
         </div>
-        <div>
         <div>
           <button type="button" id="registerButton"><strong>REGISTER</strong></button>
         </div>
-
-        </div>
         <div id="goback">
-        <p>
-          <br>
-          <a href="/html/admin/admin_mainPage.php"><strong>Πήγαινε Πίσω</strong></a>
-        </p>
-      </div>
+          <p>
+            <a href="/html/admin/admin_mainPage.php"><strong>Πήγαινε Πίσω</strong></a>
+          </p>
+        </div>
       </form>
 
   </body>
   <script src="/scripts/admin_register_rescuer.js"></script>
+
 </html>
