@@ -69,7 +69,7 @@ function announcementTable(data) {
       items_id.push(item.item_id);
       items_name_array.push(item.item_name);
       items_quantity_array.push(item.quantity);
-      items_action_array.push(`<button id="cancel_${item.item_id}${announcement.announcement_id}">Διαγραφή</button>`);
+      items_action_array.push(`<button class="announcement_buttom" id="cancel_${item.item_id}${announcement.announcement_id}">Διαγραφή</button>`);
     });
 
     item_name.innerHTML = items_name_array.join("<br>");
