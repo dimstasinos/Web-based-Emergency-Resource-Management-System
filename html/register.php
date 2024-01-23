@@ -33,7 +33,7 @@ if (isset($_SESSION['type'])) {
 <body>
 
   <div id="registerbox">
-  <img src="/images/loginuser.png" alt="Login image" id="userImage">
+  <img src="/images/loginuser.png" alt="image" id="userImage">
     <h1>Εγγραφή</h1>
     <form id="registerForm">
     
@@ -54,7 +54,7 @@ if (isset($_SESSION['type'])) {
         <input type="password" id="pass" class="input" placeholder="Δημιουργία password" required>
 
         <label for="confpass">Επιβεβαίωση κωδικού</label>
-        <input type="password" id="confpass" class="input" placeholder="Επαναλάβετε το  password" required>
+        <input type="password" id="confpass" class="input" placeholder="Επαναλάβετε το password" required>
 
       </div>
 

@@ -15,32 +15,35 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
   <link rel="stylesheet" href="/css/admin_mainPageStyle.css">
   <link rel="stylesheet" href="/css/general.css">
   <link rel="stylesheet" href="/leaflet/leaflet.css">
-
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
 </head>
 
 <body>
   <div class="headerall">
-    <div id="pic"><img src=" /images/favicon.png" alt="Icon" class="title-icon">
+    <div id="pic"><img src="/images/favicon.png" alt="Icon" class="title-icon">
     </div>
     <div class="side_header">
       <div class="header">
         <h1 class="page-title">Διαχειριστής</h1>
       </div>
       <div class="sidebar">
-        <a href="/html/admin/adminAnnouncement.php">Ανακοινώσεις</a>
-        <a href="/html/admin/adminRegisterRescuer.php">Εγγραφή Διασώστη</a>
-        <a href="/html/admin/base_warehouse.php">Βάση Δεδομένων</a>
-        <a href="/server/logout.php">Αποσύνδεση</a>
+        <div><a href="/html/admin/adminAnnouncement.php">Ανακοινώσεις</a></div>
+        <div><a href="/html/admin/adminRegisterRescuer.php">Εγγραφή Διασώστη</a></div>
+        <div><a href="/html/admin/base_warehouse.php">Βάση Δεδομένων</a></div>
+        <div><a href="/server/logout.php">Αποσύνδεση</a></div>
       </div>
     </div>
   </div>
   <div class="container">
 
     <div id="map"></div>
+
     <hr class="separator-line">
     <hr class="separator-line">
     <div class="main">
-      <h2 class="chart-heading">Κατάσταση προσφορών και αιτημάτων</h2>
+      <div id=chart>
+        <h2 class="chart-heading">Κατάσταση προσφορών και αιτημάτων</h2>
+      </div>
       <div class="charts">
         <label for="startdate">Ημερομηνία έναρξης:</label>
         <input type="date" id="startdate" name="selectedDate" required>
