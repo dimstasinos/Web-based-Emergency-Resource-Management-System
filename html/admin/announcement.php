@@ -14,7 +14,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Announcements</title>
-  <link rel="stylesheet" href="/css/announcementsV2.css">
+  <link rel="stylesheet" href="/css/announcements.css">
   <link rel="stylesheet" href="/css/general.css">
 </head>
 
@@ -52,19 +52,22 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
     </div>
 
     <div class="autocomlete-category">
-      <div class="label-input">
+
+      <div class="autocomplete">
         <label for="search">Αναζήτηση Προϊόντων</label>
         <input type="text" id="search" placeholder="Αναζήτηση προϊόντων..." autocomplete="off">
-        <ul id="results"></ul>
+        <div id="autocomplete-suggestions" class="suggestions"></div>
       </div>
+
       <div class="label-select">
         <label for="categories">Κατηγορίες Προϊόντων</label>
         <select id="categories"></select>
       </div>
     </div>
 
+
     <div id="warehouse-selected_container">
-      <div>
+      <div id="title_table_warehouse-container">
         <h1>Αποθήκη</h1>
         <div id="table_warehouse-container">
           <table id="table_warehouse" class="table">
@@ -82,7 +85,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
         </div>
       </div>
 
-      <div>
+      <div id="title_table_selected-container">
         <h1>Επιλεγμένα Προΐοντα</h1>
         <div id="table_selected-container">
           <table id="tableSelected" class="table">
@@ -97,8 +100,10 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
             <tbody id="itemSelected"></tbody>
           </table>
         </div>
-        <button id="submitAnnouncement">Καταχώρηση</button>
       </div>
+    </div>
+    <div id="button-container">
+      <button id="submitAnnouncement">Καταχώρηση</button>
     </div>
   </div>
 </body>

@@ -187,103 +187,106 @@ function items_select(data, selected_cat) {
   });
 }
 
-//Event listener που εμφανίζει τα είδη ανάλογα με την καταχώρηση του χρήστη
 document.getElementById("search").addEventListener("input", function () {
-
-  //Ανάκτηση δεδομένων απο τον server
+  // Fetch data from the server
   fetch('/server/admin/warehouse_admin/database_extract.php')
-    .then(jsonResponse => {
-
-      const isEmpty = jsonResponse.headers.get('Content-Length');
-      if (isEmpty === '0') {
+    .then(response => {
+      if (response.headers.get('Content-Length') === '0') {
         return null;
       }
-      return jsonResponse.json();
+      return response.json();
     })
     .then(data => {
-
-      //Εύρεση ειδών που ξεκινούν με την καταχώρηση του χρήστη
       if (data != null) {
-        var input = document.getElementById("search").value.toLowerCase();
-        var results = data.items.filter(item => {
-          return item.name.toLowerCase().startsWith(input);
-        });
+        var inputElement = document.getElementById('search');
+        var suggestionsContainer = document.getElementById('autocomplete-suggestions');
+        var inputValue = inputElement.value.toLowerCase();
+        suggestionsContainer.innerHTML = '';
 
-        document.getElementById("results").innerHTML = '';
+        if (!inputValue) {
+          suggestionsContainer.style.display = 'none';
+          return;
+        }
 
-        //Εμφάνιση των ειδών
+        // Filter items
+        var results = data.items.filter(item => item.name.toLowerCase().startsWith(inputValue));
+
+        // Display items
         results.forEach(item => {
-          var resultPrint = document.createElement('li');
-          resultPrint.classList.add('results_item');
-          resultPrint.textContent = item.name;
+          var resultElement = document.createElement('DIV');
+          resultElement.classList.add('results_item');
+          resultElement.textContent = item.name;
 
-          document.getElementById("results").appendChild(resultPrint);
-
-          resultPrint.addEventListener('click', function () {
-
-            document.getElementById("search").value = item.name;
-            document.getElementById("results").innerHTML = '';
-
-
-            const table = document.getElementById("itemSelected");
-            var flag = 0;
-            var item_check = [];
-
-            for (var i = 0; i < table.rows.length; i++) {
-              var cell = table.rows[i].cells[0];
-              item_check.push(cell.innerText);
-            }
-
-            for (var i = 0; i < item_check.length; i++) {
-              if (item_check[i] === item.id) {
-                flag = 1;
-                break;
-              }
-            }
-
-            //Τοποθέτηση στον πίνακα επιλεγμένων
-            if (flag === 0) {
-              const row_table = document.createElement("tr");
-              const item_id = document.createElement("td");
-              const name_table = document.createElement("td");
-              const item_quantity = document.createElement("td");
-              const item_delete = document.createElement("td");
-
-              item_id.textContent = item.id;
-              name_table.textContent = item.name;
-              item_quantity.innerHTML = `<input type="range" id="${item.id}" 
-              min="0" max="20" value="0"></input><span id="quantity_${item.id}">0</span>`;
-              item_delete.innerHTML = `<button id=cancel_${item.id}>Διαραφή</button>`;
-
-              row_table.appendChild(item_id);
-              row_table.appendChild(name_table);
-              row_table.appendChild(item_quantity);
-              row_table.appendChild(item_delete);
-
-              table.appendChild(row_table);
-
-              document.getElementById(`${item.id}`).addEventListener("input", function () {
-                document.getElementById(`quantity_${item.id}`).innerText = this.value;
-              });
-
-              document.getElementById(`cancel_${item.id}`).addEventListener("click", function () {
-                var row = this.closest('tr');
-                row.parentNode.removeChild(row);
-              });
-            }
+          resultElement.addEventListener('click', function () {
+            inputElement.value = item.name;
+            suggestionsContainer.innerHTML = '';
+            suggestionsContainer.style.display = 'none';
+            addItemToTable(item);
           });
 
-          //Αφαίρεση της λίστας
-          document.addEventListener('click', function (event) {
-            if (!event.target.closest('autocomlete')) {
-              document.getElementById("results").innerHTML = '';
-            }
-          });
+          suggestionsContainer.appendChild(resultElement);
         });
+
+        suggestionsContainer.style.display = results.length ? 'block' : 'none';
+
+       
+
+        document.addEventListener('click', function (e) {
+          if (e.target !== inputElement) {
+            suggestionsContainer.style.display = 'none';
+          }
+        });
+
       }
     })
     .catch(error => console.error('Error:', error));
+
+
+
 });
+
+function addItemToTable(item) {
+  var table = document.getElementById('tableSelected');
+  var itemCheck = [];
+
+  for (var i = 0; i < table.rows.length; i++) {
+    var cell = table.rows[i].cells[0];
+    itemCheck.push(cell.innerText);
+  }
+
+  if (!itemCheck.includes(item.id)) {
+
+    document.getElementById('search').value="";
+
+    const rowTable = document.createElement("tr");
+    const item_id = document.createElement("td");
+    const name_table = document.createElement("td");
+    const item_quantity = document.createElement("td");
+    const item_delete = document.createElement("td");
+    item_id.textContent = item.id;
+    name_table.textContent = item.name;
+    item_quantity.innerHTML = `<input type="range" id="${item.id}" 
+              min="0" max="20" value="0"></input><span id="quantity_${item.id}">0</span>`;
+    item_delete.innerHTML = `<button id=cancel_${item.id}>Διαραφή</button>`;
+
+    rowTable.appendChild(item_id);
+    rowTable.appendChild(name_table);
+    rowTable.appendChild(item_quantity);
+    rowTable.appendChild(item_delete);
+
+    table.appendChild(rowTable);
+
+    document.getElementById(`${item.id}`).addEventListener("input", function () {
+      document.getElementById(`quantity_${item.id}`).innerText = this.value;
+    });
+
+    document.getElementById(`cancel_${item.id}`).addEventListener("click", function () {
+      var row = this.closest('tr');
+      row.parentNode.removeChild(row);
+    });
+  }
+};
+
 
 //Event listener που εμφανίζει τα είδη ανάλογα με την επιλεγμένη κατηγορία
 document.getElementById("categories").addEventListener("change", function () {
@@ -342,7 +345,7 @@ document.getElementById("itemsTable").addEventListener("click", function (event)
       name_table.textContent = item;
       item_quantity.innerHTML = `<input type="range" id="${id}" 
       min="0" max="20" value="0"></input><span id="quantity_${id}">0</span>`;
-      item_delete.innerHTML = `<button id=cancel_${id}>Διαγραφή</button>`;
+      item_delete.innerHTML = `<button id=delete_${id}>Αφαίρεση</button>`;
 
       row_table.appendChild(item_id);
       row_table.appendChild(name_table);
@@ -357,7 +360,7 @@ document.getElementById("itemsTable").addEventListener("click", function (event)
       });
 
       //Αφαίρεση του είδους από τον πίνακα επιλεγμένων
-      document.getElementById(`cancel_${id}`).addEventListener("click", function () {
+      document.getElementById(`delete_${id}`).addEventListener("click", function () {
         var row = this.closest('tr');
         row.parentNode.removeChild(row);
       });
