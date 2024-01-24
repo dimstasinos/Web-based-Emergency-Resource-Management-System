@@ -33,41 +33,41 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
     </div>
   </div>
 
+  <div id="main-container">
+    <label for="online_data">Aνανέωση Βάσης απο την Αποθήκη</label>
+    <button id="online_data">Ανανέση</button>
 
-  <label for="online_data">Aνανέωση Βάσης απο την Αποθήκη</label>
-  <button id="online_data">Ανανέση</button>
+    <form id="json_upload" enctype="multipart/form-data">
+      <label for="json_file">JSON file</label>
+      <input type="file" id="json_file" name="json_file" accept=".json" />
+      <button type="button" id="submit_button" onclick="upload_data()">Καταχώρηση</button>
+    </form>
 
-  <form id="json_upload" enctype="multipart/form-data">
-    <label for="json_file">JSON file</label>
-    <input type="file" id="json_file" name="json_file" accept=".json" />
-    <button type="button" id="submit_button" onclick="upload_data()">Καταχώρηση</button>
-  </form>
+    <div>
+      <label for="cat_list">Κατηγορίες Ειδών</label>
+      <select id="cat_list"></select>
+    </div>
 
-  <div>
-    <label for="cat_list">Κατηγορίες Ειδών</label>
-    <select id="cat_list"></select>
-  </div>
+    <div class=table_adm>
+      <table id="table_admin">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Όνομα</th>
+            <th>Κατηγορία</th>
+            <th>Λεπτομέρειες</th>
+            <th>Ποσότητα</th>
+          </tr>
+        </thead>
+        <tbody id="items_table"></tbody>
+      </table>
+    </div>
 
-  <div class=table_adm>
-    <table id="table_admin">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Όνομα</th>
-          <th>Κατηγορία</th>
-          <th>Λεπτομέρειες</th>
-          <th>Ποσότητα</th>
-        </tr>
-      </thead>
-      <tbody id="items_table"></tbody>
-    </table>
-  </div>
+    <div>
+      <hr class="separator-line">
+      <hr class="separator-line">
+      <div class="main">
 
-  <div>
-    <hr class="separator-line">
-    <hr class="separator-line">
-    <div class="main">
-      
         <h2>Προϊον:</h2>
         <div id="product_select">
           <p>Επιλεγμένο Προϊόν:</p>
@@ -86,40 +86,40 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
             <button type="button" id="quantity_button">Αλλαγή Κατηγορίας</button>
           </div>
         </div>
-   
-    
-    <div>
-      <p>Πρόσθεσε Προϊόν:</p>
-      <label for="name_new">Όνομα</label>
-      <input type="text" id="name_new">
-      <label for="cat_new">Κατηγορία</label>
-      <select id="cat_new"></select>
-      <button type="button" id="add_product">Προσθήκη</button>
-    </div>
 
 
-    <div>Λεπτομέρειες Προϊόντος:</div>
-    <div id="detail_select"></div>
-    <div id="details">
-      <div>
-        <label for="detail_name_text">Όνομα</label>
-        <input type="text" id="detail_name_text">
-        <label for="detail_value_text">Τιμή</label>
-        <input type="text" id="detail_value_text">
-      </div>
-      <div>
-        <button type="button" id="clear">Καθαρισμός</button>
-        <button type="button" id="change">Αλλαγή</button>
-        <button type="button" id="add">Προσθήκη</button>
-        <button type="button" id="delete">Διαγραφή</button>
+        <div>
+          <p>Πρόσθεσε Προϊόν:</p>
+          <label for="name_new">Όνομα</label>
+          <input type="text" id="name_new">
+          <label for="cat_new">Κατηγορία</label>
+          <select id="cat_new"></select>
+          <button type="button" id="add_product">Προσθήκη</button>
+        </div>
+
+
+        <div>Λεπτομέρειες Προϊόντος:</div>
+        <div id="detail_select"></div>
+        <div id="details">
+          <div>
+            <label for="detail_name_text">Όνομα</label>
+            <input type="text" id="detail_name_text">
+            <label for="detail_value_text">Τιμή</label>
+            <input type="text" id="detail_value_text">
+          </div>
+          <div>
+            <button type="button" id="clear">Καθαρισμός</button>
+            <button type="button" id="change">Αλλαγή</button>
+            <button type="button" id="add">Προσθήκη</button>
+            <button type="button" id="delete">Διαγραφή</button>
+          </div>
+        </div>
       </div>
     </div>
-    </div>
-  </div>
-  <hr class="separator-line">
+    <hr class="separator-line">
     <hr class="separator-line">
     <div class="main">
-    
+
       <h3>Κατηγορία:</h3>
       <div>
         <label for="category">Κατηγορία</label>
@@ -143,9 +143,9 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
       <div>
         <button type="button" id="add_new_cat">Προσθήκη</button>
       </div>
-   
+
+    </div>
   </div>
-</div>
 
 
   <script src="/scripts/admin_warehouse.js"></script>
