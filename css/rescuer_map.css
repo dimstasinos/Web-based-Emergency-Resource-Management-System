@@ -5,48 +5,9 @@ body {
   background-color: #f2f2f2; 
 }
 
-
-.header {
-  background-color: #333;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-}
-
-.header h1 {
-  margin: 0;
-  font-size: 36px;
-}
  h2,h3,h4{
   font-size: 24px;
  }
-
-.sidebar {
-  background-color: #333;
-  color: white;
-  padding: 10px 0;
-  text-align: center;
-}
-
-.header p,
-.header h1 {
-    display: inline;
-}
-
-.sidebar a {
-  display: block;
-  color: white;
-  text-decoration: none;
-  padding: 10px 0;
-  transition: background-color 0.3s; 
-}
-
-.sidebar a:hover {
-  background-color: #555; 
-}
 
 
 .main {
@@ -76,15 +37,42 @@ th, td {
 
 #categorySelect {
   font-family: 'Roboto', sans-serif;
+  font-size: 24px;
   padding: 8px;
   border: 1px solid #ccc; 
   border-radius: 5px; 
   width: 100%; 
 }
 
+#tasks_panel{
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  height: 400px;
+  width: 90%;
+  align-items: center;
+  margin-bottom: 20px;
+  overflow: auto;
+}
+
+#table_truck,#table_product,#table_warehouse{
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 400px;
+  width: 90%;
+  align-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  overflow: auto;
+}
+
+
 
 button {
   background-color: #455da0;
+
   color: white;
   padding: 10px 20px;
   border: none;
@@ -103,8 +91,6 @@ button:hover {
   margin-top: 20px;
 }
 #text{
-  border: 2px solid #000000; 
-  border-radius: 4px;
   display:inline-block;
 }
 

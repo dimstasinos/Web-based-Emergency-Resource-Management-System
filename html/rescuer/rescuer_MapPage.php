@@ -17,17 +17,23 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
   <title>Διασώστης</title>
   <link rel="stylesheet" href="/css/rescuer_map.css">
   <link rel="stylesheet" href="/leaflet/leaflet.css">
+  <link rel="stylesheet" href="/css/general.css">
 </head>
 
 <body>
 
-  <div class="header">
-    <h1>ΔΙΑΣΩΣΤΕΣ</h1>
-    <p id="text"></p>
-  </div>
-
-  <div class="sidebar">
-    <a href="/server/logout.php">Αποσύνδεση</a>
+  <div class="headerall">
+    <div id="pic"><img src="/images/favicon.png" alt="Icon" class="title-icon">
+    </div>
+    <div class="side_header">
+      <div class="header">
+        <h1 class="page-title">Διασώστης</h1>
+      </div>
+      <p id="text"></p>
+      <div class="sidebar">
+        <a href="/server/logout.php">Αποσύνδεση</a>
+      </div>
+    </div>
   </div>
 
   <div class="main">
@@ -49,13 +55,12 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
         <tbody id=tasks_info></tbody>
       </table>
     </div>
-
     <div>
-      <label for="categorySelect">Κατηγορίες Ειδών</label>
+      <h3>Κατηγορίες Ειδών</h3>
       <select id="categorySelect"></select>
     </div>
 
-    <div id="tables">
+    <div id="table_warehouse">
       <div>
         <h2>Αποθήκη</h2>
         <table id="tableOfItems">
@@ -71,6 +76,8 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
           <tbody id="items"></tbody>
         </table>
       </div>
+   </div>
+   <div id="table_product">
       <div>
         <h3>Επιλεγμένο Προϊόν</h3>
         <table id="tableSelected">
@@ -85,7 +92,8 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
         </table>
         <button id="load">Φόρτωση</button>
       </div>
-      <div>
+   </div>
+      <div id="table_truck">
         <h4>Φορτίο Οχήματος</h4>
         <table id="Cargo">
           <thead>
@@ -101,7 +109,6 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
       </div>
     </div>
 
-  </div>
 
   <script src="/leaflet/leaflet.js"></script>
   <script src="/scripts/rescuer_map.js"></script>
