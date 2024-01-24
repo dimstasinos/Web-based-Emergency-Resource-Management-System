@@ -17,17 +17,23 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
   <title>Διασώστης</title>
   <link rel="stylesheet" href="/css/rescuer_map.css">
   <link rel="stylesheet" href="/leaflet/leaflet.css">
+  <link rel="stylesheet" href="/css/general.css">
 </head>
 
 <body>
 
-  <div class="header">
-    <h1>ΔΙΑΣΩΣΤΕΣ</h1>
-    <p id="text"></p>
-  </div>
-
-  <div class="sidebar">
-    <a href="/server/logout.php">Αποσύνδεση</a>
+  <div class="headerall">
+    <div id="pic"><img src="/images/favicon.png" alt="Icon" class="title-icon">
+    </div>
+    <div class="side_header">
+      <div class="header">
+        <h1 class="page-title">Διασώστης</h1>
+      </div>
+      <p id="text"></p>
+      <div class="sidebar">
+        <a href="/server/logout.php">Αποσύνδεση</a>
+      </div>
+    </div>
   </div>
 
   <div class="main">
@@ -49,9 +55,8 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
         <tbody id=tasks_info></tbody>
       </table>
     </div>
-
     <div>
-      <label for="categorySelect">Κατηγορίες Ειδών</label>
+      <h3>Κατηγορίες Ειδών</h3>
       <select id="categorySelect"></select>
     </div>
 
