@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', function () {
 
   //Επικοινωνία με τον server για εμφάνιση των ανακοινωσεων
-  fetch("/server/admin/announcement/announcement.php")
+  fetch("/server/admin/announcement/announcement_retrieve.php")
     .then(jsonResponse => jsonResponse.json())
     .then(data => {
       //Εμφάνιση ανακοινώσεων σε πίνακα
@@ -63,19 +63,17 @@ function announcementTable(data) {
 
     var items_name_array = [];
     var items_quantity_array = [];
-    var items_action_array = [];
     var items_id = [];
+
     announcement.items.forEach(item => {
       items_id.push(item.item_id);
       items_name_array.push(item.item_name);
       items_quantity_array.push(item.quantity);
-      items_action_array.push(`<button class="announcement_buttom" id="cancel_${item.item_id}${announcement.announcement_id}">Διαγραφή</button>`);
     });
 
-    item_name.innerHTML = items_name_array.join("<br>");
-    item_quantity.innerHTML = items_quantity_array.join("<br>");
-    action.innerHTML = items_action_array.join("<br>");
-
+    item_name.innerHTML = items_name_array.join("<br><br>");
+    item_quantity.innerHTML = items_quantity_array.join("<br><br>");
+    action.innerHTML = `<button id="cancel_${announcement.announcement_id}">Διαγραφή</button>`;
 
     row_table.appendChild(announcement_id);
     row_table.appendChild(item_name);
@@ -84,39 +82,39 @@ function announcementTable(data) {
 
     announcement_table.appendChild(row_table);
 
-    items_id.forEach(id => {
+    //Event listener που διαγράφη μια ανακοίνωση
+    document.getElementById(`cancel_${announcement.announcement_id}`).addEventListener("click", function () {
 
-      //Event listener που διαγράφη μια ανακοίνωση
-      document.getElementById(`cancel_${id}${announcement.announcement_id}`).addEventListener("click", function () {
+      const announcement_data = {
+        id: announcement.announcement_id,
+      };
 
-        const data = {
-          id: announcement.announcement_id,
-          item_id: id
-        };
+      //Επικοινωνία με το server για την διαγραφή της ανακοίνωσης
+      fetch("/server/admin/announcement/announcement_delete.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(announcement_data),
+      })
+        .then((response) => response.json())
+        .then((data) => {
 
-        //Επικοινωνία με το server για την διαγραφή της ανακοίνωσης
-        fetch("/server/admin/announcement/announcement_delete.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-
+          if (data.status === "error") {
+            console.error(data.Error);
+          } else {
             //Ανανέωση πίνακα ανακοινώσεων
-            fetch("/server/admin/announcement/announcement.php")
+            fetch("/server/admin/announcement/announcement_retrieve.php")
               .then(jsonResponse => jsonResponse.json())
-              .then(data => {
-                announcementTable(data);
+              .then(announcements => {
+                announcementTable(announcements);
               })
               .catch((error) => console.error("Error:", error));
-
-          })
-          .catch((error) => console.error("Error:", error));
-      });
+          }
+        })
+        .catch((error) => console.error("Error:", error));
     });
+
   });
 }
 
@@ -400,6 +398,9 @@ document.getElementById("submitAnnouncement").addEventListener("click", function
               item_id: selectTable.rows[i].cells[0].innerHTML,
               quantity: document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText,
             };
+
+
+            selectTable.innerHTML = "";
 
             //Ανέβασμα των προιόντων της ανακοίνωσης
             fetch("/server/admin/announcement/announcement_upload.php", {

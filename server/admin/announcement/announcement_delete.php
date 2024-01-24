@@ -18,33 +18,14 @@ try {
   //Σύνδεση με την βάση δεδομένων
   $db = db_connect();
 
-  //Queries για την διαγραφή της ανακοίνωσης
-  $announcement = $db->prepare("SELECT * from announcement_items where
-  announcement_id=?");
-  $announcement->bind_param(
+
+  $delete = $db->prepare("DELETE FROM announcements WHERE announcement_id=?");
+  $delete->bind_param(
     "i",
     $data->id
   );
-  $announcement->execute();
-  $announcement_response = $announcement->get_result();
+  $delete->execute();
 
-  if ($announcement_response->num_rows == 1) {
-
-    $delete = $db->prepare("DELETE FROM announcements WHERE announcement_id=?");
-    $delete->bind_param(
-      "i",
-      $data->id
-    );
-    $delete->execute();
-  } else {
-    $delete = $db->prepare("DELETE FROM announcement_items WHERE announcement_id=? and announcement_item_id=?");
-    $delete->bind_param(
-      "ii",
-      $data->id,
-      $data->item_id
-    );
-    $delete->execute();
-  }
 
   //Κλέισιμο σύνδεσης με την βάση δεδομένων
   $db->close();

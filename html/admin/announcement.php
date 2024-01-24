@@ -35,8 +35,9 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
   </div>
 
   <div id="main-container">
+    
+  <h1>Ανακοινώσεις</h1>
     <div id="tableAnnouncements-container">
-      <h1>Ανακοινώσεις</h1>
       <table id="tableAnnouncements" class="table">
         <thead>
           <tr>
