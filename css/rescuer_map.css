@@ -44,11 +44,35 @@ th, td {
   width: 100%; 
 }
 
+#tasks_panel{
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  height: 400px;
+  width: 90%;
+  align-items: center;
+  margin-bottom: 20px;
+  overflow: auto;
+}
+
+#table_truck,#table_product,#table_warehouse{
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 400px;
+  width: 90%;
+  align-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  overflow: auto;
+}
 
 
 
 button {
   background-color: #455da0;
+
   color: white;
   padding: 10px 20px;
   border: none;

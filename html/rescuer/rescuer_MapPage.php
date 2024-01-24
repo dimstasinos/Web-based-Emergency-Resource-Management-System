@@ -60,7 +60,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
       <select id="categorySelect"></select>
     </div>
 
-    <div id="tables">
+    <div id="table_warehouse">
       <div>
         <h2>Αποθήκη</h2>
         <table id="tableOfItems">
@@ -76,6 +76,8 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
           <tbody id="items"></tbody>
         </table>
       </div>
+   </div>
+   <div id="table_product">
       <div>
         <h3>Επιλεγμένο Προϊόν</h3>
         <table id="tableSelected">
@@ -90,7 +92,8 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
         </table>
         <button id="load">Φόρτωση</button>
       </div>
-      <div>
+   </div>
+      <div id="table_truck">
         <h4>Φορτίο Οχήματος</h4>
         <table id="Cargo">
           <thead>
@@ -106,7 +109,6 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
       </div>
     </div>
 
-  </div>
 
   <script src="/leaflet/leaflet.js"></script>
   <script src="/scripts/rescuer_map.js"></script>
