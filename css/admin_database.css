@@ -7,6 +7,7 @@ body {
 
 h2,h3{
   font-size: 24px;
+  text-align: center;
 }
 button {
   background-color: #455da0;
@@ -50,16 +51,44 @@ select {
     font-size:12px;
   }
 }
-
-.table_adm{
-  height: 400px;
-  overflow-y: scroll;
+.seperator-line{
+  width:100%;
+}
+#container{
+  width:100%;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   align-content: stretch;
   align-items: center;
+  overflow: auto ;
 }
+#container_2{
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  overflow: auto ;
+  align-content: stretch;
+}
+.table_adm{
+  height:500px;
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: stretch;
+  align-items: center;
+  overflow:auto;
+}
+
+#table_admin{
+  height: 400px;
+  width:100%;
+}
+
+
 thead th {
   background-color:  #455da0;
   color: white;

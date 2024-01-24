@@ -47,8 +47,11 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
     <label for="cat_list">Κατηγορίες Ειδών</label>
     <select id="cat_list"></select>
   </div>
-
-  <div class=table_adm>
+ <div id="container">
+  
+    <div class=table_adm>
+    <div >
+    <h2>Αποθήκη</h2>
     <table id="table_admin">
       <thead>
         <tr>
@@ -62,10 +65,13 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
       <tbody id="items_table"></tbody>
     </table>
   </div>
+</div>
+  <hr class="separator-line">
+  <hr class="separator-line">
 
+
+  <div id="container_2">
   <div>
-    <hr class="separator-line">
-    <hr class="separator-line">
     <div class="main">
       
         <h2>Προϊον:</h2>
@@ -146,6 +152,8 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
    
   </div>
 </div>
+</div>
+
 
 
   <script src="/scripts/admin_warehouse.js"></script>
