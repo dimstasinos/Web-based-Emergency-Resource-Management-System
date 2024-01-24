@@ -4,10 +4,13 @@ body {
     font-family: 'Roboto', sans-serif;
     background-color: #f2f2f2; 
   }
- 
+ h2{
+  font-size: 24px;
+  text-align: center;;
+ }
 
-  h2,h3,h4,h5{
-    font-size: 24px
+  h3,h4,h5{
+    font-size: 24px;
   }
   
 
@@ -33,7 +36,46 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
   }
+
+  #main_container{
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: stretch;
+  align-items: center;
+  overflow:auto;
+  }
   
+  #table_req{
+    height:400px;
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: stretch;
+    align-items: center;
+    overflow:auto;
+    
+  }
+  #items_selected{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: stretch;
+    align-items: center;
+  }
+
+
+  #request_t{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: stretch;
+    align-items: CENTER;
+  }
   
   #categories {
     font-family: 'Roboto', sans-serif;
@@ -43,12 +85,28 @@ body {
     border-radius: 5px; 
     width: 100%; 
   }
-  
 
-  table {
-    border-collapse: collapse;
-    width: 100%;
+  #search{
+   border-block:initial;
+   border-style: double;
+   border-color: #455da0;
   }
+  
+  label {
+    font-size: 18px;
+    font-weight: bolder;
+
+  }
+  thead th {
+    background-color: #455da0;
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  
   
   th, td {
     border: 1px solid #ddd;
@@ -69,14 +127,7 @@ body {
   #submitRequest:hover {
     background-color: #555;
   }
-#table_req{
-  height:400px;
-  display: flex;
-  flex-direction: column;
-  justify-content:flex-start;
-  flex-wrap: nowrap;
-  align-items: center;
-}
+
   @media only screen and (max-width: 600px) {
     #table_request th,td{
       border: 1px solid #ddd;
@@ -86,11 +137,7 @@ body {
     }
   }
 
-  .table-data{
-    max-height:400px;
-    overflow:auto;
-    width:100%;
-  }
+  
   @media (min-width:1000px)
   {
     .table-data{
