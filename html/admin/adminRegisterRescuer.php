@@ -22,26 +22,26 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
   <body>
     <div id="registerbox">
       <img src="/images/loginuser.png" alt="image" id="userImage">
-      <h1>Register Rescuer</h1>
+      <h1>Εγγραφή Διασώστη</h1>
       <form id="registerForm">
 
         <div id="userInputs">
-          <label for="fname">First Name</label>
+          <label for="fname">Όνομα</label>
           <input type="text" id="fname" class="input" placeholder="Εισαγωγή Ονόματος" maxlength="12" required>
 
-          <label for="lname">Last Name</label>
+          <label for="lname">Επώνυμο</label>
           <input type="text" id="lname" class="input" placeholder="Εισαγωγή Επώνυμου" maxlength="12" required>
 
 
           <label for="username">Username</label>
-          <input type="text" id="username" class="input" placeholder="Δημιουργία Username" maxlength="12" required>
+          <input type="text" id="username" class="input" placeholder="Δημιουργία Username" maxlength="12" required >
 
 
-          <label for="password">Password</label>
+          <label for="password">Κωδικός</label>
           <input type="password" id="password" class="input" placeholder="Δημιουργία password" required>
 
 
-          <label for="confpassword">Confirm Password</label>
+          <label for="confpassword">Επαλήθευση Κωδικού</label>
           <input type="password" id="confpassword" class="input" placeholder="Επαναλάβετε το password" required>
 
           <label for="vehicleSelect">Επέλεξε ένα όχημα</label>
@@ -56,7 +56,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
           <input type="text" id="vehicleUsername" class="input" placeholder="Δημιουργία username οχήματος" disabled>
         </div>
         <div>
-          <button type="button" id="registerButton"><strong>REGISTER</strong></button>
+          <button type="button" id="registerButton"><strong>Εγγραφή</strong></button>
         </div>
         <div id="goback">
           <p>
