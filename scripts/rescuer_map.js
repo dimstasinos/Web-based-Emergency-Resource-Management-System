@@ -1126,8 +1126,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             date.innerHTML = date_sub[0] + "<br>" + date_sub[1];
             action.innerHTML = `
-          <button id="offer_${offer.offer_id}_accept">Complete</button>
-          <button id="offer_${offer.offer_id}_cancel">Cancel</button>`;
+          <button id="offer_${offer.offer_id}_accept">Ολοκλήρωση</button>
+          <button id="offer_${offer.offer_id}_cancel">Ακύρωση</button>`;
 
             var items_name_array = [];
             var items_quantity_array = [];
@@ -2598,8 +2598,8 @@ function mapPanelRefresh() {
 
             date.innerHTML = date_sub[0] + "<br>" + date_sub[1];
             action.innerHTML = `
-              <button id="offer_${offer.offer_id}_accept">Complete</button>
-              <button id="offer_${offer.offer_id}_cancel">Cancel</button>`;
+              <button id="offer_${offer.offer_id}_accept">Ολοκλήρωση</button>
+              <button id="offer_${offer.offer_id}_cancel">Ακύρωση</button>`;
 
             var items_name_array = [];
             var items_quantity_array = [];

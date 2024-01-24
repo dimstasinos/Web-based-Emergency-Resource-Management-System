@@ -37,6 +37,18 @@ body {
   margin-top: -120px;
 }
 
+#vehicleSelect{
+  font-size:16px;
+  padding: 10px 20px; 
+  width: 100%; 
+  box-sizing: border-box; 
+  border: 2px solid #ccc;
+  border-radius: 4px; 
+  background-color: white; 
+  cursor: pointer;
+}
+
+
 h1 {
   margin: 0;
   padding: 0 0 0px;
