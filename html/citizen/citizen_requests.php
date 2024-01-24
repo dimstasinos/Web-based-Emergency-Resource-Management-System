@@ -62,7 +62,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
                 <th>Ποσότητα</th>
 
               </tr>
-        
+      
           </thead>
           </div>
           <tbody id="itemsTable"></tbody>

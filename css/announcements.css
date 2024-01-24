@@ -20,15 +20,15 @@ body {
 
 .autocomlete-category {
   display: flex;
-  width: 70%;
+  width: 50%;
   gap: 10%;
-  padding-bottom: 10px;
+  padding: 20px;
   flex-direction: row;
   justify-content: center;
   margin-top: 30px;
   background-color: #f9f9f9;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
   align-items: center;
 }
 
@@ -41,9 +41,9 @@ body {
   align-items: center;
   margin-bottom: 20px;
   overflow: auto;
-  border: 2px solid #000;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-  background-color: aliceblue;
+  background-color: #f9f9f9;
+  ;
 }
 
 #table_warehouse-container {
@@ -55,9 +55,9 @@ body {
   align-items: center;
   margin-bottom: 20px;
   overflow: auto;
-  border: 2px solid #000;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-  background-color: aliceblue;
+  background-color: #f9f9f9;
+  ;
 }
 
 .label-input {
@@ -75,50 +75,43 @@ body {
 
 select {
   border: 1px solid #ccc;
-  border-radius: 4px;
   background-color: white;
 }
 
 #search {
-  background-color: #f1f1f1;
-  font-size: 16px;
-}
-
-.autocomplete {
-  display: flex;
-  flex-direction: column;
-}
-
-.autocomplete input[type="text"] {
-  width: 100%;
+  width: 70%;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #d4d4d4;
   border-radius: 4px;
 }
 
-.suggestions {
-  position: absolute;
-  top: 100%;
-  left: 0%;
-  right: 0%;
-  border: 1px solid #aaa;
-  background-color: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-top: none;
-  z-index: 1000;
-  overflow-y: auto;
-  max-height: 200px;
-  width: 100%; /* Match the width to the input field */
+#categories {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #d4d4d4;
+  border-radius: 5px;
+  font-size: 14px;
 }
 
-.suggestions div {
+#result_list {
+  display: none;
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ddd;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.autocomplete_result {
   padding: 10px;
   cursor: pointer;
-  display: flex;
-  justify-content: center
 }
 
-.suggestions div:hover {
+.autocomplete_result:hover {
   background-color: #f2f2f2;
 }
 
@@ -131,9 +124,9 @@ select {
   width: 100%;
   margin-bottom: 20px;
   overflow: auto;
-  border: 2px solid #000;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-  background-color: aliceblue;
+  background-color: #f9f9f9;
+  ;
 }
 
 #warehouse-selected_container {
@@ -155,7 +148,6 @@ select {
 #tableAnnouncements {
   border-collapse: collapse;
   border-spacing: 0;
-  margin-bottom: 20px;
   width: 100%;
 }
 
@@ -169,14 +161,12 @@ select {
 #tableSelected {
   border-collapse: separate;
   border-spacing: 0;
-  margin-bottom: 20px;
   width: 100%;
 }
 
 #table_warehouse {
   border-collapse: separate;
   border-spacing: 0;
-  margin-bottom: 20px;
   width: 100%;
 }
 
@@ -214,18 +204,21 @@ td {
   padding: 10px;
 }
 
-
 #table_warehouse tr:hover {
   background-color: #ddd;
+  cursor: pointer;
 }
-
 
 #announcements button {
   color: rgb(255, 255, 255);
-  background-color: rgb(0, 0, 0);
+  background-color: rgb(143, 0, 0);
   padding: 5px 20px;
   border: none;
   cursor: pointer;
   border-radius: 5px;
   margin: 5px;
+}
+
+#announcements button:hover {
+  background-color: rgb(255, 0, 0);
 }

@@ -55,8 +55,9 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
 
       <div class="autocomplete">
         <label for="search">Αναζήτηση Προϊόντων</label>
-        <input type="text" id="search" placeholder="Αναζήτηση προϊόντων..." autocomplete="off">
-        <div id="autocomplete-suggestions" class="suggestions"></div>
+        <input type="text" id="search" placeholder="Items search..." autocomplete="off">
+        <ul id="result_list"></ul>
+
       </div>
 
       <div class="label-select">
