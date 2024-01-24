@@ -73,7 +73,7 @@ function announcementTable(data) {
 
     item_name.innerHTML = items_name_array.join("<br><br>");
     item_quantity.innerHTML = items_quantity_array.join("<br><br>");
-    action.innerHTML=`<button id="cancel_${announcement.announcement_id}">Διαγραφή</button>`;
+    action.innerHTML = `<button id="cancel_${announcement.announcement_id}">Διαγραφή</button>`;
 
     row_table.appendChild(announcement_id);
     row_table.appendChild(item_name);
@@ -99,15 +99,18 @@ function announcementTable(data) {
       })
         .then((response) => response.json())
         .then((data) => {
-          
-          //Ανανέωση πίνακα ανακοινώσεων
-          fetch("/server/admin/announcement/announcement_retrieve.php")
-            .then(jsonResponse => jsonResponse.json())
-            .then(announcements => {
-              announcementTable(announcements);
-            })
-            .catch((error) => console.error("Error:", error));
 
+          if (data.status === "error") {
+            console.error(data.Error);
+          } else {
+            //Ανανέωση πίνακα ανακοινώσεων
+            fetch("/server/admin/announcement/announcement_retrieve.php")
+              .then(jsonResponse => jsonResponse.json())
+              .then(announcements => {
+                announcementTable(announcements);
+              })
+              .catch((error) => console.error("Error:", error));
+          }
         })
         .catch((error) => console.error("Error:", error));
     });
