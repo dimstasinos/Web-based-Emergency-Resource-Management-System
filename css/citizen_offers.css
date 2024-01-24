@@ -18,6 +18,18 @@ body {
   }
   
   #tableAnnouncements-container {
+    
+    width:70%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: stretch;
+    align-items: center;
+    overflow:auto;
+  }
+
+  #offer_select_container{
+    max-width: 70%;
     height:400px;
     display: flex;
     flex-direction: column;
@@ -26,17 +38,43 @@ body {
     align-items: center;
     overflow: auto;
   }
-  
-  
+  #offers_t{
+    max-width: 70%;
+    height:400px;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    flex-wrap: nowrap;
+    align-items: center;
+    overflow: auto;
+  }
+  #tables{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: stretch;
+    align-items: center;
+    overflow:auto;
+  }
   table {
     border-collapse: collapse;
     width: 100%;
   }
   
   th, td {
-    border: 1px solid #ddd;
+    border: 1px solid #ffffff;
     padding: 8px;
     text-align: left;
+  }
+  thead th {
+    background-color: #455da0;
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
   }
   
   button {
