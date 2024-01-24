@@ -14,9 +14,10 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Announcements</title>
-  <link rel="stylesheet" href="/css/announcements.css">
+  <link rel="stylesheet" href="/css/announcementsV2.css">
   <link rel="stylesheet" href="/css/general.css">
 </head>
+
 
 <body>
   <div class="headerall">
@@ -33,10 +34,9 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
     </div>
   </div>
 
-
-  <div class="main-body">
-    <h2>Ανακοινώσεις</h2>
-    <div class="table-container">
+  <div id="main-container">
+    <div id="tableAnnouncements-container">
+      <h1>Ανακοινώσεις</h1>
       <table id="tableAnnouncements" class="table">
         <thead>
           <tr>
@@ -50,47 +50,52 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
       </table>
     </div>
 
-
-    <div class="autocomlete-categoty">
-      <div class="label">
+    <div class="autocomlete-category">
+      <div class="label-input">
         <label for="search">Αναζήτηση Προϊόντων</label>
         <input type="text" id="search" placeholder="Αναζήτηση προϊόντων..." autocomplete="off">
         <ul id="results"></ul>
       </div>
-      <div class="label">
+      <div class="label-select">
         <label for="categories">Κατηγορίες Προϊόντων</label>
         <select id="categories"></select>
       </div>
     </div>
 
-
-
-    <div class="label">
-
+    <h1>Αποθήκη</h1>
+    <div id="table_warehouse-container">
+      <table id="table_warehouse" class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Όνομα</th>
+            <th>Κατηγορια</th>
+            <th>Λεπτομέρειες</th>
+            <th>Ποσότητα</th>
+          </tr>
+        </thead>
+        <tbody id="itemsTable"></tbody>
+      </table>
     </div>
-    <div class="label">
-      <h2>Επιλεγμένα Προΐοντα</h2>
-      <div class="table-container">
-        <table id="tableSelected" class="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Όνομα</th>
-              <th>Ποσότητα</th>
-              <th>Διαγραφή</th>
-            </tr>
-          </thead>
-          <tbody id="itemSelected"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
 
-  <div id="button">
+    <h1>Επιλεγμένα Προΐοντα</h1>
+    <div class="table-container">
+      <table id="tableSelected" class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Όνομα</th>
+            <th>Ποσότητα</th>
+            <th>Διαγραφή</th>
+          </tr>
+        </thead>
+        <tbody id="itemSelected"></tbody>
+      </table>
+    </div>
+
     <button id="submitAnnouncement">Καταχώρηση</button>
   </div>
-
-  <script src="/scripts/announcement.js"></script>
 </body>
+<script src="/scripts/announcement.js"></script>
 
 </html>
