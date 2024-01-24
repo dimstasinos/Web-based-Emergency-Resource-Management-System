@@ -70,10 +70,11 @@ body {
     background-color: #555;
   }
 #table_req{
+  height:400px;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  align-content: stretch;
+  justify-content:flex-start;
+  flex-wrap: nowrap;
   align-items: center;
 }
   @media only screen and (max-width: 600px) {

@@ -16,17 +16,27 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Requests</title>
   <link rel="stylesheet" href="/css/citizen_offers.css">
+  <link rel="stylesheet" href="/css/general.css">
 </head>
 
 <body>
-  <div class="sidebar">
+<div class="headerall">
+    <div id="pic"><img src="/images/favicon.png" alt="Icon" class="title-icon">
+    </div>
+    <div class="side_header">
+      <div class="header">
+        <h1 class="page-title">Προσφορές</h1>
+      </div>
+      <div class="sidebar">
     <a href="/html/citizen/citizen_requests.php">Αιτήματα</a>
     <a href="/server/logout.php">Αποσύνδεση</a>
+    </div>
+    </div>
   </div>
-  <h1>ΠΡΟΣΦΟΡΕΣ</h1>
+ 
 
   <div id="tables">
-    <div>
+    <div id="tableAnnouncements-container">
      <h2> Ανακοινώσεις </h2>
       <table id="tableAnnouncements">
         <thead>
