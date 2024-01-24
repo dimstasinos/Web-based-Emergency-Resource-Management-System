@@ -63,13 +63,12 @@ body {
   border-collapse: separate;
   border-spacing: 0;
   margin-bottom: 20px;
-
+  width: 100%;
 }
 
 #table_warehouse {
   border-collapse: separate;
   border-spacing: 0;
-  height: 300px;
   margin-bottom: 20px;
   width: 100%;
 }
@@ -88,4 +87,18 @@ th,
 td {
   text-align: center;
   vertical-align: middle;
+}
+
+#announcements button {
+  color: rgb(255, 255, 255);
+  background-color: rgb(0, 0, 0);
+  padding: 5px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+#announcements td {
+  border-bottom: 1px solid;
 }
