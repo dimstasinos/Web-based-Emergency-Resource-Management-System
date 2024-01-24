@@ -71,6 +71,7 @@ function announcementTable(data) {
       items_quantity_array.push(item.quantity);
     });
 
+
     item_name.innerHTML = items_name_array.join("<br><br>");
     item_quantity.innerHTML = items_quantity_array.join("<br><br>");
     action.innerHTML = `<button id="cancel_${announcement.announcement_id}">Διαγραφή</button>`;
@@ -88,6 +89,7 @@ function announcementTable(data) {
       const announcement_data = {
         id: announcement.announcement_id,
       };
+
 
       //Επικοινωνία με το server για την διαγραφή της ανακοίνωσης
       fetch("/server/admin/announcement/announcement_delete.php", {
@@ -399,9 +401,6 @@ document.getElementById("submitAnnouncement").addEventListener("click", function
               quantity: document.getElementById(`quantity_${selectTable.rows[i].cells[0].innerHTML}`).innerText,
             };
 
-
-            selectTable.innerHTML = "";
-
             //Ανέβασμα των προιόντων της ανακοίνωσης
             fetch("/server/admin/announcement/announcement_upload.php", {
               method: "POST",
@@ -417,7 +416,7 @@ document.getElementById("submitAnnouncement").addEventListener("click", function
                 } else {
 
                   //Ανανέωση του πίνακα ανακοινώσεων
-                  fetch('/server/admin/announcement/announcement.php')
+                  fetch('/server/admin/announcement/announcement_retrieve.php')
                     .then(jsonResponse => {
 
                       const isEmpty = jsonResponse.headers.get('Content-Length');
@@ -429,6 +428,7 @@ document.getElementById("submitAnnouncement").addEventListener("click", function
                     })
                     .then(data => {
                       if (data !== null) {
+                        selectTable.innerHTML = "";
                         announcementTable(data);
                       }
                       else {

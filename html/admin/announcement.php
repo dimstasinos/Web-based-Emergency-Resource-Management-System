@@ -35,8 +35,8 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
   </div>
 
   <div id="main-container">
-    
-  <h1>Ανακοινώσεις</h1>
+
+    <h1>Ανακοινώσεις</h1>
     <div id="tableAnnouncements-container">
       <table id="tableAnnouncements" class="table">
         <thead>
@@ -63,38 +63,43 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
       </div>
     </div>
 
-    <h1>Αποθήκη</h1>
-    <div id="table_warehouse-container">
-      <table id="table_warehouse" class="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Όνομα</th>
-            <th>Κατηγορια</th>
-            <th>Λεπτομέρειες</th>
-            <th>Ποσότητα</th>
-          </tr>
-        </thead>
-        <tbody id="itemsTable"></tbody>
-      </table>
-    </div>
+    <div id="warehouse-selected_container">
+      <div>
+        <h1>Αποθήκη</h1>
+        <div id="table_warehouse-container">
+          <table id="table_warehouse" class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Όνομα</th>
+                <th>Κατηγορια</th>
+                <th>Λεπτομέρειες</th>
+                <th>Ποσότητα</th>
+              </tr>
+            </thead>
+            <tbody id="itemsTable"></tbody>
+          </table>
+        </div>
+      </div>
 
-    <h1>Επιλεγμένα Προΐοντα</h1>
-    <div class="table-container">
-      <table id="tableSelected" class="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Όνομα</th>
-            <th>Ποσότητα</th>
-            <th>Διαγραφή</th>
-          </tr>
-        </thead>
-        <tbody id="itemSelected"></tbody>
-      </table>
+      <div>
+        <h1>Επιλεγμένα Προΐοντα</h1>
+        <div id="table_selected-container">
+          <table id="tableSelected" class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Όνομα</th>
+                <th>Ποσότητα</th>
+                <th>Διαγραφή</th>
+              </tr>
+            </thead>
+            <tbody id="itemSelected"></tbody>
+          </table>
+        </div>
+        <button id="submitAnnouncement">Καταχώρηση</button>
+      </div>
     </div>
-
-    <button id="submitAnnouncement">Καταχώρηση</button>
   </div>
 </body>
 <script src="/scripts/announcement.js"></script>
