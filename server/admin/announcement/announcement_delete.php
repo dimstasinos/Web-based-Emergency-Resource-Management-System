@@ -19,6 +19,14 @@ try {
   $db = db_connect();
 
 
+  $delete_item = $db->prepare("DELETE FROM announcement_items WHERE announcement_id=?");
+  $delete_item->bind_param(
+    "i",
+    $data->id
+  );
+  $delete_item->execute();
+
+
   $delete = $db->prepare("DELETE FROM announcements WHERE announcement_id=?");
   $delete->bind_param(
     "i",

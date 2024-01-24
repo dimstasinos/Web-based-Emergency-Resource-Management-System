@@ -8,7 +8,7 @@ session_start();
 include("../../Mysql_connection.php");
 
 try {
-  
+
   //Σύνδεση με την βάση δεδομένων
   $db = db_connect();
 
