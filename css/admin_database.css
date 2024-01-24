@@ -33,14 +33,18 @@ select {
   margin-bottom: 10px;
 }
 
-.main {
+#main ,#new_cat{
   align-self: left;
-  width: 90%;
+  width: 100%;
   margin: 20px;
   max-width: 900px;
   display: flex;
   flex-direction: column;
   align-items: left;
+}
+
+#add_new,#cat_name_change,#cat_name_delete{
+  text-align: center;
 }
 
 @media only screen and (max-width: 600px) {
@@ -53,6 +57,15 @@ select {
 }
 .seperator-line{
   width:100%;
+}
+#main-container{
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: stretch;
+  align-items: center;
+  overflow: auto ;
 }
 #container{
   width:100%;
@@ -68,13 +81,41 @@ select {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: center;
   overflow: auto ;
   align-content: stretch;
 }
+#container_3{
+  width:100%;
+  display:flex;
+  flex-direction: column;
+  align-items:center;
+}
+#new_cat_name{
+  width:50%;
+}
+#add_new,#add_product{
+  text-align: left;
+}
+#new_cat{
+  width:110%;
+}
+label{
+  font-weight:bolder;
+  font-size:16px;
+}
+p{
+  font-weight:bolder;
+  font-size: 24px;
+}
+
+#product_select{
+  width:110%;
+}
+
 .table_adm{
   height:500px;
-  width:100%;
+  width:70%;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
