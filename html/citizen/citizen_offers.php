@@ -63,11 +63,11 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
         </thead>
         <tbody id="OfferSelected"></tbody>
       </table>
-      <div>
+    </div>
+    <div>
       <button id="clear">Αφαίρεση</button>
       <button id="submitAnnouncement">Καταχώρηση</button>
       </div>
-    </div>
     <div id="offers_t">
       <h4>Αποδοχή Προσφοράς</h4>
       <table id="table_offers">

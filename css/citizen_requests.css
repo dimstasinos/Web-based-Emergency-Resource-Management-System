@@ -59,12 +59,15 @@ body {
     
   }
   #items_selected{
+    height:400px;
     width:100%;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     align-content: stretch;
     align-items: center;
+    overflow:auto;
+    
   }
 
 

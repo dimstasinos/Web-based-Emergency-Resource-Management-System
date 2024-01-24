@@ -29,8 +29,8 @@ body {
   }
 
   #offer_select_container{
-    max-width: 70%;
     height:400px;
+    max-width: 70%;
     display: flex;
     flex-direction: column;
     justify-content:flex-start;
