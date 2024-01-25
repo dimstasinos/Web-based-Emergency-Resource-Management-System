@@ -81,6 +81,7 @@ body {
     border-bottom: 1px solid #ddd;
     padding: 10px;
   }
+  
   thead th {
     background-color: #455da0;
     color: white;
@@ -102,7 +103,7 @@ body {
     border-radius: 5px;
     margin-top: 10px;
   }
-  
+
   button {
     color: rgb(255, 255, 255);
     background-color: rgb(143, 0, 0);
