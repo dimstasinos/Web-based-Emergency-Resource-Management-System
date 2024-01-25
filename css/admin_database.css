@@ -2,13 +2,15 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
-  background-color: #f2f2f2; 
+  background-color: #f2f2f2;
 }
 
-h2,h3{
+h2,
+h3 {
   font-size: 24px;
   text-align: center;
 }
+
 button {
   background-color: #455da0;
   color: white;
@@ -33,7 +35,8 @@ select {
   margin-bottom: 10px;
 }
 
-#main ,#new_cat{
+#main,
+#new_cat {
   align-self: left;
   width: 100%;
   margin: 20px;
@@ -43,95 +46,110 @@ select {
   align-items: left;
 }
 
-#add_new,#cat_name_change,#cat_name_delete{
+#add_new,
+#cat_name_change,
+#cat_name_delete {
   text-align: center;
 }
 
 @media only screen and (max-width: 600px) {
-  #table_adm th,td{
+
+  #table_adm th,
+  td {
     border: 1px solid #ddd;
-    padding:0px;
+    padding: 0px;
     text-align: left;
-    font-size:12px;
+    font-size: 12px;
   }
 }
-.seperator-line{
-  width:100%;
+
+.seperator-line {
+  width: 100%;
 }
-#main-container{
-  width:100%;
+
+#main-container {
+  width: 100%;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   align-content: stretch;
   align-items: center;
-  overflow: auto ;
+  overflow: auto;
 }
-#container{
-  width:100%;
+
+#container {
+  width: 100%;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   align-content: stretch;
   align-items: center;
-  overflow: auto ;
+  overflow: auto;
 }
-#container_2{
-  width:100%;
+
+#container_2 {
+  width: 100%;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
-  overflow: auto ;
+  overflow: auto;
   align-content: stretch;
 }
-#container_3{
-  width:100%;
-  display:flex;
+
+#container_3 {
+  width: 100%;
+  display: flex;
   flex-direction: column;
-  align-items:center;
+  align-items: center;
 }
-#new_cat_name{
-  width:50%;
+
+#new_cat_name {
+  width: 50%;
 }
-#add_new,#add_product{
+
+#add_new,
+#add_product {
   text-align: left;
 }
-#new_cat{
-  width:110%;
+
+#new_cat {
+  width: 110%;
 }
-label{
-  font-weight:bolder;
-  font-size:16px;
+
+label {
+  font-weight: bolder;
+  font-size: 16px;
 }
-p{
-  font-weight:bolder;
+
+p {
+  font-weight: bolder;
   font-size: 24px;
 }
 
-#product_select{
-  width:110%;
+#product_select {
+  width: 110%;
 }
 
-.table_adm{
-  height:500px;
-  width:70%;
+.table_adm {
+  height: 500px;
+  width: 70%;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   align-content: stretch;
   align-items: center;
-  overflow:auto;
+  overflow: auto;
 }
 
-#table_admin{
+#table_admin {
   height: 400px;
-  width:100%;
+  width: 100%;
 }
 
 
 thead th {
-  background-color:  #455da0;
+  background-color: #455da0;
   color: white;
   padding: 10px 15px;
   font-size: 16px;
@@ -154,6 +172,3 @@ td {
 tr:hover {
   background-color: #ddd;
 }
-
-
-

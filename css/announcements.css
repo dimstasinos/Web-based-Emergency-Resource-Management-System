@@ -99,7 +99,7 @@ select {
   background-color: white;
   border: 1px solid #ddd;
   max-height: 200px;
-  overflow-y: auto;
+  overflow: auto;
   z-index: 1000;
   list-style-type: none;
   padding: 0;
@@ -219,6 +219,21 @@ td {
   margin: 5px;
 }
 
-#announcements button:hover {
+#itemSelected button:hover {
   background-color: rgb(255, 0, 0);
 }
+
+#itemSelected button {
+  color: rgb(255, 255, 255);
+  background-color: rgb(143, 0, 0);
+  padding: 5px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+#itemSelected button:hover {
+  background-color: rgb(255, 0, 0);
+}
+
