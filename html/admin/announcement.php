@@ -14,7 +14,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Announcements</title>
-  <link rel="stylesheet" href="/css/announcementsV2.css">
+  <link rel="stylesheet" href="/css/announcements.css">
   <link rel="stylesheet" href="/css/general.css">
 </head>
 
@@ -23,12 +23,12 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
   <div class="headerall">
     <div id="pic"><img src="/images/favicon.png" alt="Icon" class="title-icon">
     </div>
-    <div class="side_header">
+    <div class="topHeader">
       <div class="header">
         <h1 class="page-title">Διαχειριστής</h1>
       </div>
-      <div class="sidebar">
-        <div><a href="/html/admin/admin_mainPage.php">Αρχική</a></div>
+      <div class="topBar">
+        <div><a href="/html/admin/HomePage.php">Αρχική</a></div>
         <div><a href="/server/logout.php">Αποσύνδεση</a></div>
       </div>
     </div>
@@ -36,35 +36,42 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
 
   <div id="main-container">
 
-    <h1>Ανακοινώσεις</h1>
-    <div id="tableAnnouncements-container">
-      <table id="tableAnnouncements" class="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Όνομα Προϊόντος</th>
-            <th>Ποσότητα</th>
-            <th>Ακύρωση</th>
-          </tr>
-        </thead>
-        <tbody id="announcements"></tbody>
-      </table>
+    <div id="title_table_announcements-container">
+      <h1>Ανακοινώσεις</h1>
+      <div id="tableAnnouncements-container">
+        <table id="tableAnnouncements" class="table">
+          <thead>
+            <tr>
+              <th>ID Ανακοίνωσης</th>
+              <th>Όνομα Προϊόντος</th>
+              <th>Ποσότητα</th>
+              <th>Ακύρωση</th>
+            </tr>
+          </thead>
+          <tbody id="announcements"></tbody>
+        </table>
+      </div>
     </div>
 
-    <div class="autocomlete-category">
-      <div class="label-input">
-        <label for="search">Αναζήτηση Προϊόντων</label>
-        <input type="text" id="search" placeholder="Αναζήτηση προϊόντων..." autocomplete="off">
-        <ul id="results"></ul>
-      </div>
+    <div class="autocomplete-category">
       <div class="label-select">
         <label for="categories">Κατηγορίες Προϊόντων</label>
         <select id="categories"></select>
       </div>
+      <div class="autocomplete">
+          <label for="search">Αναζήτηση Προϊόντων</label>
+          <div id="input-list">
+          <input type="text" id="search" placeholder="Αναζήτηση" autocomplete="off">
+          <div id="list">
+            <ul id="result_list"></ul>
+          </div>
+        </div>
+      </div>
     </div>
 
+
     <div id="warehouse-selected_container">
-      <div>
+      <div id="title_table_warehouse-container">
         <h1>Αποθήκη</h1>
         <div id="table_warehouse-container">
           <table id="table_warehouse" class="table">
@@ -82,7 +89,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
         </div>
       </div>
 
-      <div>
+      <div id="title_table_selected-container">
         <h1>Επιλεγμένα Προΐοντα</h1>
         <div id="table_selected-container">
           <table id="tableSelected" class="table">
@@ -97,8 +104,10 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
             <tbody id="itemSelected"></tbody>
           </table>
         </div>
-        <button id="submitAnnouncement">Καταχώρηση</button>
       </div>
+    </div>
+    <div id="button-container">
+      <button id="submitAnnouncement">Καταχώρηση</button>
     </div>
   </div>
 </body>

@@ -6,7 +6,7 @@
 
 session_start();
 
-include("../Mysql_connection.php");
+include("../../Mysql_connection.php");
 
 //Παραλαβή δεδομένων από js
 $receive = file_get_contents('php://input');

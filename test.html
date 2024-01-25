@@ -1,21 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autocomplete Example</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="navbar">
-        <div class="navbar-header">
-            <div class="header-top">
-              <img src=" /images/favicon.png" alt="Icon" class="title-icon">
-                <span class="navbar-title">διασώστης</span>
-            </div>
-            <div class="navbar-links">
-                <a href="#">Home</a>
-                <a href="#">Map</a>
-                <a href="#">Logout</a>
-            </div>
-        </div>
+    <div class="autocomplete">
+        <input id="autocomplete-input" type="text" placeholder="Type something...">
+        <div id="autocomplete-suggestions" class="suggestions"></div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  var inputElement = document.getElementById('search');
+  var suggestionsContainer = document.getElementById('results');
+
+  inputElement.addEventListener('input', function() {
+      var inputValue = this.value.toLowerCase();
+      suggestionsContainer.innerHTML = '';
+
+      if (!inputValue) {
+          suggestionsContainer.style.display = 'none';
+          return;
+      }
+
+      // Assuming data.items is your data source
+      var results = data.items.filter(item => {
+          return item.name.toLowerCase().startsWith(inputValue);
+      });
+
+      results.forEach(function(item) {
+          var resultElement = document.createElement('li');
+          resultElement.classList.add('results_item');
+          resultElement.textContent = item.name;
+
+          resultElement.addEventListener('click', function() {
+              inputElement.value = item.name;
+              suggestionsContainer.innerHTML = '';
+              suggestionsContainer.style.display = 'none';
+          });
+
+          suggestionsContainer.appendChild(resultElement);
+      });
+
+      suggestionsContainer.style.display = results.length ? 'block' : 'none';
+  });
+
+  document.addEventListener('click', function(e) {
+      if (e.target !== inputElement) {
+          suggestionsContainer.style.display = 'none';
+      }
+  });
+});

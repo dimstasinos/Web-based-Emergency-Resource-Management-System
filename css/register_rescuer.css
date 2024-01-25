@@ -39,7 +39,7 @@ body {
 
 #vehicleSelect{
   font-size:16px;
-  padding: 10px 20px; 
+  padding: 5px 20px; 
   width: 100%; 
   box-sizing: border-box; 
   border: 2px solid #ccc;
@@ -124,6 +124,19 @@ h1 {
   display: flex;
   align-items: center;
   padding-top: 10px;
+}
+
+#vehicleUsername:disabled{
+  background-color: #e0e0e0; 
+  color: #a0a0a0; 
+  cursor: not-allowed; 
+  border: 1px solid #d0d0d0; 
+}
+
+#vehicleSelect:disabled{
+  background-color: #e0e0e0; 
+  color: #a0a0a0; 
+  cursor: not-allowed; 
 }
 
 #newVehicle{

@@ -1,0 +1,30 @@
+.autocomplete {
+  position: relative;
+  width: 300px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.suggestions {
+  position: absolute;
+  border: 1px solid #ccc;
+  border-top: none;
+  z-index: 1000;
+  width: calc(100% - 2px);
+  background: white;
+  display: none;
+}
+
+.suggestions div {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.suggestions div:hover {
+  background-color: #f2f2f2;
+}

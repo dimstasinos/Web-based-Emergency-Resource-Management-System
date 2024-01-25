@@ -10,7 +10,7 @@ if (isset($_SESSION['type'])) {
     header("Location: /html/citizen/citizen_requests");
     exit();
   } else if ($_SESSION['type'] == "admin") {
-    header("Location: /html/citizen/admin_mainPage");
+    header("Location: /html/admin/HomePage");
     exit();
   }
 
