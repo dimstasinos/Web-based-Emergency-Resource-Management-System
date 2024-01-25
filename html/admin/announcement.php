@@ -28,7 +28,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
         <h1 class="page-title">Διαχειριστής</h1>
       </div>
       <div class="sidebar">
-        <div><a href="/html/admin/admin_mainPage.php">Αρχική</a></div>
+        <div><a href="/html/admin/HomePage.php">Αρχική</a></div>
         <div><a href="/server/logout.php">Αποσύνδεση</a></div>
       </div>
     </div>
@@ -36,33 +36,36 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
 
   <div id="main-container">
 
-    <h1>Ανακοινώσεις</h1>
-    <div id="tableAnnouncements-container">
-      <table id="tableAnnouncements" class="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Όνομα Προϊόντος</th>
-            <th>Ποσότητα</th>
-            <th>Ακύρωση</th>
-          </tr>
-        </thead>
-        <tbody id="announcements"></tbody>
-      </table>
+    <div id="title_table_announcements-container">
+      <h1>Ανακοινώσεις</h1>
+      <div id="tableAnnouncements-container">
+        <table id="tableAnnouncements" class="table">
+          <thead>
+            <tr>
+              <th>ID Ανακοίνωσης</th>
+              <th>Όνομα Προϊόντος</th>
+              <th>Ποσότητα</th>
+              <th>Ακύρωση</th>
+            </tr>
+          </thead>
+          <tbody id="announcements"></tbody>
+        </table>
+      </div>
     </div>
 
-    <div class="autocomlete-category">
-
-      <div class="autocomplete">
-        <label for="search">Αναζήτηση Προϊόντων</label>
-        <input type="text" id="search" placeholder="Items search..." autocomplete="off">
-        <ul id="result_list"></ul>
-
-      </div>
-
+    <div class="autocomplete-category">
       <div class="label-select">
         <label for="categories">Κατηγορίες Προϊόντων</label>
         <select id="categories"></select>
+      </div>
+      <div class="autocomplete">
+          <label for="search">Αναζήτηση Προϊόντων</label>
+          <div id="input-list">
+          <input type="text" id="search" placeholder="Αναζήτηση" autocomplete="off">
+          <div id="list">
+            <ul id="result_list"></ul>
+          </div>
+        </div>
       </div>
     </div>
 

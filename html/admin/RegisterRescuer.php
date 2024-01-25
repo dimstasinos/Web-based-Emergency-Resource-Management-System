@@ -60,7 +60,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
         </div>
         <div id="goback">
           <p>
-            <a href="/html/admin/admin_mainPage.php"><strong>Πήγαινε Πίσω</strong></a>
+            <a href="/html/admin/HomePage.php"><strong>Πήγαινε Πίσω</strong></a>
           </p>
         </div>
       </form>
