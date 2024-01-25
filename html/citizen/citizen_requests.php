@@ -23,11 +23,11 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
   <div class="headerall">
     <div id="pic"><img src="/images/favicon.png" alt="Icon" class="title-icon">
     </div>
-    <div class="side_header">
+    <div class="topHeader">
       <div class="header">
         <h1 class="page-title">Αιτήματα</h1>
       </div>
-      <div class="sidebar">
+      <div class="topBar">
         <a href="/html/citizen/citizen_offers.php">Προσφορές</a>
         <a href="/server/logout.php">Αποσύνδεση</a>
       </div>
@@ -46,9 +46,10 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
       <input type="text" id="search" placeholder="Items search..." autocomplete="off">
       <ul id="results"></ul>
     </div>
-    <div id="tables">
-      <h2>Αποθήκη</h2>
-      <div id=table_req>
+    <h2>Αποθήκη</h2>
+    <div id="table_req">
+      
+      <div id=tables>
 
         <table id="table_admin_request">
         <div>
@@ -69,8 +70,8 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
         </table>
       </div>
     </div>
+    <h3>Επιλεγμένα Προϊόντα </h3>
     <div id="items_selected">
-      <h3>Επιλεγμένα Προϊόντα </h3>
       <table id="tableSelected">
         <thead>
           <tr>
@@ -86,9 +87,8 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
     <div>
       <button id="submitRequest">Καταχώρηση</button>
     </div>
-
+    <h4>Αιτήματα</h4>
     <div id="request_t">
-      <h4>Αιτήματα</h4>
       <table id="table_request">
         <thead>
           <tr>

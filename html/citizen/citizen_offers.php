@@ -23,11 +23,11 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
 <div class="headerall">
     <div id="pic"><img src="/images/favicon.png" alt="Icon" class="title-icon">
     </div>
-    <div class="side_header">
+    <div class="topHeader">
       <div class="header">
         <h1 class="page-title">Προσφορές</h1>
       </div>
-      <div class="sidebar">
+      <div class="topBar">
     <a href="/html/citizen/citizen_requests.php">Αιτήματα</a>
     <a href="/server/logout.php">Αποσύνδεση</a>
     </div>
