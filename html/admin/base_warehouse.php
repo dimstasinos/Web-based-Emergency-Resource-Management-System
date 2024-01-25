@@ -111,11 +111,11 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
 
       <h4>Προσθήκη είδους</h4>
       <div id="add_product-container">
-        <div>
+        <div id="new_name-container">
           <label for="name_new">Όνομα</label>
           <input type="text" id="name_new">
         </div>
-        <div id="new_category_button-container">
+        <div id="new_category-container">
           <label for="cat_new">Κατηγορία</label>
           <select id="cat_new"></select>
         </div>
@@ -131,11 +131,11 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
         <div id="detail_select-container">
 
           <div id="product_input">
-            <div>
+            <div id="detail_name_text-container">
               <label for="detail_name_text">Όνομα</label>
               <input type="text" id="detail_name_text">
             </div>
-            <div>
+            <div id="detail_value_text-container">
               <label for="detail_value_text">Τιμή</label>
               <input type="text" id="detail_value_text">
             </div>
@@ -162,15 +162,15 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
 
       <h4>Κατηγορία:</h4>
       <div id="category_edit-container">
-        <div>
+        <div id="category-container">
           <label for="category">Κατηγορία</label>
           <select id="category"></select>
         </div>
-        <div>
+        <div id="id_cat-container">
           <label for="id_cat">ID</label>
           <input type="text" id="id_cat" disabled>
         </div>
-        <div>
+        <div id="cat_name-container">
           <label for="cat_name">Όνομα</label>
           <input type="text" id="cat_name">
         </div>
