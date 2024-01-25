@@ -12,7 +12,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/admin_mainPageStyle.css">
+  <link rel="stylesheet" href="/css/admin_HomePage.css">
   <link rel="stylesheet" href="/css/general.css">
   <link rel="stylesheet" href="/leaflet/leaflet.css">
   <link rel="icon" href="/images/favicon.png" type="image/x-icon">
@@ -34,14 +34,13 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
       </div>
     </div>
   </div>
+
   <div class="container">
-
     <div id="map"></div>
-
     <hr class="separator-line">
     <hr class="separator-line">
-    <div class="main">
-      <div id=chart>
+    <div class="chart-container">
+      <div id=title_chart>
         <h2 class="chart-heading">Κατάσταση προσφορών και αιτημάτων</h2>
       </div>
       <div class="charts">

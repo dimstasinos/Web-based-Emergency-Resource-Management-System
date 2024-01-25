@@ -59,6 +59,7 @@
 @media (max-width:450px) {
   .topBar {
     flex-direction: column;
+    gap: 10%;
   }
 }
 
