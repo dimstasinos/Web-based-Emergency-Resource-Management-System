@@ -72,7 +72,7 @@ try {
       } else if ($type_row["user_type"] == "admin") {
         $id = $type_row["user_id"];
         $_SESSION["type"] = $type_row["user_type"];
-        $response = ["status" => "success", "Location" => "/html/admin/admin_mainPage"];
+        $response = ["status" => "success", "Location" => "/html/admin/HomePage"];
         header("Content-Type: application/json");
         echo json_encode($response);
       } else if ($type_row["user_type"] == "citizen") {
