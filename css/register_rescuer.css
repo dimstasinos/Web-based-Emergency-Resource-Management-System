@@ -26,7 +26,8 @@ body {
   color: #ffffff;
   box-sizing: border-box;
   padding: 70px 30px 10px;
-  margin-top: 70px;
+  margin-top: 5%;
+  min-width: 300px;
 }
 
 #userImage {
@@ -149,10 +150,17 @@ h1 {
   cursor: pointer;
 }
 
+@media (max-width: 1200px) {
+  #registerbox {
+    margin-top: 15%;
+  }
+}
+
 @media (max-width: 600px) {
   #registerbox {
-    width: 80%;
+    width: 90%;
     display: block;
+    margin-top: 70px;
   }
 
   #userInputs {

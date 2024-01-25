@@ -15,12 +15,14 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
   <meta name="viewport" content="width=device-width initial-scale=1">
   <link rel="stylesheet" href="/css/admin_database.css">
   <link rel="stylesheet" href="/css/general.css">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
   <title>Storage</title>
 </head>
 
 <body>
   <div class="headerall">
-    <div id="pic"><img src="/images/favicon.png" alt="Icon" class="title-icon">
+    <div id="pic">
+      <img src="/images/favicon.png" alt="Icon" class="title-icon">
     </div>
     <div class="topHeader">
       <div class="header">
@@ -79,24 +81,24 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
 
 
     <div id="product_selected-container">
-      <h2>Επιλεγμένο Είδος</h2>
+      <h1>Επιλεγμένο Είδος</h1>
 
 
       <h4>Πληροφορίες είδους</h4>
       <div id="product_select-container">
-        <div>
+        <div class="product_selected">
           <label for="id_selected">ID</label>
           <input type="text" id="id_selected" disabled>
         </div>
-        <div>
+        <div class="product_selected">
           <label for="name_selected">Όνομα</label>
           <input type="text" id="name_selected">
         </div>
-        <div>
+        <div class="product_selected">
           <label for="cat_selected">Κατηγορία</label>
           <select id="cat_selected"></select>
         </div>
-        <div>
+        <div class="product_selected">
           <label for="quantity_selected">Ποσότητα:</label>
           <input type="number" id="quantity_selected" value="0" min="0">
         </div>
@@ -122,10 +124,8 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
         </div>
       </div>
 
-
-      <h4>Λεπτομέρειες Είδους</h4>
       <div id="product_info-container">
-
+        <h4>Λεπτομέρειες Είδους</h4>
         <div id="detail_select"></div>
 
         <div id="detail_select-container">
@@ -140,7 +140,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
               <input type="text" id="detail_value_text">
             </div>
           </div>
-          
+
           <div id="details_buttons-container">
             <button type="button" id="clear">Καθαρισμός</button>
             <button type="button" id="change">Αλλαγή</button>
@@ -156,34 +156,40 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
     <hr class="separator-line">
     <hr class="separator-line">
 
-    <div id="container_3">
 
-      <div class="main">
-        <p>Κατηγορία:</p>
+    <div id="categories_edit_add-container">
+      <h1>Διαχείρηση Κατηγοριών</h1>
+
+      <h4>Κατηγορία:</h4>
+      <div id="category_edit-container">
         <div>
           <label for="category">Κατηγορία</label>
           <select id="category"></select>
+        </div>
+        <div>
           <label for="id_cat">ID</label>
           <input type="text" id="id_cat" disabled>
+        </div>
+        <div>
           <label for="cat_name">Όνομα</label>
           <input type="text" id="cat_name">
         </div>
-        <div>
-          <button type="button" id="cat_name_change">Τροποποίηση</button>
-          <button type="button" id="cat_name_delete">Διαγραφή</button>
-        </div>
-        <div id="new_cat">
-          <p>Προσθήκη Νέας Κατηγορίας:</p>
-          <label for="new_cat_name">Όνομα</label>
-          <input type="text" id="new_cat_name">
-        </div>
-        <div id="add_new">
-          <button type="button" id="add_new_cat">Προσθήκη</button>
-        </div>
       </div>
+
+      <div id="edit_category_button-container">
+        <button type="button" id="cat_name_change">Τροποποίηση</button>
+        <button type="button" id="cat_name_delete">Διαγραφή</button>
+      </div>
+
+      <h4>Προσθήκη Νέας Κατηγορίας:</h4>
+      <div id="category_add-container">
+        <label for="new_cat_name">Όνομα</label>
+        <input type="text" id="new_cat_name">
+        <button type="button" id="add_new_cat">Προσθήκη</button>
+      </div>
+
     </div>
   </div>
-
 
 
 

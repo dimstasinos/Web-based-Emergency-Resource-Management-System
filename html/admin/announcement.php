@@ -16,6 +16,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
   <title>Announcements</title>
   <link rel="stylesheet" href="/css/announcements.css">
   <link rel="stylesheet" href="/css/general.css">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
 </head>
 
 
