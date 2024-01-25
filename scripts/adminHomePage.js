@@ -641,7 +641,7 @@ document.getElementById("submitdate").addEventListener("click", function () {
     }
 
     //Αποστολή δεδομένων και επικοινωνία με τον server
-    fetch("/server/chart/newreq.php", {
+    fetch("/server/admin/chart/chartData.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -697,7 +697,7 @@ function initializeChart() {
   }
 
   //Αποστολή δεδομένων και επικοινωνία με τον server
-  fetch("/server/chart/newreq.php", {
+  fetch("/server/admin/chart/chartData.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -729,7 +729,5 @@ function initializeChart() {
 
     })
     .catch(error => console.error("Error:", error));
-
-
 
 }

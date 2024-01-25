@@ -23,11 +23,11 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
   <div class="headerall">
     <div id="pic"><img src="/images/favicon.png" alt="Icon" class="title-icon">
     </div>
-    <div class="side_header">
+    <div class="topHeader">
       <div class="header">
         <h1 class="page-title">Διαχειριστής</h1>
       </div>
-      <div class="sidebar">
+      <div class="topBar">
         <div><a href="/html/admin/HomePage.php">Αρχική</a></div>
         <div><a href="/server/logout.php">Αποσύνδεση</a></div>
       </div>

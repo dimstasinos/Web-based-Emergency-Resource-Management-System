@@ -1,4 +1,4 @@
-.sidebar {
+.topBar {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -7,7 +7,7 @@
   align-items: center;
 }
 
-.side_header {
+.topHeader {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,9 +32,18 @@
   width: fit-content;
 }
 
-.sidebar a {
+.topBar a {
   color: rgb(255, 255, 255);
   text-decoration: none;
+}
+
+.topButton{
+  padding: 5px;
+}
+
+.topButton:hover {
+  background-color: rgba(129, 129, 129, 0.315);
+  border-radius: 10px;
 }
 
 @media (max-width:600px) {
@@ -42,13 +51,13 @@
     flex-direction: column;
   }
 
-  .side_header {
+  .topHeader {
     margin-right: 0;
   }
 }
 
 @media (max-width:450px) {
-  .sidebar {
+  .topBar {
     flex-direction: column;
   }
 }

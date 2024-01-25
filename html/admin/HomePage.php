@@ -22,15 +22,15 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
   <div class="headerall">
     <div id="pic"><img src="/images/favicon.png" alt="Icon" class="title-icon">
     </div>
-    <div class="side_header">
+    <div class="topHeader">
       <div class="header">
         <h1 class="page-title">Διαχειριστής</h1>
       </div>
-      <div class="sidebar">
-        <div><a href="/html/admin/announcement.php">Ανακοινώσεις</a></div>
-        <div><a href="/html/admin/RegisterRescuer.php">Εγγραφή Διασώστη</a></div>
-        <div><a href="/html/admin/base_warehouse.php">Βάση Δεδομένων</a></div>
-        <div><a href="/server/logout.php">Αποσύνδεση</a></div>
+      <div class="topBar">
+        <div class="topButton"><a href="/html/admin/announcement.php">Ανακοινώσεις</a></div>
+        <div class="topButton"><a href="/html/admin/RegisterRescuer.php">Εγγραφή Διασώστη</a></div>
+        <div class="topButton"><a href="/html/admin/base_warehouse.php">Βάση Δεδομένων</a></div>
+        <div class="topButton"><a href="/server/logout.php">Αποσύνδεση</a></div>
       </div>
     </div>
   </div>
@@ -59,7 +59,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
   </div>
 
 
-  <script src="/scripts/admin_MainPage.js"></script>
+  <script src="/scripts/adminHomePage.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="/leaflet/leaflet.js"></script>
 </body>
