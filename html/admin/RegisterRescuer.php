@@ -19,53 +19,52 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
 
 <body>
 
-  <body>
-    <div id="registerbox">
-      <img src="/images/loginuser.png" alt="image" id="userImage">
-      <h1>Εγγραφή Διασώστη</h1>
-      <form id="registerForm">
+  <div id="registerbox">
+    <img src="/images/loginuser.png" alt="image" id="userImage">
+    <h1>Εγγραφή Διασώστη</h1>
+    <form id="registerForm">
 
-        <div id="userInputs">
-          <label for="fname">Όνομα</label>
-          <input type="text" id="fname" class="input" placeholder="Εισαγωγή Ονόματος" maxlength="12" required>
+      <div id="userInputs">
+        <label for="fname">Όνομα</label>
+        <input type="text" id="fname" class="input" placeholder="Εισαγωγή Ονόματος" maxlength="12" required>
 
-          <label for="lname">Επώνυμο</label>
-          <input type="text" id="lname" class="input" placeholder="Εισαγωγή Επώνυμου" maxlength="12" required>
-
-
-          <label for="username">Username</label>
-          <input type="text" id="username" class="input" placeholder="Δημιουργία Username" maxlength="12" required >
+        <label for="lname">Επώνυμο</label>
+        <input type="text" id="lname" class="input" placeholder="Εισαγωγή Επώνυμου" maxlength="12" required>
 
 
-          <label for="password">Κωδικός</label>
-          <input type="password" id="password" class="input" placeholder="Δημιουργία password" required>
+        <label for="username">Username</label>
+        <input type="text" id="username" class="input" placeholder="Δημιουργία Username" maxlength="12" required>
 
 
-          <label for="confpassword">Επαλήθευση Κωδικού</label>
-          <input type="password" id="confpassword" class="input" placeholder="Επαναλάβετε το password" required>
+        <label for="password">Κωδικός</label>
+        <input type="password" id="password" class="input" placeholder="Δημιουργία password" required>
 
-          <label for="vehicleSelect">Επέλεξε ένα όχημα</label>
-          <select id="vehicleSelect"></select>
 
-          <div class="checkbox-container">
-            <label for="newVehicle">Πρόσθεσαι τον σε νέο όχημα:</label>
-            <input type="checkbox" id="newVehicle">
-          </div>
+        <label for="confpassword">Επαλήθευση Κωδικού</label>
+        <input type="password" id="confpassword" class="input" placeholder="Επαναλάβετε το password" required>
 
-          <label for="vehicleUsername">Username</label>
-          <input type="text" id="vehicleUsername" class="input" placeholder="Δημιουργία username οχήματος" disabled>
+        <label for="vehicleSelect">Επέλεξε ένα όχημα</label>
+        <select id="vehicleSelect"></select>
+
+        <div class="checkbox-container">
+          <label for="newVehicle">Πρόσθεσαι τον σε νέο όχημα:</label>
+          <input type="checkbox" id="newVehicle">
         </div>
-        <div>
-          <button type="button" id="registerButton"><strong>Εγγραφή</strong></button>
-        </div>
-        <div id="goback">
-          <p>
-            <a href="/html/admin/HomePage.php"><strong>Πήγαινε Πίσω</strong></a>
-          </p>
-        </div>
-      </form>
 
-  </body>
-  <script src="/scripts/admin_register_rescuer.js"></script>
+        <label for="vehicleUsername">Username</label>
+        <input type="text" id="vehicleUsername" class="input" placeholder="Δημιουργία username οχήματος" disabled>
+      </div>
+      <div>
+        <button type="button" id="registerButton"><strong>Εγγραφή</strong></button>
+      </div>
+      <div id="goback">
+        <p>
+          <a href="/html/admin/HomePage.php"><strong>Πήγαινε Πίσω</strong></a>
+        </p>
+      </div>
+    </form>
+  </div>
+</body>
+<script src="/scripts/admin_register_rescuer.js"></script>
 
 </html>
