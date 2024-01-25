@@ -27,10 +27,10 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
         <h1 class="page-title">Διαχειριστής</h1>
       </div>
       <div class="topBar">
-        <div class="topButton"><a href="/html/admin/announcement.php">Ανακοινώσεις</a></div>
-        <div class="topButton"><a href="/html/admin/RegisterRescuer.php">Εγγραφή Διασώστη</a></div>
-        <div class="topButton"><a href="/html/admin/base_warehouse.php">Βάση Δεδομένων</a></div>
-        <div class="topButton"><a href="/server/logout.php">Αποσύνδεση</a></div>
+        <div class="topButton"><a href="/html/admin/announcement">Ανακοινώσεις</a></div>
+        <div class="topButton"><a href="/html/admin/RegisterRescuer">Εγγραφή Διασώστη</a></div>
+        <div class="topButton"><a href="/html/admin/BaseWarehouse">Βάση Δεδομένων</a></div>
+        <div class="topButton"><a href="/server/logout">Αποσύνδεση</a></div>
       </div>
     </div>
   </div>
