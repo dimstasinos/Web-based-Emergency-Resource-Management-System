@@ -80,87 +80,114 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
 
     <div id="product_selected-container">
       <h2>Επιλεγμένο Είδος</h2>
-      <div id="product_select">
-        <h3>Πληροφορίες είδους</h3>
-        <label for="id_selected">ID</label>
-        <input type="text" id="id_selected" disabled>
-        <label for="name_selected">Όνομα</label>
-        <input type="text" id="name_selected">
 
-        <label for="cat_selected">Κατηγορία</label>
-        <select id="cat_selected"></select>
-        <label for="quantity_selected">Ποσότητα:</label>
-        <input type="number" id="quantity_selected" value="0" min="0">
+
+      <h4>Πληροφορίες είδους</h4>
+      <div id="product_select-container">
+        <div>
+          <label for="id_selected">ID</label>
+          <input type="text" id="id_selected" disabled>
+        </div>
+        <div>
+          <label for="name_selected">Όνομα</label>
+          <input type="text" id="name_selected">
+        </div>
+        <div>
+          <label for="cat_selected">Κατηγορία</label>
+          <select id="cat_selected"></select>
+        </div>
+        <div>
+          <label for="quantity_selected">Ποσότητα:</label>
+          <input type="number" id="quantity_selected" value="0" min="0">
+        </div>
       </div>
-      <div>
+
+      <div id="category_quantity_button-container">
         <button type="button" id="cat_change_button">Αλλαγή Κατηγορίας</button>
         <button type="button" id="quantity_button">Αλλαγή Ποσότητας</button>
       </div>
-    </div>
 
-
-    <div id="product_add">
-      <p>Πρόσθεσε Προϊόν:</p>
-      <label for="name_new">Όνομα</label>
-      <input type="text" id="name_new">
-      <label for="cat_new">Κατηγορία</label>
-      <select id="cat_new"></select>
-    </div>
-    <div>
-      <button type="button" id="add_product">Προσθήκη</button>
-    </div>
-
-    <div id="product_info">
-      <p>Λεπτομέρειες Προϊόντος:</p>
-      <div id="detail_select"></div>
-      <div id="details">
+      <h4>Προσθήκη είδους</h4>
+      <div id="add_product-container">
         <div>
-          <label for="detail_name_text">Όνομα</label>
-          <input type="text" id="detail_name_text">
-          <label for="detail_value_text">Τιμή</label>
-          <input type="text" id="detail_value_text">
+          <label for="name_new">Όνομα</label>
+          <input type="text" id="name_new">
         </div>
-        <div>
-          <button type="button" id="clear">Καθαρισμός</button>
-          <button type="button" id="change">Αλλαγή</button>
-          <button type="button" id="add">Προσθήκη</button>
-          <button type="button" id="delete">Διαγραφή</button>
+        <div id="new_category_button-container">
+          <label for="cat_new">Κατηγορία</label>
+          <select id="cat_new"></select>
+        </div>
+        <div id="add_product_button-container">
+          <button type="button" id="add_product">Προσθήκη</button>
         </div>
       </div>
 
-      <div id="container_3">
-        <hr class="separator-line">
-        <hr class="separator-line">
-        <div class="main">
-          <p>Κατηγορία:</p>
-          <div>
-            <label for="category">Κατηγορία</label>
-            <select id="category"></select>
-            <label for="id_cat">ID</label>
-            <input type="text" id="id_cat" disabled>
-            <label for="cat_name">Όνομα</label>
-            <input type="text" id="cat_name">
+
+      <h4>Λεπτομέρειες Είδους</h4>
+      <div id="product_info-container">
+
+        <div id="detail_select"></div>
+
+        <div id="detail_select-container">
+
+          <div id="product_input">
+            <div>
+              <label for="detail_name_text">Όνομα</label>
+              <input type="text" id="detail_name_text">
+            </div>
+            <div>
+              <label for="detail_value_text">Τιμή</label>
+              <input type="text" id="detail_value_text">
+            </div>
           </div>
-          <div>
-            <button type="button" id="cat_name_change">Τροποποίηση</button>
-            <button type="button" id="cat_name_delete">Διαγραφή</button>
+          
+          <div id="details_buttons-container">
+            <button type="button" id="clear">Καθαρισμός</button>
+            <button type="button" id="change">Αλλαγή</button>
+            <button type="button" id="add">Προσθήκη</button>
+            <button type="button" id="delete">Διαγραφή</button>
           </div>
-          <div id="new_cat">
-            <p>Προσθήκη Νέας Κατηγορίας:</p>
-            <label for="new_cat_name">Όνομα</label>
-            <input type="text" id="new_cat_name">
-          </div>
-          <div id="add_new">
-            <button type="button" id="add_new_cat">Προσθήκη</button>
-          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <hr class="separator-line">
+    <hr class="separator-line">
+
+    <div id="container_3">
+
+      <div class="main">
+        <p>Κατηγορία:</p>
+        <div>
+          <label for="category">Κατηγορία</label>
+          <select id="category"></select>
+          <label for="id_cat">ID</label>
+          <input type="text" id="id_cat" disabled>
+          <label for="cat_name">Όνομα</label>
+          <input type="text" id="cat_name">
+        </div>
+        <div>
+          <button type="button" id="cat_name_change">Τροποποίηση</button>
+          <button type="button" id="cat_name_delete">Διαγραφή</button>
+        </div>
+        <div id="new_cat">
+          <p>Προσθήκη Νέας Κατηγορίας:</p>
+          <label for="new_cat_name">Όνομα</label>
+          <input type="text" id="new_cat_name">
+        </div>
+        <div id="add_new">
+          <button type="button" id="add_new_cat">Προσθήκη</button>
         </div>
       </div>
     </div>
+  </div>
 
 
 
 
-    <script src="/scripts/admin_warehouse.js"></script>
+  <script src="/scripts/admin_warehouse.js"></script>
 </body>
 
 </html>
