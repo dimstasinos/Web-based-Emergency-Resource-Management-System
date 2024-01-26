@@ -87,6 +87,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
               <th>Ημερομηνία Καταχώρησης</th>
               <th>Ημερομηνία Παραλαβής</th>
               <th>Ημερομηνία Ολοκλήρωσης</th>
+              <th>Ακύρωση</th>
             </tr>
           </thead>
           <tbody id="offers"></tbody>
