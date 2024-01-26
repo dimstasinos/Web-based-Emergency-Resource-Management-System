@@ -234,10 +234,14 @@ td {
   background-color: #555;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
 
-  .autocomplete{
+  .autocomplete {
     margin-top: 5px;
+  }
+
+  #button-container {
+    justify-content: center;
   }
 
   #table_start {
@@ -246,7 +250,7 @@ td {
     margin: 20px 0px 20px 0px;
   }
 
-  #table_start button{
+  #table_start button {
     font-size: 10px;
   }
 

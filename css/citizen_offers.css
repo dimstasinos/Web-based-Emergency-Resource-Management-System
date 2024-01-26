@@ -141,7 +141,7 @@ button {
   background-color: rgb(255, 0, 0);
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
   #table_start {
     width: 95%;
     padding: 0px;
