@@ -60,7 +60,6 @@ label {
   overflow: auto;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
   background-color: #f9f9f9;
-  ;
 }
 
 .label-input {
@@ -130,7 +129,6 @@ select {
   overflow: auto;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
   background-color: #f9f9f9;
-  ;
 }
 
 #warehouse-selected_container {

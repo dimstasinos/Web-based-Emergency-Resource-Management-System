@@ -46,6 +46,12 @@
   border-radius: 10px;
 }
 
+table{
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
 @media (max-width:600px) {
   .headerall {
     flex-direction: column;
