@@ -7,8 +7,18 @@ body {
   }
   
 
-  h2,h3,h4{
+  h2{
     font-size: 24px
+  }
+
+  #main_container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: stretch;
+    align-items: center;
+    overflow: auto;
   }
     
   #table_start{
@@ -25,68 +35,46 @@ body {
   background-color: #f9f9f9;
   }
   
-  #content {
-    margin-top: 80px; 
-    padding: 20px;
-  }
+
   
   #tableAnnouncements-container {
-    
-    width:70%;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-content: stretch;
-    align-items: center;
-    overflow:auto;
-    margin-bottom: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  overflow: auto;
+  margin: 10px;
+  }
+
+  #tableAnnouncements{
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
   }
 
   #offer_select_container{
     height:400px;
-    max-width: 70%;
-    display: flex;
-    flex-direction: column;
-    justify-content:flex-start;
-    flex-wrap: nowrap;
-    align-items: center;
+    width: 100%;
     overflow: auto;
-    margin-bottom: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    margin: 10px;
   }
-  #offers_t{
-    max-width: 70%;
-    height:400px;
-    display: flex;
-    flex-direction: column;
-    justify-content:flex-start;
-    flex-wrap: nowrap;
-    align-items: center;
-    overflow: auto;
-    margin-bottom: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-  }
-  #tables{
-    width:100%;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-content: stretch;
-    align-items: center;
-    overflow:auto;
-  }
-  table {
-    border-collapse: collapse;
+ 
+  #tableSelectedOffer{
+ 
+    border-collapse: separate;
+    border-spacing: 0;
     width: 100%;
   }
   
+  #offers_t{
+    width: 100%;
+    overflow: auto;
+    margin: 10px;
+  }
+  
+  #table_offers{
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+  }
+
   th, td {
     text-align: center;
     vertical-align: middle;
@@ -106,7 +94,7 @@ body {
   }
   
 
-  #clear,#submitAnnouncement {
+  #submitAnnouncement {
     background-color: #455da0;
     color: white;
     padding: 10px 20px;
@@ -125,15 +113,56 @@ body {
     border-radius: 5px;
   }
 
- 
-  .table_offers{
-    width:100%;
+  #clear{
+    background-color:rgb(143, 0, 0);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
   }
-  @media only screen and (max-width: 600px) {
-    #table_offers th,td{
-      border: 1px solid #ddd;
-      padding:0px;
-      text-align: left;
-      font-size:12px;
+  
+  #submitAnnouncement:hover {
+    background-color: #555;
+  }
+
+  #clear:hover {
+    background-color: rgb(255, 0, 0);
+  }
+ 
+  @media only screen and (max-width: 800px) {
+    #table_start{
+      width: 95%;
+      padding: 0px;
+    }
+     
+
+  
+    thead th {
+      padding: 10px 8px;
+      font-size: 12px;
+    }
+  
+    th,
+    td {
+      padding: 10px 2px;
+      font-size: 12px;
+    }
+  
+    h1 {
+      margin: 10px 0px 10px 0px;
+    }
+    #table_offers  thead th {
+      padding: 8px 6px;
+      font-size: 6px;
+    }
+  }
+  
+  
+  @media (min-width:1000px) {
+    #table_start{
+      width: 95%;
+      padding: 0px;
     }
   }
