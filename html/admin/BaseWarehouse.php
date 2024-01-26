@@ -16,7 +16,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
   <link rel="stylesheet" href="/css/BaseWarehouse.css">
   <link rel="stylesheet" href="/css/header.css">
   <link rel="icon" href="/images/favicon.png" type="image/x-icon">
-  <title>Storage</title>
+  <title>Αποθήκη</title>
 </head>
 
 <body>
