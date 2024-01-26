@@ -28,7 +28,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
         <h1 class="page-title">Προσφορές</h1>
       </div>
       <div class="topBar">
-        <div class="topButton"><a href="/html/citizen/Requests.php">Αιτήματα</a></div>
+        <div class="topButton"><a href="/html/citizen/Requests">Αιτήματα</a></div>
         <div class="topButton"><a href="/server/logout.php">Αποσύνδεση</a></div>
       </div>
     </div>
