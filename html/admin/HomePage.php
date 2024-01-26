@@ -16,6 +16,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
   <link rel="stylesheet" href="/css/header.css">
   <link rel="stylesheet" href="/leaflet/leaflet.css">
   <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <title>Αρχική</title>
 </head>
 
 <body>
