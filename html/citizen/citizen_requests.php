@@ -46,11 +46,10 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
       <input type="text" id="search" placeholder="Items search..." autocomplete="off">
       <ul id="results"></ul>
     </div>
+
+    <div id="table_start">
     <h2>Αποθήκη</h2>
     <div id="table_req">
-      
-      <div id=tables>
-
         <table id="table_admin_request">
         <div>
           <thead>
@@ -70,6 +69,11 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
         </table>
       </div>
     </div>
+
+    <hr class="separator-line">
+    <hr class="separator-line">
+
+    <div id="table_start">
     <h3>Επιλεγμένα Προϊόντα </h3>
     <div id="items_selected">
       <table id="tableSelected">
@@ -84,9 +88,15 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
         <tbody id="itemSelected"></tbody>
       </table>
     </div>
+    </div>
     <div>
       <button id="submitRequest">Καταχώρηση</button>
     </div>
+
+    <hr class="separator-line">
+    <hr class="separator-line">
+
+    <div id="table_start">
     <h4>Αιτήματα</h4>
     <div id="request_t">
       <table id="table_request">

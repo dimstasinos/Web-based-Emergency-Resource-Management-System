@@ -25,6 +25,8 @@ body {
  #tableSelected, #table_request {
     max-height: 400px;
     overflow-y: auto; 
+    border-collapse: separate;
+
   }
   
   
@@ -49,7 +51,7 @@ body {
   
   #table_req{
     height:400px;
-  
+    border-collapse: separate;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -63,6 +65,7 @@ body {
   }
   #items_selected{
     height:400px;
+    border-collapse: separate;
     border:none;
     display: flex;
     flex-direction: column;
