@@ -82,14 +82,16 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
     </div>
 
 
+    <div id="warehouse_selected-container">
 
-    <div id="table_warehouse">
-      <div>
-        <h1>Αποθήκη</h1>
+      <div id="title_table_warehouse-container">
+        <h2>Αποθήκη</h2>
+
         <div id="category_select-container">
           <label for="categorySelect">Κατηγορίες Ειδών</label>
           <select id="categorySelect"></select>
         </div>
+
         <div id="table_warehouse">
           <table id="tableOfItems">
             <thead>
@@ -105,26 +107,24 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
           </table>
         </div>
       </div>
-    </div>
 
-
-    <div id="table_product">
-      <div>
-        <h3>Επιλεγμένο Προϊόν</h3>
-        <table id="tableSelected">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Όνομα</th>
-              <th>Ποσότητα</th>
-            </tr>
-          </thead>
-          <tbody id="itemSelected"></tbody>
-        </table>
+      <div id="title_table_selected-container">
+        <h2>Επιλεγμένα Προϊόντα</h2>
+        <div id="table_selected-container">
+          <table id="tableSelected">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Όνομα</th>
+                <th>Ποσότητα</th>
+              </tr>
+            </thead>
+            <tbody id="itemSelected"></tbody>
+          </table>
+        </div>
         <button id="load">Φόρτωση</button>
       </div>
     </div>
-
 
   </div>
 
