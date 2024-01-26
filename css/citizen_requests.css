@@ -234,19 +234,29 @@ td {
   background-color: #555;
 }
 
-@media only screen and (max-width: 800px) {
+@media (max-width: 800px) {
+
+  .autocomplete{
+    margin-top: 5px;
+  }
+
   #table_start {
     width: 95%;
     padding: 0px;
+    margin: 20px 0px 20px 0px;
+  }
+
+  #table_start button{
+    font-size: 10px;
   }
 
   #tableRequest thead th {
     padding: 8px 6px;
-    font-size: 6px;
+    font-size: 12px;
   }
 
   thead th {
-    padding: 10px 8px;
+    padding: 5px 8px;
     font-size: 12px;
   }
 
