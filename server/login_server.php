@@ -66,7 +66,7 @@ try {
         $_SESSION["Name"] = $name_row["f_name"] . " " . $name_row["l_name"];
         $_SESSION["type"] = $type_row["user_type"];
         $_SESSION["truck_id"] = $name_row["rescuer_vehicle_id"];
-        $response = ["status" => "success", "Location" => "/html/rescuer/rescuer_MapPage"];
+        $response = ["status" => "success", "Location" => "/html/rescuer/HomePage"];
         header("Content-Type: application/json");
         echo json_encode($response);
       } else if ($type_row["user_type"] == "admin") {

@@ -4,7 +4,7 @@ session_start();
 
 if (isset($_SESSION['type'])) {
   if ($_SESSION['type'] == "rescuer") {
-    header("Location: /html/rescuer/rescuer_MapPage");
+    header("Location: /html/rescuer/HomePage");
     exit();
   } else if ($_SESSION['type'] == "citizen") {
     header("Location: /html/citizen/citizen_requests");
