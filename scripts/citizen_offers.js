@@ -55,8 +55,8 @@ function announcementTable(data) {
       items_quantity_array.push(item.quantity);
     });
 
-    item_name.innerHTML = items_name_array.join("<br>");
-    item_quantity.innerHTML = items_quantity_array.join("<br>");
+    item_name.innerHTML = items_name_array.join("<br><br>");
+    item_quantity.innerHTML = items_quantity_array.join("<br><br>");
     action.innerHTML = `<input type="radio" name="announcement"
      value="${announcement.announcement_id}" id="${announcement.announcement_id}">`;
 
@@ -215,8 +215,8 @@ function offersTable(data) {
       items_quantity_array.push(item.quantity);
     });
 
-    item_name.innerHTML = items_name_array.join("<br>");
-    item_quantity.innerHTML = items_quantity_array.join("<br>");
+    item_name.innerHTML = items_name_array.join("<br><br>");
+    item_quantity.innerHTML = items_quantity_array.join("<br><br>");
 
     sub_date.textContent = offer.submission_date;
 
