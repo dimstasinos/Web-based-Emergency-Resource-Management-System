@@ -172,7 +172,7 @@ body {
   
   @media (min-width:1000px) {
     #table_start{
-      width: 95%;
+      width: 70%;
       padding: 0px;
     }
   }
