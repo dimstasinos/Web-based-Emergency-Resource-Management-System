@@ -38,6 +38,7 @@ body {
 
   
   #tableAnnouncements-container {
+  
   width: 100%;
   overflow: auto;
   margin: 10px;
@@ -50,14 +51,14 @@ body {
   }
 
   #offer_select_container{
-    height:400px;
+    height: 350px;
     width: 100%;
     overflow: auto;
     margin: 10px;
   }
  
   #tableSelectedOffer{
- 
+  
     border-collapse: separate;
     border-spacing: 0;
     width: 100%;
@@ -91,6 +92,15 @@ body {
     position: sticky;
     top: 0;
     z-index: 10;
+  }
+  
+  #button-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content:center;
+    gap:3%;
   }
   
 

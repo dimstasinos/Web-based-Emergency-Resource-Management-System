@@ -28,7 +28,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
         <h1 class="page-title">Προσφορές</h1>
       </div>
       <div class="topBar">
-        <div class="topButton"><a href="/html/citizen/citizen_requests.php">Αιτήματα</a></div>
+        <div class="topButton"><a href="/html/citizen/Requests.php">Αιτήματα</a></div>
         <div class="topButton"><a href="/server/logout.php">Αποσύνδεση</a></div>
       </div>
     </div>
@@ -63,16 +63,16 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
               <th>ID</th>
               <th>'Ονομα Προϊόντος</th>
               <th>Ποσότητα</th>
-              <th></th>
+              <th>Eπιλογή</th>
             </tr>
           </thead>
           <tbody id="OfferSelected"></tbody>
         </table>
-        <div id="button-container">
+      </div>
+      <div id="button-container">
           <button id="submitAnnouncement">Καταχώρηση</button>
           <button id="clear">Αφαίρεση</button>
         </div>
-      </div>
     </div>
 
 
