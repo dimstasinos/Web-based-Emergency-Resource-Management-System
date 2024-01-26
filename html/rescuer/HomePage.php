@@ -17,7 +17,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
   <title>Διασώστης</title>
   <link rel="stylesheet" href="/css/Rescuer_HomePage.css">
   <link rel="stylesheet" href="/leaflet/leaflet.css">
-  <link rel="stylesheet" href="/css/general.css">
+  <link rel="stylesheet" href="/css/header.css">
   <link rel="icon" href="/images/favicon.png" type="image/x-icon">
 </head>
 
@@ -30,8 +30,9 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
       <div class="header">
         <h1 class="page-title">Διασώστης</h1>
       </div>
-      <p id="text"></p>
+     
       <div class="topBar">
+      <div><p id="text"></p></div>
       <div class="topButton"><a href="/server/logout.php">Αποσύνδεση</a></div>
       </div>
     </div>

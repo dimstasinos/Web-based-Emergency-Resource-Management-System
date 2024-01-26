@@ -7,7 +7,7 @@ if (isset($_SESSION['type'])) {
     header("Location: /html/rescuer/HomePage");
     exit();
   } else if ($_SESSION['type'] == "citizen") {
-    header("Location: /html/citizen/citizen_requests");
+    header("Location: /html/citizen/Requests");
     exit();
   } else if ($_SESSION['type'] == "admin") {
     header("Location: /html/admin/HomePage");

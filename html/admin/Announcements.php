@@ -29,8 +29,8 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
         <h1 class="page-title">Διαχειριστής</h1>
       </div>
       <div class="topBar">
-        <div><a href="/html/admin/HomePage">Αρχική</a></div>
-        <div><a href="/server/logout">Αποσύνδεση</a></div>
+        <div class="topButton"><a href="/html/admin/HomePage">Αρχική</a></div>
+        <div class="topButton"><a href="/server/logout">Αποσύνδεση</a></div>
       </div>
     </div>
   </div>

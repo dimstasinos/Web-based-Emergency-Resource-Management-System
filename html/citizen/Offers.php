@@ -15,7 +15,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/citizen_requests.css">
-  <link rel="stylesheet" href="/css/general.css">
+  <link rel="stylesheet" href="/css/Header.css">
   <title>Requests</title>
 </head>
 
@@ -28,8 +28,8 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
         <h1 class="page-title">Αιτήματα</h1>
       </div>
       <div class="topBar">
-        <a href="/html/citizen/citizen_offers.php">Προσφορές</a>
-        <a href="/server/logout.php">Αποσύνδεση</a>
+      <div class="topButton"><a href="/html/citizen/citizen_offers.php">Προσφορές</a></div>
+      <div class="topButton"><a href="/server/logout.php">Αποσύνδεση</a></div>
       </div>
     </div>
   </div>

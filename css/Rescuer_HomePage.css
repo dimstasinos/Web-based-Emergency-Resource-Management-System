@@ -136,7 +136,7 @@ label {
   margin: 1px;
 }
 
-#decline:hover {
+.decline:hover {
   background-color: rgb(255, 0, 0);
 }
 
@@ -266,6 +266,10 @@ select {
   cursor: pointer;
   border-radius: 5px;
   margin: 1px;
+}
+
+#load:hover{
+  background-color: rgba(0, 2, 141, 0.925);
 }
 
 #load:disabled {
