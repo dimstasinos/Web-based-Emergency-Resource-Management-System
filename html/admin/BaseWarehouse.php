@@ -47,7 +47,9 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
         <form id="json_upload" enctype="multipart/form-data">
           <label for="json_file">JSON file</label>
           <input type="file" id="json_file" name="json_file" accept=".json" />
-          <button type="button" id="submit_button" onclick="upload_data()">Mεταφόρτωση</button>
+          <div id="submit_button-container">
+            <button type="button" id="submit_button" onclick="upload_data()">Mεταφόρτωση</button>
+          </div>
         </form>
       </div>
     </div>

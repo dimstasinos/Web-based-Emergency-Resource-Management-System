@@ -54,6 +54,8 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
       </div>
     </div>
 
+    <h1>Νέα Ανακοίνωση</h1>
+
     <div class="autocomplete-category">
       <div class="label-select">
         <label for="categories">Κατηγορίες Προϊόντων</label>

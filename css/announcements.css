@@ -25,7 +25,6 @@ body {
   padding: 20px;
   flex-direction: row;
   justify-content: center;
-  margin-top: 30px;
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
@@ -283,10 +282,12 @@ td {
 
   #title_table_warehouse-container {
     width: 99%;
+    align-items: center;
   }
 
   #title_table_selected-container {
     width: 99%;
+    align-items: center;
   }
 
   .autocomplete-category {
@@ -310,10 +311,6 @@ td {
 
   #title_table_announcements-container {
     width: 95%;
-  }
-
-  #tableAnnouncements-container {
-    width: 99%;
   }
 
   .autocomplete-category {
