@@ -57,7 +57,7 @@ thead th {
   background-color: #455da0;
   color: white;
   padding: 10px 15px;
-  font-size: 16px;
+  font-size: 15px;
   width: 10%;
   position: sticky;
   top: 0;
@@ -111,6 +111,20 @@ label {
 
 #unload:hover {
   background-color: rgba(0, 2, 141, 0.925);
+}
+
+#table_selected-container button {
+  background-color: rgb(143, 0, 0);
+  color: white;
+  padding: 7px 8px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 1px;
+}
+
+#table_selected-container button:hover {
+  background-color: rgb(255, 0, 0);
 }
 
 .decline {
@@ -182,7 +196,7 @@ label {
   align-items: center;
   margin: 20px;
   border-radius: 20px;
-  padding: 5px 20px 20px 20px;
+  padding: 15px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
   background-color: #f9f9f9;
 }
@@ -196,111 +210,134 @@ label {
   align-items: center;
   margin: 20px;
   border-radius: 20px;
-  padding: 5px 20px 20px 20px;
-  box-shadow: 5px 5px 10px rgba
+  padding: 15px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  background-color: #f9f9f9;
 }
 
-table{
+table {
   border-collapse: separate;
   border-spacing: 0;
   width: 100%;
 }
 
-
-
-/*
- h2,h3,h4{
-  font-size: 24px;
- }
-
-
-.main {
-  margin-top: 20px; 
-  padding: 20px;
-  background-color: #fff; 
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-}
-
-
-table {
-  border-collapse: collapse;
+#table_selected-container {
   width: 100%;
-  border: 1px solid #ddd;
-}
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-@media (max-width:800px){
-  table{
-    font-size:x-small;
-  }
-}
-
-#categorySelect {
-  font-family: 'Roboto', sans-serif;
-  font-size: 24px;
-  padding: 8px;
-  border: 1px solid #ccc; 
-  border-radius: 5px; 
-  width: 100%; 
-}
-
-#tasks_panel{
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
   height: 400px;
-  width: 90%;
-  align-items: center;
-  margin-bottom: 20px;
-  overflow: auto;
-}
-
-#table_truck,#table_product,#table_warehouse{
   display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  flex-wrap: wrap;
-  height: 400px;
-  width: 90%;
-  align-content: flex-start;
   align-items: flex-start;
-  margin-bottom: 20px;
+  padding-bottom: 20px;
   overflow: auto;
 }
 
+#category_select-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 5px;
+  flex-direction: row;
+  align-content: flex-start;
+  align-items: center;
+  gap: 2%;
+}
 
+#table_warehouse {
+  width: 100%;
+  overflow: auto;
+}
 
-button {
+#table_warehouse tr:hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+select {
+  padding: 7px 15px;
+  border: 1px solid #d4d4d4;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+#load {
   background-color: #455da0;
-
   color: white;
-  padding: 10px 20px;
+  padding: 7px 10px;
   border: none;
   cursor: pointer;
-  border-radius: 5px; 
-  margin-top: 10px;
+  border-radius: 5px;
+  margin: 1px;
 }
 
-button:hover {
-  background-color: #555;
+#load:disabled {
+  background-color: #e0e0e0;
+  color: #a0a0a0;
+  cursor: not-allowed;
 }
 
-
-#map {
-  height: 400px;
-  margin-top: 20px;
-}
-#text{
-  display:inline-block;
+#load_button-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 }
 
+@media (max-width:1000px) {
 
-@media only screen and(max-width:600px){
-  #tasks th,td{
-    padding:0px;
+  thead th {
+    padding: 10px 8px;
+    font-size: 12px
   }
+
+  th,
+  td {
+    padding: 10px 2px;
+    font-size: 14px;
+  }
+
+  #warehouse_selected-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #title_table_selected-container {
+    width: 95%;
+    padding: 0;
+  }
+
+  #category_select-container{
+    width: 95%;
+    margin-bottom: 10px;
+    padding: 0;
+  }
+
+  #title_table_warehouse-container{
+    width: 95%;
+    padding: 0;
+    margin: 20px 0px 20px 0px;
+  }
+
+  #load_button-container{
+    justify-content: center;
+  }
+
+  #load{
+    margin-bottom: 5px;
+  }
+
+  #table_truck-container{
+    width: 95%;
+    padding: 0;
+    margin: 0;
+  }
+
+  #unload_button-container{
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  #title_tasks_panel-container{
+    width: 95%;
+    padding: 0;
+    margin: 20px 0px 20px 0px;
+  }
+
 }

@@ -2947,7 +2947,7 @@ document.getElementById("tableOfItems").addEventListener("click", function (even
       name_table.textContent = item;
       item_quantity.innerHTML = `<input type="range" id="${id}" 
       min="0" max="${quantity}" value="0"></input><span id="quantity_${id}">0</span>`;
-      item_delete.innerHTML = `<button id=cancel_${id}>Ακύρωση</button>`;
+      item_delete.innerHTML = `<button id=cancel_${id}>Αφαίρεση</button>`;
 
       row_table.appendChild(item_id);
       row_table.appendChild(name_table);
