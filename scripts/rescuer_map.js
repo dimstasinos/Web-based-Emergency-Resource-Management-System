@@ -899,8 +899,8 @@ document.addEventListener('DOMContentLoaded', function () {
             item.textContent = request.item_name
             quantity.textContent = request.quantity;
             action.innerHTML = `
-          <button id="request_${request.request_id}_accept">Ολοκλήρωση</button>
-          <button id="request_${request.request_id}_cancel">Ακύρωση</button>`;
+          <button class="accept" id="request_${request.request_id}_accept">Ολοκλήρωση</button>
+          <button class="decline" id="request_${request.request_id}_cancel">Ακύρωση</button>`;
 
             row_table.appendChild(name);
             row_table.appendChild(phone_number);
@@ -1126,8 +1126,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             date.innerHTML = date_sub[0] + "<br>" + date_sub[1];
             action.innerHTML = `
-          <button id="offer_${offer.offer_id}_accept">Ολοκλήρωση</button>
-          <button id="offer_${offer.offer_id}_cancel">Ακύρωση</button>`;
+          <button class="accept" id="offer_${offer.offer_id}_accept">Ολοκλήρωση</button>
+          <button class="decline" id="offer_${offer.offer_id}_cancel">Ακύρωση</button>`;
 
             var items_name_array = [];
             var items_quantity_array = [];
@@ -1136,8 +1136,8 @@ document.addEventListener('DOMContentLoaded', function () {
               items_quantity_array.push(items.quantity);
             })
 
-            item.innerHTML = items_name_array.join("<br>");
-            quantity.innerHTML = items_quantity_array.join("<br>");
+            item.innerHTML = items_name_array.join("<br><br>");
+            quantity.innerHTML = items_quantity_array.join("<br><br>");
 
             row_table.appendChild(name);
             row_table.appendChild(phone_number);
@@ -2369,8 +2369,8 @@ function mapPanelRefresh() {
             item.textContent = request.item_name
             quantity.textContent = request.quantity;
             action.innerHTML = `
-              <button id="request_${request.request_id}_accept">Ολοκλήρωση</button>
-              <button id="request_${request.request_id}_cancel">Ακύρωση</button>`;
+              <button class="accept" id="request_${request.request_id}_accept">Ολοκλήρωση</button>
+              <button class="decline" id="request_${request.request_id}_cancel">Ακύρωση</button>`;
 
             row_table.appendChild(name);
             row_table.appendChild(phone_number);
@@ -2598,8 +2598,8 @@ function mapPanelRefresh() {
 
             date.innerHTML = date_sub[0] + "<br>" + date_sub[1];
             action.innerHTML = `
-              <button id="offer_${offer.offer_id}_accept">Ολοκλήρωση</button>
-              <button id="offer_${offer.offer_id}_cancel">Ακύρωση</button>`;
+              <button class="accept" id="offer_${offer.offer_id}_accept">Ολοκλήρωση</button>
+              <button class="decline" id="offer_${offer.offer_id}_cancel">Ακύρωση</button>`;
 
             var items_name_array = [];
             var items_quantity_array = [];
@@ -2608,8 +2608,8 @@ function mapPanelRefresh() {
               items_quantity_array.push(items.quantity);
             })
 
-            item.innerHTML = items_name_array.join("<br>");
-            quantity.innerHTML = items_quantity_array.join("<br>");
+            item.innerHTML = items_name_array.join("<br><br>");
+            quantity.innerHTML = items_quantity_array.join("<br><br>");
 
             row_table.appendChild(name);
             row_table.appendChild(phone_number);

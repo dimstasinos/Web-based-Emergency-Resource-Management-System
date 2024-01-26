@@ -1,0 +1,263 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: antiquewhite;
+}
+
+#main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#map {
+  height: 500px;
+  width: 95%;
+  margin: 20px;
+  max-width: 1000px;
+  position: relative;
+  border-radius: 30px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.separator-line {
+  border: none;
+  border-top: 1px solid #455da0;
+  margin: 10px 0;
+}
+
+#title_tasks_panel-container {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  height: 400px;
+  width: 70%;
+  align-items: center;
+  margin: 20px;
+  border-radius: 20px;
+  padding: 5px 20px 20px 20px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  background-color: #f9f9f9;
+}
+
+#tasks_panel {
+  width: 100%;
+  overflow-y: auto;
+}
+
+#tasks {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+
+thead th {
+  background-color: #455da0;
+  color: white;
+  padding: 10px 15px;
+  font-size: 16px;
+  width: 10%;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+th,
+td {
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
+
+h1 {
+  display: flex;
+  width: 100%;
+  margin: 10px;
+  justify-content: center;
+}
+
+label {
+  font-weight: bolder;
+  font-size: 16px;
+  margin: 2px;
+}
+
+.accept {
+  background-color: #455da0;
+  color: white;
+  padding: 7px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 1px;
+}
+
+.accept:hover {
+  background-color: rgba(0, 2, 141, 0.925);
+}
+
+#unload {
+  background-color: #455da0;
+  color: white;
+  padding: 7px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 1px;
+}
+
+#unload:hover {
+  background-color: rgba(0, 2, 141, 0.925);
+}
+
+.decline {
+  background-color: rgb(143, 0, 0);
+  color: white;
+  padding: 7px 8px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 1px;
+}
+
+#decline:hover {
+  background-color: rgb(255, 0, 0);
+}
+
+.accept:disabled {
+  background-color: #e0e0e0;
+  color: #a0a0a0;
+  cursor: not-allowed;
+}
+
+#table_truck-container {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  height: 400px;
+  width: 50%;
+  align-items: center;
+  margin: 20px;
+  border-radius: 20px;
+  padding: 5px 20px 20px 20px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  background-color: #f9f9f9;
+}
+
+#table_cargo {
+  width: 100%;
+  height: 350px;
+  margin-bottom: 20px;
+}
+
+#Cargo {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+#unload_button-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end
+}
+
+/*
+ h2,h3,h4{
+  font-size: 24px;
+ }
+
+
+.main {
+  margin-top: 20px; 
+  padding: 20px;
+  background-color: #fff; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+@media (max-width:800px){
+  table{
+    font-size:x-small;
+  }
+}
+
+#categorySelect {
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+  padding: 8px;
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+  width: 100%; 
+}
+
+#tasks_panel{
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  height: 400px;
+  width: 90%;
+  align-items: center;
+  margin-bottom: 20px;
+  overflow: auto;
+}
+
+#table_truck,#table_product,#table_warehouse{
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 400px;
+  width: 90%;
+  align-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  overflow: auto;
+}
+
+
+
+button {
+  background-color: #455da0;
+
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px; 
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #555;
+}
+
+
+#map {
+  height: 400px;
+  margin-top: 20px;
+}
+#text{
+  display:inline-block;
+}
+
+
+@media only screen and(max-width:600px){
+  #tasks th,td{
+    padding:0px;
+  }
+}
