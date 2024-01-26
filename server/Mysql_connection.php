@@ -8,9 +8,9 @@ function db_connect()
 
   $name = "localhost";
   $user = "root";
-  $password = "7458";
+  $password = "2002";
 
-  $database_name = "project";
+  $database_name = "web";
 
   //Δημιουργία σύνδεσης
   $db = new mysqli($name, $user, $password, $database_name);
