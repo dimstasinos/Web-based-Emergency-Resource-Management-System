@@ -42,7 +42,6 @@ body {
 }
 
 #tasks_panel {
-  width: 100%;
   overflow-y: auto;
 }
 
@@ -151,7 +150,7 @@ label {
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  height: 400px;
+  height: 350px;
   width: 50%;
   align-items: center;
   margin: 20px;
@@ -162,9 +161,10 @@ label {
 }
 
 #table_cargo {
-  width: 100%;
+  width: 99%;
   height: 350px;
   margin-bottom: 20px;
+  overflow: auto;
 }
 
 #Cargo {
@@ -222,7 +222,7 @@ table {
 }
 
 #table_selected-container {
-  width: 100%;
+  width: 99%;
   height: 400px;
   display: flex;
   align-items: flex-start;
@@ -242,7 +242,7 @@ table {
 }
 
 #table_warehouse {
-  width: 100%;
+  width: 99%;
   overflow: auto;
 }
 
@@ -303,38 +303,48 @@ select {
     padding: 0;
   }
 
-  #category_select-container{
+  #category_select-container {
     width: 95%;
     margin-bottom: 10px;
     padding: 0;
   }
 
-  #title_table_warehouse-container{
+  #title_table_warehouse-container {
     width: 95%;
     padding: 0;
     margin: 20px 0px 20px 0px;
   }
 
-  #load_button-container{
+  #tasks_panel {
+    width: 99%;
+    margin: 10px 0px 10px 0px;
+  }
+
+  #table_warehouse {
+    width: 99%;
+    margin: 10px 0px 10px 0px;
+  }
+
+  #load_button-container {
     justify-content: center;
   }
 
-  #load{
+  #load {
     margin-bottom: 5px;
   }
 
-  #table_truck-container{
+  #table_truck-container {
     width: 95%;
     padding: 0;
     margin: 0;
   }
 
-  #unload_button-container{
+  #unload_button-container {
     justify-content: center;
     margin-bottom: 10px;
   }
 
-  #title_tasks_panel-container{
+  #title_tasks_panel-container {
     width: 95%;
     padding: 0;
     margin: 20px 0px 20px 0px;

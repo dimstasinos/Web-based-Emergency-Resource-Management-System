@@ -32,7 +32,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
       </div>
       <p id="text"></p>
       <div class="topBar">
-        <a href="/server/logout.php">Αποσύνδεση</a>
+      <div class="topButton"><a href="/server/logout.php">Αποσύνδεση</a></div>
       </div>
     </div>
   </div>
