@@ -69,7 +69,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Όνομα</th>
+              <th>Είδος</th>
               <th>Ποσότητα</th>
             </tr>
           </thead>
@@ -117,12 +117,15 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
                 <th>ID</th>
                 <th>Όνομα</th>
                 <th>Ποσότητα</th>
+                <th>Αφαίρεση</th>
               </tr>
             </thead>
             <tbody id="itemSelected"></tbody>
           </table>
         </div>
-        <button id="load">Φόρτωση</button>
+        <div id="load_button-container">
+          <button id="load">Φόρτωση</button>
+        </div>
       </div>
     </div>
 
