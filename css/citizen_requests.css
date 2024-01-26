@@ -141,7 +141,7 @@ select {
 }
 
 #table_req {
-  width: 100%;
+  width: 99%;
   overflow: auto;
   margin: 10px;
 }
@@ -160,7 +160,7 @@ select {
 
 #selected_t {
   height: 400px;
-  width: 100%;
+  width: 99%;
   overflow: auto;
   margin: 10px;
 }
@@ -172,7 +172,7 @@ select {
 }
 
 #request_t {
-  width: 100%;
+  width: 99%;
   overflow: auto;
   margin: 10px;
 }

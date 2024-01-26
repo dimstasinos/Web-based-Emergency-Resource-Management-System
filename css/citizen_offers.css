@@ -1,27 +1,27 @@
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-    background-color: antiquewhite;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: antiquewhite;
 
-  }
-  
+}
 
-  h2{
-    font-size: 24px
-  }
 
-  #main_container{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-content: stretch;
-    align-items: center;
-    overflow: auto;
-  }
-    
-  #table_start{
+h2 {
+  font-size: 24px
+}
+
+#main_container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: stretch;
+  align-items: center;
+  overflow: auto;
+}
+
+#table_start {
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
@@ -33,146 +33,149 @@ body {
   padding: 5px 20px 20px 20px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
   background-color: #f9f9f9;
-  }
-  
+}
 
-  
-  #tableAnnouncements-container {
-  
-  width: 100%;
+
+
+#tableAnnouncements-container {
+  width: 99%;
   overflow: auto;
   margin: 10px;
+}
+
+#tableAnnouncements {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
+#offer_select_container {
+  height: 350px;
+  width: 99%;
+  overflow: auto;
+  margin: 10px;
+}
+
+#tableSelectedOffer {
+
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
+#offers_t {
+  width: 99%;
+  overflow: auto;
+  margin: 10px;
+}
+
+#table_offers {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
+th,
+td {
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
+
+thead th {
+  background-color: #455da0;
+  color: white;
+  padding: 10px 15px;
+  font-size: 16px;
+  width: 10%;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+#button-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  gap: 3%;
+}
+
+
+#submitAnnouncement {
+  background-color: #455da0;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+button {
+  color: rgb(255, 255, 255);
+  background-color: rgb(143, 0, 0);
+  padding: 5px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#clear {
+  background-color: rgb(143, 0, 0);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+#submitAnnouncement:hover {
+  background-color: #555;
+}
+
+#clear:hover {
+  background-color: rgb(255, 0, 0);
+}
+
+@media (max-width: 800px) {
+  #table_start {
+    width: 95%;
+    padding: 0px;
   }
 
-  #tableAnnouncements{
-    border-collapse: separate;
-    border-spacing: 0;
-    width: 100%;
+  #table_start button{
+    font-size: 10px;
   }
 
-  #offer_select_container{
-    height: 350px;
-    width: 100%;
-    overflow: auto;
-    margin: 10px;
-  }
- 
-  #tableSelectedOffer{
-  
-    border-collapse: separate;
-    border-spacing: 0;
-    width: 100%;
-  }
-  
-  #offers_t{
-    width: 100%;
-    overflow: auto;
-    margin: 10px;
-  }
-  
-  #table_offers{
-    border-collapse: separate;
-    border-spacing: 0;
-    width: 100%;
-  }
-
-  th, td {
-    text-align: center;
-    vertical-align: middle;
-    border-bottom: 1px solid #ddd;
-    padding: 10px;
-  }
-  
   thead th {
-    background-color: #455da0;
-    color: white;
-    padding: 10px 15px;
-    font-size: 16px;
-    width: 10%;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-  
-  #button-container {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content:center;
-    gap:3%;
-  }
-  
-
-  #submitAnnouncement {
-    background-color: #455da0;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-top: 10px;
+    padding: 5px 8px;
+    font-size: 12px;
   }
 
-  button {
-    color: rgb(255, 255, 255);
-    background-color: rgb(143, 0, 0);
-    padding: 5px 20px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
+  th,
+  td {
+    padding: 10px 2px;
+    font-size: 12px;
   }
 
-  #clear{
-    background-color:rgb(143, 0, 0);
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-top: 10px;
-  }
-  
-  #submitAnnouncement:hover {
-    background-color: #555;
+  h1 {
+    margin: 10px 0px 10px 0px;
   }
 
-  #clear:hover {
-    background-color: rgb(255, 0, 0);
+  #table_offers thead th {
+    padding: 8px 6px;
+    font-size: 12px;
   }
- 
-  @media only screen and (max-width: 800px) {
-    #table_start{
-      width: 95%;
-      padding: 0px;
-    }
-     
+}
 
-  
-    thead th {
-      padding: 10px 8px;
-      font-size: 12px;
-    }
-  
-    th,
-    td {
-      padding: 10px 2px;
-      font-size: 12px;
-    }
-  
-    h1 {
-      margin: 10px 0px 10px 0px;
-    }
-    #table_offers  thead th {
-      padding: 8px 6px;
-      font-size: 6px;
-    }
+
+@media (min-width:1000px) {
+  #table_start {
+    width: 70%;
+    padding: 0px;
   }
-  
-  
-  @media (min-width:1000px) {
-    #table_start{
-      width: 70%;
-      padding: 0px;
-    }
-  }
+}
