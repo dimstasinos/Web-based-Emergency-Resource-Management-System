@@ -46,7 +46,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
           <div id="input-list">
           <input type="text" id="search" placeholder="Αναζήτηση" autocomplete="off">
           <div id="list">
-            <ul id="results"></ul>
+            <ul id="result_list"></ul>
           </div>
         </div>
       </div>

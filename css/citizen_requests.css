@@ -36,6 +36,28 @@ h2 {
   flex-wrap:wrap;
 }
 
+#result_list {
+  display: none;
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ddd;
+  max-height: 200px;
+  overflow: auto;
+  z-index: 1000;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.autocomplete_result {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.autocomplete_result:hover {
+  background-color: #f2f2f2;
+}
+
 label {
   font-weight: bolder;
   font-size: 16px;
