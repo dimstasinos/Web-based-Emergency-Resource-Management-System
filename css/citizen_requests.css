@@ -173,8 +173,8 @@ select {
 
 #request_t {
   width: 99%;
-  overflow: auto;
-  margin: 10px;
+  overflow-y: auto;
+  margin: 10px 0px 10px 0px;
 }
 
 #tableRequest {

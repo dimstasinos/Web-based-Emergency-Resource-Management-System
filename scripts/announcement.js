@@ -1,6 +1,6 @@
 //Event listener που εκτελείτε όταν φορτωθεί η HTML
 document.addEventListener('DOMContentLoaded', function () {
-
+  
   //Επικοινωνία με τον server για εμφάνιση των ανακοινωσεων
   fetch("/server/admin/announcement/announcement_retrieve.php")
     .then(jsonResponse => jsonResponse.json())

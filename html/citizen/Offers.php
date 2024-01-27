@@ -29,6 +29,9 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
         <h1 class="page-title">Προσφορές</h1>
       </div>
       <div class="topBar">
+        <div>
+          <p id="text"></p>
+        </div>
         <div class="topButton"><a href="/html/citizen/Requests">Αιτήματα</a></div>
         <div class="topButton"><a href="/server/logout.php">Αποσύνδεση</a></div>
       </div>
@@ -71,9 +74,9 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
         </table>
       </div>
       <div id="button-container">
-          <button id="submitAnnouncement">Καταχώρηση</button>
-          <button id="clear">Αφαίρεση</button>
-        </div>
+        <button id="submitAnnouncement">Καταχώρηση</button>
+        <button id="clear">Αφαίρεση</button>
+      </div>
     </div>
 
 

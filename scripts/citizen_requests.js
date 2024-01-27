@@ -1,6 +1,13 @@
 //Event listener που εκτελείτε όταν φορτωθεί η HTML
 document.addEventListener('DOMContentLoaded', function () {
 
+  fetch("/server/get_Session_info.php")
+    .then((jsonResponse) => jsonResponse.json())
+    .then(data => {
+      document.getElementById("text").textContent = data.Name;
+    })
+    .catch((error) => console.error("Error:", error));
+    
   //Φόρτωση των ειδών της βάσης δεδομένων
   fetch('/server/citizen/database_extract.php')
     .then(jsonResponse => {

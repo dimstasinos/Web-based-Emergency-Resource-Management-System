@@ -7,6 +7,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.getElementById("submitAnnouncement").disabled = true;
 
+  fetch("/server/get_Session_info.php")
+    .then((jsonResponse) => jsonResponse.json())
+    .then(data => {
+      document.getElementById("text").textContent = data.Name;
+    })
+    .catch((error) => console.error("Error:", error));
+
+
   //Εμφάνιση ανακοινώσεων
   fetch("/server/citizen/announcement.php")
     .then(jsonResponse => jsonResponse.json())

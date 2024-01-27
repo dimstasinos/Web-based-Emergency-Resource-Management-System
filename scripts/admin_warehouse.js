@@ -116,7 +116,7 @@ document.getElementById("table_admin").addEventListener("click", function (event
       var i = 0;
       product.details.forEach((item) => {
         const radio_button = document.createElement("input");
-        radio_button.className="radiobutton";
+        radio_button.className = "radiobutton";
         radio_button.type = "radio";
         radio_button.name = "select";
         radio_button.id = "radiobutton_" + i;

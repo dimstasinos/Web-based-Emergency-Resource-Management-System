@@ -19,6 +19,11 @@ if (
     'Name' => $_SESSION['Name'],
     'truck_id' => $_SESSION["truck_id"],
   ];
+  }else if($_SESSION["type"]=="citizen"){
+    $response=[
+      'status'=> 'success',
+      'Name' =>$_SESSION['Name'],
+    ];
   }
 
   //Αποστολή των πληροφοριών στον client
