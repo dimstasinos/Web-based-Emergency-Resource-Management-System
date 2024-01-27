@@ -76,6 +76,13 @@ try {
         header("Content-Type: application/json");
         echo json_encode($response);
       } else if ($type_row["user_type"] == "citizen") {
+        $id = $type_row["user_id"];
+        $citizenSql = $db->prepare("SELECT f_name,l_name FROM citizen WHERE citizen_id=?");
+        $citizenSql->bind_param("i", $id);
+        $citizenSql->execute();
+        $response_citizen_info = $citizenSql->get_result();
+        $name_row = $response_citizen_info->fetch_assoc();
+        $_SESSION["Name"] = $name_row["f_name"] . " " . $name_row["l_name"];
 
         $_SESSION["type"] = $type_row["user_type"];
         $response = ["status" => "success", "Location" => "/html/citizen/Requests"];

@@ -4,10 +4,14 @@ document.addEventListener('DOMContentLoaded', function () {
   fetch("/server/get_Session_info.php")
     .then((jsonResponse) => jsonResponse.json())
     .then(data => {
-      document.getElementById("text").textContent = data.Name;
+      if (data.status === "error") {
+        console.error("Server Error:", data.Error);
+      } else {
+        document.getElementById("text").textContent = data.response.Name;
+      }
     })
     .catch((error) => console.error("Error:", error));
-    
+
   //Φόρτωση των ειδών της βάσης δεδομένων
   fetch('/server/citizen/database_extract.php')
     .then(jsonResponse => {
@@ -20,19 +24,22 @@ document.addEventListener('DOMContentLoaded', function () {
       return jsonResponse.json();
     })
     .then(data => {
-
-      //Εμφάνιση ειδών
-      if (data != null) {
-        categories_select(data);
-        var selected_cat = document.getElementById("categories").value;
-        items_select(data, selected_cat)
-      }
-      else {
-        const list = document.getElementById("categories");
-        list.innerHTML = '';
-        let select_add = document.createElement("option");
-        select_add.textContent = "Η Βάση δεδομένων είναι κενή";
-        list.appendChild(select_add);
+      if (data.status === "error") {
+        console.error("Server Error:", data.Error);
+      } else {
+        //Εμφάνιση ειδών
+        if (data != null) {
+          categories_select(data);
+          var selected_cat = document.getElementById("categories").value;
+          items_select(data, selected_cat)
+        }
+        else {
+          const list = document.getElementById("categories");
+          list.innerHTML = '';
+          let select_add = document.createElement("option");
+          select_add.textContent = "Η Βάση δεδομένων είναι κενή";
+          list.appendChild(select_add);
+        }
       }
     })
     .catch(error => console.error('Error:', error));
@@ -49,13 +56,17 @@ document.addEventListener('DOMContentLoaded', function () {
       return jsonResponse.json();
     })
     .then(data => {
-      if (data !== null) {
-        requestTable(data);
-      }
-      else {
-        const table = document.getElementById("table_request");
-        table.innerHTML = '';
-        table.textContent = "Δεν υπάρχουν αιτηματα";
+      if (data.status === "error") {
+        console.error("Server Error:", data.Error);
+      } else {
+        if (data !== null) {
+          requestTable(data);
+        }
+        else {
+          const table = document.getElementById("table_request");
+          table.innerHTML = '';
+          table.textContent = "Δεν υπάρχουν αιτηματα";
+        }
       }
     })
     .catch(error => console.error('Error:', error));

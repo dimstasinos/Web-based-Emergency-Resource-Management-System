@@ -1,30 +1,39 @@
-.autocomplete {
-  position: relative;
-  width: 300px;
+body, h1, ul, li {
+  margin: 0;
+  padding: 0;
 }
 
-input[type="text"] {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.suggestions {
-  position: absolute;
-  border: 1px solid #ccc;
-  border-top: none;
-  z-index: 1000;
-  width: calc(100% - 2px);
-  background: white;
-  display: none;
+.logo {
+  width: 100px; /* Adjust the size as needed */
+  height: auto;
 }
 
-.suggestions div {
-  padding: 10px;
-  cursor: pointer;
+.title-nav-container {
+  text-align: center;
+  flex-grow: 1;
 }
 
-.suggestions div:hover {
-  background-color: #f2f2f2;
+h1 {
+  margin-bottom: 10px; /* Space between title and nav */
+}
+
+nav ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+}
+
+nav li {
+  margin: 0 10px;
+}
+
+nav a {
+  text-decoration: none;
+  color: black; /* Change as needed */
 }

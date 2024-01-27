@@ -1,3 +1,4 @@
+
 .topBar {
   width: 100%;
   display: flex;
@@ -26,6 +27,17 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  width: 100%;
+}
+
+#text{
+  margin: 0px;
+  padding: 5px;
+}
+
+.title-icon {
+  width: 100px;
+  height: auto;
 }
 
 #pic {
@@ -67,10 +79,4 @@ table{
     flex-direction: column;
     gap: 10px;
   }
-}
-
-.title-icon {
-  width: 100px;
-  height: auto;
-  margin-right: 10px;
 }
