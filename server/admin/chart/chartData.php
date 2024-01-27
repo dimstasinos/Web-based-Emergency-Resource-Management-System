@@ -131,12 +131,12 @@ try {
 
   //Διαμορφωση των δεδομένων για αποστολή
   $data_chart = array(
-    "New Requests" => $new_request,
-    "Selected Requests" => $selected_request,
-    "Completed Requests" => $complete_request,
-    "New Offers" => $new_offer,
-    "Selected Offers" => $selected_offer,
-    "Completed Offers" => $complete_offer,
+    "Νέα αιτήματα" => $new_request,
+    "Αιτήματα που παραλήφθηκαν" => $selected_request,
+    "Ολοκληρωμένα Αιτήματα" => $complete_request,
+    "Νέες Προσφορές" => $new_offer,
+    "Προσφορές που παραλήφθησαν" => $selected_offer,
+    "Ολοκληρωμένες προσφορές" => $complete_offer,
   );
 
   $db->close();
