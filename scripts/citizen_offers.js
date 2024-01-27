@@ -10,9 +10,15 @@ document.addEventListener('DOMContentLoaded', function () {
   fetch("/server/get_Session_info.php")
     .then((jsonResponse) => jsonResponse.json())
     .then(data => {
-      document.getElementById("text").textContent = data.Name;
+      if (data.status === "error") {
+        console.error("Server Error:", data.Error);
+      } else {
+        document.getElementById("text").textContent = data.response.Name;
+      }
     })
     .catch((error) => console.error("Error:", error));
+
+
 
 
   //Εμφάνιση ανακοινώσεων

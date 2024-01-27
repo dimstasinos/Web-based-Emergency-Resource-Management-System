@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
   fetch("/server/get_Session_info.php")
     .then((jsonResponse) => jsonResponse.json())
     .then(data => {
-      document.getElementById("text").textContent = data.Name;
+      document.getElementById("text").textContent = data.response.Name;
     })
     .catch((error) => console.error("Error:", error));
 

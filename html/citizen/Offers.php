@@ -25,7 +25,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
     <div id="pic"><img src="/images/favicon.png" alt="Icon" class="title-icon">
     </div>
     <div class="topHeader">
-      <div class="header">
+      <div class="header-title">
         <h1 class="page-title">Προσφορές</h1>
       </div>
       <div class="topBar">

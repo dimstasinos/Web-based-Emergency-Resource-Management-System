@@ -71,6 +71,12 @@ try {
         echo json_encode($response);
       } else if ($type_row["user_type"] == "admin") {
         $id = $type_row["user_id"];
+        $adminSql = $db->prepare("SELECT f_name,l_name FROM admins WHERE admin_id=?");
+        $adminSql->bind_param("i", $id);
+        $adminSql->execute();
+        $response_admin_info = $adminSql->get_result();
+        $name_row = $response_admin_info->fetch_assoc();
+        $_SESSION["Name"] = $name_row["f_name"] . " " . $name_row["l_name"];
         $_SESSION["type"] = $type_row["user_type"];
         $response = ["status" => "success", "Location" => "/html/admin/HomePage"];
         header("Content-Type: application/json");

@@ -26,11 +26,16 @@ try {
         'status' => 'success',
         'Name' => $_SESSION['Name'],
       ];
+    } else if ($_SESSION["type"] == "admin") {
+      $response = [
+        'status' => 'success',
+        'Name' => $_SESSION['Name'],
+      ];
     }
-
+    
     //Αποστολή των πληροφοριών στον client
     header('Content-Type: application/json');
-    echo json_encode(['status' => 'success','response' => $response]);
+    echo json_encode(['status' => 'success', 'response' => $response]);
   } else {
     header('Content-Type: application/json');
     echo (['status' => 'error', "message" => 'User is not set']);

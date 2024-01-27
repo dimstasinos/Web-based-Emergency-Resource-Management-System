@@ -1,6 +1,15 @@
 //Event listener που εκτελείτε όταν φορτωθεί η HTML
 document.addEventListener('DOMContentLoaded', function () {
-  
+
+  //Ανάκτηση πληροφοριών του Session
+  fetch("/server/get_Session_info.php")
+    .then((jsonResponse) => jsonResponse.json())
+    .then(data => {
+      document.getElementById("text").textContent = data.response.Name;
+    })
+    .catch((error) => console.error("Error:", error));
+
+
   //Επικοινωνία με τον server για εμφάνιση των ανακοινωσεων
   fetch("/server/admin/announcement/announcement_retrieve.php")
     .then(jsonResponse => jsonResponse.json())

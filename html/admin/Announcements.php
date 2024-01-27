@@ -26,7 +26,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
     </div>
     <div class="topHeader">
       <div class="header">
-        <h1 class="page-title">Διαχειριστής</h1>
+        <h1 class="page-title">Ανακοινώσεις</h1>
       </div>
       <div class="topBar">
       <div><p id="text"></p></div>

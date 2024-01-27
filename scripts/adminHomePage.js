@@ -6,6 +6,14 @@ var layerSelected;
 //Event listener που εκτελείτε όταν φορτωθεί η HTML
 document.addEventListener('DOMContentLoaded', function () {
 
+  //Ανάκτηση πληροφοριών του Session
+  fetch("/server/get_Session_info.php")
+    .then((jsonResponse) => jsonResponse.json())
+    .then(data => {
+      document.getElementById("text").textContent = data.response.Name;
+    })
+    .catch((error) => console.error("Error:", error));
+
   //Αρχικοποίηση χάρτη
   var map = L.map('map').setView([37.9838, 23.7275], 13);
 

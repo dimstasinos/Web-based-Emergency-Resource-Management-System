@@ -5,6 +5,14 @@ var item_selected = 0;
 //Event listener που εκτελείτε όταν φορτωθεί η HTML
 document.addEventListener("DOMContentLoaded", function () {
 
+  //Ανάκτηση πληροφοριών του Session
+  fetch("/server/get_Session_info.php")
+    .then((jsonResponse) => jsonResponse.json())
+    .then(data => {
+      document.getElementById("text").textContent = data.response.Name;
+    })
+    .catch((error) => console.error("Error:", error));
+
   //Επικοινωνια με τον server για εμφάνιση των ειδών που περιέχει
   //η βάση δεδομένων
   fetch("/server/admin/warehouse_admin/database_extract.php")
