@@ -74,14 +74,14 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
         </table>
       </div>
       <div id="button-container">
-        <button id="submitAnnouncement">Καταχώρηση</button>
+        <button id="submitOffer">Καταχώρηση</button>
         <button id="clear">Αφαίρεση</button>
       </div>
     </div>
 
 
     <div id="table_start">
-      <h2>Αποδοχή Προσφοράς</h2>
+      <h2>Προσφορές</h2>
       <div id="offers_t">
         <table id="table_offers">
           <thead>

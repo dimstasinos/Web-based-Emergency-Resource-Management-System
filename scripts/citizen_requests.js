@@ -161,15 +161,14 @@ function requestTable(data) {
     item_name.textContent = request.item_name;
     item_quantity.textContent = request.quantity;
     sub_date.textContent = request.submission_date;
+    action.innerHTML = `<button id="${request.request_id}">Ακύρωση</button>`;
+
     if (request.pickup_date === null) {
       pick_date.textContent = "-";
-
-      action.innerHTML = `<button id="${request.request_id}">Ακύρωση</button>`;
-
     } else {
       pick_date.textContent = request.pickup_date;
-      action.innerHTML = "";
     }
+
     if (request.hasOwnProperty('complete_date')) {
       complete_date.textContent = request.complete_date;
     } else {
@@ -185,7 +184,14 @@ function requestTable(data) {
 
     request_table.appendChild(row_table);
 
-    if (action.innerHTML !== "") {
+    if (request.pickup_date === null) {
+      document.getElementById(`${request.request_id}`).disabled = false;
+
+    } else {
+      document.getElementById(`${request.request_id}`).disabled = true;
+    }
+
+    if (document.getElementById(`${request.request_id}`).disabled === false) {
 
       //Event listener για την διαγραφή κάποιου αιτήματος
       document.getElementById(`${request.request_id}`).addEventListener("click", function () {
@@ -608,6 +614,7 @@ document.getElementById("submitRequest").addEventListener("click", function () {
           .catch((error) => console.error("Error:", error));
       }
     }
+    selectTable.innerHTML="";
   }
 
 });

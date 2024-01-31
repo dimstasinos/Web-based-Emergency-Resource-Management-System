@@ -104,7 +104,7 @@ thead th {
 }
 
 
-#submitAnnouncement {
+#submitOffer {
   background-color: #455da0;
   color: white;
   padding: 10px 20px;
@@ -114,6 +114,10 @@ thead th {
   margin-top: 10px;
 }
 
+#submitOffer:hover{
+  background-color: rgba(0, 2, 141, 0.925);
+}
+
 button {
   color: rgb(255, 255, 255);
   background-color: rgb(143, 0, 0);
@@ -121,6 +125,16 @@ button {
   border: none;
   cursor: pointer;
   border-radius: 5px;
+}
+
+button:hover {
+  background-color: rgb(255, 0, 0);
+}
+
+button:disabled {
+  background-color: #e0e0e0;
+  color: #a0a0a0;
+  cursor: not-allowed;
 }
 
 #clear {

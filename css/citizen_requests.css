@@ -198,6 +198,12 @@ button:hover {
   background-color: rgb(255, 0, 0);
 }
 
+button:disabled {
+  background-color: #e0e0e0;
+  color: #a0a0a0;
+  cursor: not-allowed;
+}
+
 thead th {
   background-color: #455da0;
   color: white;
@@ -231,7 +237,7 @@ td {
 }
 
 #submitRequest:hover {
-  background-color: #555;
+  background-color: rgba(0, 2, 141, 0.925);
 }
 
 @media (max-width: 1000px) {

@@ -43,6 +43,7 @@ body {
 
 #tasks_panel {
   overflow-y: auto;
+  width: 99%;
 }
 
 #tasks {
@@ -110,6 +111,12 @@ label {
 
 #unload:hover {
   background-color: rgba(0, 2, 141, 0.925);
+}
+
+#unload:disabled {
+  background-color: #e0e0e0;
+  color: #a0a0a0;
+  cursor: not-allowed;
 }
 
 #table_selected-container button {

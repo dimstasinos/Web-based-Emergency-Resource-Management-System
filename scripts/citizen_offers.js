@@ -5,7 +5,7 @@ var announcementSelected;
 //Event listener που εκτελείτε όταν φορτωθεί η HTML
 document.addEventListener('DOMContentLoaded', function () {
 
-  document.getElementById("submitAnnouncement").disabled = true;
+  document.getElementById("submitOffer").disabled = true;
 
   fetch("/server/get_Session_info.php")
     .then((jsonResponse) => jsonResponse.json())
@@ -45,7 +45,7 @@ function announcementTable(data) {
   const announcement_table = document.getElementById("announcements");
   announcement_table.innerHTML = "";
   document.getElementById("OfferSelected").innerHTML = "";
-  document.getElementById("submitAnnouncement").disabled = true;
+  document.getElementById("submitOffer").disabled = true;
 
   //Προσπέραση δεδομέων
   data.forEach(announcement => {
@@ -115,12 +115,12 @@ function announcementTable(data) {
 
           if (checked) {
             itemSelected.push(item.item_id);
-            document.getElementById("submitAnnouncement").disabled = false;
+            document.getElementById("submitOffer").disabled = false;
           } else {
             var pos = item_checked.indexOf(item.item_id);
             itemSelected.splice(pos, 1)
             if (item_checked.length === 0) {
-              document.getElementById("submitAnnouncement").disabled = true;
+              document.getElementById("submitOffer").disabled = true;
             }
           }
         });
@@ -130,7 +130,7 @@ function announcementTable(data) {
 }
 
 //Event listener για την υποβολή της προσφοράς
-document.getElementById("submitAnnouncement").addEventListener("click", function () {
+document.getElementById("submitOffer").addEventListener("click", function () {
 
   //Συλλογή δεδομένων
   const announcement_id = {
@@ -231,19 +231,16 @@ function offersTable(data) {
 
     item_name.innerHTML = items_name_array.join("<br><br>");
     item_quantity.innerHTML = items_quantity_array.join("<br><br>");
-
     sub_date.textContent = offer.submission_date;
+    action.innerHTML = `<button id="${offer.offer_id}">Ακύρωση</button>`;
 
     //Έλεγχος εάν έχει παραλειφθεί η προσφορά
     if (offer.pickup_date === null) {
       pick_date.textContent = "-";
-
-      action.innerHTML = `<button id="${offer.offer_id}">Ακύρωση</button>`;
-
     } else {
       pick_date.textContent = offer.pickup_date;
-      action.innerHTML = "";
     }
+
     if (offer.hasOwnProperty('complete_date')) {
       complete_date.textContent = offer.complete_date;
     } else {
@@ -259,8 +256,13 @@ function offersTable(data) {
 
     offer_table.appendChild(row_table);
 
+    if (offer.pickup_date === null) {
+      document.getElementById(`${offer.offer_id}`).disabled = false;
+    } else {
+      document.getElementById(`${offer.offer_id}`).disabled = true;
+    }
 
-    if (action.innerHTML !== "") {
+    if (document.getElementById(`${offer.offer_id}`).disabled === false) {
 
       //Event listener για την διαγραφή κάποιας προσφοράς
       document.getElementById(`${offer.offer_id}`).addEventListener("click", function () {
@@ -323,7 +325,7 @@ function offersTable(data) {
 //Event listener που καθαρίζει τον πίνακα επιλεγμένης ανακοίνωσης
 document.getElementById("clear").addEventListener("click", function () {
   document.getElementById("OfferSelected").innerHTML = "";
-  document.getElementById("submitAnnouncement").disabled = true;
+  document.getElementById("submitOffer").disabled = true;
   const uncheck = document.getElementsByName("announcement");
   uncheck.forEach(radiobutton => {
     radiobutton.checked = false;
