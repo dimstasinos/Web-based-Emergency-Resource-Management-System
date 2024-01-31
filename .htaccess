@@ -4,12 +4,8 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.php [NC,L]
 
-
 ExpiresActive On
-ExpiresByType image/png "access 1 hour"
-ExpiresByType image/jpeg "access 1 hour"
-ExpiresByType text/javascript "access 2 weeks"
-ExpiresByType text/css "access 2 months"
-ExpiresByType text/html "modification 4 hours"
-ExpiresByType text/php "modification 4 hours"
-ExpiresDefault "access 2 days"
+ExpiresByType text/css "access plus 1 week"
+ExpiresByType application/javascript "access plus 1 week"
+ExpiresByType image/png "access plus 1 month"
+ExpiresByType image/jpeg "access plus 1 month"

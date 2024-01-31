@@ -420,6 +420,10 @@ input {
 
 @media (max-width:530px) {
 
+  #delete {
+    margin-top: 5px;
+  }
+
   #add_product-container button {
     margin-top: 5px;
   }
@@ -585,10 +589,6 @@ input {
     display: flex;
     align-items: flex-start;
     flex-direction: column;
-  }
-
-  #delete {
-    margin-top: 5px;
   }
 
   #category-container {
