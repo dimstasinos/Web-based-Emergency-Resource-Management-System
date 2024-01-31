@@ -1,4 +1,0 @@
-truck icon:
-iconAnchor: [25, 46],        
-shadowAnchor: [15, 40],         
-popupAnchor: [1, -35]    
