@@ -134,7 +134,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
 
 
   <script src="/leaflet/leaflet.js"></script>
-  <script src="/scripts/rescuer_map.js"></script>
+  <script src="/scripts/rescuerHomePage.js"></script>
 
 </body>
 
