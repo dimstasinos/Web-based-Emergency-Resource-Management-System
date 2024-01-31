@@ -17,7 +17,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
   <link rel="stylesheet" href="/css/citizen_requests.css">
   <link rel="stylesheet" href="/css/Header.css">
   <link rel="icon" href="/images/favicon.png" type="image/x-icon">
-  <title>Requests</title>
+  <title>Αιτήματα</title>
 </head>
 
 <body>
