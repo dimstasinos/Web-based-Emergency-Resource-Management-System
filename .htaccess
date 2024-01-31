@@ -4,14 +4,3 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.php [NC,L]
 
-ExpiresActive On
-
-<filesMatch ".(js|css|jpg|jpeg|png|gif|js|css|ico|swf)$">
-  Header set Cache-Control "max-age=31536000, public"
-  Header unset Last-Modified
-  Header unset ETag
-</filesMatch>
-
-<filesMatch ".(html$">
-  Header set Cache-Control "no-cache"
-</filesMatch>

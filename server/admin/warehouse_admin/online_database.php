@@ -34,8 +34,9 @@ try {
   }
 
   foreach ($json_data->items as $value) {
-    $items_stmt = $db->prepare("INSERT INTO items VALUES (?,?,?,0)");
-    $items_stmt->bind_param("isi", $value->id, $value->name, $value->category);
+    $items_stmt = $db->prepare("INSERT INTO items VALUES (?,?,?,?)");
+    $quantity = mt_rand(0, 15);
+    $items_stmt->bind_param("isii", $value->id, $value->name, $value->category,$quantity);
     $items_stmt->execute();
     $items_stmt->close();
   }

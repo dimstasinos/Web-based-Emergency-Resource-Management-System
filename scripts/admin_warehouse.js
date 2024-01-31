@@ -1203,6 +1203,9 @@ function upload_data() {
     const json_data = new FormData();
     json_data.append("jsonfile", json_file);
 
+
+    console.log(json_data);
+
     //Ανέβασμα αρχείου
     fetch("/server/admin/warehouse_admin/file_upload.php", {
       method: "POST",
