@@ -199,5 +199,7 @@ create table announcement_items(
 	on update CASCADE on delete CASCADE
 );
 
+create index item_cat on items (item_category);
+
 /*DROP TABLE item_details,item_category,citizen,vehicle,citizen_requests,citizen_requests_complete,base,
 users,vehicle_storage,offer_items,citizen_offers,citizen_offers_complete,items,rescuer,announcements,announcement_items;
