@@ -1203,9 +1203,6 @@ function upload_data() {
     const json_data = new FormData();
     json_data.append("jsonfile", json_file);
 
-
-    console.log(json_data);
-
     //Ανέβασμα αρχείου
     fetch("/server/admin/warehouse_admin/file_upload.php", {
       method: "POST",
@@ -1219,14 +1216,27 @@ function upload_data() {
       })
       .then((data) => {
         if (data.status === "success") {
+
           alert("Το αρχείο ανέβηκε");
 
-          //Ανανέωση του πίνακα
-          categories_select(data.data);
-          selected_cat = category_id(data.data);
-          items_select(data.data, selected_cat);
-          categories_select_product(data.data);
-          onload_data = data;
+          fetch("/server/admin/warehouse_admin/database_extract.php")
+            .then((jsonResponse) => jsonResponse.json())
+            .then((data) => {
+              if (data.status === "error") {
+                console.error("Server Error:", data.Error);
+              } else {
+                //Ανανέωση του πίνακα
+                categories_select(data);
+                selected_cat = category_id(data);
+                items_select(data, selected_cat);
+                categories_select_product(data);
+                onload_data = data;
+              }
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+
         } else {
           console.error("Error uploading file:", data.message);
           alert("Σφάλμα στο ανέβασμα του αρχείου: " + data.message);
