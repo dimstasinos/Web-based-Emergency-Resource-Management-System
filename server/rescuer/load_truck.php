@@ -1,14 +1,24 @@
 <?php
+
+//PHP script που τοποθετεί τα είδη που έχουν 
+//επιλεχθεί στο φορτίο του οχήματος
+
 session_start();
 
 include("../Mysql_connection.php");
+
+//Παραλαβή δεδομένων από js
 $receive = file_get_contents('php://input');
+
+//Αποκωδικοποίηση δεδομένων
 $data = json_decode($receive);
 
 try {
 
+  //Σύνδεση με την βάση δεδομένων
   $db = db_connect();
 
+  //Queries για την τοποθέτηση των ειδών στο φορτίο του οχήαμτος
   $load_truck_check = $db->prepare("SELECT * from vehicle_storage
   where str_vehicle_id=? and str_item_id=?");
   $load_truck_check->bind_param(
@@ -32,7 +42,6 @@ try {
       $data->id,
     );
     $load_truck->execute();
-
   } else {
 
     $load_truck = $db->prepare("INSERT INTO vehicle_storage VALUES
@@ -68,9 +77,12 @@ try {
 
   $db->close();
 
+  //Αποστολή μηνύματος επιτυχής εκτέλεσης στον client
   header('Content-Type: application/json');
   echo json_encode(['status' => 'success']);
 } catch (Exception $error) {
+
+  //Αποστολή μηνύματος ανεπιτυχούς εκτέλεσης στον client
   header('Content-Type: application/json');
   echo json_encode(['status' => 'error', "Error" => $error->getMessage(), $data]);
 }

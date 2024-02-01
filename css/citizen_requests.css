@@ -1,88 +1,290 @@
-/* Reset default styles */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-    background-color: #f2f2f2; /* Background color for the whole page */
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: antiquewhite;
+}
+
+h2 {
+  font-size: 24px;
+  text-align: center;
+  ;
+}
+
+#main_container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: stretch;
+  align-items: center;
+  overflow: auto;
+}
+
+.autocomplete-category {
+  margin-top: 15px;
+  display: flex;
+  width: 50%;
+  gap: 10%;
+  padding: 20px;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#button-container {
+  width: 100%;
+  display: flex;
+}
+
+#result_list {
+  display: none;
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ddd;
+  max-height: 200px;
+  overflow: auto;
+  z-index: 1000;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.autocomplete_result {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.autocomplete_result:hover {
+  background-color: #f2f2f2;
+}
+
+label {
+  font-weight: bolder;
+  font-size: 16px;
+}
+
+.label-input {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.label-select {
+  display: flex;
+  flex-direction: column;
+}
+
+select {
+  border: 1px solid #ccc;
+  background-color: white;
+}
+
+#search {
+  padding: 10px;
+  border: 1px solid #d4d4d4;
+  border-radius: 4px;
+}
+
+#button-container {
+  display: flex;
+  width: 95%;
+  margin: 10px;
+  justify-content: flex-end;
+}
+
+
+#categories {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #d4d4d4;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+#list {
+  width: 100%;
+}
+
+#results {
+  display: none;
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ddd;
+  max-height: 200px;
+  overflow: auto;
+  z-index: 1000;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+
+#table_start {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  height: 500px;
+  width: 60%;
+  align-items: center;
+  margin: 20px;
+  border-radius: 20px 20px 10px 10px;
+  padding: 5px 20px 20px 20px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  background-color: #f9f9f9;
+
+}
+
+#table_req {
+  width: 99%;
+  overflow: auto;
+  margin: 10px;
+}
+
+#table_admin_request {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
+#table_admin_request tr:hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+
+#selected_t {
+  height: 400px;
+  width: 99%;
+  overflow: auto;
+  margin: 10px;
+}
+
+#tableSelected {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
+#request_t {
+  width: 99%;
+  overflow-y: auto;
+  margin: 10px 0px 10px 0px;
+}
+
+#tableRequest {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
+
+
+button {
+  color: rgb(255, 255, 255);
+  background-color: rgb(143, 0, 0);
+  padding: 5px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: rgb(255, 0, 0);
+}
+
+button:disabled {
+  background-color: #e0e0e0;
+  color: #a0a0a0;
+  cursor: not-allowed;
+}
+
+thead th {
+  background-color: #455da0;
+  color: white;
+  padding: 10px 15px;
+  font-size: 16px;
+  width: 10%;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+
+th,
+td {
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
+
+
+
+#submitRequest {
+  margin-top: 20px;
+  background-color: #455da0;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#submitRequest:hover {
+  background-color: rgba(0, 2, 141, 0.925);
+}
+
+@media (max-width: 1000px) {
+
+  .autocomplete {
+    margin-top: 5px;
   }
-  
-  /* Navigation bar styles */
-  .sidebar {
-    background-color: #333;
-    overflow: hidden;
+
+  #button-container {
+    justify-content: center;
   }
-  
-  .sidebar a {
-    float: left;
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    transition: background-color 0.3s; /* Smooth background color transition */
+
+  #table_start {
+    width: 95%;
+    padding: 0px;
+    margin: 20px 0px 20px 0px;
   }
-  
-  .sidebar a:hover {
-    background-color: #555; /* Highlight on hover */
+
+  #table_start button {
+    font-size: 10px;
   }
-  
-  /* Main content container */
-  .container {
-    margin-top: 60px; /* Add space for the navigation bar */
-    padding: 20px;
-    background-color: #fff; /* White background for the content */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+
+  #tableRequest thead th {
+    padding: 8px 6px;
+    font-size: 12px;
   }
-  
-  /* Table with scroll bar */
-  .table-data, #tableSelected, #table_request {
-    max-height: 400px; /* Set the maximum height for the tables */
-    overflow-y: auto; /* Add a vertical scrollbar when needed */
+
+  thead th {
+    padding: 5px 8px;
+    font-size: 12px;
   }
-  
-  /* Styling for the search input */
-  #search {
-    font-family: 'Roboto', sans-serif;
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    font-size: 16px;
-    border: 1px solid #ccc; /* Add a border */
-    border-radius: 5px; /* Rounded corners */
+
+  th,
+  td {
+    padding: 10px 2px;
+    font-size: 12px;
   }
-  
-  /* Styling for the Select element */
-  #categories {
-    font-family: 'Roboto', sans-serif;
-    padding: 8px;
-    border: 1px solid #ccc; /* Add a border */
-    border-radius: 5px; /* Rounded corners */
-    width: 100%; /* Full width */
+
+  h1 {
+    margin: 10px 0px 10px 0px;
   }
-  
-  /* Default table styles */
-  table {
-    border-collapse: collapse;
-    width: 100%;
+}
+
+
+@media (min-width:1000px) {
+  #table_start {
+    width: 70%;
+    padding: 0px;
   }
-  
-  th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  /* Styling for the Submit button */
-  #submitRequest {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px; /* Rounded corners */
-  }
-  
-  #submitRequest:hover {
-    background-color: #45a049;
-  }
-  
+}

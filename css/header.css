@@ -1,0 +1,82 @@
+
+.topBar {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+}
+
+.topHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-right: 8%;
+}
+
+.headerall {
+  background-image: url(../images/background-blur.JPEG);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: rgb(255, 255, 255);
+  text-align: left;
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+#text{
+  margin: 0px;
+  padding: 5px;
+}
+
+.title-icon {
+  width: 100px;
+  height: auto;
+}
+
+#pic {
+  width: fit-content;
+}
+
+.topBar a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+}
+
+.topButton{
+  padding: 5px;
+}
+
+.topButton:hover {
+  background-color: rgba(129, 129, 129, 0.315);
+  border-radius: 10px;
+}
+
+table{
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
+@media (max-width:600px) {
+  .headerall {
+    flex-direction: column;
+  }
+
+  .topHeader {
+    margin-right: 0;
+  }
+}
+
+@media (max-width:450px) {
+  .topBar {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

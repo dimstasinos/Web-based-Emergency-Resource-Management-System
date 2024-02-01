@@ -1,14 +1,19 @@
 <?php
 
+//PHP script που στέλνει στον client
+//όλες τις προσφορές του πολίτη
+
 session_start();
 
 include("../Mysql_connection.php");
 
 try {
 
+  //Σύνδεση με την βάση δεδομένων
   $db = db_connect();
 
-
+  //Queries για την δημιουργία JSON με τις προσφορές
+  //του πολίτη
   $offer = $db->prepare("SELECT * FROM citizen_offers where
   offer_citizen_id=?");
   $offer->bind_param("i", $_SESSION["user_id"]);
@@ -70,10 +75,13 @@ try {
 
   $data = $offer;
 
+  //Αποστολή του JSON στον client
   $json_data = json_encode($data);
   header('Content-Type: application/json');
   echo $json_data;
 } catch (Exception $error) {
+
+  //Αποστολή μηνύματος ανεπιτυχούς εκτέλεσης στον client
   header('Content-Type: application/json');
   echo json_encode(['status' => 'error', "Error" => $error->getMessage()]);
 }

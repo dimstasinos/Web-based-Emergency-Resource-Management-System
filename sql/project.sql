@@ -1,14 +1,19 @@
-create database project;
-
-use project;
 create table users (
   user_id INT AUTO_INCREMENT,
   username VARCHAR(50) not null,
   password VARCHAR(50) not null,
   user_type enum ('citizen', 'rescuer', 'admin') NOT NULL,
-  primary key (user_id)
+  primary key (user_id,username)
 );
 
+create table admins (
+admin_id int not null,
+f_name VARCHAR(50) not null,
+l_name varchar(50) not null,
+CONSTRAINT ADMIN_TABLE
+FOREIGN KEY (admin_id) REFERENCES users(user_id)
+on update CASCADE on delete cascade
+);
 
 CREATE TABLE citizen (
 citizen_id INT not null,
@@ -123,9 +128,10 @@ create table citizen_requests_complete(
 CREATE TABLE citizen_offers (
   offer_id INT auto_increment,
   submission_date DATETIME not null,
-  pickup_date DATE,
+  pickup_date DATETIME,
   offer_veh_id int,
   offer_citizen_id INT not null,
+  announcement_id INT not null,
   PRIMARY KEY (offer_id),
   constraint CITIZEN_VEH_ID
   FOREIGN KEY (offer_veh_id) REFERENCES vehicle(vehicle_id)
@@ -137,10 +143,10 @@ CREATE TABLE citizen_offers (
 CREATE TABLE citizen_offers_complete (
   offer_id INT,
   submission_date DATETIME not null,
-  pickup_date datetime,
-  complete_date datetime,
+  pickup_date DATETIME,
   offer_veh_id int,
   offer_citizen_id INT not null,
+  complete_date datetime,
   PRIMARY KEY (offer_id),
   constraint CITIZEN_VEH_ID_OFF
   FOREIGN KEY (offer_veh_id) REFERENCES vehicle(vehicle_id)
@@ -185,8 +191,11 @@ create table announcement_items(
 	announcement_id int not null,
     announcement_item_id int not null,
     announcement_item_quantity int not null,
+    primary key(announcement_id,announcement_item_id),
     constraint ANN_ID	
-	FOREIGN KEY (announcement_id) REFERENCES announcements(announcement_id)
+	FOREIGN KEY (announcement_id) REFERENCES announcements(announcement_id),
+    constraint ANN_ITEM_ID	
+	FOREIGN KEY (announcement_item_id) REFERENCES items(item_id)
 	on update CASCADE on delete CASCADE
 );
 
@@ -261,6 +270,4 @@ insert into vehicle_storage values
 (1,20,5);
 
 /*DROP TABLE item_details,item_category,citizen,vehicle,citizen_requests,citizen_requests_complete,base,
-users,vehicle_storage,offer_items,citizen_offers,citizen_offers_complete,items,rescuer;
-
-
+users,vehicle_storage,offer_items,citizen_offers,citizen_offers_complete,items,rescuer,announcements,announcement_items;

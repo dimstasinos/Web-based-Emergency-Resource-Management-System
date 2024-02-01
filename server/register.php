@@ -1,13 +1,18 @@
 <?php
 
+//PHP script που διαχειρίζεται την εγγραφή
+//του πολίτη 
+
 session_start();
 
 include("Mysql_connection.php");
 
 try {
 
+  //Σύνδεση με την βάση δεδομένων
   $db = db_connect();
 
+  //Έλεγχος τρόπου απόστολής στοιχείων χρήστη
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $first_name = $_POST['f_name'];
@@ -18,9 +23,11 @@ try {
     $latitude = $_POST["latitude"];
     $longitude = $_POST["longitude"];
 
+    //Queries για τον έλεγχο των στοιχείων και εγγραφή
     $phoneCheck = false;
     $usernameCheck = false;
 
+    //Έλεγχοι στοιχείων
     $usernameCheckSql = $db->prepare("SELECT username from users where username=?");
     $usernameCheckSql->bind_param("s", $username);
     $usernameCheckSql->execute();
@@ -35,12 +42,11 @@ try {
     $phoneCheckSql->execute();
     $phoneCheckSql_response = $phoneCheckSql->get_result();
 
-
-
     if ($phoneCheckSql_response->num_rows > 0) {
       $phoneCheck = true;
     }
 
+    //Αποστολή μηνυμάτων εάν αποτύχουν οι έλεγχει
     if ($usernameCheck == true && $phoneCheck == false) {
       $response = ["status" => "fail", "message" => "Το username υπάρχει ήδη"];
       header("Content-Type: application/json");
@@ -55,6 +61,7 @@ try {
       echo json_encode($response);
     } else if ($usernameCheck == false && $phoneCheck == false) {
 
+      //Εγγραφή του πολίτη
       $insert_user = $db->prepare("INSERT INTO users VALUES
       (NULL,?,?,'citizen')");
       $insert_user->bind_param("ss", $username, $password);
@@ -79,13 +86,13 @@ try {
 
       $_SESSION["type"] = "citizen";
       $_SESSION["username"] = $username;
-      $_SESSION["user_id"]=$user_id_row["user_id"];
+      $_SESSION["user_id"] = $user_id_row["user_id"];
       $_SESSION["Name"] = $first_name . " " . $last_name;
       $response = ["status" => "success", "Location" => "/html/citizen/citizen_requests"];
       header("Content-Type: application/json");
       echo json_encode($response);
-    }else{
-      $response = ["status" => "fail","message" => "Error"];
+    } else {
+      $response = ["status" => "fail", "message" => "Error"];
       header("Content-Type: application/json");
       echo json_encode($response);
     }

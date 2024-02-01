@@ -1,13 +1,18 @@
 <?php
 
+//PHP script που εγγράφει έναν νέο διασώστη στην
+//βάση δεδομένων σε ένα νέο όχημα
+
 session_start();
 
 include("../../Mysql_connection.php");
 
 try {
 
+  //Σύνδεση με την βάση δεδομένων
   $db = db_connect();
 
+  //Παραλαβεί στοιχείων του διασώστη για εγγραφή με μέθοδο POST
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $first_name = $_POST['f_name'];
     $last_name = $_POST["l_name"];
@@ -15,6 +20,7 @@ try {
     $password = $_POST["password"];
     $truck_username = $_POST["truckUsername"];
 
+    //Queries για έλεγχο στοιχείων και εγγραφή του διασώστη
     $userUsernameCheck = false;
     $truckUsernameCheck = false;
 
@@ -37,7 +43,7 @@ try {
       $truckUsernameCheck = true;
     }
 
-
+    //Αποστολή μηνυμάτων στον client ανάλογα με το αποτέλεσμα του ελέγχου
     if ($truckUsernameCheck == false && $userUsernameCheck == true) {
       $response = ["status" => "fail", "message" => "Το username του διασώστη υπάρχει ήδη"];
       header("Content-Type: application/json");
@@ -52,6 +58,8 @@ try {
       echo json_encode($response);
     } else {
 
+
+      //Queries για την εγγραφή του διασώστη
       $truck_insert = $db->prepare("INSERT INTO vehicle VALUES
       (NULL,?,37.9838,23.7278)");
       $truck_insert->bind_param(
@@ -86,12 +94,16 @@ try {
       $insert_rescuer->execute();
 
       $db->close();
+
+      //Αποστολή μηνύματος επιτυχής εκτέλεσης στον client
       $response = ["status" => "success","message" => "Έγινε εγγραφή του διασώστη και του νέου οχήματος επιτυχώς"];
       header('Content-Type: application/json');
       echo json_encode($response);
     }
   }
 } catch (Exception $error) {
+  
+  //Αποστολή μηνύματος ανεπιτυχούς εκτέλεσης στον client
   header('Content-Type: application/json');
   echo (['status' => 'fail', "message" => $error->getMessage()]);
 }

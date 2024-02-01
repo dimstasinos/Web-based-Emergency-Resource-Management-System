@@ -1,10 +1,27 @@
+//Global μεταβλητές
 var itemSelected;
 var announcementSelected;
 
+//Event listener που εκτελείτε όταν φορτωθεί η HTML
 document.addEventListener('DOMContentLoaded', function () {
 
-  document.getElementById("submitAnnouncement").disabled = true;
+  document.getElementById("submitOffer").disabled = true;
 
+  fetch("/server/get_Session_info.php")
+    .then((jsonResponse) => jsonResponse.json())
+    .then(data => {
+      if (data.status === "error") {
+        console.error("Server Error:", data.Error);
+      } else {
+        document.getElementById("text").textContent = data.response.Name;
+      }
+    })
+    .catch((error) => console.error("Error:", error));
+
+
+
+
+  //Εμφάνιση ανακοινώσεων
   fetch("/server/citizen/announcement.php")
     .then(jsonResponse => jsonResponse.json())
     .then(data => {
@@ -12,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .catch((error) => console.error("Error:", error));
 
+  //Εμφάνιση προσφορών
   fetch("/server/citizen/offers.php")
     .then(jsonResponse => jsonResponse.json())
     .then(data => {
@@ -21,18 +39,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-
+//Συνάρτηση που εμφανίζει τον πίνακα με τις ανακοινώσεις
 function announcementTable(data) {
 
   const announcement_table = document.getElementById("announcements");
   announcement_table.innerHTML = "";
   document.getElementById("OfferSelected").innerHTML = "";
-  document.getElementById("submitAnnouncement").disabled = true;
+  document.getElementById("submitOffer").disabled = true;
 
-
-
+  //Προσπέραση δεδομέων
   data.forEach(announcement => {
 
+    //Δημιουργία στοιχείων πίνακα
     const row_table = document.createElement("tr");
     const item_name = document.createElement("td");
     const item_quantity = document.createElement("td");
@@ -51,8 +69,8 @@ function announcementTable(data) {
       items_quantity_array.push(item.quantity);
     });
 
-    item_name.innerHTML = items_name_array.join("<br>");
-    item_quantity.innerHTML = items_quantity_array.join("<br>");
+    item_name.innerHTML = items_name_array.join("<br><br>");
+    item_quantity.innerHTML = items_quantity_array.join("<br><br>");
     action.innerHTML = `<input type="radio" name="announcement"
      value="${announcement.announcement_id}" id="${announcement.announcement_id}">`;
 
@@ -62,6 +80,7 @@ function announcementTable(data) {
     row_table.appendChild(item_quantity);
     announcement_table.appendChild(row_table);
 
+    //Event listener που ενεργοποιείται όταν πατιέται κάποιο radiobutton
     document.getElementById(`${announcement.announcement_id}`).addEventListener("change", function () {
       itemSelected = [];
       announcementSelected = announcement;
@@ -70,7 +89,7 @@ function announcementTable(data) {
 
       selectedAnnouncement = announcement.announcement_id;
 
-
+      //Εμφάνιση ειδών ανακοίνωσης στον πίνακα
       announcement.items.forEach(item => {
         const rowOftable = document.createElement("tr");
         const item_id = document.createElement("td");
@@ -90,18 +109,18 @@ function announcementTable(data) {
         rowOftable.appendChild(selected);
         table.appendChild(rowOftable);
 
-
+        //Event listener ο οποίος ενεργοποιεί/απενεργοποιεί το κουμπί υποβολή
         document.getElementById(`${announcement.announcement_id}${item.item_id}`).addEventListener("change", function (event) {
           const checked = event.target.checked;
 
           if (checked) {
             itemSelected.push(item.item_id);
-            document.getElementById("submitAnnouncement").disabled = false;
+            document.getElementById("submitOffer").disabled = false;
           } else {
             var pos = item_checked.indexOf(item.item_id);
             itemSelected.splice(pos, 1)
             if (item_checked.length === 0) {
-              document.getElementById("submitAnnouncement").disabled = true;
+              document.getElementById("submitOffer").disabled = true;
             }
           }
         });
@@ -110,12 +129,15 @@ function announcementTable(data) {
   });
 }
 
-document.getElementById("submitAnnouncement").addEventListener("click", function () {
+//Event listener για την υποβολή της προσφοράς
+document.getElementById("submitOffer").addEventListener("click", function () {
 
+  //Συλλογή δεδομένων
   const announcement_id = {
     announcement_id: selectedAnnouncement,
   }
 
+  //Επικοινωνία με τον server για την υποβολή της προσφοράς
   fetch("/server/citizen/offer_insert.php", {
     method: "POST",
     headers: {
@@ -126,6 +148,7 @@ document.getElementById("submitAnnouncement").addEventListener("click", function
     .then(response => response.json())
     .then(offer_id => {
 
+      //Συλλογή δεδομένων
       var offer = {
         offer_id: parseInt(offer_id.id),
         announcement_id: selectedAnnouncement,
@@ -145,7 +168,7 @@ document.getElementById("submitAnnouncement").addEventListener("click", function
         });
       })
 
-
+      //Ανεβασμα προιόντων της προσφοράς
       fetch("/server/citizen/offer_upload", {
         method: "POST",
         headers: {
@@ -158,15 +181,15 @@ document.getElementById("submitAnnouncement").addEventListener("click", function
 
           document.getElementById("OfferSelected").innerHTML = "";
 
-
+          //Ανανέωση πίνακα ανακοινώσεων
           fetch("/server/citizen/announcement.php")
             .then(jsonResponse => jsonResponse.json())
             .then(data => {
-
               announcementTable(data,);
             })
             .catch((error) => console.error("Error:", error));
 
+          //Ανανέωση πίνακα προσφορών
           fetch("/server/citizen/offers.php")
             .then(jsonResponse => jsonResponse.json())
             .then(data => {
@@ -175,23 +198,21 @@ document.getElementById("submitAnnouncement").addEventListener("click", function
             .catch((error) => console.error("Error:", error));
         })
         .catch((error) => console.error("Error:", error));
-
-
     })
     .catch((error) => console.error("Error:", error));
-
 })
 
-
-
+//Συνάρτηση που δημιουργεί τον πίνακα προσφορών
 function offersTable(data) {
 
   const offer_table = document.getElementById("offers");
 
   offer_table.innerHTML = "";
 
+  //Προσπέλαση δεδομένων
   data.forEach(offer => {
 
+    //Δημιουργία του πίνακα
     const row_table = document.createElement("tr");
     const item_name = document.createElement("td");
     const item_quantity = document.createElement("td");
@@ -199,8 +220,6 @@ function offersTable(data) {
     const pick_date = document.createElement("td");
     const complete_date = document.createElement("td");
     const action = document.createElement("td");
-
-
 
     var items_name_array = [];
     var items_quantity_array = [];
@@ -210,21 +229,18 @@ function offersTable(data) {
       items_quantity_array.push(item.quantity);
     });
 
-
-
-    item_name.innerHTML = items_name_array.join("<br>");
-    item_quantity.innerHTML = items_quantity_array.join("<br>");
-
+    item_name.innerHTML = items_name_array.join("<br><br>");
+    item_quantity.innerHTML = items_quantity_array.join("<br><br>");
     sub_date.textContent = offer.submission_date;
+    action.innerHTML = `<button id="${offer.offer_id}">Ακύρωση</button>`;
+
+    //Έλεγχος εάν έχει παραλειφθεί η προσφορά
     if (offer.pickup_date === null) {
       pick_date.textContent = "-";
-
-      action.innerHTML = `<button id="${offer.offer_id}">Cancel</button>`;
-
     } else {
       pick_date.textContent = offer.pickup_date;
-      action.innerHTML = "";
     }
+
     if (offer.hasOwnProperty('complete_date')) {
       complete_date.textContent = offer.complete_date;
     } else {
@@ -240,8 +256,15 @@ function offersTable(data) {
 
     offer_table.appendChild(row_table);
 
+    if (offer.pickup_date === null) {
+      document.getElementById(`${offer.offer_id}`).disabled = false;
+    } else {
+      document.getElementById(`${offer.offer_id}`).disabled = true;
+    }
 
-    if (action.innerHTML !== "") {
+    if (document.getElementById(`${offer.offer_id}`).disabled === false) {
+
+      //Event listener για την διαγραφή κάποιας προσφοράς
       document.getElementById(`${offer.offer_id}`).addEventListener("click", function () {
 
         const data = {
@@ -250,7 +273,7 @@ function offersTable(data) {
           items: offer.items,
         };
 
-
+        //Επικοινωνία με τον server για διαγραφή της προσφοράς
         fetch("/server/citizen/offer_delete.php", {
           method: "POST",
           headers: {
@@ -260,6 +283,8 @@ function offersTable(data) {
         })
           .then((response) => response.json())
           .then((data) => {
+
+            //Ανανέωση του πίνακα προσφορών
             fetch('/server/citizen/offers.php')
               .then(jsonResponse => {
 
@@ -283,6 +308,7 @@ function offersTable(data) {
               })
               .catch(error => console.error('Error:', error));
 
+            //Ανανέωση του πίνακα των ανακοινώσεων
             fetch("/server/citizen/announcement.php")
               .then(jsonResponse => jsonResponse.json())
               .then(data => {
@@ -291,23 +317,16 @@ function offersTable(data) {
               .catch((error) => console.error("Error:", error));
           })
           .catch((error) => console.error("Error:", error))
-
       });
     }
   });
-
 }
 
-
-
-
+//Event listener που καθαρίζει τον πίνακα επιλεγμένης ανακοίνωσης
 document.getElementById("clear").addEventListener("click", function () {
   document.getElementById("OfferSelected").innerHTML = "";
-
-  document.getElementById("submitAnnouncement").disabled = true;
-
+  document.getElementById("submitOffer").disabled = true;
   const uncheck = document.getElementsByName("announcement");
-
   uncheck.forEach(radiobutton => {
     radiobutton.checked = false;
   });

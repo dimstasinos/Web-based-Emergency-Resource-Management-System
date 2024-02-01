@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
   fetch("/server/get_Session_info.php")
     .then((jsonResponse) => jsonResponse.json())
     .then(data => {
-      document.getElementById("text").textContent = data.Name;
+      document.getElementById("text").textContent = data.response.Name;
     })
     .catch((error) => console.error("Error:", error));
 
@@ -227,6 +227,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <strong>Submission date:</strong> ${request.submission_date}<br>
             <strong>Item:</strong> ${request.item_name}<br>
             <strong>Quantity:</strong> ${request.quantity}<br>
+            <button id="${request.request_id}">Αποδοχή</button><br>
             ----------------------------------`;
             } else {
               var info = `<br><strong>Request</strong><br>
@@ -898,8 +899,8 @@ document.addEventListener('DOMContentLoaded', function () {
             item.textContent = request.item_name
             quantity.textContent = request.quantity;
             action.innerHTML = `
-          <button id="request_${request.request_id}_accept">Ολοκλήρωση</button>
-          <button id="request_${request.request_id}_cancel">Ακύρωση</button>`;
+          <button class="accept" id="request_${request.request_id}_accept">Ολοκλήρωση</button>
+          <button class="decline" id="request_${request.request_id}_cancel">Ακύρωση</button>`;
 
             row_table.appendChild(name);
             row_table.appendChild(phone_number);
@@ -1125,8 +1126,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             date.innerHTML = date_sub[0] + "<br>" + date_sub[1];
             action.innerHTML = `
-          <button id="offer_${offer.offer_id}_accept">Complete</button>
-          <button id="offer_${offer.offer_id}_cancel">Cancel</button>`;
+          <button class="accept" id="offer_${offer.offer_id}_accept">Ολοκλήρωση</button>
+          <button class="decline" id="offer_${offer.offer_id}_cancel">Ακύρωση</button>`;
 
             var items_name_array = [];
             var items_quantity_array = [];
@@ -1135,8 +1136,8 @@ document.addEventListener('DOMContentLoaded', function () {
               items_quantity_array.push(items.quantity);
             })
 
-            item.innerHTML = items_name_array.join("<br>");
-            quantity.innerHTML = items_quantity_array.join("<br>");
+            item.innerHTML = items_name_array.join("<br><br>");
+            quantity.innerHTML = items_quantity_array.join("<br><br>");
 
             row_table.appendChild(name);
             row_table.appendChild(phone_number);
@@ -2368,8 +2369,8 @@ function mapPanelRefresh() {
             item.textContent = request.item_name
             quantity.textContent = request.quantity;
             action.innerHTML = `
-              <button id="request_${request.request_id}_accept">Ολοκλήρωση</button>
-              <button id="request_${request.request_id}_cancel">Ακύρωση</button>`;
+              <button class="accept" id="request_${request.request_id}_accept">Ολοκλήρωση</button>
+              <button class="decline" id="request_${request.request_id}_cancel">Ακύρωση</button>`;
 
             row_table.appendChild(name);
             row_table.appendChild(phone_number);
@@ -2597,8 +2598,8 @@ function mapPanelRefresh() {
 
             date.innerHTML = date_sub[0] + "<br>" + date_sub[1];
             action.innerHTML = `
-              <button id="offer_${offer.offer_id}_accept">Complete</button>
-              <button id="offer_${offer.offer_id}_cancel">Cancel</button>`;
+              <button class="accept" id="offer_${offer.offer_id}_accept">Ολοκλήρωση</button>
+              <button class="decline" id="offer_${offer.offer_id}_cancel">Ακύρωση</button>`;
 
             var items_name_array = [];
             var items_quantity_array = [];
@@ -2607,8 +2608,8 @@ function mapPanelRefresh() {
               items_quantity_array.push(items.quantity);
             })
 
-            item.innerHTML = items_name_array.join("<br>");
-            quantity.innerHTML = items_quantity_array.join("<br>");
+            item.innerHTML = items_name_array.join("<br><br>");
+            quantity.innerHTML = items_quantity_array.join("<br><br>");
 
             row_table.appendChild(name);
             row_table.appendChild(phone_number);
@@ -2946,7 +2947,7 @@ document.getElementById("tableOfItems").addEventListener("click", function (even
       name_table.textContent = item;
       item_quantity.innerHTML = `<input type="range" id="${id}" 
       min="0" max="${quantity}" value="0"></input><span id="quantity_${id}">0</span>`;
-      item_delete.innerHTML = `<button id=cancel_${id}>Ακύρωση</button>`;
+      item_delete.innerHTML = `<button id=cancel_${id}>Αφαίρεση</button>`;
 
       row_table.appendChild(item_id);
       row_table.appendChild(name_table);

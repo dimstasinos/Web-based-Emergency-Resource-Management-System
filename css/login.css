@@ -7,7 +7,7 @@
 
 body {
   font-family: 'Roboto Black', sans-serif;
-  background-image: url(../images/backround.JPEG);
+  background-image: url(../images/background.JPEG);
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -120,13 +120,9 @@ h1 {
   background-color: rgba(255, 255, 255, 1);
   border-radius: 15px;
   border: 1px solid #ced4da;
- 
   margin-bottom: 10px;
-  
   font-size: 16px;
- 
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
   transition: border-color 0.3s, box-shadow 0.3s; 
 }
 
