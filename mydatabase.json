@@ -1,0 +1,468 @@
+{
+    "code": 1,
+    "message": "Retrieved successfully",
+    "items": [
+        {
+            "id": "215",
+            "name": "Shoes",
+            "category": "7",
+            "details": [
+                {
+                    "detail_name": "",
+                    "detail_value": ""
+                }
+            ]
+        },
+        {
+            "id": "216",
+            "name": "Hoodie",
+            "category": "7",
+            "details": [
+                {
+                    "detail_name": "",
+                    "detail_value": ""
+                }
+            ]
+        },
+        {
+            "id": "214",
+            "name": "Trousers",
+            "category": "7",
+            "details": [
+                {
+                    "detail_name": "",
+                    "detail_value": ""
+                }
+            ]
+        },
+        {
+            "id": "106",
+            "name": "T-Shirt",
+            "category": "7",
+            "details": [
+                {
+                    "detail_name": "size",
+                    "detail_value": "XL"
+                }
+            ]
+        },
+        {
+            "id": "71",
+            "name": "Boots",
+            "category": "7",
+            "details": [
+                {
+                    "detail_name": "",
+                    "detail_value": ""
+                }
+            ]
+        },
+        {
+            "id": "68",
+            "name": "Raincoat",
+            "category": "7",
+            "details": [
+                {
+                    "detail_name": "",
+                    "detail_value": ""
+                }
+            ]
+        },
+        {
+            "id": "67",
+            "name": "Warm Jacket",
+            "category": "7",
+            "details": [
+                {
+                    "detail_name": "",
+                    "detail_value": ""
+                }
+            ]
+        },
+        {
+            "id": "65",
+            "name": "Underwear",
+            "category": "7",
+            "details": [
+                {
+                    "detail_name": "",
+                    "detail_value": ""
+                }
+            ]
+        },
+        {
+            "id": "66",
+            "name": "Socks",
+            "category": "7",
+            "details": [
+                {
+                    "detail_name": "",
+                    "detail_value": ""
+                }
+            ]
+        },
+        {
+            "id": "125",
+            "name": "Bandages",
+            "category": "35",
+            "details": [
+                {
+                    "detail_name": "Adhesive",
+                    "detail_value": "2 meters"
+                }
+            ]
+        },
+        {
+            "id": "154",
+            "name": "Painkillers",
+            "category": "35",
+            "details": [
+                {
+                    "detail_name": "Potency",
+                    "detail_value": "High"
+                }
+            ]
+        },
+        {
+            "id": "126",
+            "name": "Betadine",
+            "category": "35",
+            "details": [
+                {
+                    "detail_name": "Povidone iodine 10%",
+                    "detail_value": "240 ml"
+                }
+            ]
+        },
+        {
+            "id": "127",
+            "name": "Cotton",
+            "category": "35",
+            "details": [
+                {
+                    "detail_name": "100% Hydrofile",
+                    "detail_value": "70gr"
+                }
+            ]
+        },
+        {
+            "id": "143",
+            "name": "Surgical Mask",
+            "category": "35",
+            "details": [
+                {
+                    "detail_name": "1",
+                    "detail_value": ""
+                }
+            ]
+        },
+        {
+            "id": "31",
+            "name": "Disposable gloves",
+            "category": "16",
+            "details": [
+                {
+                    "detail_name": "",
+                    "detail_value": "100 pcs"
+                }
+            ]
+        },
+        {
+            "id": "33",
+            "name": "Antiseptic",
+            "category": "16",
+            "details": [
+                {
+                    "detail_name": "",
+                    "detail_value": "250ml"
+                }
+            ]
+        },
+        {
+            "id": "34",
+            "name": "First Aid Kit",
+            "category": "16",
+            "details": [
+                {
+                    "detail_name": "",
+                    "detail_value": ""
+                }
+            ]
+        },
+        {
+            "id": "45",
+            "name": "Multivitamines",
+            "category": "16",
+            "details": [
+                {
+                    "detail_name": "stock",
+                    "detail_value": "200"
+                }
+            ]
+        },
+        {
+            "id": "46",
+            "name": "Paracetamol",
+            "category": "16",
+            "details": [
+                {
+                    "detail_name": "stock",
+                    "detail_value": "2000"
+                },
+                {
+                    "detail_name": "dosage",
+                    "detail_value": "500mg"
+                }
+            ]
+        },
+        {
+            "id": "47",
+            "name": "Ibuprofen",
+            "category": "16",
+            "details": [
+                {
+                    "detail_name": "stock ",
+                    "detail_value": "10"
+                },
+                {
+                    "detail_name": "dosage",
+                    "detail_value": "200mg"
+                }
+            ]
+        },
+        {
+            "id": "114",
+            "name": "Thermometer",
+            "category": "16",
+            "details": [
+                {
+                    "detail_name": "",
+                    "detail_value": ""
+                }
+            ]
+        },
+        {
+            "id": "138",
+            "name": "Antihistamines",
+            "category": "16",
+            "details": [
+                {
+                    "detail_name": "pills",
+                    "detail_value": "10 pills"
+                }
+            ]
+        },
+        {
+            "id": "38",
+            "name": "Menstrual Pads",
+            "category": "21",
+            "details": [
+                {
+                    "detail_name": "stock",
+                    "detail_value": "500"
+                },
+                {
+                    "detail_name": "size",
+                    "detail_value": "3"
+                },
+                {
+                    "detail_name": "",
+                    "detail_value": ""
+                }
+            ]
+        },
+        {
+            "id": "39",
+            "name": "Tampon",
+            "category": "21",
+            "details": [
+                {
+                    "detail_name": "stock",
+                    "detail_value": "500"
+                },
+                {
+                    "detail_name": "size",
+                    "detail_value": "regular"
+                }
+            ]
+        },
+        {
+            "id": "40",
+            "name": "Toilet Paper",
+            "category": "21",
+            "details": [
+                {
+                    "detail_name": "stock",
+                    "detail_value": "300"
+                },
+                {
+                    "detail_name": "ply",
+                    "detail_value": "3"
+                }
+            ]
+        },
+        {
+            "id": "41",
+            "name": "Baby wipes",
+            "category": "21",
+            "details": [
+                {
+                    "detail_name": "volume",
+                    "detail_value": "500gr"
+                },
+                {
+                    "detail_name": "stock ",
+                    "detail_value": "500"
+                },
+                {
+                    "detail_name": "scent",
+                    "detail_value": "aloe"
+                }
+            ]
+        },
+        {
+            "id": "42",
+            "name": "Toothbrush",
+            "category": "21",
+            "details": [
+                {
+                    "detail_name": "stock",
+                    "detail_value": "500"
+                }
+            ]
+        },
+        {
+            "id": "43",
+            "name": "Toothpaste",
+            "category": "21",
+            "details": [
+                {
+                    "detail_name": "stock",
+                    "detail_value": "250"
+                }
+            ]
+        },
+        {
+            "id": "20",
+            "name": "Bread",
+            "category": "5",
+            "details": [
+                {
+                    "detail_name": "weight",
+                    "detail_value": "1kg"
+                },
+                {
+                    "detail_name": "type",
+                    "detail_value": "white"
+                }
+            ]
+        },
+        {
+            "id": "21",
+            "name": "Chocolate",
+            "category": "5",
+            "details": [
+                {
+                    "detail_name": "weight",
+                    "detail_value": "100g"
+                },
+                {
+                    "detail_name": "type",
+                    "detail_value": "milk chocolate"
+                },
+                {
+                    "detail_name": "brand",
+                    "detail_value": "ION"
+                }
+            ]
+        },
+        {
+            "id": "25",
+            "name": "Spaghetti",
+            "category": "5",
+            "details": [
+                {
+                    "detail_name": "grams",
+                    "detail_value": "500"
+                }
+            ]
+        },
+        {
+            "id": "26",
+            "name": "Croissant",
+            "category": "5",
+            "details": [
+                {
+                    "detail_name": "calories",
+                    "detail_value": "200"
+                }
+            ]
+        },
+        {
+            "id": "29",
+            "name": "Biscuits",
+            "category": "5",
+            "details": [
+                {
+                    "detail_name": "",
+                    "detail_value": ""
+                }
+            ]
+        },
+        {
+            "id": "115",
+            "name": "Rice",
+            "category": "5",
+            "details": [
+                {
+                    "detail_name": "",
+                    "detail_value": ""
+                }
+            ]
+        },
+        {
+            "id": "173",
+            "name": "flour",
+            "category": "5",
+            "details": [
+                {
+                    "detail_name": "grams",
+                    "detail_value": "1000"
+                }
+            ]
+        },
+        {
+            "id": "175",
+            "name": "nuts",
+            "category": "5",
+            "details": [
+                {
+                    "detail_name": "grams",
+                    "detail_value": "500"
+                }
+            ]
+        }
+    ],
+    "categories": [
+        {
+            "id": "7",
+            "category_name": "Clothing"
+        },
+        {
+            "id": "35",
+            "category_name": "First Aid "
+        },
+        {
+            "id": "16",
+            "category_name": "Medical Supplies"
+        },
+        {
+            "id": "21",
+            "category_name": "Personal Hygiene "
+        },
+        {
+            "id": "5",
+            "category_name": "Food"
+        }
+    ]
+}
