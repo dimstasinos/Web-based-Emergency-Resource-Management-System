@@ -213,11 +213,11 @@ INSERT INTO base VALUES
 (37.9838,23.7275);
 
 INSERT INTO users VALUES
-(NULL,'dimitrisstasinos',2002,'admin'),
-(NULL,'vasilispistiolas',2002,'admin'),
-(NULL,'verakarioti',2002,'admin'),
-(NULL,'spilios',5516,'citizen'),
-(NULL,'vera',7586,'citizen'),
+(NULL,'dimitrisstasinos','2002','admin'),
+(NULL,'vasilispistiolas','2002','admin'),
+(NULL,'verakarioti','2002','admin'),
+(NULL,'spilios','5516','citizen'),
+(NULL,'vera','7586','citizen'),
 (NULL,'dimitris','2003','rescuer'),
 (NULL,'marios','159753','rescuer');
 
@@ -234,13 +234,10 @@ INSERT INTO vehicle VALUES
 INSERT INTO rescuer values
 (6,'Nikos','Papadopoulos',1),
 (7,'Apostolis','Chasiotis',2),
-(8,'Nikoleta','Apostolopoulou',3);
+;
 
 
 INSERT INTO citizen VALUES
-(1,'Dimitris','Stasinos','6981254892',37.9593578107923,23.753819428699714),
-(2,'Marios','Kourtakis','6972344631',37.95989919257204,23.701968353689313),
-(3,'Vasilis','Pistiolas','6948799021',37.98547493214612,23.716905583907558),
 (4,'Spilios','Apostolopoulos','6951266432',37.98114527484491,23.74815350707955),
 (5,'Vera','Karioti','6931235321',37.95962850218102,23.725318514872313);
 
