@@ -167,8 +167,7 @@ insert into
 values
   (1, 20, 5),
   (2, 19, 1),
-  (3, 18, 7),
-  ;
+  (3, 18, 7);
 
 INSERT INTO
   base
@@ -193,12 +192,12 @@ VALUES
   (NULL, "oxima2", 37.984593, 23.657402),
   (NULL, "oxima3", 38.048832, 23.860135);
 
-insert into admins values 
-(1,'Dimitris','Stasinos'),
-(2,'Vasilis','Pistiolas'),
-(3,'Vera','Karioti')
-;
-
+insert into
+  admins
+values
+  (1, 'Dimitris', 'Stasinos'),
+  (2, 'Vasilis', 'Pistiolas'),
+  (3, 'Vera', 'Karioti');
 
 INSERT INTO
   rescuer
@@ -240,19 +239,38 @@ VALUES
 insert into
   citizen_offers
 values
-  (NULL, now(), NULL, 1, 4,1),
-  (NULL, now(), NULL, 2, 5,2);
+  (NULL, now(), NULL, 1, 4, 1),
+  (NULL, now(), NULL, 2, 5, 2);
 
-  insert into citizen_offers_complete values
-(1,'2024-02-04 13:23:44' ,'2024-02-10 10:00:00',1,4,now());
+insert into
+  citizen_offers_complete
+values
+  (
+    1,
+    '2024-02-04 13:23:44',
+    '2024-02-10 10:00:00',
+    1,
+    4,
+    now()
+  );
 
-  insert into citizen_requests_complete values
-(1,'2024-02-04 13:23:44', 5 ,'2024-02-10 10:00:00',1,4,18,now());
+insert into
+  citizen_requests_complete
+values
+  (
+    1,
+    '2024-02-04 13:23:44',
+    5,
+    '2024-02-10 10:00:00',
+    1,
+    4,
+    18,
+    now()
+  );
 
 insert into
   offer_items
 VALUES
-
   (4, 20, 8),
   (3, 25, 5);
 
@@ -261,5 +279,7 @@ insert into
 values
   (1, 18, 5);
 
-/*DROP TABLE item_details,item_category,citizen,vehicle,citizen_requests,citizen_requests_complete,base,
- users,vehicle_storage,offer_items,citizen_offers,citizen_offers_complete,items,rescuer,announcements,announcement_items;
+create index item_cat on items (item_category);
+
+/*DROP TABLE admins,item_details,item_category,citizen,vehicle,citizen_requests,citizen_requests_complete,base,
+users,vehicle_storage,offer_items,citizen_offers,citizen_offers_complete,items,rescuer,announcements,announcement_items;
