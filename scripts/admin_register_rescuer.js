@@ -7,21 +7,25 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(response => response.json())
     .then(data => {
 
-      var vehicle = document.getElementById("vehicleSelect");
-      vehicle.innerHTML = "";
+      if (data.status === "success") {
+        var vehicle = document.getElementById("vehicleSelect");
+        vehicle.innerHTML = "";
 
-      //Εμφάνιση username οχημάτων
-      if (data !== "") {
-        data.trucks.forEach(info => {
-          var vehicle_add = document.createElement("option");
-          vehicle_add.textContent = info.username;
-          vehicle_add.value = info.id;
-          vehicle.appendChild(vehicle_add);
-        });
+        //Εμφάνιση username οχημάτων
+        if (data.vehicle !== "") {
+          data.vehicle.trucks.forEach(info => {
+            var vehicle_add = document.createElement("option");
+            vehicle_add.textContent = info.username;
+            vehicle_add.value = info.id;
+            vehicle.appendChild(vehicle_add);
+          });
+        } else {
+          var noVehicle = document.createElement("option");
+          noVehicle.textContent = "Δεν υπάρχει κάποιο όχημα";
+          vehicle.appendChild(noVehicle);
+        }
       } else {
-        var noVehicle = document.createElement("option");
-        noVehicle.textContent = "Δεν υπάρχει κάποιο όχημα";
-        vehicle.appendChild(noVehicle);
+        console.error("Server Error:", data.Error);
       }
 
     })
@@ -94,7 +98,7 @@ document.getElementById("registerButton").addEventListener("click", function () 
       })
         .then(response => response.json())
         .then((data) => {
-          if (data.status === "fail") {
+          if (data.status === "error") {
             alert(data.message);
           } else if (data.status === "success") {
             document.getElementById("fname").value = "";
@@ -117,7 +121,7 @@ document.getElementById("registerButton").addEventListener("click", function () 
         formData.append("l_name", l_name);
         formData.append("username", username);
         formData.append("password", password);
-        formData.append("truckUsername", document.getElementById("vehicleUsername").value);       
+        formData.append("truckUsername", document.getElementById("vehicleUsername").value);
 
         fetch('/server/admin/register/register_rescuer_newVehicle.php', {
           method: "POST",
@@ -125,8 +129,8 @@ document.getElementById("registerButton").addEventListener("click", function () 
         })
           .then(response => response.json())
           .then((data) => {
-            if (data.status === "fail") {
-              alert(data.message);
+            if (data.status === "error") {
+              alert(data.Error);
             } else if (data.status === "success") {
               document.getElementById("fname").value = "";
               document.getElementById("lname").value = "";

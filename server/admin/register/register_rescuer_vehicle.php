@@ -72,5 +72,5 @@ try {
 
   //Αποστολή μηνύματος ανεπιτυχούς εκτέλεσης στον client
   header('Content-Type: application/json');
-  echo (['status' => 'fail', "message" => $error->getMessage()]);
+  echo (['status' => 'error', "message" => $error->getMessage()]);
 }

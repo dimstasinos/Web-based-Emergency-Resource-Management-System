@@ -5,7 +5,7 @@
 
 session_start();
 
-include("../Mysql_connection.php");
+include("../../Mysql_connection.php");
 
 try {
 
@@ -401,8 +401,9 @@ try {
   );
 
   //Αποστολή του geoJSON στον client
+  $json_data = json_encode($featureCollection);
   header('Content-Type: application/json');
-  echo json_encode($featureCollection);
+  echo $json_data;
 } catch (Exception $error) {
 
   //Αποστολή μηνύματος ανεπιτυχούς εκτέλεσης στον client
