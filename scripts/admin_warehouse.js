@@ -331,7 +331,7 @@ document.getElementById("change").addEventListener("click", function () {
         };
 
         //Αποστολή των νέων πληροφοριών του είδους στον server
-        fetch("/server/warehouse_admin/update_details.php", {
+        fetch("/server/admin/warehouse_admin/update_details.php", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -573,6 +573,9 @@ document.getElementById("add_new_cat").addEventListener("click", function () {
                   console.error("Server Error:", data.Error);
                 } else {
 
+
+                  alert("Η κατηγορία προστέθηκε")
+
                   //Ανανέωση λιστών που περιέχουν τις 
                   //κατηγορίες
                   onload_data = data;
@@ -687,7 +690,7 @@ document.getElementById("cat_name_change").addEventListener("click", function ()
 
         //Επικοινωνία με τον server για αλλαγή του ονόματος της
         //κατηγορίας
-        fetch("/server/warehouse_admin/update_category.php", {
+        fetch("/server/admin/warehouse_admin/update_category.php", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -701,7 +704,7 @@ document.getElementById("cat_name_change").addEventListener("click", function ()
             } else {
 
               //Ενημέρωση του πίνακα ειδών και λιστών
-              fetch("/server/warehouse_admin/database_extract.php")
+              fetch("/server/admin/warehouse_admin/database_extract.php")
                 .then((jsonResponse) => jsonResponse.json())
                 .then((data) => {
                   if (data.status === "error") {
@@ -773,6 +776,9 @@ document.getElementById("cat_name_delete").addEventListener("click", function ()
                 if (data.status === "error") {
                   console.error("Server Error:", data.Error);
                 } else {
+
+                  alert("Η κατηγορία διαγράφηκε")
+
                   onload_data = data;
                   categories_select(data);
                   categories_select_product(data);
@@ -797,8 +803,11 @@ document.getElementById("cat_name_delete").addEventListener("click", function ()
                   if (current_cat_3 !== cate_name.id) {
                     document.getElementById("cat_selected").value = current_cat_3;
                   }
-                  document.getElementById("id_cat").value = "";
-                  document.getElementById("cat_name").value = "";
+                  document.getElementById("id_cat").value = document.getElementById("category").value;
+                  
+                  const id=data.categories.find(cat_name=> cat_name.id=document.getElementById("category").value);
+                  document.getElementById("cat_name").value=id.id;
+
 
                 }
               })
@@ -862,6 +871,8 @@ document.getElementById("add_product").addEventListener("click", function () {
                   console.error("Server Error:", data.Error);
                 } else {
                   onload_data = data;
+
+                  alert("Το νέο είδος προστέθηκε")
 
                   document.getElementById("detail_name_text").value = "";
                   document.getElementById("detail_value_text").value = "";

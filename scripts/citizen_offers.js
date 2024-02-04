@@ -125,9 +125,10 @@ function announcementTable(data) {
             itemSelected.push(item.item_id);
             document.getElementById("submitOffer").disabled = false;
           } else {
-            var pos = item_checked.indexOf(item.item_id);
+            
+            var pos = itemSelected.indexOf(item.item_id);
             itemSelected.splice(pos, 1)
-            if (item_checked.length === 0) {
+            if (itemSelected.length === 0) {
               document.getElementById("submitOffer").disabled = true;
             }
           }
@@ -165,6 +166,7 @@ document.getElementById("submitOffer").addEventListener("click", function () {
           announcement_id: selectedAnnouncement,
           items: []
         };
+
 
         itemSelected.forEach(item => {
           var newItem;

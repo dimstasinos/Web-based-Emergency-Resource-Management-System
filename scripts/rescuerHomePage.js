@@ -2602,7 +2602,7 @@ function mapPanelRefresh() {
                                   console.error("Server Error:", data.Error);
                                 } else {
 
-                                  alert("Request Complete");
+                                  alert("Το αίτημα ολοκληρώθηκε");
 
                                   //Ανανέωση χάρτη
                                   mapPanelRefresh();
@@ -2632,7 +2632,7 @@ function mapPanelRefresh() {
 
                   //Εμφάνισει ειδοποιήσεων προς τον χρήστη για αποτυχία ολοκλήρωσης του αιτήματος
                   if (item_check === 0) {
-                    alert(`Το όχημα δεν έχει το προιόν "${request.item_name}  για να ολοκληρώσει το αίτημα`);
+                    alert(`Το όχημα δεν έχει το προιόν "${request.item_name}"  για να ολοκληρώσει το αίτημα`);
                   } else if (quantity_check === 0) {
                     alert(`Το όχημα δεν έχει την ποσότητα που απαιτείται για να ολοκληρωσει το αίτημα (Αίτημα: ${request.quantity}, Όχημα: ${cargo_quantity})`);
                   }

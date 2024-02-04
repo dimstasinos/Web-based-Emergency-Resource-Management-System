@@ -56,10 +56,10 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(response => response.json())
     .then(data => {
 
-      if (data.status === "success") {
+      if (data.status !== "error") {
 
         //Προσπέλαση του πίνακα
-        data.map.features.forEach((feature, index) => {
+        data.features.forEach((feature, index) => {
 
           //Κατηγορία του feuture
           const category = feature.properties.category;
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
           var check = 0;
 
           //Έλεγχος εάν ο χρήστης έχει προσφορές και αιτήματα
-          data.map.features.forEach((features_check, index_check) => {
+          data.features.forEach((features_check, index_check) => {
             if (features_check.geometry.coordinates[0] === feature.geometry.coordinates[0] &&
               features_check.geometry.coordinates[1] === feature.geometry.coordinates[1] &&
               (category !== "Base" || category !== "Truck Active" || category !== "Truck Inactive") &&
@@ -446,7 +446,7 @@ document.addEventListener('DOMContentLoaded', function () {
             //Τοποθέτηση γραμμών προς τα αιτήματα
             feature.properties.offers.forEach((cargo) => {
 
-              data.map.features.forEach((detail) => {
+              data.features.forEach((detail) => {
                 if (detail.properties.category === "Offer Pending" || detail.properties.category === "Offer Accepted") {
                   detail.properties.details.forEach((id) => {
                     if (id.offer_id === cargo.offer_id) {

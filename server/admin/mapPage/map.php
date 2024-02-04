@@ -401,10 +401,9 @@ try {
   );
 
   //Αποστολή του geoJSON στον client
-  $response = ["status" => "success", "map" =>  $featureCollection];
+  $json_data = json_encode($featureCollection);
   header('Content-Type: application/json');
-  echo json_encode($response);
-  
+  echo $json_data;
 } catch (Exception $error) {
 
   //Αποστολή μηνύματος ανεπιτυχούς εκτέλεσης στον client

@@ -56,6 +56,15 @@ try {
       $announcement_delete->execute();
     } else if ($announcement_response->num_rows == 1) {
 
+      $announcement_delete = $db->prepare("DELETE FROM announcement_items
+      where announcement_item_id=? and announcement_id=?");
+      $announcement_delete->bind_param(
+        "ii",
+        $item->item_id,
+        $data->announcement_id
+      );
+      $announcement_delete->execute();
+
       //Διαγραφή ανακοίνωσης
       $announcement_delete = $db->prepare("DELETE FROM announcements
       where announcement_id=?");
