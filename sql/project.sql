@@ -158,16 +158,17 @@ create table announcement_items(
 insert into
   announcements
 values
-  (null),
-  (null);
+  (1),
+  (2),
+  (3);
 
 insert into
   announcement_items
 values
   (1, 20, 5),
-  (1, 19, 1),
-  (2, 18, 7),
-  (2, 17, 2);
+  (2, 19, 1),
+  (3, 18, 7),
+  ;
 
 INSERT INTO
   base
@@ -191,6 +192,13 @@ VALUES
   (NULL, "oxima", 37.947241, 23.678174),
   (NULL, "oxima2", 37.984593, 23.657402),
   (NULL, "oxima3", 38.048832, 23.860135);
+
+insert into admins values 
+(1,'Dimitris','Stasinos'),
+(2,'Vasilis','Pistiolas'),
+(3,'Vera','Karioti')
+;
+
 
 INSERT INTO
   rescuer
@@ -222,34 +230,36 @@ VALUES
 INSERT INTO
   citizen_requests
 VALUES
-  (NULL, now(), 5, NULL, 2, 2, 17),
-  (NULL, now(), 2, now(), 1, 1, 16),
-  (NULL, now(), 4, NULL, NULL, 2, 19),
-  (NULL, now(), 2, NULL, NULL, 2, 25),
-  (NULL, now(), 7, now(), 1, 3, 18),
-  (NULL, now(), 3, NULL, NULL, 1, 20);
+  (NULL, now(), 5, NULL, 2, 4, 17),
+  (NULL, now(), 2, now(), 1, 5, 16),
+  (NULL, now(), 4, NULL, NULL, 4, 19),
+  (NULL, now(), 2, NULL, NULL, 4, 25),
+  (NULL, now(), 7, now(), 1, 5, 18),
+  (NULL, now(), 3, NULL, NULL, 5, 20);
 
 insert into
   citizen_offers
 values
-  (NULL, now(), NULL, NULL, 4),
-  (NULL, now(), NULL, NULL, 4),
-  (NULL, now(), NULL, NULL, 5),
-  (NULL, now(), NULL, NULL, 5);
+  (NULL, now(), NULL, 1, 4,1),
+  (NULL, now(), NULL, 2, 5,2);
+
+  insert into citizen_offers_complete values
+(1,'2024-02-04 13:23:44' ,'2024-02-10 10:00:00',1,4,now());
+
+  insert into citizen_requests_complete values
+(1,'2024-02-04 13:23:44', 5 ,'2024-02-10 10:00:00',1,4,18,now());
 
 insert into
   offer_items
 VALUES
-  (1, 17, 9),
-  (2, 18, 25),
-  (1, 19, 3),
-  (2, 20, 8),
+
+  (4, 20, 8),
   (3, 25, 5);
 
 insert into
   vehicle_storage
 values
-  (1, 20, 5);
+  (1, 18, 5);
 
 /*DROP TABLE item_details,item_category,citizen,vehicle,citizen_requests,citizen_requests_complete,base,
  users,vehicle_storage,offer_items,citizen_offers,citizen_offers_complete,items,rescuer,announcements,announcement_items;
