@@ -25,7 +25,11 @@ document.addEventListener('DOMContentLoaded', function () {
   fetch("/server/citizen/announcement.php")
     .then(jsonResponse => jsonResponse.json())
     .then(data => {
-      announcementTable(data);
+      if (data.status === "error") {
+        console.error("Server Error:", data.Error);
+      } else {
+        announcementTable(data);
+      }
     })
     .catch((error) => console.error("Error:", error));
 
@@ -33,7 +37,11 @@ document.addEventListener('DOMContentLoaded', function () {
   fetch("/server/citizen/offers.php")
     .then(jsonResponse => jsonResponse.json())
     .then(data => {
-      offersTable(data);
+      if (data.status === "error") {
+        console.error("Server Error:", data.Error);
+      } else {
+        offersTable(data);
+      }
     })
     .catch((error) => console.error("Error:", error));
 
@@ -148,56 +156,73 @@ document.getElementById("submitOffer").addEventListener("click", function () {
     .then(response => response.json())
     .then(offer_id => {
 
-      //Συλλογή δεδομένων
-      var offer = {
-        offer_id: parseInt(offer_id.id),
-        announcement_id: selectedAnnouncement,
-        items: []
-      };
+      if (offer_id.status === "error") {
+        console.error("Server Error:", data.Error);
+      } else {
+        //Συλλογή δεδομένων
+        var offer = {
+          offer_id: parseInt(offer_id.id),
+          announcement_id: selectedAnnouncement,
+          items: []
+        };
 
-      itemSelected.forEach(item => {
-        var newItem;
-        announcementSelected.items.forEach(id => {
-          if (item === id.item_id) {
-            newItem = {
-              item_id: id.item_id,
-              quantity: id.quantity
-            };
-            offer.items.push(newItem);
-          }
-        });
-      })
-
-      //Ανεβασμα προιόντων της προσφοράς
-      fetch("/server/citizen/offer_upload", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(offer),
-      })
-        .then(response => response.json())
-        .then(data => {
-
-          document.getElementById("OfferSelected").innerHTML = "";
-
-          //Ανανέωση πίνακα ανακοινώσεων
-          fetch("/server/citizen/announcement.php")
-            .then(jsonResponse => jsonResponse.json())
-            .then(data => {
-              announcementTable(data,);
-            })
-            .catch((error) => console.error("Error:", error));
-
-          //Ανανέωση πίνακα προσφορών
-          fetch("/server/citizen/offers.php")
-            .then(jsonResponse => jsonResponse.json())
-            .then(data => {
-              offersTable(data);
-            })
-            .catch((error) => console.error("Error:", error));
+        itemSelected.forEach(item => {
+          var newItem;
+          announcementSelected.items.forEach(id => {
+            if (item === id.item_id) {
+              newItem = {
+                item_id: id.item_id,
+                quantity: id.quantity
+              };
+              offer.items.push(newItem);
+            }
+          });
         })
-        .catch((error) => console.error("Error:", error));
+
+        //Ανεβασμα προιόντων της προσφοράς
+        fetch("/server/citizen/offer_upload", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(offer),
+        })
+          .then(response => response.json())
+          .then(data => {
+
+            if (data.status === "success") {
+
+              document.getElementById("OfferSelected").innerHTML = "";
+
+              //Ανανέωση πίνακα ανακοινώσεων
+              fetch("/server/citizen/announcement.php")
+                .then(jsonResponse => jsonResponse.json())
+                .then(data => {
+                  if (data.status === "error") {
+                    console.error("Server Error:", data.Error);
+                  } else {
+                    announcementTable(data);
+                  }
+                })
+                .catch((error) => console.error("Error:", error));
+
+              //Ανανέωση πίνακα προσφορών
+              fetch("/server/citizen/offers.php")
+                .then(jsonResponse => jsonResponse.json())
+                .then(data => {
+                  if (data.status === "error") {
+                    console.error("Server Error:", data.Error);
+                  } else {
+                    offersTable(data);
+                  }
+                })
+                .catch((error) => console.error("Error:", error));
+            } else {
+              console.error("Server Error:", data.Error);
+            }
+          })
+          .catch((error) => console.error("Error:", error));
+      }
     })
     .catch((error) => console.error("Error:", error));
 })
@@ -284,37 +309,52 @@ function offersTable(data) {
           .then((response) => response.json())
           .then((data) => {
 
-            //Ανανέωση του πίνακα προσφορών
-            fetch('/server/citizen/offers.php')
-              .then(jsonResponse => {
+            if (data.status === "success") {
 
-                const isEmpty = jsonResponse.headers.get('Content-Length');
-                if (isEmpty === '0') {
-                  return null;
-                }
+              //Ανανέωση του πίνακα προσφορών
+              fetch('/server/citizen/offers.php')
+                .then(jsonResponse => {
 
-                return jsonResponse.json();
-              })
-              .then(data => {
-                if (data !== null) {
-                  offersTable(data);
-                }
-                else {
-                  const table = document.getElementById("table_request");
-                  table.innerHTML = '';
-                  table.textContent = "There are now requests";
+                  const isEmpty = jsonResponse.headers.get('Content-Length');
+                  if (isEmpty === '0') {
+                    return null;
+                  }
 
-                }
-              })
-              .catch(error => console.error('Error:', error));
+                  return jsonResponse.json();
+                })
+                .then(data => {
 
-            //Ανανέωση του πίνακα των ανακοινώσεων
-            fetch("/server/citizen/announcement.php")
-              .then(jsonResponse => jsonResponse.json())
-              .then(data => {
-                announcementTable(data);
-              })
-              .catch((error) => console.error("Error:", error));
+                  if (data.status === "error") {
+                    console.error("Server Error:", data.Error);
+                  } else {
+
+                    if (data !== null) {
+                      offersTable(data);
+                    }
+                    else {
+                      const table = document.getElementById("table_request");
+                      table.innerHTML = '';
+                      table.textContent = "There are now requests";
+
+                    }
+                  }
+                })
+                .catch(error => console.error('Error:', error));
+
+              //Ανανέωση του πίνακα των ανακοινώσεων
+              fetch("/server/citizen/announcement.php")
+                .then(jsonResponse => jsonResponse.json())
+                .then(data => {
+                  if (data.status === "error") {
+                    console.error("Server Error:", data.Error);
+                  } else {
+                    announcementTable(data);
+                  }
+                })
+                .catch((error) => console.error("Error:", error));
+            } else {
+              console.error("Server Error:", data.Error);
+            }
           })
           .catch((error) => console.error("Error:", error))
       });

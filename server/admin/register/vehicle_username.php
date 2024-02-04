@@ -37,9 +37,10 @@ try {
   $db->close();
 
   //Αποστολή usernames στον client
-  $json_data = json_encode($data);
+  $response = ["status" => "success", "vehicle" =>  $data];
   header('Content-Type: application/json');
-  echo $json_data;
+  echo json_encode($response);
+
 } catch (Exception $error) {
 
   //Αποστολή μηνύματος ανεπιτυχούς εκτέλεσης στον client

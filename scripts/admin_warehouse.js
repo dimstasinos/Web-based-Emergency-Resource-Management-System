@@ -9,7 +9,11 @@ document.addEventListener("DOMContentLoaded", function () {
   fetch("/server/get_Session_info.php")
     .then((jsonResponse) => jsonResponse.json())
     .then(data => {
-      document.getElementById("text").textContent = data.response.Name;
+      if(data.status==="success"){
+        document.getElementById("text").textContent = data.response.Name;
+      }else{
+        console.error(data.message);
+      }
     })
     .catch((error) => console.error("Error:", error));
 
@@ -251,7 +255,7 @@ document.getElementById("delete").addEventListener("click", function () {
       })
         .then((response) => response.json())
         .then((data) => {
-
+          if(data.status==="success"){
           //Επικοινωνία με τον server για ανανέωση των ειδών του πίνακα
           fetch("/server/admin/warehouse_admin/database_extract.php")
             .then((jsonResponse) => jsonResponse.json())
@@ -268,6 +272,9 @@ document.getElementById("delete").addEventListener("click", function () {
               }
             })
             .catch((error) => console.error("Error:", error));
+          }else{
+            console.error(data.Error);
+          }
         })
         .catch((error) => console.error("Error:", error));
     } else {

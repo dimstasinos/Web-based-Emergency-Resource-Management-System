@@ -99,11 +99,12 @@ try {
       $response = ["status" => "success","message" => "Έγινε εγγραφή του διασώστη και του νέου οχήματος επιτυχώς"];
       header('Content-Type: application/json');
       echo json_encode($response);
+      
     }
   }
 } catch (Exception $error) {
   
   //Αποστολή μηνύματος ανεπιτυχούς εκτέλεσης στον client
   header('Content-Type: application/json');
-  echo (['status' => 'fail', "message" => $error->getMessage()]);
+  echo (['status' => 'error', "Error" => $error->getMessage()]);
 }

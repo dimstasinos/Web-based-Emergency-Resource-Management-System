@@ -37,7 +37,7 @@ if (isset($_SESSION['type'])) {
     <form id="loginForm">
       <div id="userInputs">
         <label for="username">Username</label>
-        <input type="text" id="username" placeholder="Εισαγωγή Username" name="username" required>
+        <input type="text" id="username" placeholder="Εισαγωγή Username" name="username" autocomplete="username" required>
 
         <label for="password">Κωδικός</label>
         <input type="password" id="password" placeholder="Εισαγωγή Κωδικού" name="password" required>

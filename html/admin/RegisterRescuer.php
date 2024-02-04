@@ -27,14 +27,14 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
 
       <div id="userInputs">
         <label for="fname">Όνομα</label>
-        <input type="text" id="fname" class="input" placeholder="Εισαγωγή Ονόματος" maxlength="12" required>
+        <input type="text" id="fname" class="input" placeholder="Εισαγωγή Ονόματος" maxlength="20" required>
 
         <label for="lname">Επώνυμο</label>
-        <input type="text" id="lname" class="input" placeholder="Εισαγωγή Επώνυμου" maxlength="12" required>
+        <input type="text" id="lname" class="input" placeholder="Εισαγωγή Επώνυμου" maxlength="20" required>
 
 
         <label for="username">Username</label>
-        <input type="text" id="username" class="input" placeholder="Δημιουργία Username" maxlength="12" required>
+        <input type="text" id="username" class="input" placeholder="Δημιουργία Username" maxlength="20" autocomplete="username" required>
 
 
         <label for="password">Κωδικός</label>

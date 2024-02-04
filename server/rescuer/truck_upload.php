@@ -1,7 +1,7 @@
 <?php
 
-//PHP script που αλλάζει την τοποθεσία της
-//βάσης
+//PHP script που ανανεώνει την 
+//τοποθεσία ενός οχήματος
 
 session_start();
 
@@ -18,28 +18,27 @@ try {
   //Σύνδεση με την βάση δεδομένων
   $db = db_connect();
 
-  //Query για διαγραφή προηγούμενης θέσης
-  //και αποθήκευση της νέας
-  $delete_base_loc = "DELETE FROM base";
-  $db->query($delete_base_loc);
+  //Query για ανανέωση της τοποθεσίας
+  $update_truck_loc = $db->prepare("UPDATE vehicle SET latitude=?,longitude=?
+  WHERE vehicle_id=?");
 
-  $update_base_loc = $db->prepare("INSERT INTO base VALUES (?,?)");
-
-  $update_base_loc->bind_param(
-    "dd",
-    $data->lati,
-    $data->long
+  $update_truck_loc->bind_param(
+    "ddi",
+    $data->lat,
+    $data->lng,
+    $data->id,
   );
+  $update_truck_loc->execute();
 
-  $update_base_loc->execute();
   $db->close();
 
   //Αποστολή μηνύματος επιτυχής εκτέλεσης στον client
   header('Content-Type: application/json');
   echo json_encode(['status' => 'success']);
+
 } catch (Exception $error) {
 
-  //Αποστολή μηνύματος ανεπιτυχούς εκτέλεσης στον client
+  //Αποστολή μηνύματος επιτυχής εκτέλεσης στον client
   header('Content-Type: application/json');
   echo json_encode(['status' => 'error', "Error" => $error->getMessage(), $data]);
 }
