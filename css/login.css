@@ -1,12 +1,5 @@
-@font-face {
-  font-family: 'Roboto Black';
-  src: url(/fonts/Roboto/Roboto-Black.ttf) format('truetype');
-  font-weight: 900;
-  font-style: normal;
-}
-
 body {
-  font-family: 'Roboto Black', sans-serif;
+  font-family: sans-serif;
   background-image: url(../images/background.JPEG);
   background-size: cover;
   background-position: center;

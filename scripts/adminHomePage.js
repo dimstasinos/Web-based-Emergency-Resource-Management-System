@@ -707,8 +707,8 @@ function initializeChart() {
 
   document.getElementById('startdate').value = "2024-01-04";
   document.getElementById('enddate').value = "2024-01-20";
-  const start_date = "2024-01-04  00:00:00";
-  const end_date = "2024-01-20 23:59:59";
+  const start_date = "2024-02-01  00:00:00";
+  const end_date = "2024-02-15 23:59:59";
 
   //Δημιουργία Object
   const data = {

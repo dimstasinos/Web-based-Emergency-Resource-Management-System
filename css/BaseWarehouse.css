@@ -1,14 +1,7 @@
-@font-face {
-  font-family: 'Roboto Black';
-  src: url(/fonts/Roboto/Roboto-Black.ttf) format('truetype');
-  font-weight: 900;
-  font-style: normal;
-}
-
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: sans-serif;
   background-color: antiquewhite;
 }
 
