@@ -155,42 +155,37 @@ create table announcement_items(
   constraint ANN_ITEM_ID FOREIGN KEY (announcement_item_id) REFERENCES items(item_id) on update CASCADE on delete CASCADE
 );
 
-insert into
-  announcements
-values
-  (1),
-  (2),
-  (3);
-
-insert into
-  announcement_items
-values
-  (1, 20, 5),
-  (2, 19, 1),
-  (3, 18, 7);
-
 INSERT INTO
   base
 VALUES
-  (37.9838, 23.7275);
+  (37.984003, 23.727950);
 
 INSERT INTO
   users
 VALUES
-  (NULL, 'dimitrisstasinos', '2002', 'admin'),
-  (NULL, 'vasilispistiolas', '2002', 'admin'),
-  (NULL, 'verakarioti', '2002', 'admin'),
-  (NULL, 'spilios', '5516', 'citizen'),
-  (NULL, 'vera', '7586', 'citizen'),
-  (NULL, 'dimitris', '2003', 'rescuer'),
-  (NULL, 'marios', '159753', 'rescuer');
+  (NULL, 'dimitris', '2000', 'admin'),
+  (NULL, 'vasilis', '2001', 'admin'),
+  (NULL, 'vera', '2002', 'admin'),
+  (NULL, 'spilios', 'sp20', 'citizen'),
+  (NULL, 'platon', '1234pl', 'citizen'),
+  (NULL, 'fotis', '159753', 'citizen'),
+  (NULL, 'xristos', '74123', 'citizen'),
+  (NULL, 'alex', '15963', 'citizen'),
+  (NULL, 'marios', '123456', 'rescuer'),
+  (NULL, 'giorgos', '65482', 'rescuer'),
+  (NULL, 'sakis', 'sa7485', 'rescuer');
 
 INSERT INTO
   vehicle
 VALUES
-  (NULL, "oxima", 37.947241, 23.678174),
-  (NULL, "oxima2", 37.984593, 23.657402),
-  (NULL, "oxima3", 38.048832, 23.860135);
+  (NULL, "oxima", 37.997674, 23.667426),
+  (NULL, "oxima_2", 38.024325, 23.789415),
+  (
+    NULL,
+    "oxima_3",
+    37.910309490512326,
+    23.711972203672794
+  );
 
 insert into
   admins
@@ -202,9 +197,9 @@ values
 INSERT INTO
   rescuer
 values
-  (6, 'Nikos', 'Papadopoulos', 1),
-  (7, 'Apostolis', 'Chasiotis', 2),
-;
+  (9, 'Marios', 'Tsarouxis', 1),
+  (10, 'Giorgos', 'Georgiou', 2),
+  (11, 'Sakis', 'Apostolou', 3);
 
 INSERT INTO
   citizen
@@ -213,18 +208,61 @@ VALUES
     4,
     'Spilios',
     'Apostolopoulos',
-    '6951266432',
-    37.98114527484491,
-    23.74815350707955
+    '6954658213',
+    38.037424013297475,
+    23.70968074010114
   ),
   (
     5,
-    'Vera',
-    'Karioti',
+    'Platonas',
+    'Nikolaou',
     '6931235321',
     37.95962850218102,
     23.725318514872313
+  ),
+  (
+    6,
+    'Fotis',
+    'Stravodimos',
+    '6951237598',
+    37.97295590950958,
+    23.780778997004717
+  ),
+  (
+    7,
+    'Xristos',
+    'Skordopoulos',
+    '69785624830',
+    37.940576857814335,
+    23.707412560205587
+  ),
+  (
+    8,
+    'Alexandros',
+    'Nikolaou',
+    '6981023456',
+    37.973213429715024,
+    23.65525324828876
   );
+
+insert into
+  announcements
+values
+  (NULL),
+  (NULL),
+  (NULL),
+  (NULL);
+
+insert into
+  announcement_items
+values
+  (1, 20, 5),
+  (1, 25, 3),
+  (2, 125, 2),
+  (2, 143, 6),
+  (2, 114, 2),
+  (3, 29, 3),
+  (3, 115, 7);
 
 INSERT INTO
   citizen_requests
@@ -282,4 +320,4 @@ values
 create index item_cat on items (item_category);
 
 /*DROP TABLE admins,item_details,item_category,citizen,vehicle,citizen_requests,citizen_requests_complete,base,
-users,vehicle_storage,offer_items,citizen_offers,citizen_offers_complete,items,rescuer,announcements,announcement_items;
+ users,vehicle_storage,offer_items,citizen_offers,citizen_offers_complete,items,rescuer,announcements,announcement_items;
