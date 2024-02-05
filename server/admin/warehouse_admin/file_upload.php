@@ -80,5 +80,5 @@ try {
 
   //Αποστολή μηνύματος ανεπιτυχούς εκτέλεσης στον client
   header('Content-Type: application/json');
-  echo json_encode(['status' => 'error', "Error" => $error->getMessage()]);
+  echo json_encode(['status' => 'error', "message" => $error->getMessage()]);
 }

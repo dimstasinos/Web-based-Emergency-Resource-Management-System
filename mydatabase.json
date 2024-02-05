@@ -271,7 +271,6 @@
         }
       ]
     },
-
     {
       "id": "40",
       "name": "Toilet Paper",
@@ -309,7 +308,7 @@
     {
       "id": "117",
       "name": "Towels",
-      "category": "22",
+      "category": "21",
       "details": [
         {
           "detail_name": "",
@@ -331,7 +330,7 @@
     {
       "id": "118",
       "name": "Wet Wipes",
-      "category": "22",
+      "category": "21",
       "details": [
         {
           "detail_name": "",
