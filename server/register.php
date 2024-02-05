@@ -88,7 +88,7 @@ try {
       $_SESSION["username"] = $username;
       $_SESSION["user_id"] = $user_id_row["user_id"];
       $_SESSION["Name"] = $first_name . " " . $last_name;
-      $response = ["status" => "success", "Location" => "/html/citizen/citizen_requests"];
+      $response = ["status" => "success", "Location" => "/html/citizen/Requests"];
       header("Content-Type: application/json");
       echo json_encode($response);
     } else {

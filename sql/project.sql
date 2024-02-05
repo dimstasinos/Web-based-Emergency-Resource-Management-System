@@ -171,7 +171,7 @@ VALUES
   (NULL, 'fotis', '159753', 'citizen'),
   (NULL, 'xristos', '74123', 'citizen'),
   (NULL, 'alex', '15963', 'citizen'),
-  (NULL, 'marios', '123456', 'rescuer'),
+  (NULL, 'marios', '96345', 'rescuer'),
   (NULL, 'giorgos', '65482', 'rescuer'),
   (NULL, 'sakis', 'sa7485', 'rescuer');
 
@@ -261,7 +261,8 @@ values
   (2, 125, 2),
   (2, 143, 6),
   (2, 114, 2),
-  (3, 29, 3);
+  (3, 29, 3),
+  (4, 173, 3);
 
 INSERT INTO
   citizen_requests
