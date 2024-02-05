@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .catch((error) => console.error("Error:", error));
 
   //Αρχικοποίηση χάρτη
-  var map = L.map('map').setView([37.9838, 23.7275], 13);
+  var map = L.map('map').setView([37.9838, 23.7275], 11);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
