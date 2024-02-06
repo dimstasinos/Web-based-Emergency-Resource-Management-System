@@ -79,10 +79,11 @@ document.addEventListener('DOMContentLoaded', function () {
               features_check.geometry.coordinates[1] === feature.geometry.coordinates[1] &&
               (category !== "Base" || category !== "Truck Active" || category !== "Truck Inactive") &&
               index !== index_check) {
+              if(category==="T")
               check = 1;
             }
-
           });
+
 
           //Επιλογή σωστού marker για κάθε κατηγορία feature του GeoJson και αρχικοποίησή του
           const customMarkers = L.marker([feature.geometry.coordinates[0], feature.geometry.coordinates[1]], {
