@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function () {
           if (category === "Base") {
 
             //Τοποθέτηση pop-up
-            customMarkers.bindPopup('<strong>Base</strong>');
+            customMarkers.bindPopup('<strong>Βάση</strong>');
 
             //Event listener για την αλλαγή της θέσης
             //της βάσης

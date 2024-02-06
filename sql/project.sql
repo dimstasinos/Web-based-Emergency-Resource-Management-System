@@ -137,7 +137,6 @@ CREATE TABLE offer_items (
   item_id_offer int not null,
   quantity int not null,
   primary key(offer_id_item, item_id_offer),
-  constraint OFFER_ID FOREIGN KEY (offer_id_item) REFERENCES citizen_offers(offer_id) on update CASCADE on delete CASCADE,
   constraint ITEM_ID FOREIGN KEY (item_id_offer) REFERENCES items(item_id) on update CASCADE on delete CASCADE
 );
 

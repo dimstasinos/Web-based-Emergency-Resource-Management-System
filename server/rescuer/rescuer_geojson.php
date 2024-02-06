@@ -24,25 +24,13 @@ try {
     while ($requests_row = $response->fetch_assoc()) {
 
       $check = 0;
+      $truck = 0;
       $citizen_info = $db->prepare("SELECT f_name,l_name,phone_number,latitude,longitude FROM citizen
     where citizen_id=?");
       $citizen_info->bind_param("i", $requests_row["req_citizen_id"]);
       $citizen_info->execute();
       $citizen_response = $citizen_info->get_result();
       $citizen_row = $citizen_response->fetch_assoc();
-
-      $citizen_data["citizen_id"] = $requests_row["req_citizen_id"];
-      $citizen_data["first_name"] = $citizen_row["f_name"];
-      $citizen_data["last_name"] = $citizen_row["l_name"];
-      $citizen_data["phone_number"] = $citizen_row["phone_number"];
-      $location["latitude"] = $citizen_row["latitude"];
-      $location["longitude"] = $citizen_row["longitude"];
-
-      $coordinates = array((float)$location["latitude"], (float)$location["longitude"]);
-      $geometry = array(
-        "type" => "Point",
-        "coordinates" => $coordinates
-      );
 
       $request_citizen = $db->prepare("SELECT * FROM citizen_requests where req_citizen_id=?");
       $request_citizen->bind_param("i", $requests_row["req_citizen_id"]);
@@ -54,6 +42,8 @@ try {
       while ($citizen_request_row = $requests_response->fetch_assoc()) {
 
         if ($citizen_request_row["req_veh_id"] == null || $citizen_request_row["req_veh_id"] == $_SESSION["truck_id"]) {
+
+          $truck = 1;
 
           $request_array = array(
             "request_id" => $citizen_request_row["request_id"],
@@ -91,23 +81,41 @@ try {
           $requests_details[] = $request_array;
         }
       }
-      if ($check == 1) {
-        $citizen_data["category"] = "Request Pending";
-      } else {
-        $citizen_data["category"] = "Request Accepted";
-      }
 
 
-      $citizen_data["details"] = $requests_details;
+      if ($truck == 1) {
+        if ($check == 1) {
+          $citizen_data["category"] = "Request Pending";
+        } else {
+          $citizen_data["category"] = "Request Accepted";
+        }
 
-      if (sizeof($citizen_data["details"]) != 0) {
-        $feature = array(
-          "type" => "Feature",
-          "geometry" => $geometry,
-          "properties" => $citizen_data,
+
+        $citizen_data["citizen_id"] = $requests_row["req_citizen_id"];
+        $citizen_data["first_name"] = $citizen_row["f_name"];
+        $citizen_data["last_name"] = $citizen_row["l_name"];
+        $citizen_data["phone_number"] = $citizen_row["phone_number"];
+        $location["latitude"] = $citizen_row["latitude"];
+        $location["longitude"] = $citizen_row["longitude"];
+
+        $coordinates = array((float)$location["latitude"], (float)$location["longitude"]);
+        $geometry = array(
+          "type" => "Point",
+          "coordinates" => $coordinates
         );
 
-        $features[] = $feature;
+
+        $citizen_data["details"] = $requests_details;
+
+        if (sizeof($citizen_data["details"]) != 0) {
+          $feature = array(
+            "type" => "Feature",
+            "geometry" => $geometry,
+            "properties" => $citizen_data,
+          );
+
+          $features[] = $feature;
+        }
       }
     }
   }
@@ -116,7 +124,7 @@ try {
   $response = $db->query($citizen_offer);
 
   $check = 0;
-
+  $truck = 0;
 
   if ($response->num_rows > 0) {
     while ($offer_row = $response->fetch_assoc()) {
@@ -130,18 +138,7 @@ try {
       $citizen_rensponse = $citizen_info->get_result();
       $citizen_row = $citizen_rensponse->fetch_assoc();
 
-      $citizen_data["citizen_id"] = $offer_row["offer_citizen_id"];
-      $citizen_data["first_name"] = $citizen_row["f_name"];
-      $citizen_data["last_name"] = $citizen_row["l_name"];
-      $citizen_data["phone_number"] = $citizen_row["phone_number"];
-      $location["latitude"] = $citizen_row["latitude"];
-      $location["longitude"] = $citizen_row["longitude"];
 
-      $coordinates = array((float)$location["latitude"], (float)$location["longitude"]);
-      $geometry = array(
-        "type" => "Point",
-        "coordinates" => $coordinates
-      );
 
       $offer_citizen = $db->prepare("SELECT * FROM citizen_offers where offer_citizen_id=?");
       $offer_citizen->bind_param("i", $offer_row["offer_citizen_id"]);
@@ -152,6 +149,8 @@ try {
 
       while ($citizen_offer_row = $offer_rensponse->fetch_assoc()) {
         if ($citizen_offer_row["offer_veh_id"] == null || $citizen_offer_row["offer_veh_id"] == $_SESSION["truck_id"]) {
+
+          $truck = 1;
 
           $offer_array = array(
             "offer_id" => $citizen_offer_row["offer_id"],
@@ -205,22 +204,37 @@ try {
 
           $offer_details[] = $offer_array;
         }
+        if ($truck == 1) {
+          if ($check == 1) {
+            $citizen_data["category"] = "Offer Pending";
+          } else {
+            $citizen_data["category"] = "Offer Accepted";
+          }
 
-        if ($check == 1) {
-          $citizen_data["category"] = "Offer Pending";
-        } else {
-          $citizen_data["category"] = "Offer Accepted";
+          $citizen_data["details"] = $offer_details;
+
+
+          $citizen_data["citizen_id"] = $offer_row["offer_citizen_id"];
+          $citizen_data["first_name"] = $citizen_row["f_name"];
+          $citizen_data["last_name"] = $citizen_row["l_name"];
+          $citizen_data["phone_number"] = $citizen_row["phone_number"];
+          $location["latitude"] = $citizen_row["latitude"];
+          $location["longitude"] = $citizen_row["longitude"];
+
+          $coordinates = array((float)$location["latitude"], (float)$location["longitude"]);
+          $geometry = array(
+            "type" => "Point",
+            "coordinates" => $coordinates
+          );
+
+          $feature = array(
+            "type" => "Feature",
+            "geometry" => $geometry,
+            "properties" => $citizen_data,
+          );
+          $features[] = $feature;
         }
-
-        $citizen_data["details"] = $offer_details;
       }
-
-      $feature = array(
-        "type" => "Feature",
-        "geometry" => $geometry,
-        "properties" => $citizen_data,
-      );
-      $features[] = $feature;
     }
   }
 

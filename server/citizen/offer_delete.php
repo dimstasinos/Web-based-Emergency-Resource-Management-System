@@ -69,6 +69,10 @@ try {
     }
   }
 
+  $delete_offer = $db->prepare("DELETE FROM offer_items WHERE offer_id_item=?");
+  $delete_offer->bind_param("i", $data->offer_id);
+  $delete_offer->execute();
+
   $db->close();
 
   //Αποστολή μηνύματος επιτυχής εκτέλεσης στον client

@@ -216,33 +216,33 @@ document.addEventListener('DOMContentLoaded', function () {
           if (category === "Base") {
 
             //Τοποθέτηση pop-up
-            customMarkers.bindPopup('<strong>Base</strong>');
+            customMarkers.bindPopup('<strong>Βάση</strong>');
 
           } else if (category === "Request Pending") {
 
             //Αρχικοποίηση και τοποθέτηση pop-up
             var requests = [];
             var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
-          <strong>Citizen</strong><br>
-          <strong>Name:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
-          <strong>Phone number:</strong> ${feature.properties.phone_number}<br>
+          <strong>Πολίτης</strong><br>
+          <strong>Όνομα:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
+          <strong>Αριθμός τηλεφώνου:</strong> ${feature.properties.phone_number}<br>
           ----------------------------------`;
 
             feature.properties.details.forEach((request) => {
               if (request.vehicle_id === null) {
-                var info = `<br><strong>Request</strong><br>
-            <strong>Submission date:</strong> ${request.submission_date}<br>
-            <strong>Item:</strong> ${request.item_name}<br>
-            <strong>Quantity:</strong> ${request.quantity}<br>
+                var info = `<br><strong>Αίτημα</strong><br>
+            <strong>Ημερομηνία καταχώρησης:</strong> ${request.submission_date}<br>
+            <strong>Είδος:</strong> ${request.item_name}<br>
+            <strong>Ποσότητα:</strong> ${request.quantity}<br>
             <button id="${request.request_id}">Αποδοχή</button><br>
             ----------------------------------`;
               } else {
-                var info = `<br><strong>Request</strong><br>
-              <strong>Submission date:</strong> ${request.submission_date}<br>
-              <strong>Item:</strong> ${request.item_name}<br>
-              <strong>Quantity:</strong> ${request.quantity}<br>
-              <strong>Pickup date:</strong> ${request.pickup_date}<br>
-              <strong>Vehicle username:</strong> ${request.vehicle_username}<br>
+                var info = `<br><strong>Αίτημα</strong><br>
+              <strong>Ημερομηνία καταχώρησης:</strong> ${request.submission_date}<br>
+              <strong>Είδος:</strong> ${request.item_name}<br>
+              <strong>Ποσότητα:</strong> ${request.quantity}<br>
+              <strong>Ημερομηνία αποδοχής:</strong> ${request.pickup_date}<br>
+              <strong>Username οχήματος:</strong> ${request.vehicle_username}<br>
               ----------------------------------`;
               }
               info_citizen = info_citizen + info;
@@ -261,18 +261,18 @@ document.addEventListener('DOMContentLoaded', function () {
             //Αρχικοποίηση και τοποθέτηση pop-up
             var requests = [];
             var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
-          <strong>Citizen</strong><br>
-          <strong>Name:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
-          <strong>Phone number:</strong> ${feature.properties.phone_number}<br>
+          <strong>Πολίτης</strong><br>
+          <strong>Όνομα:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
+          <strong>Αριθμός τηλεφώνου:</strong> ${feature.properties.phone_number}<br>
           ----------------------------------`;
 
             feature.properties.details.forEach((request) => {
-              var info = `<br><strong>Request</strong><br>
-            <strong>Submission date:</strong> ${request.submission_date}<br>
-            <strong>Item:</strong> ${request.item_name}<br>
-            <strong>Quantity:</strong> ${request.quantity}<br>
-            <strong>Pickup date:</strong> ${request.pickup_date}<br>
-            <strong>Vehicle username:</strong> ${request.vehicle_username}<br>
+              var info = `<br><strong>Αίτη,α</strong><br>
+            <strong>Ημερομηνία καταχώρησης:</strong> ${request.submission_date}<br>
+            <strong>Είδος:</strong> ${request.item_name}<br>
+            <strong>Ποσότητα:</strong> ${request.quantity}<br>
+            <strong>Ημερομηνία αποδοχής:</strong> ${request.pickup_date}<br>
+            <strong>Username οχήματος:</strong> ${request.vehicle_username}<br>
             ----------------------------------`;
               info_citizen = info_citizen + info;
               requests.push(request.request_id);
@@ -286,20 +286,20 @@ document.addEventListener('DOMContentLoaded', function () {
             //Αρχικοποίηση και τοποθέτηση pop-up
             var offers = [];
             var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
-          <strong>Citizen</strong><br>
-          <strong>Name:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
-          <strong>Phone number:</strong> ${feature.properties.phone_number}<br>
+          <strong>Πολίτης</strong><br>
+          <strong>Όνομα:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
+          <strong>Αριθμός τηλεφώνου:</strong> ${feature.properties.phone_number}<br>
           ----------------------------------`;
 
             feature.properties.details.forEach((offer) => {
-              var info = `<br><strong>Offer</strong><br>
-            <strong>Submission date:</strong> ${offer.submission_date}<br>
-            <strong>Pickup date:</strong> ${offer.pickup_date}<br>
-            <strong>Vehicle username:</strong> ${offer.vehicle_username}<br>`;
+              var info = `<br><strong>Προσφορά</strong><br>
+            <strong>Ημερομηνία καταχώρησης:</strong> ${offer.submission_date}<br>
+            <strong>Ημερομηνία αποδοχής:</strong> ${offer.pickup_date}<br>
+            <strong>Username οχήματος:</strong> ${offer.vehicle_username}<br>`;
 
               offer.items.forEach((item) => {
-                info = info + `<br><strong>Item:</strong> ${item.item_name}<br>
-               <strong>Quantity:</strong> ${item.quantity}<br>`;
+                info = info + `<br><strong>Είδος:</strong> ${item.item_name}<br>
+               <strong>Ποσότητα:</strong> ${item.quantity}<br>`;
               });
 
               offers.push(offer.offer_id);
@@ -315,21 +315,21 @@ document.addEventListener('DOMContentLoaded', function () {
             //Αρχικοποίηση και τοποθέτηση pop-up
             var offers = [];
             var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
-          <strong>Citizen</strong><br>
-          <strong>Name:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
-          <strong>Phone number:</strong> ${feature.properties.phone_number}<br>
+          <strong>Πολίτης</strong><br>
+          <strong>Όνομα:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
+          <strong>Αριθμός τηλεφώνου:</strong> ${feature.properties.phone_number}<br>
           ----------------------------------`;
 
 
             feature.properties.details.forEach((offer) => {
 
               if (offer.vehicle_id === null) {
-                var info = `<br><strong>Offer</strong><br>
-            <strong>Submission date:</strong> ${offer.submission_date}<br>`
+                var info = `<br><strong>Προσφορά</strong><br>
+            <strong>Ημερομηνία καταχώρησης:</strong> ${offer.submission_date}<br>`
 
                 offer.items.forEach((item) => {
-                  info = info + `<br><strong>Item:</strong> ${item.item_name}<br>
-               <strong>Quantity:</strong> ${item.quantity}<br>`
+                  info = info + `<br><strong>Είδος:</strong> ${item.item_name}<br>
+               <strong>Ποσότητα:</strong> ${item.quantity}<br>`
                 });
 
                 info_citizen = info_citizen + info + ` <button id="${offer.offer_id}">Αποδοχή</button><br>`
@@ -338,14 +338,14 @@ document.addEventListener('DOMContentLoaded', function () {
               } else {
 
                 //Αρχικοποίηση και τοποθέτηση pop-up
-                var info = `<br><strong>Offer</strong><br>
-              <strong>Submission date:</strong> ${offer.submission_date}<br>
-              <strong>Pickup date:</strong> ${offer.pickup_date}<br>
-              <strong>Vehicle username:</strong> ${offer.vehicle_username}<br>`;
+                var info = `<br><strong>Προσφορά</strong><br>
+              <strong>Ημερομηνία καταχώρησης:</strong> ${offer.submission_date}<br>
+              <strong>Ημερομηνία αποδοχής:</strong> ${offer.pickup_date}<br>
+              <strong>Username οχήματος:</strong> ${offer.vehicle_username}<br>`;
 
                 offer.items.forEach((item) => {
-                  info = info + `<br><strong>Item:</strong> ${item.item_name}<br>
-                 <strong>Quantity:</strong> ${item.quantity}<br>`;
+                  info = info + `<br><strong>Είδος:</strong> ${item.item_name}<br>
+                 <strong>Ποσότητα:</strong> ${item.quantity}<br>`;
                 });
                 info_citizen = info_citizen + info + ` ----------------------------------`;
                 offers.push(offer.offer_id);
@@ -359,21 +359,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
             //Αρχικοποίηση και τοποθέτηση pop-up
             var info_truck = `<div style="max-height: 150px; overflow-y: auto;">
-          <strong>Truck</strong><br>
+          <strong>Όχημα</strong><br>
           <strong>Username:</strong> ${feature.properties.vehicle_username}<br>
-          <strong>Status:</strong> ${feature.properties.category}<br>
+          <strong>Κατάσταση:</strong> ${feature.properties.category}<br>
           ----------------------------------`;
 
 
             if (feature.properties.cargo.length === 0) {
-              var info = `<br>The truck do not have any cargo`
+              var info = `<br>Το όχημα δεν έχει κάποιο φορτίο`
               info_truck = info_truck + info;
             } else {
-              info_truck = info_truck + `<br><strong>Cargo</strong><br>`
+              info_truck = info_truck + `<br><strong>Φορτίο</strong><br>`
 
               feature.properties.cargo.forEach(cargo => {
-                var info = `<strong>Item name:</strong> ${cargo.item_name}<br>
-              <strong>Quantity:</strong> ${cargo.quantity}<br><br>`
+                var info = `<strong>Όνομα είδους:</strong> ${cargo.item_name}<br>
+              <strong>Ποσότητα:</strong> ${cargo.quantity}<br><br>`
                 info_truck = info_truck + info;
               });
             }
@@ -433,21 +433,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
             //Αρχικοποίηση και τοποθέτηση pop-up
             var info_truck = `<div style="max-height: 150px; overflow-y: auto;">
-          <strong>Truck</strong><br>
+          <strong>Όχημα</strong><br>
           <strong>Username:</strong> ${feature.properties.vehicle_username}<br>
-          <strong>Status:</strong> ${feature.properties.category}<br>
+          <strong>Κατάσταση:</strong> ${feature.properties.category}<br>
           ----------------------------------`;
 
 
             if (feature.properties.cargo.length === 0) {
-              var info = `<br>The truck do not have any cargo`
+              var info = `<br>Το όχημα δεν έχει κάποιο φορτίο`
               info_truck = info_truck + info;
             } else {
-              info_truck = info_truck + `<br><strong>Cargo</strong><br>`
+              info_truck = info_truck + `<br><strong>Φορτίο</strong><br>`
 
               feature.properties.cargo.forEach(cargo => {
-                var info = `<strong>Item name:</strong> ${cargo.item_name}<br>
-              <strong>Quantity:</strong> ${cargo.quantity}<br><br>`
+                var info = `<strong>Όνομα είδους:</strong> ${cargo.item_name}<br>
+              <strong>Ποσότητα:</strong> ${cargo.quantity}<br><br>`
                 info_truck = info_truck + info;
               });
             }
@@ -1619,27 +1619,27 @@ function mapPanelRefresh() {
             //Αρχικοποίηση και τοποθέτηση pop-up
             var requests = [];
             var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
-            <strong>Citizen</strong><br>
-            <strong>Name:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
-            <strong>Phone number:</strong> ${feature.properties.phone_number}<br>
+            <strong>Πολίτης</strong><br>
+            <strong>Όνομα:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
+            <strong>Αριθμός τηλεφώνου:</strong> ${feature.properties.phone_number}<br>
             ----------------------------------`;
 
             feature.properties.details.forEach((request) => {
               if (request.vehicle_id === null) {
                 var info = `<br><strong>Request</strong><br>
-              <strong>Submission date:</strong> ${request.submission_date}<br>
-              <strong>Item:</strong> ${request.item_name}<br>
-              <strong>Quantity:</strong> ${request.quantity}<br>
+              <strong>Ημερομηνία καταχώρησης:</strong> ${request.submission_date}<br>
+              <strong>Είδος:</strong> ${request.item_name}<br>
+              <strong>Ποσότητα:</strong> ${request.quantity}<br>
               <button id="${request.request_id}">Αποδοχή</button><br>
               ----------------------------------`;
 
               } else {
                 var info = `<br><strong>Request</strong><br>
-                <strong>Submission date:</strong> ${request.submission_date}<br>
-                <strong>Item:</strong> ${request.item_name}<br>
-                <strong>Quantity:</strong> ${request.quantity}<br>
-                <strong>Pickup date:</strong> ${request.pickup_date}<br>
-                <strong>Vehicle username:</strong> ${request.vehicle_username}<br>
+                <strong>Ημερομηνία καταχώρησης:</strong> ${request.submission_date}<br>
+                <strong>Είδος:</strong> ${request.item_name}<br>
+                <strong>Ποσότητα:</strong> ${request.quantity}<br>
+                <strong>Ημερομηνία αποδοχής:</strong> ${request.pickup_date}<br>
+                <strong>Username οχήματος:</strong> ${request.vehicle_username}<br>
                 ----------------------------------`;
               }
               info_citizen = info_citizen + info;
@@ -1659,18 +1659,18 @@ function mapPanelRefresh() {
             //Αρχικοποίηση και τοποθέτηση pop-up
             var requests = [];
             var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
-            <strong>Citizen</strong><br>
-            <strong>Name:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
-            <strong>Phone number:</strong> ${feature.properties.phone_number}<br>
+            <strong>Πολίτης</strong><br>
+            <strong>Όνομα:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
+            <strong>Αριθμός τηλεφώνου:</strong> ${feature.properties.phone_number}<br>
             ----------------------------------`;
 
             feature.properties.details.forEach((request) => {
               var info = `<br><strong>Request</strong><br>
-              <strong>Submission date:</strong> ${request.submission_date}<br>
-              <strong>Item:</strong> ${request.item_name}<br>
-              <strong>Quantity:</strong> ${request.quantity}<br>
-              <strong>Pickup date:</strong> ${request.pickup_date}<br>
-              <strong>Vehicle username:</strong> ${request.vehicle_username}<br>
+              <strong>Ημερομηνία καταχώρησης:</strong> ${request.submission_date}<br>
+              <strong>Είδος:</strong> ${request.item_name}<br>
+              <strong>Ποσότητα:</strong> ${request.quantity}<br>
+              <strong>Ημερομηνία αποδοχής:</strong> ${request.pickup_date}<br>
+              <strong>Username οχήματος:</strong> ${request.vehicle_username}<br>
               ----------------------------------`;
               info_citizen = info_citizen + info;
               requests.push(request.request_id);
@@ -1684,20 +1684,20 @@ function mapPanelRefresh() {
             //Αρχικοποίηση και τοποθέτηση pop-up
             var offers = [];
             var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
-            <strong>Citizen</strong><br>
-            <strong>Name:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
-            <strong>Phone number:</strong> ${feature.properties.phone_number}<br>
+            <strong>Πολίτης</strong><br>
+            <strong>Όνομα:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
+            <strong>Αριθμός τηλεφώνου:</strong> ${feature.properties.phone_number}<br>
             ----------------------------------`;
 
             feature.properties.details.forEach((offer) => {
-              var info = `<br><strong>Offer</strong><br>
-              <strong>Submission date:</strong> ${offer.submission_date}<br>
-              <strong>Pickup date:</strong> ${offer.pickup_date}<br>
-              <strong>Vehicle username:</strong> ${offer.vehicle_username}<br>`;
+              var info = `<br><strong>Προσφορά</strong><br>
+              <strong>Ημερομηνία καταχώρησης:</strong> ${offer.submission_date}<br>
+              <strong>Ημερομηνία αποδοχής:</strong> ${offer.pickup_date}<br>
+              <strong>Username οχήματος:</strong> ${offer.vehicle_username}<br>`;
 
               offer.items.forEach((item) => {
-                info = info + `<br><strong>Item:</strong> ${item.item_name}<br>
-                 <strong>Quantity:</strong> ${item.quantity}<br>`;
+                info = info + `<br><strong>Είδος:</strong> ${item.item_name}<br>
+                 <strong>Ποσότητα:</strong> ${item.quantity}<br>`;
               });
 
               offers.push(offer.offer_id);
@@ -1713,35 +1713,35 @@ function mapPanelRefresh() {
             //Αρχικοποίηση και τοποθέτηση pop-up
             var offers = [];
             var info_citizen = `<div style="max-height: 150px; overflow-y: auto;">
-              <strong>Citizen</strong><br>
-              <strong>Name:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
-              <strong>Phone number:</strong> ${feature.properties.phone_number}<br>
+              <strong>Πολίτης</strong><br>
+              <strong>Όνομα:</strong> ${feature.properties.first_name} ${feature.properties.last_name}<br>
+              <strong>Αριθμός τηλεφώνου:</strong> ${feature.properties.phone_number}<br>
               ----------------------------------`;
 
 
             feature.properties.details.forEach((offer) => {
 
               if (offer.vehicle_id === null) {
-                var info = `<br><strong>Offer</strong><br>
-                  <strong>Submission date:</strong> ${offer.submission_date}<br>`
+                var info = `<br><strong>Προσφορά</strong><br>
+                  <strong>Ημερομηνία καταχώρησης:</strong> ${offer.submission_date}<br>`
 
                 offer.items.forEach((item) => {
-                  info = info + `<br><strong>Item:</strong> ${item.item_name}<br>
-                    <strong>Quantity:</strong> ${item.quantity}<br>`
+                  info = info + `<br><strong>Είδος:</strong> ${item.item_name}<br>
+                    <strong>Ποσότητα:</strong> ${item.quantity}<br>`
                 });
 
                 info_citizen = info_citizen + info + ` <button id="${offer.offer_id}">Accept</button><br>`
                   + ` ----------------------------------`;
                 offers.push(offer.offer_id);
               } else {
-                var info = `<br><strong>Offer</strong><br>
-                  <strong>Submission date:</strong> ${offer.submission_date}<br>
-                  <strong>Pickup date:</strong> ${offer.pickup_date}<br>
-                  <strong>Vehicle username:</strong> ${offer.vehicle_username}<br>`;
+                var info = `<br><strong>Προσφορά</strong><br>
+                  <strong>Ημερομηνία καταχώρησης:</strong> ${offer.submission_date}<br>
+                  <strong>Ημερομηνία αποδοχής:</strong> ${offer.pickup_date}<br>
+                  <strong>Username οχήματος:</strong> ${offer.vehicle_username}<br>`;
 
                 offer.items.forEach((item) => {
-                  info = info + `<br><strong>Item:</strong> ${item.item_name}<br>
-                    <strong>Quantity:</strong> ${item.quantity}<br>`;
+                  info = info + `<br><strong>Είδος:</strong> ${item.item_name}<br>
+                    <strong>Ποσότητα:</strong> ${item.quantity}<br>`;
                 });
                 info_citizen = info_citizen + info + ` ----------------------------------`;
                 offers.push(offer.offer_id);
@@ -1755,21 +1755,21 @@ function mapPanelRefresh() {
 
             //Αρχικοποίηση και τοποθέτηση pop-up
             var info_truck = `<div style="max-height: 150px; overflow-y: auto;">
-            <strong>Truck</strong><br>
+            <strong>Όχημα</strong><br>
             <strong>Username:</strong> ${feature.properties.vehicle_username}<br>
-            <strong>Status:</strong> ${feature.properties.category}<br>
+            <strong>Κατάσταση:</strong> ${feature.properties.category}<br>
             ----------------------------------`;
 
 
             if (feature.properties.cargo.length === 0) {
-              var info = `<br>The truck do not have any cargo`
+              var info = `<br>Το όχημα δεν έχει κάποιο φορτίο`
               info_truck = info_truck + info;
             } else {
-              info_truck = info_truck + `<br><strong>Cargo</strong><br>`
+              info_truck = info_truck + `<br><strong>Φορτίο</strong><br>`
 
               feature.properties.cargo.forEach(cargo => {
-                var info = `<strong>Item name:</strong> ${cargo.item_name}<br>
-                <strong>Quantity:</strong> ${cargo.quantity}<br><br>`
+                var info = `<strong>Όνομα είδους:</strong> ${cargo.item_name}<br>
+                <strong>Ποσότητα:</strong> ${cargo.quantity}<br><br>`
                 info_truck = info_truck + info;
               });
             }
@@ -1829,20 +1829,20 @@ function mapPanelRefresh() {
 
             //Αρχικοποίηση και τοποθέτηση pop-up
             var info_truck = `<div style="max-height: 150px; overflow-y: auto;">
-          <strong>Truck</strong><br>
+          <strong>Όχημα</strong><br>
           <strong>Username:</strong> ${feature.properties.vehicle_username}<br>
-          <strong>Status:</strong> ${feature.properties.category}<br>
+          <strong>Κατάσταση:</strong> ${feature.properties.category}<br>
           ----------------------------------`;
 
             if (feature.properties.cargo.length === 0) {
-              var info = `<br>The truck do not have any cargo`
+              var info = `<br>Το όχημα δεν έχει κάποιο φορτίο`
               info_truck = info_truck + info;
             } else {
-              info_truck = info_truck + `<br><strong>Cargo</strong><br>`
+              info_truck = info_truck + `<br><strong>Φορτίο</strong><br>`
 
               feature.properties.cargo.forEach(cargo => {
-                var info = `<strong>Item name:</strong> ${cargo.item_name}<br>
-              <strong>Quantity:</strong> ${cargo.quantity}<br><br>`
+                var info = `<strong>Όνομα είδους:</strong> ${cargo.item_name}<br>
+              <strong>Ποσότητα:</strong> ${cargo.quantity}<br><br>`
                 info_truck = info_truck + info;
               });
             }

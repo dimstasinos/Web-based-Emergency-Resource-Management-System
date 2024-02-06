@@ -184,7 +184,7 @@ function requestTable(data) {
 
     request_table.appendChild(row_table);
 
-    if (request.pickup_date === null) {
+    if (complete_date.textContent === "-") {
       document.getElementById(`${request.request_id}`).disabled = false;
 
     } else {

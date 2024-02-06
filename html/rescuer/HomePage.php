@@ -64,7 +64,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
 
 
     <div id="table_truck-container">
-      <h2>Φορτίο Οχήματος</h2>
+      <h1>Φορτίο Οχήματος</h1>
       <div id="table_cargo">
         <table id="Cargo">
           <thead>

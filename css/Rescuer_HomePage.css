@@ -41,6 +41,21 @@ body {
   background-color: #f9f9f9;
 }
 
+#map button {
+  background-color: #455da0;
+  color: white;
+  padding: 7px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 1px;
+}
+
+#map button:hover {
+  background-color: rgba(0, 2, 141, 0.925);
+}
+
+
 #tasks_panel {
   overflow-y: auto;
   width: 99%;
@@ -275,7 +290,7 @@ select {
   margin: 1px;
 }
 
-#load:hover{
+#load:hover {
   background-color: rgba(0, 2, 141, 0.925);
 }
 

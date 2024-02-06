@@ -80,7 +80,7 @@ function announcementTable(data) {
     item_name.innerHTML = items_name_array.join("<br><br>");
     item_quantity.innerHTML = items_quantity_array.join("<br><br>");
     action.innerHTML = `<input type="radio" name="announcement"
-     value="${announcement.announcement_id}" id="${announcement.announcement_id}">`;
+     value="${announcement.announcement_id}" id="${announcement.announcement_id}_check">`;
 
     row_table.appendChild(action);
     row_table.appendChild(announcement_id);
@@ -89,7 +89,7 @@ function announcementTable(data) {
     announcement_table.appendChild(row_table);
 
     //Event listener που ενεργοποιείται όταν πατιέται κάποιο radiobutton
-    document.getElementById(`${announcement.announcement_id}`).addEventListener("change", function () {
+    document.getElementById(`${announcement.announcement_id}_check`).addEventListener("change", function () {
       itemSelected = [];
       announcementSelected = announcement;
       const table = document.getElementById("OfferSelected");
@@ -283,7 +283,7 @@ function offersTable(data) {
 
     offer_table.appendChild(row_table);
 
-    if (offer.pickup_date === null) {
+    if (complete_date.textContent === "-") {
       document.getElementById(`${offer.offer_id}`).disabled = false;
     } else {
       document.getElementById(`${offer.offer_id}`).disabled = true;
