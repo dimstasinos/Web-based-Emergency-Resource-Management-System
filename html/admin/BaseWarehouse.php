@@ -60,7 +60,8 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
       <h1>Αποθήκη</h1>
       <div id="category_select-container">
         <label for="cat_list">Επιλογή κατηγορίας</label>
-        <select id="cat_list"></select>
+        <div id="cat_list"></div>
+        <button id="change_content">Επιβεβαίωση</button>
       </div>
       <div id=table_warehouse>
         <table id="table_admin">
@@ -95,7 +96,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
         </div>
         <div class="product_selected">
           <label for="name_selected">Όνομα</label>
-          <input type="text" id="name_selected">
+          <input type="text" id="name_selected" disabled>
         </div>
         <div class="product_selected">
           <label for="cat_selected">Κατηγορία</label>

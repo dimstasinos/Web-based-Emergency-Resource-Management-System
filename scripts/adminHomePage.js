@@ -413,7 +413,7 @@ document.addEventListener('DOMContentLoaded', function () {
               info_truck = info_truck + `<br><strong>Φορτίο</strong><br>`
 
               feature.properties.cargo.forEach(cargo => {
-                var info = `<strong>IΌνομα είδους:</strong> ${cargo.item_name}<br>
+                var info = `<strong>Όνομα είδους:</strong> ${cargo.item_name}<br>
               <strong>Ποσότητα:</strong> ${cargo.quantity}<br><br>`
                 info_truck = info_truck + info;
               });

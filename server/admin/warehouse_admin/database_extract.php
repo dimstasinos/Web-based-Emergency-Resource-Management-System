@@ -22,12 +22,32 @@ try {
   if ($response->num_rows > 0) {
 
     while ($row = $response->fetch_assoc()) {
-      $item_array = array(
-        "id" => $row["item_id"],
-        "name" => $row["item_name"],
-        "category" => $row["item_category"],
-        "quantity" => $row["item_quantity"]
-      );
+
+
+      $vehicle = $db->prepare("SELECT str_quantity FROM vehicle_storage where str_item_id=?");
+      $vehicle->bind_param("i", $row["item_id"]);
+      $vehicle->execute();
+      $vehicle_response = $vehicle->get_result();
+
+      if ($vehicle_response->num_rows > 0) {
+        while ($vehicle_row = $vehicle_response->fetch_assoc()) {
+          $quantity = $row["item_quantity"] + $vehicle_row["str_quantity"];
+
+          $item_array = array(
+            "id" => $row["item_id"],
+            "name" => $row["item_name"],
+            "category" => $row["item_category"],
+            "quantity" => $quantity
+          );
+        }
+      } else {
+        $item_array = array(
+          "id" => $row["item_id"],
+          "name" => $row["item_name"],
+          "category" => $row["item_category"],
+          "quantity" => $row["item_quantity"]
+        );
+      }
 
       $details = array();
       $mysql = $db->prepare("SELECT * FROM item_details where item_detail_id=?");

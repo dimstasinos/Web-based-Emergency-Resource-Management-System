@@ -1,6 +1,7 @@
 //Global μεταβλητές
 var onload_data;
 var item_selected = 0;
+var categories_selected = [];
 
 //Event listener που εκτελείτε όταν φορτωθεί η HTML
 document.addEventListener("DOMContentLoaded", function () {
@@ -9,9 +10,9 @@ document.addEventListener("DOMContentLoaded", function () {
   fetch("/server/get_Session_info.php")
     .then((jsonResponse) => jsonResponse.json())
     .then(data => {
-      if(data.status==="success"){
+      if (data.status === "success") {
         document.getElementById("text").textContent = data.response.Name;
-      }else{
+      } else {
         console.error(data.message);
       }
     })
@@ -29,12 +30,20 @@ document.addEventListener("DOMContentLoaded", function () {
         //Έλεγχος εάν υπάρχει κάποιο είδος
         if (data.categories.length !== 0 && data.items.length !== 0) {
 
+
+          data.categories.forEach(cat => {
+            categories_selected.push(cat.id);
+          })
+
           //Συμπλήρωση της λίστα με τις κατηγορίες
           categories_select(data);
 
+          for (var i = 0; i < document.getElementsByClassName("categories").length; i++) {
+            document.getElementsByClassName("categories")[i].checked = true;
+          }
+
           //Εμφάνιση των ειδών της επιλεγμένης κατηγορίας
-          var selected_cat = document.getElementById("cat_list").value;
-          items_select(data, selected_cat);
+          items_select(data, categories_selected);
 
           //Συμπλήρωση της λίστα με τις κατηγορίες
           categories_select_product(data);
@@ -56,12 +65,6 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
 
           //Εμφάνιση ειδοποιήσεωβ ότι η βάση είναι κενή
-          const list = document.getElementById("cat_list");
-          list.innerHTML = "";
-          var select_add = document.createElement("option");
-          select_add.textContent = "Η Βάση δεδομένων είναι κενή";
-          list.appendChild(select_add);
-
           const list_2 = document.getElementById("cat_selected");
           list_2.innerHTML = "";
           var select_add_2 = document.createElement("option");
@@ -255,24 +258,23 @@ document.getElementById("delete").addEventListener("click", function () {
       })
         .then((response) => response.json())
         .then((data) => {
-          if(data.status==="success"){
-          //Επικοινωνία με τον server για ανανέωση των ειδών του πίνακα
-          fetch("/server/admin/warehouse_admin/database_extract.php")
-            .then((jsonResponse) => jsonResponse.json())
-            .then((data) => {
-              if (data.status === "error") {
-                console.error("Server Error:", data.Error);
-              } else {
+          if (data.status === "success") {
+            //Επικοινωνία με τον server για ανανέωση των ειδών του πίνακα
+            fetch("/server/admin/warehouse_admin/database_extract.php")
+              .then((jsonResponse) => jsonResponse.json())
+              .then((data) => {
+                if (data.status === "error") {
+                  console.error("Server Error:", data.Error);
+                } else {
 
-                //Ανανέωση πίνακα ειδών και των λεπτομεριών
-                onload_data = data;
-                var selected_cat = document.getElementById("cat_list").value;
-                items_select(data, selected_cat);
-                radiobutton_refresh();
-              }
-            })
-            .catch((error) => console.error("Error:", error));
-          }else{
+                  //Ανανέωση πίνακα ειδών και των λεπτομεριών
+                  onload_data = data;
+                  items_select(data, categories_selected);
+                  radiobutton_refresh();
+                }
+              })
+              .catch((error) => console.error("Error:", error));
+          } else {
             console.error(data.Error);
           }
         })
@@ -354,9 +356,7 @@ document.getElementById("change").addEventListener("click", function () {
 
                     //Συνάρτηση που ανανεώνει τα είδη του πίνακα
                     onload_data = data;
-                    var selected_cat =
-                      document.getElementById("cat_list").value;
-                    items_select(data, selected_cat);
+                    items_select(data, categories_selected);
                     radiobutton_refresh();
                   }
                 })
@@ -428,9 +428,7 @@ document.getElementById("add").addEventListener("click", function () {
                       console.error("Server Error:", data.Error);
                     } else {
                       onload_data = data;
-                      var selected_cat =
-                        document.getElementById("cat_list").value;
-                      items_select(data, selected_cat);
+                      items_select(data, categories_selected);
                       radiobutton_refresh();
                     }
                   })
@@ -461,7 +459,12 @@ document.getElementById("cat_change_button").addEventListener("click", function 
     //Συλλογή πληροφοριών
     const id = document.getElementById("id_selected").value;
     const new_category_id = document.getElementById("cat_selected").value;
-    const old_category_id = document.getElementById("cat_list").value;
+    var old_category_id
+    onload_data.items.forEach(item =>{
+      if(item.id===id){
+        old_category_id=item.category;
+      }
+    })
 
     if (new_category_id !== old_category_id) {
       const data = {
@@ -491,9 +494,8 @@ document.getElementById("cat_change_button").addEventListener("click", function 
                   console.error("Server Error:", data.Error);
                 } else {
                   onload_data = data;
-                  items_select(data, new_category_id);
+                  items_select(data, categories_selected);
                   radiobutton_refresh();
-                  document.getElementById("cat_list").value = new_category_id;
                 }
               })
               .catch((error) => console.error("Error:", error));
@@ -560,7 +562,6 @@ document.getElementById("add_new_cat").addEventListener("click", function () {
           if (data.status === "error") {
             console.error("Server Error:", data.Error);
           } else {
-            temp = document.getElementById("cat_list").value;
             temp_2 = document.getElementById("cat_selected").value;
             temp_3 = document.getElementById("cat_new").value;
             temp_4 = document.getElementById("category").value;
@@ -584,7 +585,6 @@ document.getElementById("add_new_cat").addEventListener("click", function () {
                   category_select_det(data);
                   categories_select_new(data);
 
-                  document.getElementById("cat_list").value = temp;
                   document.getElementById("cat_selected").value = temp_2;
                   document.getElementById("cat_new").value = temp_3;
                   document.getElementById("category").value = temp_4;
@@ -600,26 +600,6 @@ document.getElementById("add_new_cat").addEventListener("click", function () {
   } else {
     alert("Δώστε ένα όνομα");
   }
-});
-
-//Event listener που αλλάζει τον πίνακα ανάλογα με την επιλεγμένη κατηγορία
-document.getElementById("cat_list").addEventListener("change", function () {
-  fetch("/server/admin/warehouse_admin/database_extract.php")
-    .then((jsonResponse) => jsonResponse.json())
-    .then((data) => {
-      if (data.status === "error") {
-        console.error("Server Error:", data.Error);
-      } else {
-        onload_data = data;
-        const selected_cat = document.getElementById("cat_list").value;
-        items_select(data, selected_cat);
-
-        document.getElementById("id_selected").value = "";
-        document.getElementById("name_selected").value = "";
-        document.getElementById("detail_select").innerHTML = "";
-      }
-    })
-    .catch((error) => console.error("Error:", error));
 });
 
 //Event listener που ενημερώνει την βάση με τα δεδομένα από την 
@@ -645,9 +625,19 @@ document.getElementById("online_data").addEventListener("click", function () {
 
               //Ενημέρωση της σελίδας με τα δεδομένα
               onload_data = data;
+
+              data.categories.forEach(cat => {
+                categories_selected.push(cat.id);
+              })
+
               categories_select(data);
-              const selected_cat = document.getElementById("cat_list").value;
-              items_select(data, selected_cat);
+
+              for (var i = 0; i < document.getElementsByClassName("categories").length; i++) {
+                document.getElementsByClassName("categories")[i].checked = true;
+              }
+
+            
+              items_select(data, categories_selected);
               categories_select_product(data);
               category_select_det(data);
               document.getElementById("detail_select").innerHTML = "";
@@ -684,7 +674,6 @@ document.getElementById("cat_name_change").addEventListener("click", function ()
         };
 
         var current_cat = document.getElementById("category").value;
-        var current_cat_1 = document.getElementById("cat_list").value;
         var current_cat_2 = document.getElementById("cat_new").value;
         var current_cat_3 = document.getElementById("cat_selected").value;
 
@@ -715,9 +704,8 @@ document.getElementById("cat_name_change").addEventListener("click", function ()
                     categories_select_product(data);
                     category_select_det(data);
                     categories_select_new(data);
-                    items_select(data, current_cat_1);
+                    items_select(data, categories_selected);
                     document.getElementById("category").value = current_cat;
-                    document.getElementById("cat_list").value = current_cat_1;
                     document.getElementById("cat_selected").value = current_cat_3;
                     document.getElementById("cat_new").value = current_cat_2;
                   }
@@ -750,7 +738,6 @@ document.getElementById("cat_name_delete").addEventListener("click", function ()
       };
 
       var current_cat = document.getElementById("category").value;
-      var current_cat_1 = document.getElementById("cat_list").value;
       var current_cat_2 = document.getElementById("cat_new").value;
       var current_cat_3 = document.getElementById("cat_selected").value;
 
@@ -789,14 +776,6 @@ document.getElementById("cat_name_delete").addEventListener("click", function ()
                   if (current_cat !== cate_name.id) {
                     document.getElementById("category").value = current_cat;
                   }
-                  if (current_cat_1 !== cate_name.id) {
-                    items_select(data, current_cat_1);
-                    document.getElementById("cat_list").value = current_cat_1;
-                  } else {
-                    var selected_cat =
-                      document.getElementById("cat_list").value;
-                    items_select(data, selected_cat);
-                  }
                   if (current_cat_2 !== cate_name.id) {
                     document.getElementById("cat_new").value = current_cat_2;
                   }
@@ -804,9 +783,9 @@ document.getElementById("cat_name_delete").addEventListener("click", function ()
                     document.getElementById("cat_selected").value = current_cat_3;
                   }
                   document.getElementById("id_cat").value = document.getElementById("category").value;
-                  
-                  const id=data.categories.find(cat_name=> cat_name.id=document.getElementById("category").value);
-                  document.getElementById("cat_name").value=id.id;
+
+                  const id = data.categories.find(cat_name => cat_name.id = document.getElementById("category").value);
+                  document.getElementById("cat_name").value = id.id;
 
 
                 }
@@ -903,11 +882,9 @@ document.getElementById("add_product").addEventListener("click", function () {
                     }
                   }
 
-                  items_select(data, document.getElementById("cat_new").value);
+                  items_select(data, categories_selected);
                   document.getElementById("quantity_selected").value =
                     product.quantity;
-                  document.getElementById("cat_list").value =
-                    document.getElementById("cat_new").value;
                   item_selected = 1;
                 }
               })
@@ -959,9 +936,7 @@ document.getElementById("quantity_button").addEventListener("click", function ()
                   console.error("Server Error:", data.Error);
                 } else {
                   onload_data = data;
-                  var selected_cat =
-                    document.getElementById("cat_list").value;
-                  items_select(data, selected_cat);
+                  items_select(data, categories_selected);
                 }
               })
               .catch((error) => console.error("Error:", error));
@@ -995,13 +970,37 @@ function categories_select(data) {
 
   data.categories.forEach((category) => {
     if (category.category_name !== "" && category.category_name !== "-----") {
-      var select_add = document.createElement("option");
-      select_add.textContent = category.category_name;
+      var select_add = document.createElement("input");
+      select_add.type = 'checkbox';
+      select_add.id = category.id;
       select_add.value = category.id;
+      select_add.className = "categories";
+
+      const label = document.createElement('label');
+      label.textContent = category.category_name;
+
       list.appendChild(select_add);
+      list.appendChild(label);
     }
   });
 }
+
+document.getElementById('change_content').addEventListener('click', function () {
+  // Επιλογή όλων των checkboxes
+  const checkboxes = document.querySelectorAll('.categories');
+
+  categories_selected = [];
+
+  checkboxes.forEach((checkbox) => {
+    if (checkbox.checked) {
+      categories_selected.push(checkbox.value);
+    }
+  });
+
+  items_select(onload_data, categories_selected);
+  
+});
+
 
 //Συνάρτηση που τοποθετεί τις κατηγορίες ειδών
 //σε λίστα
@@ -1059,43 +1058,45 @@ function items_select(data, selected_cat) {
   table.innerHTML = "";
 
   data.items.forEach((item) => {
-    if (item.name != "" && item.category === selected_cat) {
-      const row_table = document.createElement("tr");
-      const id_table = document.createElement("td");
-      const name_table = document.createElement("td");
-      const category_table = document.createElement("td");
-      const detail_table = document.createElement("td");
-      const item_quantity = document.createElement("td");
+    selected_cat.forEach(category => {
+      if (item.name != "" && item.category === category) {
+        const row_table = document.createElement("tr");
+        const id_table = document.createElement("td");
+        const name_table = document.createElement("td");
+        const category_table = document.createElement("td");
+        const detail_table = document.createElement("td");
+        const item_quantity = document.createElement("td");
 
-      id_table.textContent = item.id;
-      name_table.textContent = item.name;
-      item_quantity.textContent = item.quantity;
-      const category = data.categories.find((category) =>
-        category.id === item.category
-      );
-      category_table.textContent = category.category_name;
+        id_table.textContent = item.id;
+        name_table.textContent = item.name;
+        item_quantity.textContent = item.quantity;
+        const category = data.categories.find((category) =>
+          category.id === item.category
+        );
+        category_table.textContent = category.category_name;
 
-      const detail_get = item.details.map((detail) => {
-        if (detail.detail_name && detail.detail_value) {
-          return `-${detail.detail_name}: ${detail.detail_value}-`;
-        } else if (detail.detail_name && detail.detail_value === "") {
-          return `${detail.detail_name}:`;
-        } else if (detail.detail_name === "" && detail.detail_value) {
-          return `---: ${detail.detail_value}`;
-        } else {
-          return " ";
-        }
-      });
-      detail_table.innerHTML = detail_get.join("<br>");
+        const detail_get = item.details.map((detail) => {
+          if (detail.detail_name && detail.detail_value) {
+            return `-${detail.detail_name}: ${detail.detail_value}-`;
+          } else if (detail.detail_name && detail.detail_value === "") {
+            return `${detail.detail_name}:`;
+          } else if (detail.detail_name === "" && detail.detail_value) {
+            return `---: ${detail.detail_value}`;
+          } else {
+            return " ";
+          }
+        });
+        detail_table.innerHTML = detail_get.join("<br>");
 
-      row_table.appendChild(id_table);
-      row_table.appendChild(name_table);
-      row_table.appendChild(category_table);
-      row_table.appendChild(detail_table);
-      row_table.appendChild(item_quantity);
+        row_table.appendChild(id_table);
+        row_table.appendChild(name_table);
+        row_table.appendChild(category_table);
+        row_table.appendChild(detail_table);
+        row_table.appendChild(item_quantity);
 
-      table.appendChild(row_table);
-    }
+        table.appendChild(row_table);
+      }
+    })
   });
 }
 
@@ -1191,7 +1192,7 @@ function radiobutton_refresh() {
   }
 }
 
-//Έλργχος για λετπομέρια που υπάρχει δύο φορές
+//Έλεγχος για λεπτομέρια που υπάρχει δύο φορές
 function duplicate_check() {
   var check = 0;
 
@@ -1245,8 +1246,12 @@ function upload_data() {
               } else {
                 //Ανανέωση του πίνακα
                 categories_select(data);
-                selected_cat = category_id(data);
-                items_select(data, selected_cat);
+               
+                for (var i = 0; i < document.getElementsByClassName("categories").length; i++) {
+                  document.getElementsByClassName("categories")[i].checked = true;
+                }
+
+                items_select(data, categories_selected);
                 categories_select_product(data);
                 onload_data = data;
               }
