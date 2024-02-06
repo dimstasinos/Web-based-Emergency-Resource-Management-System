@@ -59,7 +59,7 @@ if (isset($_SESSION['type'])) {
       </div>
 
       <div id="mapBox">
-        <p>Επέλεξε τοποθεσία</p>
+        <p><strong>Επέλεξε τοποθεσία</strong></p>
         <div id="map"></div>
       </div>
 

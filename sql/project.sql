@@ -291,7 +291,7 @@ VALUES
 insert into
   citizen_offers
 values
-  (NULL, '2024-02-04 9:25:00', NULL, 3, 7, 4),
+  (NULL, '2024-02-04 9:25:00', '2024-02-05 10:00:00', 3, 7, 4),
   (
     NULL,
     '2024-02-05 8:40:00',
@@ -301,6 +301,8 @@ values
     5
   ),
   (NULL, '2024-02-03 15:19:00', NULL, NULL, 2, 8, 6);
+
+  
 
 insert into
   offer_items
