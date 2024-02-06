@@ -460,9 +460,9 @@ document.getElementById("cat_change_button").addEventListener("click", function 
     const id = document.getElementById("id_selected").value;
     const new_category_id = document.getElementById("cat_selected").value;
     var old_category_id
-    onload_data.items.forEach(item =>{
-      if(item.id===id){
-        old_category_id=item.category;
+    onload_data.items.forEach(item => {
+      if (item.id === id) {
+        old_category_id = item.category;
       }
     })
 
@@ -636,7 +636,7 @@ document.getElementById("online_data").addEventListener("click", function () {
                 document.getElementsByClassName("categories")[i].checked = true;
               }
 
-            
+
               items_select(data, categories_selected);
               categories_select_product(data);
               category_select_det(data);
@@ -764,10 +764,20 @@ document.getElementById("cat_name_delete").addEventListener("click", function ()
                   console.error("Server Error:", data.Error);
                 } else {
 
-                  alert("Η κατηγορία διαγράφηκε")
+                  alert("Η κατηγορία διαγράφηκε");
 
                   onload_data = data;
                   categories_select(data);
+
+                  for (var i = 0; i < document.getElementsByClassName("categories").length; i++) {
+                    document.getElementsByClassName("categories")[i].checked = true;
+                  }
+
+                  data.categories.forEach(cat => {
+                    categories_selected.push(cat.id);
+                  })
+
+                  items_select(data, categories_selected);
                   categories_select_product(data);
                   category_select_det(data);
                   categories_select_new(data);
@@ -787,7 +797,7 @@ document.getElementById("cat_name_delete").addEventListener("click", function ()
                   const id = data.categories.find(cat_name => cat_name.id = document.getElementById("category").value);
                   document.getElementById("cat_name").value = id.id;
 
-
+                  
                 }
               })
               .catch((error) => console.error("Error:", error));
@@ -998,7 +1008,7 @@ document.getElementById('change_content').addEventListener('click', function () 
   });
 
   items_select(onload_data, categories_selected);
-  
+
 });
 
 
@@ -1246,13 +1256,15 @@ function upload_data() {
               } else {
                 //Ανανέωση του πίνακα
                 categories_select(data);
-               
+
                 for (var i = 0; i < document.getElementsByClassName("categories").length; i++) {
                   document.getElementsByClassName("categories")[i].checked = true;
                 }
 
                 items_select(data, categories_selected);
                 categories_select_product(data);
+                category_select_det(data);
+                categories_select_new(data);
                 onload_data = data;
               }
             })

@@ -29,7 +29,9 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
         <h1 class="page-title">Αποθήκη</h1>
       </div>
       <div class="topBar">
-      <div><p id="text"></p></div>
+        <div>
+          <p id="text"></p>
+        </div>
         <div class="topButton"><a href="/html/admin/HomePage">Aρχική</a></div>
         <div class="topButton"><a href="/server/logout">Αποσύνδεση</a></div>
       </div>
@@ -55,14 +57,16 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
       </div>
     </div>
 
+    <div id="category_select-container">
+    <h2>Επιλογή κατηγορίας</h2>
+      <div id="select">
+        <div id="cat_list"></div>
+      </div>
+      <button id="change_content">Επιβεβαίωση</button>
+    </div>
 
     <div id="title_select_warehouse-container">
       <h1>Αποθήκη</h1>
-      <div id="category_select-container">
-        <label for="cat_list">Επιλογή κατηγορίας</label>
-        <div id="cat_list"></div>
-        <button id="change_content">Επιβεβαίωση</button>
-      </div>
       <div id=table_warehouse>
         <table id="table_admin">
           <thead>
@@ -78,7 +82,6 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "admin") {
         </table>
       </div>
     </div>
-
 
     <hr class="separator-line">
     <hr class="separator-line">

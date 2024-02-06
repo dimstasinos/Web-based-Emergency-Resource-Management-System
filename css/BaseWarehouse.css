@@ -42,6 +42,7 @@ body {
   margin-top: 5px;
 }
 
+
 #data_insert-container button:hover {
   background-color: rgba(0, 2, 141, 0.925);
 }
@@ -66,12 +67,19 @@ body {
   background-color: rgba(182, 182, 182, 0.753);
 }
 
+
 #category_select-container {
   display: flex;
-  flex-direction: row;
+  justify-content: flex-start;
+  flex-direction: column;
+  height: auto;
+  width: 60%;
   align-items: center;
-  width: 100%;
-  gap: 2%;
+  margin: 20px;
+  border-radius: 20px;
+  padding: 5px 20px 20px 20px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  background-color: #f9f9f9;
 }
 
 #title_select_warehouse-container {
@@ -114,6 +122,18 @@ select {
   margin: 10px 0;
 }
 
+#select{
+  width: 100%;
+  overflow: auto;
+}
+
+#cat_list {
+  margin: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
 
 thead th {
   background-color: #455da0;
@@ -179,6 +199,7 @@ label {
 }
 
 #category_quantity_button-container button,
+#change_content,
 #add_product-container button {
   background-color: #455da0;
   color: white;
@@ -189,7 +210,8 @@ label {
 }
 
 #category_quantity_button-container button:hover,
-#add_product-container button:hover {
+#add_product-container button:hover,
+#change_content:hover  {
   background-color: rgba(0, 2, 141, 0.925);
 }
 
