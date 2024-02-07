@@ -86,7 +86,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
     <div id="warehouse_selected-container">
 
       <div id="title_table_warehouse-container">
-        <h2>Αποθήκη</h2>
+        <h1>Αποθήκη</h1>
 
         <div id="category_select-container">
           <label for="categorySelect">Κατηγορίες Ειδών</label>
@@ -110,7 +110,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "rescuer") {
       </div>
 
       <div id="title_table_selected-container">
-        <h2>Επιλεγμένα Προϊόντα</h2>
+        <h1>Επιλεγμένα Προϊόντα</h1>
         <div id="table_selected-container">
           <table id="tableSelected">
             <thead>

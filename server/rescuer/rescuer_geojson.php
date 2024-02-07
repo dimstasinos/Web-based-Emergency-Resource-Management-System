@@ -214,13 +214,14 @@ try {
 
         $citizen_data["details"] = $offer_details;
       }
-
-      $feature = array(
-        "type" => "Feature",
-        "geometry" => $geometry,
-        "properties" => $citizen_data,
-      );
-      $features[] = $feature;
+      if (sizeof($citizen_data["details"]) != 0) {
+        $feature = array(
+          "type" => "Feature",
+          "geometry" => $geometry,
+          "properties" => $citizen_data,
+        );
+        $features[] = $feature;
+      }
     }
   }
 

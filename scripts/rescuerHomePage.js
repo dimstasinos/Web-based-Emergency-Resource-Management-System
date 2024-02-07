@@ -79,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function () {
               features_check.geometry.coordinates[1] === feature.geometry.coordinates[1] &&
               (category !== "Base" || category !== "Truck Active" || category !== "Truck Inactive") &&
               index !== index_check) {
-              if(category==="T")
               check = 1;
             }
           });

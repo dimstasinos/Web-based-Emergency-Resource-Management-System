@@ -306,7 +306,7 @@ values
     8,
     5
   ),
-  (NULL, '2024-02-03 15:19:00', NULL, NULL, 2, 8, 6);
+  (NULL, '2024-02-03 15:19:00', NULL, NULL, 8, 6);
 
 insert into
   vehicle_storage
