@@ -186,11 +186,3 @@ button:disabled {
     font-size: 12px;
   }
 }
-
-
-@media (max-width:1000px) {
-  #table_start {
-    width: 70%;
-    padding: 0px;
-  }
-}

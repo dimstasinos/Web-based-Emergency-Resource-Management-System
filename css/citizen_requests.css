@@ -278,11 +278,3 @@ td {
     margin: 10px 0px 10px 0px;
   }
 }
-
-
-@media (max-width:1000px) {
-  #table_start {
-    width: 70%;
-    padding: 0px;
-  }
-}
