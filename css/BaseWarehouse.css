@@ -126,7 +126,9 @@ select {
 
 #select{
   width: 100%;
-  overflow: auto;
+    overflow: auto;
+    display: flex;
+    justify-content: flex-start;
 }
 
 #cat_list {
@@ -329,6 +331,12 @@ input {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+
+#submit_button-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 #categories_edit_add-container {

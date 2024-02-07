@@ -1257,6 +1257,10 @@ function upload_data() {
                 //Ανανέωση του πίνακα
                 categories_select(data);
 
+                data.categories.forEach(cat => {
+                  categories_selected.push(cat.id);
+                })
+
                 for (var i = 0; i < document.getElementsByClassName("categories").length; i++) {
                   document.getElementsByClassName("categories")[i].checked = true;
                 }
