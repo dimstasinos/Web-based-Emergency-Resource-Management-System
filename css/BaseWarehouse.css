@@ -73,6 +73,7 @@ body {
   justify-content: flex-start;
   flex-direction: column;
   height: auto;
+  max-width: 1000px;
   width: 60%;
   align-items: center;
   margin: 20px;
@@ -88,6 +89,7 @@ body {
   flex-direction: column;
   height: 500px;
   width: 60%;
+  max-width: 1000px;
   align-items: center;
   margin: 20px;
   border-radius: 20px;
