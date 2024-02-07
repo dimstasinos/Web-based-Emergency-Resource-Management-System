@@ -41,7 +41,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
 
   <div id="main_container">
     <div id="table_start">
-      <h2> Ανακοινώσεις </h2>
+      <h1> Ανακοινώσεις</h1>
       <div id="tableAnnouncements-container">
         <table id="tableAnnouncements">
           <thead>
@@ -59,7 +59,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
 
 
     <div id="table_start">
-      <h2>Επίλογη Προσφοράς </h2>
+      <h1>Επίλογη Προσφοράς</h1>
       <div id="offer_select_container">
         <table id="tableSelectedOffer">
           <thead>
@@ -81,7 +81,7 @@ if (!isset($_SESSION["type"]) || $_SESSION["type"] != "citizen") {
 
 
     <div id="table_start">
-      <h2>Προσφορές</h2>
+      <h1>Προσφορές</h1>
       <div id="offers_t">
         <table id="table_offers">
           <thead>

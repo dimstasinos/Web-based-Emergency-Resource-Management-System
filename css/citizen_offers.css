@@ -5,8 +5,10 @@ body {
   background-color: antiquewhite;
 }
 
-h2 {
-  font-size: 24px
+#main_container h1{
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 
 #main_container {
@@ -25,6 +27,7 @@ h2 {
   flex-direction: column;
   height: 500px;
   width: 60%;
+  width: 1000px;
   align-items: center;
   margin: 20px;
   border-radius: 20px 20px 10px 10px;
@@ -185,7 +188,7 @@ button:disabled {
 }
 
 
-@media (min-width:1000px) {
+@media (max-width:1000px) {
   #table_start {
     width: 70%;
     padding: 0px;

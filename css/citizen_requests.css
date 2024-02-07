@@ -5,9 +5,10 @@ body {
   background-color: antiquewhite;
 }
 
-h2 {
-  font-size: 24px;
+#main_container h1{
   text-align: center;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 
 #main_container {
@@ -122,8 +123,6 @@ select {
   margin: 0;
 }
 
-
-
 #table_start {
   display: flex;
   justify-content: flex-start;
@@ -181,8 +180,6 @@ select {
   border-spacing: 0;
   width: 100%;
 }
-
-
 
 button {
   color: rgb(255, 255, 255);
@@ -281,7 +278,7 @@ td {
 }
 
 
-@media (min-width:1000px) {
+@media (max-width:1000px) {
   #table_start {
     width: 70%;
     padding: 0px;
