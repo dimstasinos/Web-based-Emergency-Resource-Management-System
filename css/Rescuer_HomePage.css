@@ -200,7 +200,7 @@ label {
 #unload_button-container {
   width: 100%;
   display: flex;
-  justify-content: flex-end
+  justify-content: flex-end;
 }
 
 #warehouse_selected-container {
@@ -208,7 +208,7 @@ label {
   flex-direction: row;
   margin-bottom: 10px;
   width: 100%;
-  justify-content: space-around
+  justify-content: center;
 }
 
 #title_table_warehouse-container {
@@ -216,6 +216,7 @@ label {
   justify-content: flex-start;
   flex-direction: column;
   height: 500px;
+  max-width: 1000px;
   width: 60%;
   align-items: center;
   margin: 20px;
@@ -231,6 +232,7 @@ label {
   flex-direction: column;
   height: 500px;
   width: 40%;
+  max-width: 1000px;
   align-items: center;
   margin: 20px;
   border-radius: 20px;
