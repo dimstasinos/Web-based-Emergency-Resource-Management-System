@@ -1,6 +1,6 @@
 # Crisis Response Web Platform
  
-This project was developed for the course **"Programming and Systems on the World Wide Web"** during the academic year 2023–2024. It is a web-based platform designed to coordinate offers and requests of goods during crisis situations, connecting citizens, rescuers, and administrators in a unified system.
+This project was developed for the course **"Programming and Systems on the World Wide Web"**. It is a web-based platform designed to coordinate offers and requests of goods during crisis situations, connecting citizens, rescuers, and administrators in a unified system.
 
 ## Features
 
